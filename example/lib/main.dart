@@ -36,11 +36,11 @@ class Demo extends StatelessWidget {
           alignment: AlignmentDirectional.center,
           children: [
             Tilt(
-              width: 100,
-              height: 100,
+              width: 200,
+              height: 200,
               child: Container(
-                width: 100,
-                height: 100,
+                width: 200,
+                height: 200,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [Colors.pink, Colors.yellow],

@@ -22,12 +22,12 @@ class Tilt extends StatefulWidget {
 
 class _TiltState extends State<Tilt> {
   Offset position = Offset.zero;
-
   final GlobalKey globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     print("重载");
+
     return Listener(
       onPointerMove: (event) {
         bindingRange(event.localPosition);
@@ -61,9 +61,6 @@ class _TiltState extends State<Tilt> {
       return matrix;
     }
 
-    /// 近大远小效果
-    matrix.setEntry(3, 2, 0.01);
-
     /// 移动位置
     final double x = position.dx;
     final double y = position.dy;
@@ -83,6 +80,10 @@ class _TiltState extends State<Tilt> {
     print(rotateX);
     print(x);
 
+    /// 近大远小效果（适配不同尺寸的组件）
+    matrix.setEntry(3, 2, 0.5 / (w > h ? w : h));
+
+    /// 旋转
     matrix.rotateY(rotateX);
     matrix.rotateX(rotateY);
 
@@ -102,7 +103,7 @@ class _TiltState extends State<Tilt> {
     /// 触发范围阈值
     const double r = 10;
 
-    if (x <= h + r && x >= -r && y <= w + r && y >= -r) {
+    if (x <= w + r && x >= -r && y <= h + r && y >= -r) {
       setState(() {
         position = offset;
       });
