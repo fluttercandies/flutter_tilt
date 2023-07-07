@@ -30,26 +30,29 @@ class Demo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Flutter Tilt Demo')),
+      appBar: AppBar(title: const Text('Flutter Tilt Demo')),
       body: Center(
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
             Tilt(
-              width: 200,
+              width: 100,
               height: 200,
-              child: Container(
-                width: 200,
-                height: 200,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.pink, Colors.yellow],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+              child: Builder(builder: (context) {
+                print('子组件重建');
+                return Container(
+                  width: 100,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Colors.pink, Colors.yellow],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
+                );
+              }),
             ),
           ],
         ),
