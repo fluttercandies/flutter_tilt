@@ -67,56 +67,62 @@ class _TiltState extends State<Tilt> {
       onPointerMove: (event) {
         bindingRange(event.localPosition);
       },
-      onPointerHover: (event) {
-        bindingRange(event.localPosition);
-      },
       onPointerUp: (event) {
         tiltTransformFinish(event.localPosition);
       },
-      child: TweenAnimationBuilder(
-        duration: Duration(milliseconds: isMove ? 100 : 200),
-        tween: Tween<Offset>(
-          begin: isMove ? Offset.zero : _position,
-          end: isMove ? _position : initPosition,
-        ),
-        builder: (context, value, child) {
-          print("TweenAnimationBuilder 重载");
-          print(value);
-
-          _position = value;
-
-          /// 移动位置
-          final double x = value.dx;
-          final double y = value.dy;
-
-          return Transform(
-            key: globalKey,
-            alignment: Alignment.center,
-            transform: tiltTransformStart(),
-            child: Container(
-              clipBehavior: Clip.antiAlias,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
-              child: Stack(
-                children: [
-                  /// Body
-                  child ?? const SizedBox(),
-
-                  /// Light
-                  isLight
-                      ? Light(
-                          width: w,
-                          height: h,
-                          position: value,
-                          lightDirection: widget.lightDirection,
-                        )
-                      : const SizedBox(),
-                ],
-              ),
-            ),
-          );
+      onPointerCancel: (event) {
+        tiltTransformFinish(event.localPosition);
+      },
+      behavior: HitTestBehavior.deferToChild,
+      child: MouseRegion(
+        onHover: (event) {
+          bindingRange(event.localPosition);
         },
-        child: widget.child,
+        onExit: (event) {
+          tiltTransformFinish(event.localPosition);
+        },
+        cursor: MouseCursor.defer,
+        child: TweenAnimationBuilder(
+          duration: Duration(milliseconds: isMove ? 100 : 200),
+          tween: Tween<Offset>(
+            begin: isMove ? Offset.zero : _position,
+            end: isMove ? _position : initPosition,
+          ),
+          builder: (context, value, child) {
+            print("TweenAnimationBuilder 重载");
+            print(value);
+
+            _position = value;
+
+            return Transform(
+              key: globalKey,
+              alignment: Alignment.center,
+              transform: tiltTransformStart(),
+              child: Container(
+                clipBehavior: Clip.antiAlias,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Stack(
+                  children: [
+                    /// Body
+                    child ?? const SizedBox(),
+
+                    /// Light
+                    isLight
+                        ? Light(
+                            width: w,
+                            height: h,
+                            position: value,
+                            lightDirection: widget.lightDirection,
+                          )
+                        : const SizedBox(),
+                  ],
+                ),
+              ),
+            );
+          },
+          child: widget.child,
+        ),
       ),
     );
   }
@@ -173,6 +179,8 @@ class _TiltState extends State<Tilt> {
         _position = position;
         isMove = true;
       });
+    } else {
+      tiltTransformFinish(position);
     }
   }
 }
