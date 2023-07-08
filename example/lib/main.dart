@@ -40,7 +40,7 @@ class Demo extends StatelessWidget {
               height: 300,
               lightDirection: LightDirection.around,
               child: Builder(builder: (context) {
-                print('子组件重建');
+                print('Demo Build');
                 return Container(
                   width: 200,
                   height: 300,
