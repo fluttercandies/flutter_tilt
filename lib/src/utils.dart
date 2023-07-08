@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart';
 
 /// 计算倾斜开始
@@ -39,4 +41,14 @@ bool isInRange(double width, double height, Offset offset) {
   } else {
     return false;
   }
+}
+
+/// 两点间的距离 sqrt((x1-x2)²+(y1-y2)²)
+///
+/// 坐标 (x1, y1) 到坐标 (x2, y2) 的距离
+///
+double p2pDistance(Offset p1, Offset p2) {
+  final x1 = p1.dx, y1 = p1.dy;
+  final x2 = p2.dx, y2 = p2.dy;
+  return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 }

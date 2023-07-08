@@ -1,6 +1,8 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+import 'utils.dart';
 
 /// 光源方向
 enum LightDirection {
@@ -47,25 +49,23 @@ enum LightDirection {
   yCenter,
 }
 
-/// 光
+/// 光源
 class Light extends StatelessWidget {
-  /// 光
+  /// 光源
   ///
-  /// 作用于其他组件上的发光效果，
+  /// 作用于其他组件上的光源效果，
   ///
   /// 搭配 [Stack] 于同级组件上方使用。
   ///
   /// [width], [height] 一般和同级组件尺寸一致
-  ///
-  /// [position] 触发的位置坐标
-  ///
-  /// [lightDirection] 发光方向
   const Light({
     super.key,
     required this.width,
     required this.height,
     required this.position,
+    required this.lightColor,
     required this.lightDirection,
+    required this.islightReverse,
   });
 
   final double width;
@@ -74,8 +74,14 @@ class Light extends StatelessWidget {
   /// 位置坐标
   final Offset position;
 
-  /// 发光方向
+  /// 光颜色
+  final Color lightColor;
+
+  /// 光源方向
   final LightDirection lightDirection;
+
+  /// 光源是否反向
+  final bool islightReverse;
 
   /// 坐标位置 x
   double get x => position.dx;
@@ -107,8 +113,10 @@ class Light extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: xPositioned,
-      top: yPositioned,
+      left: islightReverse ? xPositioned : null,
+      top: islightReverse ? yPositioned : null,
+      right: !islightReverse ? xPositioned : null,
+      bottom: !islightReverse ? yPositioned : null,
       width: wEm,
       height: hEm,
       child: Opacity(
@@ -120,8 +128,8 @@ class Light extends StatelessWidget {
             gradient: RadialGradient(
               radius: 0.5,
               colors: [
-                Colors.white.withAlpha(60),
-                Colors.white.withAlpha(0),
+                lightColor.withAlpha(80),
+                lightColor.withAlpha(0),
               ],
               stops: const [0.01, 0.99],
               tileMode: TileMode.clamp,
@@ -152,35 +160,31 @@ class Light extends StatelessWidget {
     switch (lightDirection) {
       case LightDirection.none:
       case LightDirection.around:
-        // 两点间的距离，sqrt((x1-x2)²+(y1-y2)²)
-        // 中心 (x1=0, y1=0) 到坐标 (x2=?, y2=?) 的位置
         final double distance =
-            sqrt(tempRotateX * tempRotateX + tempRotateY * tempRotateY);
+            p2pDistance(Offset.zero, Offset(tempRotateX, tempRotateY));
         opacity = distance * 2;
       case LightDirection.all:
         opacity = 1;
       case LightDirection.top:
-        opacity = rotateY * 2;
-      case LightDirection.bottom:
         opacity = -rotateY * 2;
+      case LightDirection.bottom:
+        opacity = rotateY * 2;
       case LightDirection.left:
-        opacity = -rotateX * 2;
-      case LightDirection.right:
         opacity = rotateX * 2;
+      case LightDirection.right:
+        opacity = -rotateX * 2;
       case LightDirection.center:
-        // 两点间的距离，sqrt((x1-x2)²+(y1-y2)²)
-        // 中心 (x1=0, y1=0) 到坐标 (x2=?, y2=?) 的位置
         final double distance =
-            sqrt(tempRotateX * tempRotateX + tempRotateY * tempRotateY);
+            p2pDistance(Offset.zero, Offset(tempRotateX, tempRotateY));
         opacity = 1 - distance;
       case LightDirection.topLeft:
+        opacity = (rotateX - rotateY) * 2;
+      case LightDirection.bottomRight:
         opacity = -(rotateX - rotateY) * 2;
       case LightDirection.topRight:
-        opacity = (rotateX + rotateY) * 2;
-      case LightDirection.bottomLeft:
         opacity = -(rotateX + rotateY) * 2;
-      case LightDirection.bottomRight:
-        opacity = (rotateX - rotateY) * 2;
+      case LightDirection.bottomLeft:
+        opacity = (rotateX + rotateY) * 2;
       case LightDirection.xCenter:
         if (rotateY < 0) tempRotateY = -rotateY;
         opacity = 1 - tempRotateY;

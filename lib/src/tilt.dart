@@ -14,13 +14,23 @@ class Tilt extends StatefulWidget {
     required this.width,
     required this.height,
     required this.child,
+    this.lightColor = const Color(0xFFFFFFFF),
     this.lightDirection = LightDirection.around,
+    this.islightReverse = false,
   });
 
   final double width;
   final double height;
   final Widget child;
+
+  /// 光颜色
+  final Color lightColor;
+
+  /// 光源方向
   final LightDirection lightDirection;
+
+  /// 光源是否反向
+  final bool islightReverse;
 
   @override
   State<Tilt> createState() => _TiltState();
@@ -55,7 +65,9 @@ class _TiltState extends State<Tilt> {
       onStop: onGesturesStop,
       child: GesturesListener(
         child: TiltContainer(
+          lightColor: widget.lightColor,
           lightDirection: widget.lightDirection,
+          islightReverse: widget.islightReverse,
           child: widget.child,
         ),
       ),

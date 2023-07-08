@@ -10,11 +10,21 @@ class TiltContainer extends StatefulWidget {
   const TiltContainer({
     super.key,
     required this.child,
-    this.lightDirection = LightDirection.around,
+    required this.lightColor,
+    required this.lightDirection,
+    required this.islightReverse,
   });
 
   final Widget child;
+
+  /// 光颜色
+  final Color lightColor;
+
+  /// 光源方向
   final LightDirection lightDirection;
+
+  /// 光源是否反向
+  final bool islightReverse;
 
   @override
   State<TiltContainer> createState() => _TiltContainerState();
@@ -66,27 +76,46 @@ class _TiltContainerState extends State<TiltContainer> {
 
         position = value;
 
-        return Transform(
-          alignment: Alignment.center,
-          transform: tiltTransform(w, h, value.dx, value.dy),
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-            child: Stack(
-              children: [
-                /// Body
-                child ?? const SizedBox(),
+        return IgnorePointer(
+          child: Transform(
+            alignment: Alignment.center,
+            transform: tiltTransform(w, h, value.dx, value.dy),
+            child: Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
 
-                /// Light
-                isLight
-                    ? Light(
-                        width: w,
-                        height: h,
-                        position: value,
-                        lightDirection: widget.lightDirection,
-                      )
-                    : const SizedBox(),
-              ],
+                /// Shadow
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withAlpha(50),
+                    offset: Offset(value.dx - w / 2, value.dy - h / 2),
+                  ),
+                ],
+              ),
+              child: Stack(
+                children: [
+                  /// Body
+                  Container(
+                    alignment: Alignment.center,
+                    width: w,
+                    height: h,
+                    child: child,
+                  ),
+
+                  /// Light
+                  isLight
+                      ? Light(
+                          width: w,
+                          height: h,
+                          position: value,
+                          lightColor: widget.lightColor,
+                          lightDirection: widget.lightDirection,
+                          islightReverse: widget.islightReverse,
+                        )
+                      : const SizedBox(),
+                ],
+              ),
             ),
           ),
         );
