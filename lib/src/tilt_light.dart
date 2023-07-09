@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'utils.dart';
+import 'package:flutter_tilt/src/utils.dart';
 
 /// 光源方向
 enum LightDirection {

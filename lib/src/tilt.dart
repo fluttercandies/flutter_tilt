@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 
-import 'utils.dart';
+import 'package:flutter_tilt/src/utils.dart';
 
-import 'tilt_light.dart';
-import 'tilt_container.dart';
-import 'gestures_listener.dart';
+import 'package:flutter_tilt/src/tilt_light.dart';
+import 'package:flutter_tilt/src/tilt_container.dart';
+import 'package:flutter_tilt/src/gestures_listener.dart';
 
-import 'state/tilt_state.dart';
+import 'package:flutter_tilt/src/state/tilt_state.dart';
 
 class Tilt extends StatefulWidget {
   const Tilt({

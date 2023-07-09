@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'utils.dart';
+import 'package:flutter_tilt/src/utils.dart';
 
-import 'tilt_light.dart';
-import 'tilt_shadow.dart';
+import 'package:flutter_tilt/src/tilt_light.dart';
+import 'package:flutter_tilt/src/tilt_shadow.dart';
 
-import 'state/tilt_state.dart';
+import 'package:flutter_tilt/src/state/tilt_state.dart';
 
 class TiltContainer extends StatefulWidget {
   const TiltContainer({
@@ -89,6 +89,8 @@ class _TiltContainerState extends State<TiltContainer> {
           child: Transform(
             alignment: Alignment.center,
             transform: tiltTransform(w, h, value.dx, value.dy),
+
+            /// Shadow
             child: TiltShadow(
               width: w,
               height: h,
@@ -110,17 +112,16 @@ class _TiltContainerState extends State<TiltContainer> {
                   ),
 
                   /// Light
-                  isLight
-                      ? TiltLight(
-                          width: w,
-                          height: h,
-                          position: value,
-                          borderRadius: widget.borderRadius,
-                          lightColor: widget.lightColor,
-                          lightDirection: widget.lightDirection,
-                          islightReverse: widget.islightReverse,
-                        )
-                      : const SizedBox(),
+                  if (isLight)
+                    TiltLight(
+                      width: w,
+                      height: h,
+                      position: value,
+                      borderRadius: widget.borderRadius,
+                      lightColor: widget.lightColor,
+                      lightDirection: widget.lightDirection,
+                      islightReverse: widget.islightReverse,
+                    ),
                 ],
               ),
             ),

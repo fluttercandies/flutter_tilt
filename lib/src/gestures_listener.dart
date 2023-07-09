@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import 'compatible/tilt_mouse_listener.dart';
-import 'compatible/tilt_touch_listener.dart';
+import 'package:flutter_tilt/src/compatible/tilt_mouse_listener.dart';
+import 'package:flutter_tilt/src/compatible/tilt_touch_listener.dart';
 
-import 'state/tilt_state.dart';
+import 'package:flutter_tilt/src/state/tilt_state.dart';
 
 /// 手势监听
 class GesturesListener extends StatefulWidget {
@@ -26,22 +26,12 @@ class _GesturesListenerState extends State<GesturesListener> {
     final TiltState tiltState = TiltState.of(context)!;
 
     return TiltTouchListener(
-      onPointerMove: (event) {
-        tiltState.onMove(event.localPosition);
-      },
-      onPointerUp: (event) {
-        tiltState.onStop(event.localPosition);
-      },
-      onPointerCancel: (event) {
-        tiltState.onStop(event.localPosition);
-      },
+      onPointerMove: (e) => tiltState.onMove(e.localPosition),
+      onPointerUp: (e) => tiltState.onStop(e.localPosition),
+      onPointerCancel: (e) => tiltState.onStop(e.localPosition),
       child: TiltMouseListener(
-        onHover: (event) {
-          tiltState.onMove(event.localPosition);
-        },
-        onExit: (event) {
-          tiltState.onStop(event.localPosition);
-        },
+        onHover: (e) => tiltState.onMove(e.localPosition),
+        onExit: (e) => tiltState.onStop(e.localPosition),
         child: widget.child,
       ),
     );

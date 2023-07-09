@@ -4,8 +4,6 @@ import 'package:flutter/widgets.dart';
 
 /// 计算倾斜开始
 Matrix4 tiltTransform(double w, double h, double x, double y) {
-  final matrix = Matrix4.identity();
-
   /// 旋转角度 (中心位置) / 灵敏度
   final double rotateX = -((w / 2 - x) / w);
   final double rotateY = ((h / 2 - y) / h);
@@ -17,14 +15,14 @@ Matrix4 tiltTransform(double w, double h, double x, double y) {
   print(rotateX);
   print(x);
 
-  /// 近大远小效果（适配不同尺寸的组件）
-  matrix.setEntry(3, 2, 0.5 / (w > h ? w : h));
+  return Matrix4.identity()
 
-  /// 旋转
-  matrix.rotateY(rotateX);
-  matrix.rotateX(rotateY);
+    /// 近大远小效果（适配不同尺寸的组件）
+    ..setEntry(3, 2, 0.5 / (w > h ? w : h))
 
-  return matrix;
+    /// 旋转
+    ..rotateY(rotateX)
+    ..rotateX(rotateY);
 }
 
 /// 计算是否在区域内

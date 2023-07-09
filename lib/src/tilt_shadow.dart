@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'utils.dart';
+import 'package:flutter_tilt/src/utils.dart';
 
 /// 阴影
 class TiltShadow extends StatelessWidget {
@@ -61,8 +61,7 @@ class TiltShadow extends StatelessWidget {
       p2pDistance(Offset.zero, Offset(xPositioned, yPositioned));
 
   /// Shadow BlurRadius
-  double get blurRadius =>
-      p2pDistance(Offset.zero, Offset(xPositioned, yPositioned)) / speed;
+  double get blurRadius => centerDistance / speed;
 
   /// Shadow SpreadRadius
   ///
