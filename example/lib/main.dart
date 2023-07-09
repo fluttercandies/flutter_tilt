@@ -30,6 +30,7 @@ class Demo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(title: const Text('Flutter Tilt Demo')),
       body: Center(
         child: Stack(
@@ -38,16 +39,20 @@ class Demo extends StatelessWidget {
             Tilt(
               width: 200,
               height: 300,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(40),
               lightDirection: LightDirection.around,
+              shadowColor: const Color(0xFF999999),
               child: Builder(builder: (context) {
                 print('Demo Build');
                 return Container(
                   width: 200,
                   height: 300,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.pink, Colors.yellow],
+                      colors: [
+                        Colors.grey.withOpacity(0.1),
+                        Colors.grey.withOpacity(0.1)
+                      ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
