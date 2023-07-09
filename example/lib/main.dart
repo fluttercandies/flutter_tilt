@@ -38,19 +38,19 @@ class Demo extends StatelessWidget {
             Tilt(
               width: 200,
               height: 300,
+              borderRadius: BorderRadius.circular(20),
               lightDirection: LightDirection.around,
               child: Builder(builder: (context) {
                 print('Demo Build');
                 return Container(
                   width: 200,
                   height: 300,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
                       colors: [Colors.pink, Colors.yellow],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
-                    borderRadius: BorderRadius.circular(20),
                   ),
                 );
               }),
