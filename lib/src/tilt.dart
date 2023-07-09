@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import 'utils.dart';
 
-import 'light.dart';
+import 'tilt_light.dart';
 import 'tilt_container.dart';
 import 'gestures_listener.dart';
 
@@ -14,6 +14,7 @@ class Tilt extends StatefulWidget {
     required this.width,
     required this.height,
     required this.child,
+    this.borderRadius,
     this.lightColor = const Color(0xFFFFFFFF),
     this.lightDirection = LightDirection.around,
     this.islightReverse = false,
@@ -22,6 +23,9 @@ class Tilt extends StatefulWidget {
   final double width;
   final double height;
   final Widget child;
+
+  /// BorderRadius
+  final BorderRadiusGeometry? borderRadius;
 
   /// 光颜色
   final Color lightColor;
@@ -65,6 +69,7 @@ class _TiltState extends State<Tilt> {
       onStop: onGesturesStop,
       child: GesturesListener(
         child: TiltContainer(
+          borderRadius: widget.borderRadius,
           lightColor: widget.lightColor,
           lightDirection: widget.lightDirection,
           islightReverse: widget.islightReverse,

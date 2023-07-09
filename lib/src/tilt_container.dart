@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'utils.dart';
 
-import 'light.dart';
+import 'tilt_light.dart';
+import 'tilt_shadow.dart';
 
 import 'states/tilt_state.dart';
 
@@ -10,12 +11,16 @@ class TiltContainer extends StatefulWidget {
   const TiltContainer({
     super.key,
     required this.child,
+    this.borderRadius,
     required this.lightColor,
     required this.lightDirection,
     required this.islightReverse,
   });
 
   final Widget child;
+
+  /// BorderRadius
+  final BorderRadiusGeometry? borderRadius;
 
   /// 光颜色
   final Color lightColor;
@@ -65,7 +70,7 @@ class _TiltContainerState extends State<TiltContainer> {
     print("TiltContainer Build");
 
     return TweenAnimationBuilder(
-      duration: Duration(milliseconds: isMove ? 100 : 200),
+      duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(
         begin: isMove ? Offset.zero : position,
         end: isMove ? position : initPosition,
@@ -80,41 +85,39 @@ class _TiltContainerState extends State<TiltContainer> {
           child: Transform(
             alignment: Alignment.center,
             transform: tiltTransform(w, h, value.dx, value.dy),
-            child: Container(
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+            child: TiltShadow(
+              width: w,
+              height: h,
+              position: value,
+              borderRadius: widget.borderRadius,
+              child: Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: widget.borderRadius,
+                ),
+                child: Stack(
+                  children: [
+                    /// Body
+                    Container(
+                      alignment: Alignment.center,
+                      width: w,
+                      height: h,
+                      child: child,
+                    ),
 
-                /// Shadow
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withAlpha(50),
-                    offset: Offset(value.dx - w / 2, value.dy - h / 2),
-                  ),
-                ],
-              ),
-              child: Stack(
-                children: [
-                  /// Body
-                  Container(
-                    alignment: Alignment.center,
-                    width: w,
-                    height: h,
-                    child: child,
-                  ),
-
-                  /// Light
-                  isLight
-                      ? Light(
-                          width: w,
-                          height: h,
-                          position: value,
-                          lightColor: widget.lightColor,
-                          lightDirection: widget.lightDirection,
-                          islightReverse: widget.islightReverse,
-                        )
-                      : const SizedBox(),
-                ],
+                    /// Light
+                    isLight
+                        ? TiltLight(
+                            width: w,
+                            height: h,
+                            position: value,
+                            lightColor: widget.lightColor,
+                            lightDirection: widget.lightDirection,
+                            islightReverse: widget.islightReverse,
+                          )
+                        : const SizedBox(),
+                  ],
+                ),
               ),
             ),
           ),

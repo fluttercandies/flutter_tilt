@@ -48,7 +48,7 @@ enum LightDirection {
 }
 
 /// 光源
-class Light extends StatelessWidget {
+class TiltLight extends StatelessWidget {
   /// 光源
   ///
   /// 作用于其他组件上的光源效果，
@@ -56,7 +56,7 @@ class Light extends StatelessWidget {
   /// 搭配 [Stack] 于同级组件上方使用。
   ///
   /// [width], [height] 一般和同级组件尺寸一致
-  const Light({
+  const TiltLight({
     super.key,
     required this.width,
     required this.height,
@@ -94,7 +94,7 @@ class Light extends StatelessWidget {
   double get h => height;
 
   /// 尺寸扩大的倍数
-  double get em => 2;
+  double get em => 4;
 
   /// 扩大的尺寸 width
   double get wEm => w * em;
@@ -110,13 +110,11 @@ class Light extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
+    return Positioned.fill(
       left: islightReverse ? xPositioned : null,
       top: islightReverse ? yPositioned : null,
       right: !islightReverse ? xPositioned : null,
       bottom: !islightReverse ? yPositioned : null,
-      width: wEm,
-      height: hEm,
       child: Opacity(
         opacity: opacity(lightDirection),
         child: Container(
