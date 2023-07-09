@@ -18,6 +18,7 @@ class Tilt extends StatefulWidget {
     this.lightColor = const Color(0xFFFFFFFF),
     this.lightDirection = LightDirection.around,
     this.islightReverse = false,
+    this.shadowColor = const Color(0xFF9E9E9E),
   });
 
   final double width;
@@ -35,6 +36,9 @@ class Tilt extends StatefulWidget {
 
   /// 光源是否反向
   final bool islightReverse;
+
+  /// 阴影颜色
+  final Color shadowColor;
 
   @override
   State<Tilt> createState() => _TiltState();
@@ -73,6 +77,7 @@ class _TiltState extends State<Tilt> {
           lightColor: widget.lightColor,
           lightDirection: widget.lightDirection,
           islightReverse: widget.islightReverse,
+          shadowColor: widget.shadowColor,
           child: widget.child,
         ),
       ),

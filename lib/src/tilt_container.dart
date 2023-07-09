@@ -15,6 +15,7 @@ class TiltContainer extends StatefulWidget {
     required this.lightColor,
     required this.lightDirection,
     required this.islightReverse,
+    required this.shadowColor,
   });
 
   final Widget child;
@@ -30,6 +31,9 @@ class TiltContainer extends StatefulWidget {
 
   /// 光源是否反向
   final bool islightReverse;
+
+  /// 阴影颜色
+  final Color shadowColor;
 
   @override
   State<TiltContainer> createState() => _TiltContainerState();
@@ -90,34 +94,34 @@ class _TiltContainerState extends State<TiltContainer> {
               height: h,
               position: value,
               borderRadius: widget.borderRadius,
-              child: Container(
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  borderRadius: widget.borderRadius,
-                ),
-                child: Stack(
-                  children: [
-                    /// Body
-                    Container(
-                      alignment: Alignment.center,
-                      width: w,
-                      height: h,
-                      child: child,
+              shadowColor: widget.shadowColor,
+              child: Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  /// Body
+                  Container(
+                    width: w,
+                    height: h,
+                    decoration: BoxDecoration(
+                      borderRadius: widget.borderRadius,
                     ),
+                    clipBehavior: Clip.antiAlias,
+                    child: child,
+                  ),
 
-                    /// Light
-                    isLight
-                        ? TiltLight(
-                            width: w,
-                            height: h,
-                            position: value,
-                            lightColor: widget.lightColor,
-                            lightDirection: widget.lightDirection,
-                            islightReverse: widget.islightReverse,
-                          )
-                        : const SizedBox(),
-                  ],
-                ),
+                  /// Light
+                  isLight
+                      ? TiltLight(
+                          width: w,
+                          height: h,
+                          position: value,
+                          borderRadius: widget.borderRadius,
+                          lightColor: widget.lightColor,
+                          lightDirection: widget.lightDirection,
+                          islightReverse: widget.islightReverse,
+                        )
+                      : const SizedBox(),
+                ],
               ),
             ),
           ),

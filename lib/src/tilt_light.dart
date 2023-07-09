@@ -55,12 +55,13 @@ class TiltLight extends StatelessWidget {
   ///
   /// 搭配 [Stack] 于同级组件上方使用。
   ///
-  /// [width], [height] 一般和同级组件尺寸一致
+  /// [width], [height] 一般和传入的组件尺寸一致
   const TiltLight({
     super.key,
     required this.width,
     required this.height,
     required this.position,
+    this.borderRadius,
     required this.lightColor,
     required this.lightDirection,
     required this.islightReverse,
@@ -71,6 +72,9 @@ class TiltLight extends StatelessWidget {
 
   /// 位置坐标
   final Offset position;
+
+  /// BorderRadius
+  final BorderRadiusGeometry? borderRadius;
 
   /// 光颜色
   final Color lightColor;
@@ -130,7 +134,9 @@ class TiltLight extends StatelessWidget {
               stops: const [0.01, 0.99],
               tileMode: TileMode.clamp,
             ),
+            borderRadius: borderRadius,
           ),
+          clipBehavior: Clip.antiAlias,
         ),
       ),
     );
