@@ -5,7 +5,7 @@ import 'utils.dart';
 import 'tilt_light.dart';
 import 'tilt_shadow.dart';
 
-import 'states/tilt_state.dart';
+import 'state/tilt_state.dart';
 
 class TiltContainer extends StatefulWidget {
   const TiltContainer({

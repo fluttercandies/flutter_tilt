@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import 'widgets/tilt_mouse_listener.dart';
-import 'widgets/tilt_touch_listener.dart';
+import 'compatible/tilt_mouse_listener.dart';
+import 'compatible/tilt_touch_listener.dart';
 
-import 'states/tilt_state.dart';
+import 'state/tilt_state.dart';
 
 /// 手势监听
 class GesturesListener extends StatefulWidget {
