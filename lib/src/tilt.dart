@@ -21,7 +21,7 @@ class Tilt extends StatefulWidget {
     this.lightDirection = LightDirection.around,
     this.islightReverse = false,
     this.shadowColor = const Color(0xFF9E9E9E),
-    this.shadowDistance = 0.2,
+    this.shadowDistance = 0.4,
     this.shadowSpreadRadius = 0.5,
     this.shadowBlurRadius = 100.0,
   });
@@ -34,6 +34,11 @@ class Tilt extends StatefulWidget {
   final BorderRadiusGeometry? borderRadius;
 
   /// 倾斜灵敏度
+  ///
+  /// 调整该值后，一般还需要调整 [shadowDistance] 的值，
+  /// 保持一种相对正确的阴影关系
+  ///
+  /// 为 0 时将会停止不动
   final double sensitivity;
 
   /// 光源颜色

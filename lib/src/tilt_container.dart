@@ -34,7 +34,10 @@ class TiltContainer extends StatefulWidget {
 
   /// 倾斜灵敏度
   ///
-  /// 为 0 将会停止不动
+  /// 调整该值后，一般还需要调整 [shadowDistance] 的值，
+  /// 保持一种相对正确的阴影关系
+  ///
+  /// 为 0 时将会停止不动
   final double sensitivity;
 
   /// 光源颜色
@@ -113,6 +116,7 @@ class _TiltContainerState extends State<TiltContainer> {
               height: height,
               position: value,
               borderRadius: widget.borderRadius,
+              sensitivity: widget.sensitivity,
               shadowColor: widget.shadowColor,
               shadowDistance: widget.shadowDistance,
               shadowSpreadRadius: widget.shadowSpreadRadius,
