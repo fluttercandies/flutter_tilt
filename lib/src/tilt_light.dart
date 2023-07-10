@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
 import 'package:flutter_tilt/src/enums.dart';
+import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 
 /// 光源
 class TiltLight extends StatelessWidget {
@@ -18,10 +19,7 @@ class TiltLight extends StatelessWidget {
     required this.height,
     required this.position,
     this.borderRadius,
-    required this.lightColor,
-    required this.lightIntensity,
-    required this.lightDirection,
-    required this.islightReverse,
+    required this.lightConfig,
   });
 
   final double width;
@@ -33,21 +31,8 @@ class TiltLight extends StatelessWidget {
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
 
-  /// 光源颜色
-  final Color lightColor;
-
-  /// 光源强度
-  ///
-  /// min: 0 max: 255
-  ///
-  /// 为 0 时将没有光源
-  final int lightIntensity;
-
-  /// 光源方向
-  final LightDirection lightDirection;
-
-  /// 光源是否反向
-  final bool islightReverse;
+  /// 光源配置
+  final LightConfig lightConfig;
 
   /// 尺寸扩散的倍数
   double get spread => 4;
@@ -70,12 +55,12 @@ class TiltLight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
-      left: islightReverse ? postionX : null,
-      top: islightReverse ? postionY : null,
-      right: !islightReverse ? postionX : null,
-      bottom: !islightReverse ? postionY : null,
+      left: lightConfig.isReverse ? postionX : null,
+      top: lightConfig.isReverse ? postionY : null,
+      right: !lightConfig.isReverse ? postionX : null,
+      bottom: !lightConfig.isReverse ? postionY : null,
       child: Opacity(
-        opacity: lightSource(lightDirection),
+        opacity: lightSource(lightConfig.direction),
         child: Container(
           width: spreadW,
           height: spreadH,
@@ -83,8 +68,8 @@ class TiltLight extends StatelessWidget {
             gradient: RadialGradient(
               radius: 0.5,
               colors: [
-                lightColor.withAlpha(lightIntensity),
-                lightColor.withAlpha(0),
+                lightConfig.color.withAlpha(lightConfig.intensity),
+                lightConfig.color.withAlpha(0),
               ],
               stops: const [0.01, 0.99],
               tileMode: TileMode.clamp,
@@ -115,7 +100,7 @@ class TiltLight extends StatelessWidget {
         final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
         opacity = distance;
       case LightDirection.all:
-        opacity = lightIntensity.toDouble();
+        opacity = lightConfig.intensity.toDouble();
       case LightDirection.top:
         opacity = progressY;
       case LightDirection.bottom:
@@ -126,7 +111,7 @@ class TiltLight extends StatelessWidget {
         opacity = -progressX;
       case LightDirection.center:
         final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
-        opacity = lightIntensity - distance;
+        opacity = lightConfig.intensity - distance;
       case LightDirection.topLeft:
         opacity = (progressX + progressY);
       case LightDirection.bottomRight:
@@ -137,10 +122,10 @@ class TiltLight extends StatelessWidget {
         opacity = (progressX - progressY);
       case LightDirection.xCenter:
         if (progressY < 0) tempY = -progressY;
-        opacity = lightIntensity - tempY;
+        opacity = lightConfig.intensity - tempY;
       case LightDirection.yCenter:
         if (progressX < 0) tempX = -progressX;
-        opacity = lightIntensity - tempX;
+        opacity = lightConfig.intensity - tempX;
     }
 
     /// 避免超出范围

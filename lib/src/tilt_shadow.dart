@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
+import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
 /// 阴影
 class TiltShadow extends StatelessWidget {
@@ -17,10 +18,7 @@ class TiltShadow extends StatelessWidget {
     required this.position,
     this.borderRadius,
     required this.sensitivity,
-    required this.shadowColor,
-    required this.shadowDistance,
-    required this.shadowSpreadRadius,
-    required this.shadowBlurRadius,
+    required this.shadowConfig,
   });
 
   final Widget child;
@@ -36,19 +34,8 @@ class TiltShadow extends StatelessWidget {
   /// 倾斜灵敏度
   final double sensitivity;
 
-  /// 阴影颜色
-  final Color shadowColor;
-
-  /// 阴影距离
-  ///
-  /// 为 0 时将没有阴影
-  final double shadowDistance;
-
-  /// 阴影扩散半径
-  final double shadowSpreadRadius;
-
-  /// 阴影模糊半径
-  final double shadowBlurRadius;
+  /// 阴影配置
+  final ShadowConfig shadowConfig;
 
   /// 当前坐标在中心坐标到区域边界的进度
   Offset get p2cProgress => -p2cAreaProgress(width, height, position);
@@ -59,20 +46,21 @@ class TiltShadow extends StatelessWidget {
   /// 阴影当前坐标
   ///
   /// 阴影进度 * 阴影距离 * 100
-  Offset get offset => p2cProgress * shadowDistance * 100;
+  Offset get offset => p2cProgress * shadowConfig.distance * 100;
 
   /// 阴影模糊半径
   ///
   /// 距离中心的进度 * 模糊半径 * 阴影距离
-  double get blurRadius => centerProgress * shadowBlurRadius * shadowDistance;
+  double get blurRadius =>
+      centerProgress * shadowConfig.blurRadius * shadowConfig.distance;
 
   /// 阴影扩散半径
   ///
   /// (距离中心的进度 * 扩散半径 * 阴影距离 * (倾斜灵敏度 * 10)) - (固定扩散值)
   double get spreadRadius =>
       (centerProgress *
-          shadowSpreadRadius *
-          shadowDistance *
+          shadowConfig.spreadRadius *
+          shadowConfig.distance *
           (sensitivity * 10)) -
       ((width < height ? width : height) / 10);
 
@@ -88,9 +76,10 @@ class TiltShadow extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         boxShadow: [
-          if (shadowDistance != 0)
+          if (shadowConfig.distance != 0)
             BoxShadow(
-              color: shadowColor.withAlpha(colorAlpha > 255 ? 255 : colorAlpha),
+              color: shadowConfig.color
+                  .withAlpha(colorAlpha > 255 ? 255 : colorAlpha),
               offset: offset,
               blurRadius: blurRadius,
               spreadRadius: spreadRadius,

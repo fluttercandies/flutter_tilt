@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
-import 'package:flutter_tilt/src/enums.dart';
+import 'package:flutter_tilt/src/type/tilt_light_type.dart';
+import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
 import 'package:flutter_tilt/src/tilt_container.dart';
 import 'package:flutter_tilt/src/gestures_listener.dart';
@@ -16,14 +17,8 @@ class Tilt extends StatefulWidget {
     required this.child,
     this.borderRadius,
     this.sensitivity = 0.2,
-    this.lightColor = const Color(0xFFFFFFFF),
-    this.lightIntensity = 80,
-    this.lightDirection = LightDirection.around,
-    this.islightReverse = false,
-    this.shadowColor = const Color(0xFF9E9E9E),
-    this.shadowDistance = 0.4,
-    this.shadowSpreadRadius = 0.5,
-    this.shadowBlurRadius = 100.0,
+    this.lightConfig = const LightConfig(),
+    this.shadowConfig = const ShadowConfig(),
   });
 
   final double width;
@@ -41,35 +36,11 @@ class Tilt extends StatefulWidget {
   /// 为 0 时将会停止不动
   final double sensitivity;
 
-  /// 光源颜色
-  final Color lightColor;
+  /// 光源配置
+  final LightConfig lightConfig;
 
-  /// 光源强度
-  ///
-  /// min: 0 max: 255
-  ///
-  /// 为 0 时将没有光源
-  final int lightIntensity;
-
-  /// 光源方向
-  final LightDirection lightDirection;
-
-  /// 光源是否反向
-  final bool islightReverse;
-
-  /// 阴影颜色
-  final Color shadowColor;
-
-  /// 阴影距离
-  ///
-  /// 为 0 时将没有阴影
-  final double shadowDistance;
-
-  /// 阴影扩散半径
-  final double shadowSpreadRadius;
-
-  /// 阴影模糊半径
-  final double shadowBlurRadius;
+  /// 阴影配置
+  final ShadowConfig shadowConfig;
 
   @override
   State<Tilt> createState() => _TiltState();
@@ -101,14 +72,8 @@ class _TiltState extends State<Tilt> {
           height: height,
           borderRadius: widget.borderRadius,
           sensitivity: widget.sensitivity,
-          lightColor: widget.lightColor,
-          lightIntensity: widget.lightIntensity,
-          lightDirection: widget.lightDirection,
-          islightReverse: widget.islightReverse,
-          shadowColor: widget.shadowColor,
-          shadowDistance: widget.shadowDistance,
-          shadowSpreadRadius: widget.shadowSpreadRadius,
-          shadowBlurRadius: widget.shadowBlurRadius,
+          lightConfig: widget.lightConfig,
+          shadowConfig: widget.shadowConfig,
           child: widget.child,
         ),
       ),

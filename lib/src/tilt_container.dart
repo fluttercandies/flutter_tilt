@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
 import 'package:flutter_tilt/src/enums.dart';
+import 'package:flutter_tilt/src/type/tilt_light_type.dart';
+import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
 import 'package:flutter_tilt/src/tilt_light.dart';
 import 'package:flutter_tilt/src/tilt_shadow.dart';
@@ -16,14 +18,8 @@ class TiltContainer extends StatefulWidget {
     required this.child,
     this.borderRadius,
     required this.sensitivity,
-    required this.lightColor,
-    required this.lightIntensity,
-    required this.lightDirection,
-    required this.islightReverse,
-    required this.shadowColor,
-    required this.shadowDistance,
-    required this.shadowSpreadRadius,
-    required this.shadowBlurRadius,
+    required this.lightConfig,
+    required this.shadowConfig,
   });
 
   final double width;
@@ -41,29 +37,11 @@ class TiltContainer extends StatefulWidget {
   /// 为 0 时将会停止不动
   final double sensitivity;
 
-  /// 光源颜色
-  final Color lightColor;
+  /// 光源配置
+  final LightConfig lightConfig;
 
-  /// 光源强度
-  final int lightIntensity;
-
-  /// 光源方向
-  final LightDirection lightDirection;
-
-  /// 光源是否反向
-  final bool islightReverse;
-
-  /// 阴影颜色
-  final Color shadowColor;
-
-  /// 阴影距离
-  final double shadowDistance;
-
-  /// 阴影扩散半径
-  final double shadowSpreadRadius;
-
-  /// 阴影模糊半径
-  final double shadowBlurRadius;
+  /// 阴影配置
+  final ShadowConfig shadowConfig;
 
   @override
   State<TiltContainer> createState() => _TiltContainerState();
@@ -83,8 +61,8 @@ class _TiltContainerState extends State<TiltContainer> {
   late bool isMove;
 
   /// 是否有光源
-  late bool isLight = widget.lightDirection != LightDirection.none ||
-      widget.lightIntensity == 0;
+  late bool isLight = widget.lightConfig.direction != LightDirection.none ||
+      widget.lightConfig.intensity == 0;
 
   @override
   void didChangeDependencies() {
@@ -118,10 +96,7 @@ class _TiltContainerState extends State<TiltContainer> {
               position: value,
               borderRadius: widget.borderRadius,
               sensitivity: widget.sensitivity,
-              shadowColor: widget.shadowColor,
-              shadowDistance: widget.shadowDistance,
-              shadowSpreadRadius: widget.shadowSpreadRadius,
-              shadowBlurRadius: widget.shadowBlurRadius,
+              shadowConfig: widget.shadowConfig,
               child: Stack(
                 alignment: AlignmentDirectional.center,
                 children: [
@@ -143,10 +118,7 @@ class _TiltContainerState extends State<TiltContainer> {
                       height: height,
                       position: value,
                       borderRadius: widget.borderRadius,
-                      lightColor: widget.lightColor,
-                      lightIntensity: widget.lightIntensity,
-                      lightDirection: widget.lightDirection,
-                      islightReverse: widget.islightReverse,
+                      lightConfig: widget.lightConfig,
                     ),
                 ],
               ),
