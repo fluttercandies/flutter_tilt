@@ -30,35 +30,46 @@ class Demo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF111111),
-      appBar: AppBar(title: const Text('Flutter Tilt Demo')),
       body: Center(
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Tilt(
-              width: 200,
-              height: 300,
-              borderRadius: BorderRadius.circular(20),
-              lightDirection: LightDirection.around,
-              child: Builder(builder: (context) {
-                return Container(
-                  width: 200,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.grey.withOpacity(0.1),
-                        Colors.grey.withOpacity(0.1)
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+        child: Tilt(
+          width: 250,
+          height: 450,
+          borderRadius: BorderRadius.circular(20),
+          lightDirection: LightDirection.around,
+          child: Scaffold(
+            backgroundColor: const Color(0xFF777777),
+            appBar: AppBar(title: const Text('Flutter Tilt Demo')),
+            body: Center(
+              child: Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  Tilt(
+                    width: 200,
+                    height: 300,
+                    borderRadius: BorderRadius.circular(20),
+                    lightDirection: LightDirection.around,
+                    sensitivity: 1.2,
+                    child: Builder(builder: (context) {
+                      return Container(
+                        width: 200,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.grey.withOpacity(0.1),
+                              Colors.grey.withOpacity(0.1)
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                      );
+                    }),
                   ),
-                );
-              }),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
       ),
     );
