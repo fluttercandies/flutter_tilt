@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
+import 'package:flutter_tilt/src/enums.dart';
 
-import 'package:flutter_tilt/src/tilt_light.dart';
 import 'package:flutter_tilt/src/tilt_container.dart';
 import 'package:flutter_tilt/src/gestures_listener.dart';
 

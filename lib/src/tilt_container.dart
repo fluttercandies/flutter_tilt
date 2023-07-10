@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
+import 'package:flutter_tilt/src/enums.dart';
 
 import 'package:flutter_tilt/src/tilt_light.dart';
 import 'package:flutter_tilt/src/tilt_shadow.dart';
