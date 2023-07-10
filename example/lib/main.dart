@@ -35,7 +35,6 @@ class Demo extends StatelessWidget {
           width: 250,
           height: 450,
           borderRadius: BorderRadius.circular(20),
-          lightDirection: LightDirection.around,
           child: Scaffold(
             backgroundColor: const Color(0xFF777777),
             appBar: AppBar(title: const Text('Flutter Tilt Demo')),
@@ -47,7 +46,6 @@ class Demo extends StatelessWidget {
                     width: 200,
                     height: 300,
                     borderRadius: BorderRadius.circular(20),
-                    lightDirection: LightDirection.around,
                     sensitivity: 1.2,
                     child: Builder(builder: (context) {
                       return Container(
