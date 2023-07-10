@@ -77,9 +77,6 @@ class TiltShadow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Shadow Build');
-    print(centerDistance);
-
     return Container(
       width: width,
       height: height,

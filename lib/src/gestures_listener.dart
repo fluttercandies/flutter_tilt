@@ -21,8 +21,6 @@ class GesturesListener extends StatefulWidget {
 class _GesturesListenerState extends State<GesturesListener> {
   @override
   Widget build(BuildContext context) {
-    print("GesturesListener Build");
-
     final TiltState tiltState = TiltState.of(context)!;
 
     return TiltTouchListener(

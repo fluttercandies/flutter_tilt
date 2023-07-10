@@ -42,7 +42,6 @@ class Demo extends StatelessWidget {
               lightDirection: LightDirection.around,
               shadowColor: const Color(0xFF999999),
               child: Builder(builder: (context) {
-                print('Demo Build');
                 return Container(
                   width: 200,
                   height: 300,

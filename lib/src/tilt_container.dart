@@ -93,8 +93,6 @@ class _TiltContainerState extends State<TiltContainer> {
 
   @override
   Widget build(BuildContext context) {
-    print("TiltContainer Build");
-
     return TweenAnimationBuilder(
       duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(
@@ -102,9 +100,6 @@ class _TiltContainerState extends State<TiltContainer> {
         end: isMove ? position : initPosition,
       ),
       builder: (context, value, child) {
-        print("TweenAnimationBuilder Build");
-        print(value);
-
         position = value;
 
         return IgnorePointer(

@@ -147,10 +147,6 @@ class TiltLight extends StatelessWidget {
     final Offset progress = -p2cAreaProgress(width, height, position);
     final double progressX = progress.dx, progressY = progress.dy;
 
-    print("opacity");
-    print(progressX);
-    print(progressY);
-
     /// 临时区域进度
     late double tempX = progressX, tempY = progressY;
 
@@ -190,8 +186,6 @@ class TiltLight extends StatelessWidget {
         if (progressX < 0) tempX = -progressX;
         opacity = lightIntensity - tempX;
     }
-
-    print(opacity);
 
     /// 避免超出范围
     if (opacity < 0) opacity = 0;

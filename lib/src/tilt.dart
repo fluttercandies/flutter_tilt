@@ -83,8 +83,6 @@ class _TiltState extends State<Tilt> {
 
   @override
   Widget build(BuildContext context) {
-    print('Tilt Build');
-
     return TiltState(
       position: position,
       isMove: isMove,
