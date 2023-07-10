@@ -10,21 +10,38 @@ import 'package:flutter_tilt/src/state/tilt_state.dart';
 class TiltContainer extends StatefulWidget {
   const TiltContainer({
     super.key,
+    required this.width,
+    required this.height,
     required this.child,
     this.borderRadius,
+    required this.sensitivity,
     required this.lightColor,
+    required this.lightIntensity,
     required this.lightDirection,
     required this.islightReverse,
     required this.shadowColor,
+    required this.shadowDistance,
+    required this.shadowSpreadRadius,
+    required this.shadowBlurRadius,
   });
 
+  final double width;
+  final double height;
   final Widget child;
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
 
-  /// 光颜色
+  /// 倾斜灵敏度
+  ///
+  /// 为 0 将会停止不动
+  final double sensitivity;
+
+  /// 光源颜色
   final Color lightColor;
+
+  /// 光源强度
+  final int lightIntensity;
 
   /// 光源方向
   final LightDirection lightDirection;
@@ -35,19 +52,25 @@ class TiltContainer extends StatefulWidget {
   /// 阴影颜色
   final Color shadowColor;
 
+  /// 阴影距离
+  final double shadowDistance;
+
+  /// 阴影扩散半径
+  final double shadowSpreadRadius;
+
+  /// 阴影模糊半径
+  final double shadowBlurRadius;
+
   @override
   State<TiltContainer> createState() => _TiltContainerState();
 }
 
 class _TiltContainerState extends State<TiltContainer> {
-  /// 初始的坐标，避免计算后的倾斜，默认为尺寸/2
-  late Offset initPosition = Offset(w / 2, h / 2);
+  late double width = widget.width;
+  late double height = widget.height;
 
-  /// Width
-  late double w;
-
-  /// Height
-  late double h;
+  /// 初始的坐标
+  late Offset initPosition = centerPosition(width, height);
 
   /// 坐标位置
   late Offset position;
@@ -56,15 +79,14 @@ class _TiltContainerState extends State<TiltContainer> {
   late bool isMove;
 
   /// 是否有光源
-  late bool isLight = widget.lightDirection != LightDirection.none;
+  late bool isLight = widget.lightDirection != LightDirection.none ||
+      widget.lightIntensity == 0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     final TiltState tiltState = TiltState.of(context)!;
-    w = tiltState.width;
-    h = tiltState.height;
     position = tiltState.position;
     isMove = tiltState.isMove;
   }
@@ -88,22 +110,25 @@ class _TiltContainerState extends State<TiltContainer> {
         return IgnorePointer(
           child: Transform(
             alignment: Alignment.center,
-            transform: tiltTransform(w, h, value.dx, value.dy),
+            transform: tiltTransform(width, height, value, widget.sensitivity),
 
             /// Shadow
             child: TiltShadow(
-              width: w,
-              height: h,
+              width: width,
+              height: height,
               position: value,
               borderRadius: widget.borderRadius,
               shadowColor: widget.shadowColor,
+              shadowDistance: widget.shadowDistance,
+              shadowSpreadRadius: widget.shadowSpreadRadius,
+              shadowBlurRadius: widget.shadowBlurRadius,
               child: Stack(
                 alignment: AlignmentDirectional.center,
                 children: [
                   /// Body
                   Container(
-                    width: w,
-                    height: h,
+                    width: width,
+                    height: height,
                     decoration: BoxDecoration(
                       borderRadius: widget.borderRadius,
                     ),
@@ -114,11 +139,12 @@ class _TiltContainerState extends State<TiltContainer> {
                   /// Light
                   if (isLight)
                     TiltLight(
-                      width: w,
-                      height: h,
+                      width: width,
+                      height: height,
                       position: value,
                       borderRadius: widget.borderRadius,
                       lightColor: widget.lightColor,
+                      lightIntensity: widget.lightIntensity,
                       lightDirection: widget.lightDirection,
                       islightReverse: widget.islightReverse,
                     ),

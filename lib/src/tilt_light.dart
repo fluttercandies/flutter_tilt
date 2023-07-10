@@ -63,6 +63,7 @@ class TiltLight extends StatelessWidget {
     required this.position,
     this.borderRadius,
     required this.lightColor,
+    required this.lightIntensity,
     required this.lightDirection,
     required this.islightReverse,
   });
@@ -70,14 +71,21 @@ class TiltLight extends StatelessWidget {
   final double width;
   final double height;
 
-  /// 位置坐标
+  /// 当前坐标
   final Offset position;
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
 
-  /// 光颜色
+  /// 光源颜色
   final Color lightColor;
+
+  /// 光源强度
+  ///
+  /// min: 0 max: 255
+  ///
+  /// 为 0 时将没有光源
+  final int lightIntensity;
 
   /// 光源方向
   final LightDirection lightDirection;
@@ -85,50 +93,41 @@ class TiltLight extends StatelessWidget {
   /// 光源是否反向
   final bool islightReverse;
 
-  /// 坐标位置 x
-  double get x => position.dx;
+  /// 尺寸扩散的倍数
+  double get spread => 4;
 
-  /// 坐标位置 y
-  double get y => position.dy;
+  /// 扩散的尺寸 width
+  double get spreadW => width * spread;
 
-  /// 尺寸 width
-  double get w => width;
+  /// 扩散的尺寸 height
+  double get spreadH => height * spread;
 
-  /// 尺寸 height
-  double get h => height;
+  /// 当前坐标相对于中心坐标的区域坐标
+  Offset get p2cPostion => -p2cAreaPostion(spreadW, spreadH, position);
 
-  /// 尺寸扩大的倍数
-  double get em => 4;
+  /// 定位 x （从中心位置开始）
+  double get postionX => p2cPostion.dx;
 
-  /// 扩大的尺寸 width
-  double get wEm => w * em;
-
-  /// 扩大的尺寸 height
-  double get hEm => h * em;
-
-  /// 定位 x （从组件中心位置开始）
-  double get xPositioned => x - w / 2 * em;
-
-  /// 定位 y （从组件中心位置开始）
-  double get yPositioned => y - h / 2 * em;
+  /// 定位 y （从中心位置开始）
+  double get postionY => p2cPostion.dy;
 
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
-      left: islightReverse ? xPositioned : null,
-      top: islightReverse ? yPositioned : null,
-      right: !islightReverse ? xPositioned : null,
-      bottom: !islightReverse ? yPositioned : null,
+      left: islightReverse ? postionX : null,
+      top: islightReverse ? postionY : null,
+      right: !islightReverse ? postionX : null,
+      bottom: !islightReverse ? postionY : null,
       child: Opacity(
-        opacity: opacity(lightDirection),
+        opacity: lightSource(lightDirection),
         child: Container(
-          width: wEm,
-          height: hEm,
+          width: spreadW,
+          height: spreadH,
           decoration: BoxDecoration(
             gradient: RadialGradient(
               radius: 0.5,
               colors: [
-                lightColor.withAlpha(80),
+                lightColor.withAlpha(lightIntensity),
                 lightColor.withAlpha(0),
               ],
               stops: const [0.01, 0.99],
@@ -142,19 +141,18 @@ class TiltLight extends StatelessWidget {
     );
   }
 
-  /// 透明度计算
-  double opacity(LightDirection lightDirection) {
-    /// 旋转角度 (中心位置) / 灵敏度
-    final double rotateX = -((w / 2 - x) / w);
-    final double rotateY = ((h / 2 - y) / h);
+  /// 光源计算
+  double lightSource(LightDirection lightDirection) {
+    /// 光源：区域进度
+    final Offset progress = -p2cAreaProgress(width, height, position);
+    final double progressX = progress.dx, progressY = progress.dy;
 
     print("opacity");
-    print(rotateX);
-    print(rotateY);
+    print(progressX);
+    print(progressY);
 
-    /// 临时位置
-    late double tempRotateX = rotateX;
-    late double tempRotateY = rotateY;
+    /// 临时区域进度
+    late double tempX = progressX, tempY = progressY;
 
     /// 透明度
     late double opacity = 0;
@@ -162,38 +160,38 @@ class TiltLight extends StatelessWidget {
     switch (lightDirection) {
       case LightDirection.none:
       case LightDirection.around:
-        final double distance =
-            p2pDistance(Offset.zero, Offset(tempRotateX, tempRotateY));
-        opacity = distance * 2;
+        final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
+        opacity = distance;
       case LightDirection.all:
-        opacity = 1;
+        opacity = lightIntensity.toDouble();
       case LightDirection.top:
-        opacity = -rotateY * 2;
+        opacity = progressY;
       case LightDirection.bottom:
-        opacity = rotateY * 2;
+        opacity = -progressY;
       case LightDirection.left:
-        opacity = rotateX * 2;
+        opacity = progressX;
       case LightDirection.right:
-        opacity = -rotateX * 2;
+        opacity = -progressX;
       case LightDirection.center:
-        final double distance =
-            p2pDistance(Offset.zero, Offset(tempRotateX, tempRotateY));
-        opacity = 1 - distance;
+        final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
+        opacity = lightIntensity - distance;
       case LightDirection.topLeft:
-        opacity = (rotateX - rotateY) * 2;
+        opacity = (progressX + progressY);
       case LightDirection.bottomRight:
-        opacity = -(rotateX - rotateY) * 2;
+        opacity = -(progressX + progressY);
       case LightDirection.topRight:
-        opacity = -(rotateX + rotateY) * 2;
+        opacity = -(progressX - progressY);
       case LightDirection.bottomLeft:
-        opacity = (rotateX + rotateY) * 2;
+        opacity = (progressX - progressY);
       case LightDirection.xCenter:
-        if (rotateY < 0) tempRotateY = -rotateY;
-        opacity = 1 - tempRotateY;
+        if (progressY < 0) tempY = -progressY;
+        opacity = lightIntensity - tempY;
       case LightDirection.yCenter:
-        if (rotateX < 0) tempRotateX = -rotateX;
-        opacity = 1 - tempRotateX;
+        if (progressX < 0) tempX = -progressX;
+        opacity = lightIntensity - tempX;
     }
+
+    print(opacity);
 
     /// 避免超出范围
     if (opacity < 0) opacity = 0;

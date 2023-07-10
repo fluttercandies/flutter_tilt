@@ -17,6 +17,9 @@ class TiltShadow extends StatelessWidget {
     required this.position,
     this.borderRadius,
     required this.shadowColor,
+    required this.shadowDistance,
+    required this.shadowSpreadRadius,
+    required this.shadowBlurRadius,
   });
 
   final Widget child;
@@ -32,61 +35,58 @@ class TiltShadow extends StatelessWidget {
   /// 阴影颜色
   final Color shadowColor;
 
-  /// 尺寸 width
-  double get w => width;
+  /// 阴影距离
+  final double shadowDistance;
 
-  /// 尺寸 height
-  double get h => height;
+  /// 阴影扩散半径
+  final double shadowSpreadRadius;
 
-  /// 坐标位置 x
-  double get x => position.dx;
+  /// 阴影模糊半径
+  final double shadowBlurRadius;
 
-  /// 坐标位置 y
-  double get y => position.dy;
+  /// 当前坐标相对于中心坐标的区域坐标
+  Offset get p2cPostion => -p2cAreaPostion(width, height, position);
 
-  /// 定位 x （从组件中心位置开始）
-  double get xPositioned => x - w / 2;
+  /// 当前坐标在中心坐标到区域边界的进度
+  Offset get p2cProgress => p2cAreaProgress(width, height, position);
 
-  /// 定位 y （从组件中心位置开始）
-  double get yPositioned => y - h / 2;
+  /// 距离中心的进度
+  double get centerDistance => p2pDistance(Offset.zero, p2cProgress);
 
-  /// 速度
-  double get speed => 4;
-
-  /// Shadow Offset
-  Offset get offset => Offset(xPositioned, yPositioned) / speed;
-
-  /// 距离中心
-  double get centerDistance =>
-      p2pDistance(Offset.zero, Offset(xPositioned, yPositioned));
-
-  /// Shadow BlurRadius
-  double get blurRadius => centerDistance / speed;
-
-  /// Shadow SpreadRadius
+  /// 阴影当前坐标
   ///
-  /// (扩散半径) - (最短边/10)
+  /// 阴影坐标 * 阴影距离
+  Offset get offset => p2cPostion * shadowDistance;
+
+  /// 阴影模糊半径
+  ///
+  /// 距离中心的进度 * 模糊半径 * 阴影距离
+  double get blurRadius => centerDistance * shadowBlurRadius * shadowDistance;
+
+  /// 阴影扩散半径
+  ///
+  /// (距离中心的进度 * 扩散半径 * 阴影距离) - (固定扩散值 * shadowDistance)
   double get spreadRadius =>
-      ((centerDistance / speed) / 2) - (w < h ? w / 10 : h / 10);
+      (centerDistance * shadowSpreadRadius * shadowDistance) -
+      ((width < height ? width : height) / 10 * shadowDistance);
 
-  /// Shadow Color
+  /// 阴影颜色
   ///
-  /// 距离中心坐标的百分比 * 60 Alpha
-  int get colorAlpha => ((centerDistance * 2 / (w < h ? h : w)) * 60).toInt();
+  /// 距离中心的进度 * ColorAlpha
+  int get colorAlpha => (centerDistance * 60).toInt();
 
   @override
   Widget build(BuildContext context) {
     print('Shadow Build');
-    print(colorAlpha);
+    print(centerDistance);
+
     return Container(
-      width: w,
-      height: h,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: shadowColor.withAlpha(
-              colorAlpha > 255 ? 255 : colorAlpha,
-            ),
+            color: shadowColor.withAlpha(colorAlpha > 255 ? 255 : colorAlpha),
             offset: offset,
             blurRadius: blurRadius,
             spreadRadius: spreadRadius,

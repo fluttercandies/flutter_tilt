@@ -4,20 +4,12 @@ import 'package:flutter/widgets.dart';
 class TiltState extends InheritedWidget {
   const TiltState({
     super.key,
-    required this.width,
-    required this.height,
     required this.position,
     required this.isMove,
     required this.onMove,
     required this.onStop,
     required super.child,
   });
-
-  /// Width
-  final double width;
-
-  /// Height
-  final double height;
 
   /// 坐标位置
   final Offset position;
@@ -41,8 +33,6 @@ class TiltState extends InheritedWidget {
   bool updateShouldNotify(TiltState oldWidget) {
     late bool update = false;
     if (position != oldWidget.position) update = true;
-    if (width != oldWidget.width) update = true;
-    if (height != oldWidget.height) update = true;
     if (isMove != oldWidget.isMove) update = true;
     return update;
   }

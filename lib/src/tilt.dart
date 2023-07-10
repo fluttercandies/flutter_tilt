@@ -15,10 +15,15 @@ class Tilt extends StatefulWidget {
     required this.height,
     required this.child,
     this.borderRadius,
+    this.sensitivity = 0.2,
     this.lightColor = const Color(0xFFFFFFFF),
+    this.lightIntensity = 80,
     this.lightDirection = LightDirection.around,
     this.islightReverse = false,
     this.shadowColor = const Color(0xFF9E9E9E),
+    this.shadowDistance = 0.2,
+    this.shadowSpreadRadius = 10,
+    this.shadowBlurRadius = 100,
   });
 
   final double width;
@@ -28,8 +33,18 @@ class Tilt extends StatefulWidget {
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
 
-  /// 光颜色
+  /// 倾斜灵敏度
+  final double sensitivity;
+
+  /// 光源颜色
   final Color lightColor;
+
+  /// 光源强度
+  ///
+  /// min: 0 max: 255
+  ///
+  /// 为 0 时将没有光源
+  final int lightIntensity;
 
   /// 光源方向
   final LightDirection lightDirection;
@@ -40,19 +55,25 @@ class Tilt extends StatefulWidget {
   /// 阴影颜色
   final Color shadowColor;
 
+  /// 阴影距离
+  final double shadowDistance;
+
+  /// 阴影扩散半径
+  final double shadowSpreadRadius;
+
+  /// 阴影模糊半径
+  final double shadowBlurRadius;
+
   @override
   State<Tilt> createState() => _TiltState();
 }
 
 class _TiltState extends State<Tilt> {
-  /// 初始的坐标，避免计算后的倾斜，默认为尺寸/2
-  late Offset initPosition = Offset(w / 2, h / 2);
+  late double width = widget.width;
+  late double height = widget.height;
 
-  /// Width
-  late double w = widget.width;
-
-  /// Height
-  late double h = widget.height;
+  /// 初始的坐标
+  late Offset initPosition = centerPosition(width, height);
 
   /// 坐标位置
   late Offset position = initPosition;
@@ -65,19 +86,24 @@ class _TiltState extends State<Tilt> {
     print('Tilt Build');
 
     return TiltState(
-      height: h,
-      width: w,
       position: position,
       isMove: isMove,
       onMove: onGesturesMove,
       onStop: onGesturesStop,
       child: GesturesListener(
         child: TiltContainer(
+          width: width,
+          height: height,
           borderRadius: widget.borderRadius,
+          sensitivity: widget.sensitivity,
           lightColor: widget.lightColor,
+          lightIntensity: widget.lightIntensity,
           lightDirection: widget.lightDirection,
           islightReverse: widget.islightReverse,
           shadowColor: widget.shadowColor,
+          shadowDistance: widget.shadowDistance,
+          shadowSpreadRadius: widget.shadowSpreadRadius,
+          shadowBlurRadius: widget.shadowBlurRadius,
           child: widget.child,
         ),
       ),
@@ -86,7 +112,7 @@ class _TiltState extends State<Tilt> {
 
   /// 手势移动触发
   void onGesturesMove(Offset offset) {
-    if (isInRange(w, h, offset)) {
+    if (isInRange(width, height, offset)) {
       setState(() {
         position = offset;
         isMove = true;
