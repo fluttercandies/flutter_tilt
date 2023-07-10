@@ -22,8 +22,8 @@ class Tilt extends StatefulWidget {
     this.islightReverse = false,
     this.shadowColor = const Color(0xFF9E9E9E),
     this.shadowDistance = 0.2,
-    this.shadowSpreadRadius = 10,
-    this.shadowBlurRadius = 100,
+    this.shadowSpreadRadius = 0.5,
+    this.shadowBlurRadius = 100.0,
   });
 
   final double width;
@@ -56,6 +56,8 @@ class Tilt extends StatefulWidget {
   final Color shadowColor;
 
   /// 阴影距离
+  ///
+  /// 为 0 时将没有阴影
   final double shadowDistance;
 
   /// 阴影扩散半径

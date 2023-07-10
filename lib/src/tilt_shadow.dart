@@ -36,6 +36,8 @@ class TiltShadow extends StatelessWidget {
   final Color shadowColor;
 
   /// 阴影距离
+  ///
+  /// 为 0 时将没有阴影
   final double shadowDistance;
 
   /// 阴影扩散半径
@@ -82,13 +84,14 @@ class TiltShadow extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         boxShadow: [
-          BoxShadow(
-            color: shadowColor.withAlpha(colorAlpha > 255 ? 255 : colorAlpha),
-            offset: offset,
-            blurRadius: blurRadius,
-            spreadRadius: spreadRadius,
-            blurStyle: BlurStyle.normal,
-          ),
+          if (shadowDistance != 0)
+            BoxShadow(
+              color: shadowColor.withAlpha(colorAlpha > 255 ? 255 : colorAlpha),
+              offset: offset,
+              blurRadius: blurRadius,
+              spreadRadius: spreadRadius,
+              blurStyle: BlurStyle.normal,
+            ),
         ],
         borderRadius: borderRadius,
       ),
