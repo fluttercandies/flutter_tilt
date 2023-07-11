@@ -42,7 +42,7 @@ class TiltMouseListener extends SingleChildRenderObjectWidget {
   /// By default, all callbacks are empty, [cursor] is [MouseCursor.defer], and
   /// [opaque] is true. The [cursor] must not be null.
   const TiltMouseListener({
-    super.key,
+    Key? key,
     this.onEnter,
     this.onExit,
     this.onHover,
@@ -51,8 +51,8 @@ class TiltMouseListener extends SingleChildRenderObjectWidget {
 
     /// Change the default to translucent
     this.hitTestBehavior = HitTestBehavior.translucent,
-    super.child,
-  });
+    Widget? child,
+  }) : super(key: key, child: child);
 
   /// Triggered when a mouse pointer has entered this widget.
   ///

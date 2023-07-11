@@ -11,7 +11,7 @@ import 'package:flutter_tilt/src/state/tilt_state.dart';
 
 class Tilt extends StatefulWidget {
   const Tilt({
-    super.key,
+    Key? key,
     required this.width,
     required this.height,
     required this.child,
@@ -20,7 +20,7 @@ class Tilt extends StatefulWidget {
     this.isOutsideAreaMove = true,
     this.lightConfig = const LightConfig(),
     this.shadowConfig = const ShadowConfig(),
-  });
+  }) : super(key: key);
 
   final double width;
   final double height;

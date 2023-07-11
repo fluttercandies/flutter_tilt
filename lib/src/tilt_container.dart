@@ -12,7 +12,7 @@ import 'package:flutter_tilt/src/state/tilt_state.dart';
 
 class TiltContainer extends StatefulWidget {
   const TiltContainer({
-    super.key,
+    Key? key,
     required this.width,
     required this.height,
     required this.child,
@@ -20,7 +20,7 @@ class TiltContainer extends StatefulWidget {
     required this.sensitivity,
     required this.lightConfig,
     required this.shadowConfig,
-  });
+  }) : super(key: key);
 
   final double width;
   final double height;
@@ -81,7 +81,7 @@ class _TiltContainerState extends State<TiltContainer> {
         begin: isMove ? initPosition : position,
         end: isMove ? position : initPosition,
       ),
-      builder: (context, value, child) {
+      builder: (context, Offset value, child) {
         return IgnorePointer(
           child: Transform(
             alignment: Alignment.center,

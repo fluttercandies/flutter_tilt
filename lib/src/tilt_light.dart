@@ -14,13 +14,13 @@ class TiltLight extends StatelessWidget {
   ///
   /// [width], [height] 一般和传入的组件尺寸一致
   const TiltLight({
-    super.key,
+    Key? key,
     required this.width,
     required this.height,
     required this.position,
     this.borderRadius,
     required this.lightConfig,
-  });
+  }) : super(key: key);
 
   final double width;
   final double height;
@@ -96,36 +96,50 @@ class TiltLight extends StatelessWidget {
 
     switch (lightDirection) {
       case LightDirection.none:
+        break;
       case LightDirection.around:
         final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
         opacity = distance;
+        break;
       case LightDirection.all:
         opacity = lightConfig.intensity.toDouble();
+        break;
       case LightDirection.top:
         opacity = progressY;
+        break;
       case LightDirection.bottom:
         opacity = -progressY;
+        break;
       case LightDirection.left:
         opacity = progressX;
+        break;
       case LightDirection.right:
         opacity = -progressX;
+        break;
       case LightDirection.center:
         final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
         opacity = lightConfig.intensity - distance;
+        break;
       case LightDirection.topLeft:
         opacity = (progressX + progressY);
+        break;
       case LightDirection.bottomRight:
         opacity = -(progressX + progressY);
+        break;
       case LightDirection.topRight:
         opacity = -(progressX - progressY);
+        break;
       case LightDirection.bottomLeft:
         opacity = (progressX - progressY);
+        break;
       case LightDirection.xCenter:
         if (progressY < 0) tempY = -progressY;
         opacity = lightConfig.intensity - tempY;
+        break;
       case LightDirection.yCenter:
         if (progressX < 0) tempX = -progressX;
         opacity = lightConfig.intensity - tempX;
+        break;
     }
 
     /// 避免超出范围

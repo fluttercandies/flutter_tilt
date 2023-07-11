@@ -3,13 +3,13 @@ import 'package:flutter/widgets.dart';
 /// Tilt
 class TiltState extends InheritedWidget {
   const TiltState({
-    super.key,
+    Key? key,
     required this.position,
     required this.isMove,
     required this.onMove,
     required this.onStop,
-    required super.child,
-  });
+    required Widget child,
+  }) : super(key: key, child: child);
 
   /// 坐标位置
   final Offset position;

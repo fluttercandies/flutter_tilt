@@ -36,7 +36,7 @@ class TiltTouchListener extends SingleChildRenderObjectWidget {
   ///
   /// The [behavior] argument defaults to [HitTestBehavior.deferToChild].
   const TiltTouchListener({
-    super.key,
+    Key? key,
     this.onPointerDown,
     this.onPointerMove,
     this.onPointerUp,
@@ -49,8 +49,8 @@ class TiltTouchListener extends SingleChildRenderObjectWidget {
 
     /// Change the default to translucent
     this.behavior = HitTestBehavior.translucent,
-    super.child,
-  });
+    Widget? child,
+  }) : super(key: key, child: child);
 
   /// Called when a pointer comes into contact with the screen (for touch
   /// pointers), or has its button pressed (for mouse pointers) at this widget's

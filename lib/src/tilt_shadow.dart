@@ -11,7 +11,7 @@ class TiltShadow extends StatelessWidget {
   ///
   /// [width], [height] 一般和传入的组件尺寸一致
   const TiltShadow({
-    super.key,
+    Key? key,
     required this.child,
     required this.width,
     required this.height,
@@ -19,7 +19,7 @@ class TiltShadow extends StatelessWidget {
     this.borderRadius,
     required this.sensitivity,
     required this.shadowConfig,
-  });
+  }) : super(key: key);
 
   final Widget child;
   final double width;
