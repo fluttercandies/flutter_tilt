@@ -31,7 +31,7 @@ class TiltContainer extends StatefulWidget {
 
   /// 倾斜灵敏度
   ///
-  /// 调整该值后，一般还需要调整 [shadowDistance] 的值，
+  /// 调整该值后，一般还需要调整 [ShadowConfig.distance] 的值，
   /// 保持一种相对正确的阴影关系
   ///
   /// 为 0 时将会停止不动
@@ -82,8 +82,6 @@ class _TiltContainerState extends State<TiltContainer> {
         end: isMove ? position : initPosition,
       ),
       builder: (context, value, child) {
-        position = value;
-
         return IgnorePointer(
           child: Transform(
             alignment: Alignment.center,
