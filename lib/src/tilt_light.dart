@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
-import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 
 /// 光源
@@ -52,6 +51,15 @@ class TiltLight extends StatelessWidget {
   /// 定位 y （从中心位置开始）
   double get postionY => p2cPostion.dy;
 
+  /// 光源方向进度
+  double get showProgress => lightProgress(
+        width,
+        height,
+        position,
+        lightConfig.direction,
+        max: lightConfig.intensity,
+      );
+
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
@@ -59,93 +67,23 @@ class TiltLight extends StatelessWidget {
       top: lightConfig.isReverse ? postionY : null,
       right: !lightConfig.isReverse ? postionX : null,
       bottom: !lightConfig.isReverse ? postionY : null,
-      child: Opacity(
-        opacity: lightSource(lightConfig.direction),
-        child: Container(
-          width: spreadW,
-          height: spreadH,
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              radius: 0.5,
-              colors: [
-                lightConfig.color.withAlpha(lightConfig.intensity),
-                lightConfig.color.withAlpha(0),
-              ],
-              stops: const [0.01, 0.99],
-              tileMode: TileMode.clamp,
-            ),
-            borderRadius: borderRadius,
+      child: Container(
+        width: spreadW,
+        height: spreadH,
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+            radius: 0.5,
+            colors: [
+              lightConfig.color.withOpacity(showProgress),
+              lightConfig.color.withOpacity(0),
+            ],
+            stops: const [0.01, 0.99],
+            tileMode: TileMode.clamp,
           ),
-          clipBehavior: Clip.antiAlias,
+          borderRadius: borderRadius,
         ),
+        clipBehavior: Clip.antiAlias,
       ),
     );
-  }
-
-  /// 光源计算
-  double lightSource(LightDirection lightDirection) {
-    /// 光源：区域进度
-    final Offset progress = -p2cAreaProgress(width, height, position);
-    final double progressX = progress.dx, progressY = progress.dy;
-
-    /// 临时区域进度
-    late double tempX = progressX, tempY = progressY;
-
-    /// 透明度
-    late double opacity = 0;
-
-    switch (lightDirection) {
-      case LightDirection.none:
-        break;
-      case LightDirection.around:
-        final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
-        opacity = distance;
-        break;
-      case LightDirection.all:
-        opacity = lightConfig.intensity.toDouble();
-        break;
-      case LightDirection.top:
-        opacity = progressY;
-        break;
-      case LightDirection.bottom:
-        opacity = -progressY;
-        break;
-      case LightDirection.left:
-        opacity = progressX;
-        break;
-      case LightDirection.right:
-        opacity = -progressX;
-        break;
-      case LightDirection.center:
-        final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
-        opacity = lightConfig.intensity - distance;
-        break;
-      case LightDirection.topLeft:
-        opacity = (progressX + progressY);
-        break;
-      case LightDirection.bottomRight:
-        opacity = -(progressX + progressY);
-        break;
-      case LightDirection.topRight:
-        opacity = -(progressX - progressY);
-        break;
-      case LightDirection.bottomLeft:
-        opacity = (progressX - progressY);
-        break;
-      case LightDirection.xCenter:
-        if (progressY < 0) tempY = -progressY;
-        opacity = lightConfig.intensity - tempY;
-        break;
-      case LightDirection.yCenter:
-        if (progressX < 0) tempX = -progressX;
-        opacity = lightConfig.intensity - tempX;
-        break;
-    }
-
-    /// 避免超出范围
-    if (opacity < 0) opacity = 0;
-    if (opacity > 1) opacity = 1;
-
-    return opacity;
   }
 }

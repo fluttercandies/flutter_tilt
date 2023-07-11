@@ -94,6 +94,7 @@ class _TiltContainerState extends State<TiltContainer> {
               position: value,
               borderRadius: widget.borderRadius,
               sensitivity: widget.sensitivity,
+              lightConfig: widget.lightConfig,
               shadowConfig: widget.shadowConfig,
               child: Stack(
                 alignment: AlignmentDirectional.center,

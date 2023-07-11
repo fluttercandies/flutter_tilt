@@ -1,4 +1,6 @@
 /// 光源方向
+///
+/// 同时会影响阴影方向
 enum LightDirection {
   /// 禁用光源
   none,
@@ -6,7 +8,7 @@ enum LightDirection {
   /// 周围光源，距离周围越近越亮，距离中心越近越暗。
   around,
 
-  /// 整体光源相同，所有坐标位置光源亮度一致。
+  /// 所有坐标位置光源强度一致。
   all,
 
   /// 仅顶部光源
@@ -40,5 +42,52 @@ enum LightDirection {
   xCenter,
 
   /// 仅 y 轴中心光源
+  yCenter,
+}
+
+/// 阴影方向
+///
+/// 指定后将不受以下影响
+/// * [LightConfig.direction] 光源方向
+/// * [LightConfig.isReverse] 光源反向
+///
+enum ShadowDirection {
+  /// 禁用阴影
+  none,
+
+  /// 周围阴影。
+  around,
+
+  /// 仅顶部阴影
+  top,
+
+  /// 仅底部阴影
+  bottom,
+
+  /// 仅左侧阴影
+  left,
+
+  /// 仅右侧阴影
+  right,
+
+  /// 中心阴影，距离中心越近越深，距离中心越远越淡。
+  center,
+
+  /// 仅左上阴影
+  topLeft,
+
+  /// 仅右上阴影
+  topRight,
+
+  /// 仅左下阴影
+  bottomLeft,
+
+  /// 仅右下阴影
+  bottomRight,
+
+  /// 仅 x 轴中心阴影
+  xCenter,
+
+  /// 仅 y 轴中心阴影
   yCenter,
 }

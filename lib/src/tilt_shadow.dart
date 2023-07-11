@@ -1,13 +1,17 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
+import 'package:flutter_tilt/src/enums.dart';
+import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
 /// 阴影
 class TiltShadow extends StatelessWidget {
   /// 阴影
   ///
-  /// 作用于其他组件上的阴影效果，
+  /// 作用于其他组件上的阴影效果
+  ///
+  /// 部分效果受到光源影响
   ///
   /// [width], [height] 一般和传入的组件尺寸一致
   const TiltShadow({
@@ -18,6 +22,7 @@ class TiltShadow extends StatelessWidget {
     required this.position,
     this.borderRadius,
     required this.sensitivity,
+    required this.lightConfig,
     required this.shadowConfig,
   }) : super(key: key);
 
@@ -33,6 +38,9 @@ class TiltShadow extends StatelessWidget {
 
   /// 倾斜灵敏度
   final double sensitivity;
+
+  /// 光源配置
+  final LightConfig lightConfig;
 
   /// 阴影配置
   final ShadowConfig shadowConfig;
@@ -64,10 +72,39 @@ class TiltShadow extends StatelessWidget {
           (sensitivity * 10)) -
       ((width < height ? width : height) / 10);
 
-  /// 阴影颜色
+  /// 阴影显示
   ///
-  /// 距离中心的进度 * ColorAlpha
-  int get colorAlpha => (centerProgress * 60).toInt();
+  /// 用于阴影颜色，限制最大进度表示强度（透明度）
+  ///
+  /// 如果未指定以下阴影配置将受光源方向影响
+  ///
+  /// * 阴影方向 [ShadowConfig.direction]
+  ///
+  double get showShadow => lightProgress(
+        width,
+        height,
+        position,
+        shadowConfig.direction ?? lightConfig.direction,
+        max: shadowConfig.intensity,
+      );
+
+  /// 禁用
+  bool get disable =>
+      shadowConfig.distance == 0 ||
+      shadowConfig.intensity == 0 ||
+      shadowConfig.direction == ShadowDirection.none;
+
+  /// 是否反向（受光源影响）
+  ///
+  /// 如果未指定以下阴影配置将受光源反向影响
+  ///
+  /// * 阴影方向 [ShadowConfig.direction]
+  /// * 阴影反向 [ShadowConfig.isReverse]
+  ///
+  bool get isReverse =>
+      shadowConfig.isReverse ??
+      ((lightConfig.isReverse && shadowConfig.direction == null) &&
+          (lightConfig.isReverse && shadowConfig.isReverse == null));
 
   @override
   Widget build(BuildContext context) {
@@ -76,11 +113,10 @@ class TiltShadow extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         boxShadow: [
-          if (shadowConfig.distance != 0)
+          if (!disable)
             BoxShadow(
-              color: shadowConfig.color
-                  .withAlpha(colorAlpha > 255 ? 255 : colorAlpha),
-              offset: offset,
+              color: shadowConfig.color.withOpacity(showShadow),
+              offset: isReverse ? -offset : offset,
               blurRadius: blurRadius,
               spreadRadius: spreadRadius,
               blurStyle: BlurStyle.normal,

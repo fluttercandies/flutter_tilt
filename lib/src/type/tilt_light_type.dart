@@ -1,31 +1,50 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/enums.dart';
+import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
 /// 光源配置
 @immutable
 class LightConfig {
   /// 光源配置
+  ///
+  /// 光源部分配置会影响阴影效果，
+  /// 如果需要改变阴影效果，请指定阴影配置 [ShadowConfig]
+  ///
   const LightConfig({
     this.color = const Color(0xFFFFFFFF),
-    this.intensity = 80,
+    this.intensity = 0.4,
     this.direction = LightDirection.around,
     this.isReverse = false,
-  });
+  }) : assert(intensity >= 0 && intensity <= 1,
+            'lightConfig.intensity value is wrong, range is 0-1');
 
   /// 光源颜色
   final Color color;
 
   /// 光源强度
   ///
-  /// min: 0 max: 255
+  /// min: 0 max: 1
   ///
   /// 为 0 时将没有光源
-  final int intensity;
+  final double intensity;
 
   /// 光源方向
+  ///
+  /// 光源方向会影响阴影以下效果，
+  /// 如果需要改变阴影效果，请指定阴影配置 [ShadowConfig]
+  ///
+  /// * 阴影方向 [ShadowConfig.direction]
+  ///
   final LightDirection direction;
 
   /// 光源是否反向
+  ///
+  /// 光源方向会影响以下阴影效果，
+  /// 如果需要改变阴影效果，请指定阴影配置 [ShadowConfig]
+  ///
+  /// * 阴影方向 [ShadowConfig.direction]
+  /// * 阴影反向 [ShadowConfig.isReverse]
+  ///
   final bool isReverse;
 }
