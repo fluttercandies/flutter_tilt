@@ -21,10 +21,10 @@ Matrix4 tiltTransform(
   Offset position,
   double sensitivity,
 ) {
-  /// 旋转大小：区域进度 * 灵敏度
+  /// 旋转大小进度：区域进度 * 灵敏度
   final rotate = p2cAreaProgress(width, height, position) * sensitivity;
 
-  final rotateX = rotate.dx, rotateY = rotate.dy;
+  late double rotateX = rotate.dx, rotateY = rotate.dy;
 
   return Matrix4.identity()
 
@@ -53,8 +53,18 @@ Matrix4 tiltTransform(
 /// 如果值超出了区域坐标范围，那么代表这个坐标不在区域内
 Offset p2cAreaPostion(double width, double height, Offset position) {
   final Offset center = centerPosition(width, height);
-  final double x = center.dx - position.dx;
-  final double y = center.dy - position.dy;
+  late double x = center.dx - position.dx;
+  late double y = center.dy - position.dy;
+
+  final double centerWidth = width / 2;
+  final double centerHeight = height / 2;
+
+  /// 限制最大值
+  if (x > centerWidth) x = centerWidth;
+  if (x < -centerWidth) x = -centerWidth;
+  if (y > centerHeight) y = centerHeight;
+  if (y < -centerHeight) y = -centerHeight;
+
   return Offset(x, y);
 }
 
@@ -75,9 +85,16 @@ Offset p2cAreaPostion(double width, double height, Offset position) {
 /// 如果值超出了区域进度范围，那么代表这个坐标不在区域内，比如 (1.1, 1), (-1, 1.1)
 Offset p2cAreaProgress(double width, double height, Offset position) {
   final Offset center = centerPosition(width, height);
-  final double x = (center.dx - position.dx) / width;
-  final double y = (center.dy - position.dy) / height;
-  return Offset(x, y) * 2;
+  late double x = (center.dx - position.dx) / width * 2;
+  late double y = (center.dy - position.dy) / height * 2;
+
+  /// 限制最大值
+  if (x > 1) x = 1;
+  if (x < -1) x = -1;
+  if (y > 1) y = 1;
+  if (y < -1) y = -1;
+
+  return Offset(x, y);
 }
 
 /// 计算坐标是否在区域内
@@ -86,24 +103,20 @@ Offset p2cAreaProgress(double width, double height, Offset position) {
 ///
 /// [position] 当前坐标定位
 bool isInRange(double width, double height, Offset position) {
-  final x = position.dx, y = position.dy;
+  final double x = position.dx, y = position.dy;
 
   /// 触发范围阈值
   // const double r = 10;
 
   /// 限制移动范围
-  if (x <= width && x >= 0 && y <= height && y >= 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return x <= width && x >= 0 && y <= height && y >= 0;
 }
 
 /// 两点间的距离 sqrt((x1-x2)²+(y1-y2)²)
 ///
 /// 坐标 (x1, y1) 到坐标 (x2, y2) 的距离
 double p2pDistance(Offset p1, Offset p2) {
-  final x1 = p1.dx, y1 = p1.dy;
-  final x2 = p2.dx, y2 = p2.dy;
+  final double x1 = p1.dx, y1 = p1.dy;
+  final double x2 = p2.dx, y2 = p2.dy;
   return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 }

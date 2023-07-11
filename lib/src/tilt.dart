@@ -17,6 +17,7 @@ class Tilt extends StatefulWidget {
     required this.child,
     this.borderRadius,
     this.sensitivity = 0.2,
+    this.isOutsideAreaMove = true,
     this.lightConfig = const LightConfig(),
     this.shadowConfig = const ShadowConfig(),
   });
@@ -30,11 +31,23 @@ class Tilt extends StatefulWidget {
 
   /// 倾斜灵敏度
   ///
-  /// 调整该值后，一般还需要调整 [shadowDistance] 的值，
+  /// 调整该值后，一般还需要调整 [ShadowConfig.distance] 的值，
   /// 保持一种相对正确的阴影关系
   ///
   /// 为 0 时将会停止不动
   final double sensitivity;
+
+  /// 倾斜过程中区域外是否可以继续移动
+  ///
+  /// `仅对手势按下后的移动有效`
+  /// [GesturesListener] 触发的 [TiltTouchListener.onPointerMove]
+  ///
+  /// 当触发手势移动的倾斜过程中，
+  /// 手势移动到区域外是否可以继续移动。
+  ///
+  /// * true: 手势触发过程中超出区域可以继续移动
+  /// * flase: 超出区域后回到初始状态
+  final bool isOutsideAreaMove;
 
   /// 光源配置
   final LightConfig lightConfig;
@@ -82,7 +95,7 @@ class _TiltState extends State<Tilt> {
 
   /// 手势移动触发
   void onGesturesMove(Offset offset) {
-    if (isInRange(width, height, offset)) {
+    if (widget.isOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
         position = offset;
         isMove = true;
