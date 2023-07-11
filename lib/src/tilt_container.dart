@@ -78,7 +78,7 @@ class _TiltContainerState extends State<TiltContainer> {
     return TweenAnimationBuilder(
       duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(
-        begin: isMove ? Offset.zero : position,
+        begin: isMove ? initPosition : position,
         end: isMove ? position : initPosition,
       ),
       builder: (context, value, child) {
