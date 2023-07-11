@@ -36,7 +36,7 @@ class Demo extends StatelessWidget {
           height: 450,
           borderRadius: BorderRadius.circular(20),
           child: Scaffold(
-            backgroundColor: const Color(0xFF777777),
+            backgroundColor: const Color(0x20777777),
             appBar: AppBar(title: const Text('Flutter Tilt Demo')),
             body: Center(
               child: Stack(
@@ -47,22 +47,20 @@ class Demo extends StatelessWidget {
                     height: 300,
                     borderRadius: BorderRadius.circular(20),
                     sensitivity: 1.2,
-                    child: Builder(builder: (context) {
-                      return Container(
-                        width: 200,
-                        height: 300,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.grey.withOpacity(0.1),
-                              Colors.grey.withOpacity(0.1)
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
+                    child: Container(
+                      width: 200,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.grey.withOpacity(0.1),
+                            Colors.grey.withOpacity(0.1)
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                      );
-                    }),
+                      ),
+                    ),
                   ),
                 ],
               ),
