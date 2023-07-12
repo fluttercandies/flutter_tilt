@@ -47,17 +47,17 @@ class TiltLight extends StatelessWidget {
   double get spreadH => height * spread;
 
   /// 当前坐标相对于中心坐标的区域坐标
-  Offset get p2cPostion => -p2cAreaPostion(
+  Offset get p2cPosition => -p2cAreaPosition(
         spreadW,
         spreadH,
         position,
       );
 
   /// 定位 x （从中心位置开始）
-  double get postionX => p2cPostion.dx;
+  double get positionX => p2cPosition.dx;
 
   /// 定位 y （从中心位置开始）
-  double get postionY => p2cPostion.dy;
+  double get positionY => p2cPosition.dy;
 
   /// 光源方向进度
   double get showProgress => directionProgress(
@@ -71,10 +71,10 @@ class TiltLight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: lightConfig.isReverse ? postionX : null,
-      top: lightConfig.isReverse ? postionY : null,
-      right: !lightConfig.isReverse ? postionX : null,
-      bottom: !lightConfig.isReverse ? postionY : null,
+      left: lightConfig.isReverse ? positionX : null,
+      top: lightConfig.isReverse ? positionY : null,
+      right: !lightConfig.isReverse ? positionX : null,
+      bottom: !lightConfig.isReverse ? positionY : null,
       child: Container(
         width: spreadW,
         height: spreadH,

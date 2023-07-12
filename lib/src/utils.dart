@@ -38,7 +38,7 @@ Matrix4 tiltTransform(
 
 /// 计算当前坐标相对于中心坐标的区域坐标
 ///
-/// PostionToCenterAreaPostion
+/// PositionToCenterAreaPosition
 ///
 /// 可以定位当前坐标正处于的区域方向，以及区域内的坐标位置
 ///
@@ -51,7 +51,7 @@ Matrix4 tiltTransform(
 /// (x, y) 区域坐标范围：(width / 2, height / 2) 到 (-width / 2, -height / 2)
 ///
 /// 如果值超出了区域坐标范围，那么代表这个坐标不在区域内
-Offset p2cAreaPostion(double width, double height, Offset position) {
+Offset p2cAreaPosition(double width, double height, Offset position) {
   final Offset center = centerPosition(width, height);
   late double x = center.dx - position.dx;
   late double y = center.dy - position.dy;
@@ -70,7 +70,7 @@ Offset p2cAreaPostion(double width, double height, Offset position) {
 
 /// 计算当前坐标在中心坐标到区域边界的进度
 ///
-/// PostionToCenterAreaProgress
+/// PositionToCenterAreaProgress
 ///
 /// 可以定位当前坐标正处于的区域方向，以及区域内到边界的进度
 ///
