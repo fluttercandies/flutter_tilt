@@ -74,7 +74,6 @@ class _TiltContainerState extends State<TiltContainer> {
     isInit = tiltState.isInit;
     width = tiltState.width;
     height = tiltState.height;
-    position = tiltState.position;
     areaProgress = tiltState.areaProgress;
     isMove = tiltState.isMove;
   }
@@ -85,6 +84,7 @@ class _TiltContainerState extends State<TiltContainer> {
       duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(end: isMove ? areaProgress : Offset.zero),
       builder: (BuildContext context, Offset value, Widget? child) {
+        position = p2cPosition(width, height, value);
         return IgnorePointer(
           ignoring: false,
           child: Transform(

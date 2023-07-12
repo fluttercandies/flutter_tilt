@@ -62,9 +62,6 @@ class _TiltState extends State<Tilt> {
   late double width = 0;
   late double height = 0;
 
-  /// 坐标位置
-  late Offset position = Offset.zero;
-
   /// 当前坐标的区域进度
   late Offset areaProgress = Offset.zero;
 
@@ -77,7 +74,6 @@ class _TiltState extends State<Tilt> {
       isInit: isInit,
       width: width,
       height: height,
-      position: position,
       areaProgress: areaProgress,
       isMove: isMove,
       onMove: onGesturesMove,
@@ -102,7 +98,6 @@ class _TiltState extends State<Tilt> {
       isInit = true;
       width = size.width;
       height = size.height;
-      position = centerPosition(width, height);
       areaProgress = p2cAreaProgress(width, height, Offset.zero);
     });
   }
@@ -111,19 +106,17 @@ class _TiltState extends State<Tilt> {
   void onGesturesMove(Offset offset) {
     if (widget.isOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
-        position = offset;
         areaProgress = p2cAreaProgress(width, height, offset);
         isMove = true;
       });
     } else {
-      onGesturesStop(position);
+      onGesturesStop(offset);
     }
   }
 
   /// 手势停止触发
   void onGesturesStop(Offset offset) {
     setState(() {
-      position = offset;
       areaProgress = p2cAreaProgress(width, height, offset);
       isMove = false;
     });

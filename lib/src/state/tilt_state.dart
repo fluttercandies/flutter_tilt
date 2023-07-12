@@ -7,7 +7,6 @@ class TiltState extends InheritedWidget {
     required this.isInit,
     required this.width,
     required this.height,
-    required this.position,
     required this.areaProgress,
     required this.onResize,
     required this.isMove,
@@ -24,9 +23,6 @@ class TiltState extends InheritedWidget {
 
   /// 尺寸 height
   final double height;
-
-  /// 当前坐标位置
-  final Offset position;
 
   /// 当前坐标的区域进度
   final Offset areaProgress;
@@ -55,7 +51,6 @@ class TiltState extends InheritedWidget {
     if (isInit != oldWidget.isInit) update = true;
     if (width != oldWidget.width) update = true;
     if (height != oldWidget.height) update = true;
-    if (position != oldWidget.position) update = true;
     if (areaProgress != oldWidget.areaProgress) update = true;
     if (isMove != oldWidget.isMove) update = true;
     return update;
