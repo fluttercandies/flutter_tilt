@@ -7,26 +7,24 @@ import 'package:flutter_tilt/src/enums.dart';
 /// 区域中心定位
 ///
 /// [width], [height] 区域尺寸
-Offset centerPosition(double width, double height) =>
-    Offset(width / 2, height / 2);
+Offset centerPosition(double width, double height) => Offset(width, height) / 2;
 
-/// 计算当前定位的倾斜
+/// 计算当前坐标进度的倾斜
 ///
 /// [width], [height] 区域尺寸
 ///
-/// [position] 当前坐标定位
+/// [areaProgress] 当前坐标的区域进度
 ///
 /// [sensitivity] 灵敏度，为 0 将会停止不动
 Matrix4 tiltTransform(
   double width,
   double height,
-  Offset position,
+  Offset areaProgress,
   double sensitivity,
 ) {
   /// 旋转大小进度：区域进度 * 灵敏度
-  final rotate = p2cAreaProgress(width, height, position) * sensitivity;
-
-  late double rotateX = rotate.dx, rotateY = rotate.dy;
+  final rotate = areaProgress * sensitivity;
+  final double rotateX = rotate.dx, rotateY = rotate.dy;
 
   return Matrix4.identity()
 
@@ -106,11 +104,6 @@ Offset p2cAreaProgress(double width, double height, Offset position) {
 /// [position] 当前坐标定位
 bool isInRange(double width, double height, Offset position) {
   final double x = position.dx, y = position.dy;
-
-  /// 触发范围阈值
-  // const double r = 10;
-
-  /// 限制移动范围
   return x <= width && x >= 0 && y <= height && y >= 0;
 }
 
@@ -123,12 +116,12 @@ double p2pDistance(Offset p1, Offset p2) {
   return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 }
 
-/// 计算方向进度
+/// 计算提供的方向进度
 ///
 /// 范围：0-1
 ///
 /// * [width], [height] 区域尺寸
-/// * [position] 当前坐标定位
+/// * [areaProgress] 当前坐标的区域进度
 /// * [direction] 方向计算方式
 ///   * [LightDirection] 光线方向
 ///   * [ShadowDirection] 阴影方向
@@ -138,26 +131,27 @@ double p2pDistance(Offset p1, Offset p2) {
 /// * [max] 最大进度限制 0-1
 /// * [isReverse] 是否反向
 ///
-double lightProgress<T>(
+double directionProgress<T>(
   double width,
   double height,
-  Offset position,
+  Offset areaProgress,
   T direction, {
   double min = 0,
   double max = 1,
   bool isReverse = false,
 }) {
-  assert(min <= max, 'lightProgress value is wrong, only min <= max');
+  assert(
+      min <= max && min >= 0 && max <= 1, 'directionProgress value is wrong');
 
   /// 区域进度
-  final Offset progress = -p2cAreaProgress(width, height, position);
+  final Offset progress = -areaProgress;
   final double progressX = progress.dx, progressY = progress.dy;
 
-  /// 临时区域进度
-  late double tempX = progressX, tempY = progressY;
+  /// 区域进度
+  late double dataX = progressX, dataY = progressY;
 
   /// 进度
-  late double areaProgress = min;
+  late double progressData = min;
 
   /// 光源方向计算方式
   if (direction.runtimeType == LightDirection) {
@@ -165,47 +159,47 @@ double lightProgress<T>(
       case LightDirection.none:
         break;
       case LightDirection.around:
-        final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
-        areaProgress = distance;
+        final double distance = p2pDistance(Offset.zero, Offset(dataX, dataY));
+        progressData = distance;
         break;
       case LightDirection.all:
-        areaProgress = max;
+        progressData = max;
         break;
       case LightDirection.top:
-        areaProgress = progressY;
+        progressData = progressY;
         break;
       case LightDirection.bottom:
-        areaProgress = -progressY;
+        progressData = -progressY;
         break;
       case LightDirection.left:
-        areaProgress = progressX;
+        progressData = progressX;
         break;
       case LightDirection.right:
-        areaProgress = -progressX;
+        progressData = -progressX;
         break;
       case LightDirection.center:
-        final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
-        areaProgress = max - distance;
+        final double distance = p2pDistance(Offset.zero, Offset(dataX, dataY));
+        progressData = max - distance;
         break;
       case LightDirection.topLeft:
-        areaProgress = (progressX + progressY);
+        progressData = (progressX + progressY);
         break;
       case LightDirection.bottomRight:
-        areaProgress = -(progressX + progressY);
+        progressData = -(progressX + progressY);
         break;
       case LightDirection.topRight:
-        areaProgress = -(progressX - progressY);
+        progressData = -(progressX - progressY);
         break;
       case LightDirection.bottomLeft:
-        areaProgress = (progressX - progressY);
+        progressData = (progressX - progressY);
         break;
       case LightDirection.xCenter:
-        if (progressY < 0) tempY = -progressY;
-        areaProgress = max - tempY;
+        if (progressY < 0) dataY = -progressY;
+        progressData = max - dataY;
         break;
       case LightDirection.yCenter:
-        if (progressX < 0) tempX = -progressX;
-        areaProgress = max - tempX;
+        if (progressX < 0) dataX = -progressX;
+        progressData = max - dataX;
         break;
     }
   }
@@ -216,57 +210,57 @@ double lightProgress<T>(
       case ShadowDirection.none:
         break;
       case ShadowDirection.around:
-        final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
-        areaProgress = distance;
+        final double distance = p2pDistance(Offset.zero, Offset(dataX, dataY));
+        progressData = distance;
         break;
       case ShadowDirection.top:
-        areaProgress = -progressY;
+        progressData = -progressY;
         break;
       case ShadowDirection.bottom:
-        areaProgress = progressY;
+        progressData = progressY;
         break;
       case ShadowDirection.left:
-        areaProgress = -progressX;
+        progressData = -progressX;
         break;
       case ShadowDirection.right:
-        areaProgress = progressX;
+        progressData = progressX;
         break;
       case ShadowDirection.center:
-        final double distance = p2pDistance(Offset.zero, Offset(tempX, tempY));
-        areaProgress = max - distance;
+        final double distance = p2pDistance(Offset.zero, Offset(dataX, dataY));
+        progressData = max - distance;
         break;
       case ShadowDirection.topLeft:
-        areaProgress = -(progressX + progressY);
+        progressData = -(progressX + progressY);
         break;
       case ShadowDirection.bottomRight:
-        areaProgress = (progressX + progressY);
+        progressData = (progressX + progressY);
         break;
       case ShadowDirection.topRight:
-        areaProgress = (progressX - progressY);
+        progressData = (progressX - progressY);
         break;
       case ShadowDirection.bottomLeft:
-        areaProgress = -(progressX - progressY);
+        progressData = -(progressX - progressY);
         break;
       case ShadowDirection.xCenter:
-        if (progressY < 0) tempY = -progressY;
-        areaProgress = max - tempY;
+        if (progressY < 0) dataY = -progressY;
+        progressData = max - dataY;
         break;
       case ShadowDirection.yCenter:
-        if (progressX < 0) tempX = -progressX;
-        areaProgress = max - tempX;
+        if (progressX < 0) dataX = -progressX;
+        progressData = max - dataX;
         break;
     }
   }
 
   /// 强度
-  areaProgress = areaProgress * max;
+  progressData = progressData * max;
 
   /// 反向
-  if (isReverse) areaProgress = -areaProgress;
+  if (isReverse) progressData = -progressData;
 
   /// 避免超出范围
-  if (areaProgress < min) areaProgress = min;
-  if (areaProgress > max) areaProgress = max;
+  if (progressData < min) progressData = min;
+  if (progressData > max) progressData = max;
 
-  return areaProgress;
+  return progressData;
 }

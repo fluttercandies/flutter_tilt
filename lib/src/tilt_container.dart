@@ -13,8 +13,6 @@ import 'package:flutter_tilt/src/state/tilt_state.dart';
 class TiltContainer extends StatefulWidget {
   const TiltContainer({
     Key? key,
-    required this.width,
-    required this.height,
     required this.child,
     this.borderRadius,
     required this.sensitivity,
@@ -22,8 +20,6 @@ class TiltContainer extends StatefulWidget {
     required this.shadowConfig,
   }) : super(key: key);
 
-  final double width;
-  final double height;
   final Widget child;
 
   /// BorderRadius
@@ -48,14 +44,19 @@ class TiltContainer extends StatefulWidget {
 }
 
 class _TiltContainerState extends State<TiltContainer> {
-  late double width = widget.width;
-  late double height = widget.height;
+  late TiltState tiltState;
 
-  /// 初始的坐标
-  late Offset initPosition = centerPosition(width, height);
+  /// 是否初始化
+  late bool isInit;
+
+  late double width;
+  late double height;
 
   /// 坐标位置
   late Offset position;
+
+  /// 当前坐标的区域进度
+  late Offset areaProgress;
 
   /// 是否正在移动
   late bool isMove;
@@ -67,9 +68,13 @@ class _TiltContainerState extends State<TiltContainer> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    tiltState = TiltState.of(context)!;
 
-    final TiltState tiltState = TiltState.of(context)!;
+    isInit = tiltState.isInit;
+    width = tiltState.width;
+    height = tiltState.height;
     position = tiltState.position;
+    areaProgress = tiltState.areaProgress;
     isMove = tiltState.isMove;
   }
 
@@ -77,21 +82,16 @@ class _TiltContainerState extends State<TiltContainer> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
       duration: Duration(milliseconds: isMove ? 100 : 300),
-      tween: Tween<Offset>(
-        begin: isMove ? initPosition : position,
-        end: isMove ? position : initPosition,
-      ),
-      builder: (context, Offset value, child) {
+      tween: Tween<Offset>(end: isMove ? areaProgress : Offset.zero),
+      builder: (BuildContext context, Offset value, Widget? child) {
         return IgnorePointer(
           child: Transform(
-            alignment: Alignment.center,
+            alignment: AlignmentDirectional.center,
             transform: tiltTransform(width, height, value, widget.sensitivity),
-
-            /// Shadow
             child: TiltShadow(
               width: width,
               height: height,
-              position: value,
+              areaProgress: value,
               borderRadius: widget.borderRadius,
               sensitivity: widget.sensitivity,
               lightConfig: widget.lightConfig,
@@ -101,8 +101,6 @@ class _TiltContainerState extends State<TiltContainer> {
                 children: [
                   /// Body
                   Container(
-                    width: width,
-                    height: height,
                     decoration: BoxDecoration(
                       borderRadius: widget.borderRadius,
                     ),
@@ -115,10 +113,23 @@ class _TiltContainerState extends State<TiltContainer> {
                     TiltLight(
                       width: width,
                       height: height,
-                      position: value,
+                      position: position,
+                      areaProgress: value,
                       borderRadius: widget.borderRadius,
                       lightConfig: widget.lightConfig,
                     ),
+
+                  /// Resize
+                  ///
+                  /// 获取同级的尺寸
+                  Positioned.fill(
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (_) => tiltState.onResize(constraints.biggest),
+                      );
+                      return const SizedBox();
+                    }),
+                  ),
                 ],
               ),
             ),

@@ -4,18 +4,38 @@ import 'package:flutter/widgets.dart';
 class TiltState extends InheritedWidget {
   const TiltState({
     Key? key,
+    required this.isInit,
+    required this.width,
+    required this.height,
     required this.position,
+    required this.areaProgress,
+    required this.onResize,
     required this.isMove,
     required this.onMove,
     required this.onStop,
     required Widget child,
   }) : super(key: key, child: child);
 
-  /// 坐标位置
+  /// 是否初始化
+  final bool isInit;
+
+  /// 尺寸 width
+  final double width;
+
+  /// 尺寸 height
+  final double height;
+
+  /// 当前坐标位置
   final Offset position;
+
+  /// 当前坐标的区域进度
+  final Offset areaProgress;
 
   /// 是否正在移动
   final bool isMove;
+
+  /// 调整尺寸
+  final void Function(Size) onResize;
 
   /// 坐标移动
   final void Function(Offset) onMove;
@@ -32,7 +52,11 @@ class TiltState extends InheritedWidget {
   @override
   bool updateShouldNotify(TiltState oldWidget) {
     late bool update = false;
+    if (isInit != oldWidget.isInit) update = true;
+    if (width != oldWidget.width) update = true;
+    if (height != oldWidget.height) update = true;
     if (position != oldWidget.position) update = true;
+    if (areaProgress != oldWidget.areaProgress) update = true;
     if (isMove != oldWidget.isMove) update = true;
     return update;
   }

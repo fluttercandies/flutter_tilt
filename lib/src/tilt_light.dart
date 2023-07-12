@@ -17,6 +17,7 @@ class TiltLight extends StatelessWidget {
     required this.width,
     required this.height,
     required this.position,
+    required this.areaProgress,
     this.borderRadius,
     required this.lightConfig,
   }) : super(key: key);
@@ -26,6 +27,9 @@ class TiltLight extends StatelessWidget {
 
   /// 当前坐标
   final Offset position;
+
+  /// 当前坐标的区域进度
+  final Offset areaProgress;
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
@@ -43,7 +47,11 @@ class TiltLight extends StatelessWidget {
   double get spreadH => height * spread;
 
   /// 当前坐标相对于中心坐标的区域坐标
-  Offset get p2cPostion => -p2cAreaPostion(spreadW, spreadH, position);
+  Offset get p2cPostion => -p2cAreaPostion(
+        spreadW,
+        spreadH,
+        position,
+      );
 
   /// 定位 x （从中心位置开始）
   double get postionX => p2cPostion.dx;
@@ -52,17 +60,17 @@ class TiltLight extends StatelessWidget {
   double get postionY => p2cPostion.dy;
 
   /// 光源方向进度
-  double get showProgress => lightProgress(
+  double get showProgress => directionProgress(
         width,
         height,
-        position,
+        areaProgress,
         lightConfig.direction,
         max: lightConfig.intensity,
       );
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
+    return Positioned(
       left: lightConfig.isReverse ? postionX : null,
       top: lightConfig.isReverse ? postionY : null,
       right: !lightConfig.isReverse ? postionX : null,

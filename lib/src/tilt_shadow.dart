@@ -19,7 +19,7 @@ class TiltShadow extends StatelessWidget {
     required this.child,
     required this.width,
     required this.height,
-    required this.position,
+    required this.areaProgress,
     this.borderRadius,
     required this.sensitivity,
     required this.lightConfig,
@@ -30,8 +30,8 @@ class TiltShadow extends StatelessWidget {
   final double width;
   final double height;
 
-  /// 位置坐标
-  final Offset position;
+  /// 当前坐标的区域进度
+  final Offset areaProgress;
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
@@ -45,8 +45,8 @@ class TiltShadow extends StatelessWidget {
   /// 阴影配置
   final ShadowConfig shadowConfig;
 
-  /// 当前坐标在中心坐标到区域边界的进度
-  Offset get p2cProgress => -p2cAreaProgress(width, height, position);
+  /// 当前坐标的区域进度
+  Offset get p2cProgress => -areaProgress;
 
   /// 距离中心的进度
   double get centerProgress => p2pDistance(Offset.zero, p2cProgress);
@@ -72,7 +72,7 @@ class TiltShadow extends StatelessWidget {
           (sensitivity * 10)) -
       ((width < height ? width : height) / 10);
 
-  /// 阴影显示
+  /// 阴影显示（受光源影响）
   ///
   /// 用于阴影颜色，限制最大进度表示强度（透明度）
   ///
@@ -80,10 +80,10 @@ class TiltShadow extends StatelessWidget {
   ///
   /// * 阴影方向 [ShadowConfig.direction]
   ///
-  double get showShadow => lightProgress(
+  double get showShadow => directionProgress(
         width,
         height,
-        position,
+        areaProgress,
         shadowConfig.direction ?? lightConfig.direction,
         max: shadowConfig.intensity,
       );
@@ -109,8 +109,6 @@ class TiltShadow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
       decoration: BoxDecoration(
         boxShadow: [
           if (!disable)

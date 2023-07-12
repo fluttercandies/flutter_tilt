@@ -12,8 +12,6 @@ import 'package:flutter_tilt/src/state/tilt_state.dart';
 class Tilt extends StatefulWidget {
   const Tilt({
     Key? key,
-    required this.width,
-    required this.height,
     required this.child,
     this.borderRadius,
     this.sensitivity = 0.2,
@@ -22,8 +20,6 @@ class Tilt extends StatefulWidget {
     this.shadowConfig = const ShadowConfig(),
   }) : super(key: key);
 
-  final double width;
-  final double height;
   final Widget child;
 
   /// BorderRadius
@@ -60,14 +56,17 @@ class Tilt extends StatefulWidget {
 }
 
 class _TiltState extends State<Tilt> {
-  late double width = widget.width;
-  late double height = widget.height;
+  /// 是否初始化
+  late bool isInit = false;
 
-  /// 初始的坐标
-  late Offset initPosition = centerPosition(width, height);
+  late double width = 0;
+  late double height = 0;
 
   /// 坐标位置
-  late Offset position = initPosition;
+  late Offset position = Offset.zero;
+
+  /// 当前坐标的区域进度
+  late Offset areaProgress = Offset.zero;
 
   /// 是否正在移动
   late bool isMove = false;
@@ -75,14 +74,17 @@ class _TiltState extends State<Tilt> {
   @override
   Widget build(BuildContext context) {
     return TiltState(
+      isInit: isInit,
+      width: width,
+      height: height,
       position: position,
+      areaProgress: areaProgress,
       isMove: isMove,
       onMove: onGesturesMove,
       onStop: onGesturesStop,
+      onResize: onResize,
       child: GesturesListener(
         child: TiltContainer(
-          width: width,
-          height: height,
           borderRadius: widget.borderRadius,
           sensitivity: widget.sensitivity,
           lightConfig: widget.lightConfig,
@@ -93,11 +95,24 @@ class _TiltState extends State<Tilt> {
     );
   }
 
+  /// 调整尺寸
+  void onResize(Size size) {
+    if (isInit) return;
+    setState(() {
+      isInit = true;
+      width = size.width;
+      height = size.height;
+      position = centerPosition(width, height);
+      areaProgress = p2cAreaProgress(width, height, Offset.zero);
+    });
+  }
+
   /// 手势移动触发
   void onGesturesMove(Offset offset) {
     if (widget.isOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
         position = offset;
+        areaProgress = p2cAreaProgress(width, height, offset);
         isMove = true;
       });
     } else {
@@ -109,6 +124,7 @@ class _TiltState extends State<Tilt> {
   void onGesturesStop(Offset offset) {
     setState(() {
       position = offset;
+      areaProgress = p2cAreaProgress(width, height, offset);
       isMove = false;
     });
   }
