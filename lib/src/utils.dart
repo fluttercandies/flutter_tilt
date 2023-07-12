@@ -264,3 +264,17 @@ double directionProgress<T>(
 
   return progressData;
 }
+
+/// 限制区域尺寸定位
+///
+/// * [width], [height] 区域尺寸
+/// * [position] 需要限制的定位
+Offset constraintsPosition(double width, double height, Offset position) {
+  late double constraintWidth = position.dx;
+  late double constraintHidth = position.dy;
+  if (constraintWidth > width) constraintWidth = width;
+  if (constraintWidth < -width) constraintWidth = -width;
+  if (constraintHidth > height) constraintHidth = height;
+  if (constraintHidth < -height) constraintHidth = -height;
+  return Offset(constraintWidth, constraintHidth);
+}

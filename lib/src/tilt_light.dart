@@ -50,10 +50,7 @@ class TiltLight extends StatelessWidget {
 
   /// 当前坐标相对于中心坐标的区域坐标
   Offset get p2cPosition => -p2cAreaPosition(
-        spreadW,
-        spreadH,
-        position,
-      );
+      spreadW, spreadH, constraintsPosition(width, height, position));
 
   /// 定位 x （从中心位置开始）
   double get positionX => p2cPosition.dx;
