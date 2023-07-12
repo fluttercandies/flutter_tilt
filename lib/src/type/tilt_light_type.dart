@@ -12,12 +12,16 @@ class LightConfig {
   /// 如果需要改变阴影效果，请指定阴影配置 [ShadowConfig]
   ///
   const LightConfig({
+    this.disable = false,
     this.color = const Color(0xFFFFFFFF),
     this.intensity = 0.4,
     this.direction = LightDirection.around,
     this.isReverse = false,
   }) : assert(intensity >= 0 && intensity <= 1,
             'lightConfig.intensity value is wrong, range is 0-1');
+
+  /// 禁用
+  final bool disable;
 
   /// 光源颜色
   final Color color;

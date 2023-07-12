@@ -17,6 +17,7 @@ class ShadowConfig {
   ///   * 失效：光源反向 [LightConfig.isReverse]
   ///
   const ShadowConfig({
+    this.disable = false,
     this.color = const Color(0xFF9E9E9E),
     this.intensity = 0.5,
     this.distance = 0.5,
@@ -26,6 +27,9 @@ class ShadowConfig {
     this.isReverse,
   }) : assert(intensity >= 0 && intensity <= 1,
             'shadowConfig.intensity value is wrong, range is 0-1');
+
+  /// 禁用
+  final bool disable;
 
   /// 阴影颜色
   final Color color;

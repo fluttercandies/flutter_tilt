@@ -88,12 +88,6 @@ class TiltShadow extends StatelessWidget {
         max: shadowConfig.intensity,
       );
 
-  /// 禁用
-  bool get disable =>
-      shadowConfig.distance == 0 ||
-      shadowConfig.intensity == 0 ||
-      shadowConfig.direction == ShadowDirection.none;
-
   /// 是否反向（受光源影响）
   ///
   /// 如果未指定以下阴影配置将受光源反向影响
@@ -106,12 +100,19 @@ class TiltShadow extends StatelessWidget {
       ((lightConfig.isReverse && shadowConfig.direction == null) &&
           (lightConfig.isReverse && shadowConfig.isReverse == null));
 
+  /// 禁用
+  bool get shadowDisable =>
+      shadowConfig.disable ||
+      shadowConfig.distance == 0 ||
+      shadowConfig.intensity == 0 ||
+      shadowConfig.direction == ShadowDirection.none;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
-          if (!disable)
+          if (!shadowDisable)
             BoxShadow(
               color: shadowConfig.color.withOpacity(showShadow),
               offset: isReverse ? -offset : offset,

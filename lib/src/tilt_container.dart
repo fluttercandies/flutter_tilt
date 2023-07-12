@@ -61,8 +61,9 @@ class _TiltContainerState extends State<TiltContainer> {
   /// 是否正在移动
   late bool isMove;
 
-  /// 是否有光源
-  late bool isLight = widget.lightConfig.direction != LightDirection.none ||
+  /// 是否禁用光源
+  late bool lightDisable = widget.lightConfig.disable ||
+      widget.lightConfig.direction == LightDirection.none ||
       widget.lightConfig.intensity == 0;
 
   @override
@@ -109,7 +110,7 @@ class _TiltContainerState extends State<TiltContainer> {
                   ),
 
                   /// Light
-                  if (isLight)
+                  if (!lightDisable)
                     TiltLight(
                       width: width,
                       height: height,
