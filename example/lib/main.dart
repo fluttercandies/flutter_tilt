@@ -30,41 +30,47 @@ class Demo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
         child: Tilt(
-          width: 250,
-          height: 450,
           borderRadius: BorderRadius.circular(20),
-          child: Scaffold(
-            backgroundColor: const Color(0x20777777),
-            appBar: AppBar(title: const Text('Flutter Tilt Demo')),
-            body: Center(
-              child: Stack(
-                alignment: AlignmentDirectional.center,
-                children: [
-                  Tilt(
-                    width: 200,
-                    height: 300,
-                    borderRadius: BorderRadius.circular(20),
-                    sensitivity: 1.2,
-                    child: Container(
-                      width: 200,
-                      height: 300,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.grey.withOpacity(0.1),
-                            Colors.grey.withOpacity(0.1)
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                      ),
+          child: Builder(
+            builder: (context) {
+              print('Demo Build');
+              return Container(
+                width: 250,
+                height: 450,
+                child: Scaffold(
+                  backgroundColor: const Color(0x20777777),
+                  appBar: AppBar(title: const Text('Flutter Tilt Demo')),
+                  body: Center(
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        // Tilt(
+                        //   borderRadius: BorderRadius.circular(20),
+                        //   sensitivity: 1.2,
+                        //   child: Container(
+                        //     width: 200,
+                        //     height: 300,
+                        //     decoration: BoxDecoration(
+                        //       gradient: LinearGradient(
+                        //         colors: [
+                        //           Colors.grey.withOpacity(0.1),
+                        //           Colors.grey.withOpacity(0.1)
+                        //         ],
+                        //         begin: Alignment.topLeft,
+                        //         end: Alignment.bottomRight,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),
