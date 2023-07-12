@@ -32,46 +32,104 @@ class Demo extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Tilt(
-          borderRadius: BorderRadius.circular(20),
-          child: Builder(
-            builder: (context) {
-              print('Demo Build');
-              return Container(
-                width: 250,
-                height: 450,
-                child: Scaffold(
-                  backgroundColor: const Color(0x20777777),
-                  appBar: AppBar(title: const Text('Flutter Tilt Demo')),
-                  body: Center(
-                    child: Stack(
-                      alignment: AlignmentDirectional.center,
-                      children: [
-                        // Tilt(
-                        //   borderRadius: BorderRadius.circular(20),
-                        //   sensitivity: 1.2,
-                        //   child: Container(
-                        //     width: 200,
-                        //     height: 300,
-                        //     decoration: BoxDecoration(
-                        //       gradient: LinearGradient(
-                        //         colors: [
-                        //           Colors.grey.withOpacity(0.1),
-                        //           Colors.grey.withOpacity(0.1)
-                        //         ],
-                        //         begin: Alignment.topLeft,
-                        //         end: Alignment.bottomRight,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+        child: ListView(
+          shrinkWrap: false,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 200,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.grey.withOpacity(0.1),
+                        Colors.grey.withOpacity(0.1)
                       ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+                Tilt(
+                  borderRadius: BorderRadius.circular(10),
+                  lightConfig: LightConfig(
+                      disable: false,
+                      direction: LightDirection.center,
+                      intensity: 1),
+                  shadowConfig: ShadowConfig(disable: false, distance: 0.2),
+                  child: Builder(
+                    builder: (context) {
+                      print('Demo Build');
+                      return SizedBox(
+                        width: 200,
+                        height: 150,
+                        child: Scaffold(
+                          backgroundColor: const Color(0x20777777),
+                          appBar:
+                              AppBar(title: const Text('Flutter Tilt Demo')),
+                          body: Center(
+                            child: Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                Tilt(
+                                  borderRadius: BorderRadius.circular(20),
+                                  sensitivity: 1,
+                                  child: Container(
+                                    width: 200,
+                                    height: 300,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.grey.withOpacity(0.1),
+                                          Colors.grey.withOpacity(0.1)
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  width: 200,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.grey.withOpacity(0.1),
+                        Colors.grey.withOpacity(0.1)
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 200,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.grey.withOpacity(0.1),
+                        Colors.grey.withOpacity(0.1)
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
