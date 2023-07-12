@@ -18,14 +18,21 @@ class GesturesListener extends StatelessWidget {
   Widget build(BuildContext context) {
     final TiltState tiltState = TiltState.of(context)!;
 
-    return TiltTouchListener(
-      onPointerMove: (e) => tiltState.onMove(e.localPosition),
-      onPointerUp: (e) => tiltState.onStop(e.localPosition),
-      onPointerCancel: (e) => tiltState.onStop(e.localPosition),
-      child: TiltMouseListener(
-        onHover: (e) => tiltState.onMove(e.localPosition),
-        onExit: (e) => tiltState.onStop(e.localPosition),
-        child: child,
+    /// 不受滑动影响
+    return GestureDetector(
+      onVerticalDragUpdate: (_) {},
+      onHorizontalDragUpdate: (_) {},
+
+      /// 手势监听
+      child: TiltTouchListener(
+        onPointerMove: (e) => tiltState.onMove(e.localPosition),
+        onPointerUp: (e) => tiltState.onStop(e.localPosition),
+        onPointerCancel: (e) => tiltState.onStop(e.localPosition),
+        child: TiltMouseListener(
+          onHover: (e) => tiltState.onMove(e.localPosition),
+          onExit: (e) => tiltState.onStop(e.localPosition),
+          child: child,
+        ),
       ),
     );
   }

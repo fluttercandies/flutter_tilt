@@ -86,6 +86,7 @@ class _TiltContainerState extends State<TiltContainer> {
       tween: Tween<Offset>(end: isMove ? areaProgress : Offset.zero),
       builder: (BuildContext context, Offset value, Widget? child) {
         return IgnorePointer(
+          ignoring: false,
           child: Transform(
             alignment: AlignmentDirectional.center,
             transform: tiltTransform(width, height, value, widget.sensitivity),
