@@ -8,14 +8,15 @@ import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 class ShadowConfig {
   /// 阴影配置
   ///
-  /// 如果配置以下参数将不会受到光源的部分影响
+  /// {@template tilt.ShadowConfig}
+  /// 如果阴影配置以下参数将不会受到光源的影响
   ///
   /// * 配置：阴影方向 [ShadowConfig.direction]
   ///   * 失效：光源方向 [LightConfig.direction]
   ///   * 失效：光源反向 [LightConfig.isReverse]
   /// * 配置：阴影反向 [ShadowConfig.isReverse]
   ///   * 失效：光源反向 [LightConfig.isReverse]
-  ///
+  /// {@endtemplate}
   const ShadowConfig({
     this.disable = false,
     this.color = const Color(0xFF9E9E9E),
@@ -54,16 +55,18 @@ class ShadowConfig {
 
   /// 阴影方向
   ///
+  /// {@template tilt.ShadowConfig.direction}
   /// 指定后将不受以下影响
   /// * 失效：光源方向 [LightConfig.direction]
   /// * 失效：光源反向 [LightConfig.isReverse]
-  ///
+  /// {@endtemplate}
   final ShadowDirection? direction;
 
   /// 阴影是否反向
   ///
+  /// {@template tilt.ShadowConfig.isReverse}
   /// 指定后将不受以下影响
   /// * [LightConfig.isReverse] 光源反向
-  ///
+  /// {@endtemplate}
   final bool? isReverse;
 }

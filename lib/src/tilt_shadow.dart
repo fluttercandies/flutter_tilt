@@ -11,9 +11,9 @@ class TiltShadow extends StatelessWidget {
   ///
   /// 作用于其他组件上的阴影效果
   ///
-  /// 部分效果受到光源影响
-  ///
   /// [width], [height] 一般和传入的组件尺寸一致
+  ///
+  /// {@macro tilt.ShadowConfig}
   const TiltShadow({
     Key? key,
     required this.child,
@@ -76,10 +76,7 @@ class TiltShadow extends StatelessWidget {
   ///
   /// 用于阴影颜色，限制最大进度表示强度（透明度）
   ///
-  /// 如果未指定以下阴影配置将受光源方向影响
-  ///
-  /// * 阴影方向 [ShadowConfig.direction]
-  ///
+  /// {@macro tilt.ShadowConfig.direction}
   double get showShadow => directionProgress(
         width,
         height,
@@ -90,11 +87,7 @@ class TiltShadow extends StatelessWidget {
 
   /// 是否反向（受光源影响）
   ///
-  /// 如果未指定以下阴影配置将受光源反向影响
-  ///
-  /// * 阴影方向 [ShadowConfig.direction]
-  /// * 阴影反向 [ShadowConfig.isReverse]
-  ///
+  /// {@macro tilt.ShadowConfig.isReverse}
   bool get isReverse =>
       shadowConfig.isReverse ??
       ((lightConfig.isReverse && shadowConfig.direction == null) &&

@@ -12,6 +12,8 @@ class TiltLight extends StatelessWidget {
   /// 搭配 [Stack] 于同级组件上方使用。
   ///
   /// [width], [height] 一般和传入的组件尺寸一致
+  ///
+  /// {@macro tilt.LightConfig}
   const TiltLight({
     Key? key,
     required this.width,
