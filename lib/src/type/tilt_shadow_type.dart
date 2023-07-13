@@ -20,10 +20,10 @@ class ShadowConfig {
   const ShadowConfig({
     this.disable = false,
     this.color = const Color(0xFF9E9E9E),
-    this.intensity = 0.5,
-    this.distance = 0.5,
-    this.spreadRadius = 0.5,
-    this.blurRadius = 100.0,
+    this.intensity = 0.25,
+    this.offsetFactor = 0.1,
+    this.spreadFactor = 0.0,
+    this.blurRadius = 20,
     this.direction,
     this.isReverse,
   }) : assert(intensity >= 0 && intensity <= 1,
@@ -42,13 +42,15 @@ class ShadowConfig {
   /// 为 0 时将没有阴影
   final double intensity;
 
-  /// 阴影距离
+  /// 阴影偏移系数
   ///
-  /// 为 0 时将没有阴影
-  final double distance;
+  /// 相对当前的尺寸进行偏移
+  final double offsetFactor;
 
-  /// 阴影扩散半径
-  final double spreadRadius;
+  /// 阴影扩散系数
+  ///
+  /// 相对当前的尺寸进行扩散
+  final double spreadFactor;
 
   /// 阴影模糊半径
   final double blurRadius;

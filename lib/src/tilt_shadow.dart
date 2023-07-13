@@ -57,27 +57,6 @@ class TiltShadow extends StatelessWidget {
   /// 距离中心的进度
   double get centerProgress => p2pDistance(Offset.zero, p2cProgress);
 
-  /// 阴影当前坐标
-  ///
-  /// 阴影进度 * 阴影距离 * 100
-  Offset get offset => p2cProgress * shadowConfig.distance * 100;
-
-  /// 阴影模糊半径
-  ///
-  /// 距离中心的进度 * 模糊半径 * 阴影距离
-  double get blurRadius =>
-      centerProgress * shadowConfig.blurRadius * shadowConfig.distance;
-
-  /// 阴影扩散半径
-  ///
-  /// (距离中心的进度 * 扩散半径 * 阴影距离 * 倾斜角度) - (固定扩散值)
-  double get spreadRadius =>
-      (centerProgress *
-          shadowConfig.spreadRadius *
-          shadowConfig.distance *
-          radian(angle)) -
-      ((width < height ? width : height) / 10);
-
   /// 阴影显示（受光源影响）
   ///
   /// 用于阴影颜色，限制最大进度表示强度（透明度）
@@ -99,10 +78,46 @@ class TiltShadow extends StatelessWidget {
       ((lightConfig.isReverse && shadowConfig.direction == null) &&
           (lightConfig.isReverse && shadowConfig.isReverse == null));
 
+  /// 阴影当前偏移距离
+  ///
+  /// 阴影进度 * 阴影偏移系数的距离（相对当前尺寸的中心）
+  Offset get offset =>
+      p2cProgress *
+      p2pDistance(
+        centerPosition(width, height),
+        centerPosition(width, height) * (shadowConfig.offsetFactor + 1),
+      );
+
+  /// 阴影模糊半径
+  ///
+  /// 距离中心的进度 * 模糊半径
+  double get blurRadius => centerProgress * shadowConfig.blurRadius;
+
+  /// 阴影扩散半径距离
+  ///
+  /// (距离中心的进度 * 阴影扩散系数)
+  double get spreadRadiusDistance => p2pDistance(
+        Offset(width, height),
+        Offset(width, height) * (shadowConfig.spreadFactor + 1),
+      );
+
+  /// 阴影扩散半径距离还原
+  ///
+  /// 避免初始状态的扩散
+  ///
+  /// (阴影扩散半径距离 + 初始固定扩散值，随进度还原至 0)
+  double get spreadRadiusRevert =>
+      (spreadRadiusDistance + ((width < height ? width : height) / 10)) *
+      (1 - (centerProgress > 1 ? 1 : centerProgress));
+
+  /// 阴影扩散半径
+  ///
+  /// 阴影扩散半径距离 - 阴影扩散半径距离还原
+  double get spreadRadius => spreadRadiusDistance - spreadRadiusRevert;
+
   /// 禁用
   bool get shadowDisable =>
       shadowConfig.disable ||
-      shadowConfig.distance == 0 ||
       shadowConfig.intensity == 0 ||
       shadowConfig.direction == ShadowDirection.none;
 

@@ -28,8 +28,10 @@ class Tilt extends StatefulWidget {
   /// {@template tilt.angle}
   /// 例如：0 会停止不动、180 会翻转...
   ///
-  /// 调整该值后，一般还需要调整 [ShadowConfig.distance] 的值，
-  /// 保持一种相对正确的阴影关系
+  /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的阴影关系
+  /// * [ShadowConfig.offsetFactor]
+  /// * [ShadowConfig.spreadFactor]
+  /// * [ShadowConfig.blurRadius]
   /// {@endtemplate}
   final double angle;
 
@@ -111,6 +113,7 @@ class _TiltState extends State<Tilt> {
 
   /// 手势移动触发
   void onGesturesMove(Offset offset) {
+    if (!isInit) return;
     if (widget.isOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
         areaProgress = p2cAreaProgress(width, height, offset);
@@ -123,6 +126,7 @@ class _TiltState extends State<Tilt> {
 
   /// 手势停止触发
   void onGesturesStop(Offset offset) {
+    if (!isInit) return;
     setState(() {
       areaProgress = p2cAreaProgress(width, height, offset);
       isMove = false;
