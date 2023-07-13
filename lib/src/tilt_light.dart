@@ -20,6 +20,7 @@ class TiltLight extends StatelessWidget {
     required this.height,
     required this.areaProgress,
     this.borderRadius,
+    required this.clipBehavior,
     required this.lightConfig,
   }) : super(key: key);
 
@@ -31,6 +32,9 @@ class TiltLight extends StatelessWidget {
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
+
+  /// Clip
+  final Clip clipBehavior;
 
   /// 光源配置
   final LightConfig lightConfig;
@@ -86,9 +90,9 @@ class TiltLight extends StatelessWidget {
             stops: const [0.01, 0.99],
             tileMode: TileMode.clamp,
           ),
-          borderRadius: borderRadius,
+          // borderRadius: borderRadius,
         ),
-        clipBehavior: Clip.antiAlias,
+        // clipBehavior: clipBehavior,
       ),
     );
   }

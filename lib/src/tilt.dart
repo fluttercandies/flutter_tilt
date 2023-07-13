@@ -14,6 +14,7 @@ class Tilt extends StatefulWidget {
     Key? key,
     required this.child,
     this.borderRadius,
+    this.clipBehavior = Clip.antiAlias,
     this.sensitivity = 0.2,
     this.isOutsideAreaMove = true,
     this.lightConfig = const LightConfig(),
@@ -24,6 +25,9 @@ class Tilt extends StatefulWidget {
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
+
+  /// Clip
+  final Clip clipBehavior;
 
   /// 倾斜灵敏度
   ///
@@ -82,6 +86,7 @@ class _TiltState extends State<Tilt> {
       child: GesturesListener(
         child: TiltContainer(
           borderRadius: widget.borderRadius,
+          clipBehavior: widget.clipBehavior,
           sensitivity: widget.sensitivity,
           lightConfig: widget.lightConfig,
           shadowConfig: widget.shadowConfig,

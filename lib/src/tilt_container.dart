@@ -15,6 +15,7 @@ class TiltContainer extends StatefulWidget {
     Key? key,
     required this.child,
     this.borderRadius,
+    required this.clipBehavior,
     required this.sensitivity,
     required this.lightConfig,
     required this.shadowConfig,
@@ -24,6 +25,9 @@ class TiltContainer extends StatefulWidget {
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
+
+  /// Clip
+  final Clip clipBehavior;
 
   /// 倾斜灵敏度
   ///
@@ -94,18 +98,24 @@ class _TiltContainerState extends State<TiltContainer> {
               height: height,
               areaProgress: value,
               borderRadius: widget.borderRadius,
+              clipBehavior: widget.clipBehavior,
               sensitivity: widget.sensitivity,
               lightConfig: widget.lightConfig,
               shadowConfig: widget.shadowConfig,
               child: Stack(
                 alignment: AlignmentDirectional.center,
+
+                /// 避免暴露其他组件 [Clip.none] 时，默认赋值 [Clip.hardEdge]
+                clipBehavior: widget.clipBehavior == Clip.none
+                    ? Clip.hardEdge
+                    : widget.clipBehavior,
                 children: [
                   /// Body
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: widget.borderRadius,
                     ),
-                    clipBehavior: Clip.antiAlias,
+                    clipBehavior: widget.clipBehavior,
                     child: child,
                   ),
 
@@ -116,6 +126,7 @@ class _TiltContainerState extends State<TiltContainer> {
                       height: height,
                       areaProgress: value,
                       borderRadius: widget.borderRadius,
+                      clipBehavior: widget.clipBehavior,
                       lightConfig: widget.lightConfig,
                     ),
 

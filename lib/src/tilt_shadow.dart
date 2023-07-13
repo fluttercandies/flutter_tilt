@@ -21,6 +21,7 @@ class TiltShadow extends StatelessWidget {
     required this.height,
     required this.areaProgress,
     this.borderRadius,
+    required this.clipBehavior,
     required this.sensitivity,
     required this.lightConfig,
     required this.shadowConfig,
@@ -35,6 +36,9 @@ class TiltShadow extends StatelessWidget {
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
+
+  /// Clip
+  final Clip clipBehavior;
 
   /// 倾斜灵敏度
   final double sensitivity;
@@ -116,7 +120,7 @@ class TiltShadow extends StatelessWidget {
         ],
         borderRadius: borderRadius,
       ),
-      clipBehavior: Clip.antiAlias,
+      clipBehavior: clipBehavior,
       child: child,
     );
   }
