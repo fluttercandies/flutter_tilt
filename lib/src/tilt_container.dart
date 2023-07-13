@@ -14,25 +14,25 @@ class TiltContainer extends StatefulWidget {
   const TiltContainer({
     Key? key,
     required this.child,
+    required this.angle,
     this.borderRadius,
     required this.clipBehavior,
-    required this.angle,
     required this.lightConfig,
     required this.shadowConfig,
   }) : super(key: key);
 
   final Widget child;
 
+  /// 可倾斜角度
+  ///
+  /// {@macro tilt.angle}
+  final double angle;
+
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
 
   /// Clip
   final Clip clipBehavior;
-
-  /// 可倾斜角度
-  ///
-  /// {@macro tilt.angle}
-  final double angle;
 
   /// 光源配置
   final LightConfig lightConfig;
@@ -94,9 +94,9 @@ class _TiltContainerState extends State<TiltContainer> {
               width: width,
               height: height,
               areaProgress: value,
+              angle: widget.angle,
               borderRadius: widget.borderRadius,
               clipBehavior: widget.clipBehavior,
-              angle: widget.angle,
               lightConfig: widget.lightConfig,
               shadowConfig: widget.shadowConfig,
               child: Stack(

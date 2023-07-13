@@ -13,9 +13,9 @@ class Tilt extends StatefulWidget {
   const Tilt({
     Key? key,
     required this.child,
+    this.angle = 10,
     this.borderRadius,
     this.clipBehavior = Clip.antiAlias,
-    this.angle = 10,
     this.isOutsideAreaMove = true,
     this.lightConfig = const LightConfig(),
     this.shadowConfig = const ShadowConfig(),
@@ -23,21 +23,21 @@ class Tilt extends StatefulWidget {
 
   final Widget child;
 
-  /// BorderRadius
-  final BorderRadiusGeometry? borderRadius;
-
-  /// Clip
-  final Clip clipBehavior;
-
   /// 可倾斜角度
   ///
   /// {@template tilt.angle}
-  /// 如：0 会停止不动、180 会翻转...
+  /// 例如：0 会停止不动、180 会翻转...
   ///
   /// 调整该值后，一般还需要调整 [ShadowConfig.distance] 的值，
   /// 保持一种相对正确的阴影关系
   /// {@endtemplate}
   final double angle;
+
+  /// BorderRadius
+  final BorderRadiusGeometry? borderRadius;
+
+  /// Clip
+  final Clip clipBehavior;
 
   /// 倾斜过程中区域外是否可以继续移动
   ///

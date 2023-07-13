@@ -20,9 +20,9 @@ class TiltShadow extends StatelessWidget {
     required this.width,
     required this.height,
     required this.areaProgress,
+    required this.angle,
     this.borderRadius,
     required this.clipBehavior,
-    required this.angle,
     required this.lightConfig,
     required this.shadowConfig,
   }) : super(key: key);
@@ -34,16 +34,16 @@ class TiltShadow extends StatelessWidget {
   /// 当前坐标的区域进度
   final Offset areaProgress;
 
+  /// 可倾斜角度
+  ///
+  /// {@macro tilt.angle}
+  final double angle;
+
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
 
   /// Clip
   final Clip clipBehavior;
-
-  /// 可倾斜角度
-  ///
-  /// {@macro tilt.angle}
-  final double angle;
 
   /// 光源配置
   final LightConfig lightConfig;
