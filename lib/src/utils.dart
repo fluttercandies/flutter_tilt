@@ -9,21 +9,33 @@ import 'package:flutter_tilt/src/enums.dart';
 /// [width], [height] 区域尺寸
 Offset centerPosition(double width, double height) => Offset(width, height) / 2;
 
+/// 弧度
+double radian(double angle) => pi / 180 * angle;
+
+/// 两点间的距离 sqrt((x1-x2)²+(y1-y2)²)
+///
+/// 坐标 (x1, y1) 到坐标 (x2, y2) 的距离
+double p2pDistance(Offset p1, Offset p2) {
+  final double x1 = p1.dx, y1 = p1.dy;
+  final double x2 = p2.dx, y2 = p2.dy;
+  return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+}
+
 /// 计算当前坐标进度的倾斜
 ///
 /// [width], [height] 区域尺寸
 ///
 /// [areaProgress] 当前坐标的区域进度
 ///
-/// [sensitivity] 灵敏度，为 0 将会停止不动
+/// [angle] 可旋转角度，为 0 将会停止不动
 Matrix4 tiltTransform(
   double width,
   double height,
   Offset areaProgress,
-  double sensitivity,
+  double angle,
 ) {
-  /// 旋转大小进度：区域进度 * 灵敏度
-  final rotate = areaProgress * sensitivity;
+  /// 旋转大小：区域进度 * 弧度
+  final rotate = areaProgress * radian(angle);
   final double rotateX = rotate.dx, rotateY = rotate.dy;
 
   return Matrix4.identity()
@@ -104,25 +116,6 @@ Offset progressPosition(double width, double height, Offset areaProgress) =>
       width / 2 * (1 - areaProgress.dx),
       height / 2 * (1 - areaProgress.dy),
     );
-
-/// 计算坐标是否在区域内
-///
-/// [width], [height] 区域尺寸
-///
-/// [position] 当前坐标定位
-bool isInRange(double width, double height, Offset position) {
-  final double x = position.dx, y = position.dy;
-  return x <= width && x >= 0 && y <= height && y >= 0;
-}
-
-/// 两点间的距离 sqrt((x1-x2)²+(y1-y2)²)
-///
-/// 坐标 (x1, y1) 到坐标 (x2, y2) 的距离
-double p2pDistance(Offset p1, Offset p2) {
-  final double x1 = p1.dx, y1 = p1.dy;
-  final double x2 = p2.dx, y2 = p2.dy;
-  return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-}
 
 /// 计算提供的方向进度
 ///
@@ -271,6 +264,16 @@ double directionProgress<T>(
   if (progressData > max) progressData = max;
 
   return progressData;
+}
+
+/// 计算坐标是否在区域内
+///
+/// [width], [height] 区域尺寸
+///
+/// [position] 当前坐标定位
+bool isInRange(double width, double height, Offset position) {
+  final double x = position.dx, y = position.dy;
+  return x <= width && x >= 0 && y <= height && y >= 0;
 }
 
 /// 限制区域尺寸定位

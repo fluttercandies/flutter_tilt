@@ -16,7 +16,7 @@ class TiltContainer extends StatefulWidget {
     required this.child,
     this.borderRadius,
     required this.clipBehavior,
-    required this.sensitivity,
+    required this.angle,
     required this.lightConfig,
     required this.shadowConfig,
   }) : super(key: key);
@@ -29,13 +29,10 @@ class TiltContainer extends StatefulWidget {
   /// Clip
   final Clip clipBehavior;
 
-  /// 倾斜灵敏度
+  /// 可倾斜角度
   ///
-  /// 调整该值后，一般还需要调整 [ShadowConfig.distance] 的值，
-  /// 保持一种相对正确的阴影关系
-  ///
-  /// 为 0 时将会停止不动
-  final double sensitivity;
+  /// {@macro tilt.angle}
+  final double angle;
 
   /// 光源配置
   final LightConfig lightConfig;
@@ -92,14 +89,14 @@ class _TiltContainerState extends State<TiltContainer> {
           ignoring: false,
           child: Transform(
             alignment: AlignmentDirectional.center,
-            transform: tiltTransform(width, height, value, widget.sensitivity),
+            transform: tiltTransform(width, height, value, widget.angle),
             child: TiltShadow(
               width: width,
               height: height,
               areaProgress: value,
               borderRadius: widget.borderRadius,
               clipBehavior: widget.clipBehavior,
-              sensitivity: widget.sensitivity,
+              angle: widget.angle,
               lightConfig: widget.lightConfig,
               shadowConfig: widget.shadowConfig,
               child: Stack(

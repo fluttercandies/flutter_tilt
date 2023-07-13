@@ -22,7 +22,7 @@ class TiltShadow extends StatelessWidget {
     required this.areaProgress,
     this.borderRadius,
     required this.clipBehavior,
-    required this.sensitivity,
+    required this.angle,
     required this.lightConfig,
     required this.shadowConfig,
   }) : super(key: key);
@@ -40,8 +40,10 @@ class TiltShadow extends StatelessWidget {
   /// Clip
   final Clip clipBehavior;
 
-  /// 倾斜灵敏度
-  final double sensitivity;
+  /// 可倾斜角度
+  ///
+  /// {@macro tilt.angle}
+  final double angle;
 
   /// 光源配置
   final LightConfig lightConfig;
@@ -68,12 +70,12 @@ class TiltShadow extends StatelessWidget {
 
   /// 阴影扩散半径
   ///
-  /// (距离中心的进度 * 扩散半径 * 阴影距离 * (倾斜灵敏度 * 10)) - (固定扩散值)
+  /// (距离中心的进度 * 扩散半径 * 阴影距离 * 倾斜角度) - (固定扩散值)
   double get spreadRadius =>
       (centerProgress *
           shadowConfig.spreadRadius *
           shadowConfig.distance *
-          (sensitivity * 10)) -
+          radian(angle)) -
       ((width < height ? width : height) / 10);
 
   /// 阴影显示（受光源影响）
