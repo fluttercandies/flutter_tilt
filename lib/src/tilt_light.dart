@@ -18,7 +18,6 @@ class TiltLight extends StatelessWidget {
     Key? key,
     required this.width,
     required this.height,
-    required this.position,
     required this.areaProgress,
     this.borderRadius,
     required this.lightConfig,
@@ -26,9 +25,6 @@ class TiltLight extends StatelessWidget {
 
   final double width;
   final double height;
-
-  /// 当前坐标
-  final Offset position;
 
   /// 当前坐标的区域进度
   final Offset areaProgress;
@@ -38,6 +34,9 @@ class TiltLight extends StatelessWidget {
 
   /// 光源配置
   final LightConfig lightConfig;
+
+  /// 当前坐标
+  Offset get position => progressPosition(width, height, areaProgress);
 
   /// 尺寸扩散的倍数
   double get spread => 4;
@@ -53,10 +52,10 @@ class TiltLight extends StatelessWidget {
       spreadW, spreadH, constraintsPosition(width, height, position));
 
   /// 定位 x （从中心位置开始）
-  double get positionX => p2cPosition.dx;
+  double get positionX => position.dx;
 
   /// 定位 y （从中心位置开始）
-  double get positionY => p2cPosition.dy;
+  double get positionY => position.dy;
 
   /// 光源方向进度
   double get showProgress => directionProgress(

@@ -99,7 +99,8 @@ Offset p2cAreaProgress(double width, double height, Offset position) {
 
 /// 通过 [p2cAreaProgress] 的进度，获得当前坐标位置
 ///
-Offset p2cPosition(double width, double height, Offset areaProgress) => Offset(
+Offset progressPosition(double width, double height, Offset areaProgress) =>
+    Offset(
       width / 2 * (1 - areaProgress.dx),
       height / 2 * (1 - areaProgress.dy),
     );

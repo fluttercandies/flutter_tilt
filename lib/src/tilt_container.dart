@@ -84,7 +84,6 @@ class _TiltContainerState extends State<TiltContainer> {
       duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(end: isMove ? areaProgress : Offset.zero),
       builder: (BuildContext context, Offset value, Widget? child) {
-        position = p2cPosition(width, height, value);
         return IgnorePointer(
           ignoring: false,
           child: Transform(
@@ -115,7 +114,6 @@ class _TiltContainerState extends State<TiltContainer> {
                     TiltLight(
                       width: width,
                       height: height,
-                      position: position,
                       areaProgress: value,
                       borderRadius: widget.borderRadius,
                       lightConfig: widget.lightConfig,
