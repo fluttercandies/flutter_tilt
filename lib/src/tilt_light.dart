@@ -52,10 +52,10 @@ class TiltLight extends StatelessWidget {
       spreadW, spreadH, constraintsPosition(width, height, position));
 
   /// 定位 x （从中心位置开始）
-  double get positionX => position.dx;
+  double get positionX => p2cPosition.dx;
 
   /// 定位 y （从中心位置开始）
-  double get positionY => position.dy;
+  double get positionY => p2cPosition.dy;
 
   /// 光源方向进度
   double get showProgress => directionProgress(
