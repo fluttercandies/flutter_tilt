@@ -53,7 +53,15 @@ class Demo extends StatelessWidget {
                   ),
                 ),
                 Tilt(
+                  initTilt: Offset(-1, -1),
+                  direction: [
+                    TiltDirection.bottom,
+                    TiltDirection(0.1, 0.1),
+                    TiltDirection.left
+                  ],
                   borderRadius: BorderRadius.circular(10),
+                  lightConfig: LightConfig(direction: LightDirection.all),
+                  shadowConfig: ShadowConfig(direction: ShadowDirection.all),
                   child: Builder(
                     builder: (context) {
                       print('Demo Build');
@@ -61,7 +69,7 @@ class Demo extends StatelessWidget {
                         width: 200,
                         height: 300,
                         child: Scaffold(
-                          backgroundColor: const Color(0xFF777777),
+                          backgroundColor: const Color(0x20777777),
                           appBar:
                               AppBar(title: const Text('Flutter Tilt Demo')),
                           body: Center(
