@@ -141,8 +141,7 @@ double directionProgress<T>(
   double max = 1,
   bool isReverse = false,
 }) {
-  assert(
-      min <= max && min >= 0 && max <= 1, 'directionProgress value is wrong');
+  assert(min <= max && min >= 0 && max <= 1);
 
   /// 区域进度
   final Offset progress = -areaProgress;
@@ -150,6 +149,12 @@ double directionProgress<T>(
 
   /// 区域进度
   late double dataX = progressX, dataY = progressY;
+
+  /// 距离中心
+  late double dataDistance = p2pDistance(Offset.zero, Offset(dataX, dataY));
+
+  /// 限制距离中心
+  late double constraintsDistance = dataDistance > max ? max : dataDistance;
 
   /// 进度
   late double progressData = min;
@@ -160,7 +165,7 @@ double directionProgress<T>(
       case LightDirection.none:
         break;
       case LightDirection.around:
-        final double distance = p2pDistance(Offset.zero, Offset(dataX, dataY));
+        final double distance = constraintsDistance;
         progressData = distance;
         break;
       case LightDirection.all:
@@ -179,7 +184,7 @@ double directionProgress<T>(
         progressData = -progressX;
         break;
       case LightDirection.center:
-        final double distance = p2pDistance(Offset.zero, Offset(dataX, dataY));
+        final double distance = constraintsDistance;
         progressData = max - distance;
         break;
       case LightDirection.topLeft:
@@ -211,8 +216,11 @@ double directionProgress<T>(
       case ShadowDirection.none:
         break;
       case ShadowDirection.around:
-        final double distance = p2pDistance(Offset.zero, Offset(dataX, dataY));
+        final double distance = constraintsDistance;
         progressData = distance;
+        break;
+      case ShadowDirection.all:
+        progressData = max;
         break;
       case ShadowDirection.top:
         progressData = -progressY;
@@ -227,7 +235,7 @@ double directionProgress<T>(
         progressData = progressX;
         break;
       case ShadowDirection.center:
-        final double distance = p2pDistance(Offset.zero, Offset(dataX, dataY));
+        final double distance = constraintsDistance;
         progressData = max - distance;
         break;
       case ShadowDirection.topLeft:

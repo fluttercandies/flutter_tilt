@@ -58,6 +58,9 @@ enum ShadowDirection {
   /// 周围阴影。
   around,
 
+  /// 所有坐标位置阴影强度一致。
+  all,
+
   /// 仅顶部阴影
   top,
 
