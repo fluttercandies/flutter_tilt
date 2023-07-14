@@ -18,8 +18,7 @@ class LightConfig {
     this.intensity = 0.4,
     this.direction = LightDirection.around,
     this.isReverse = false,
-  }) : assert(intensity >= 0 && intensity <= 1,
-            'lightConfig.intensity value is wrong, range is 0-1');
+  }) : assert(intensity >= 0 && intensity <= 1, 'shadowConfig.intensity');
 
   /// 禁用
   final bool disable;

@@ -20,14 +20,15 @@ class ShadowConfig {
   const ShadowConfig({
     this.disable = false,
     this.color = const Color(0xFF9E9E9E),
-    this.intensity = 0.25,
+    this.intensity = 0.5,
     this.offsetFactor = 0.1,
     this.spreadFactor = 0.0,
     this.blurRadius = 20,
     this.direction,
     this.isReverse,
-  }) : assert(intensity >= 0 && intensity <= 1,
-            'shadowConfig.intensity value is wrong, range is 0-1');
+  })  : assert(intensity >= 0 && intensity <= 1, 'shadowConfig.intensity'),
+        assert(offsetFactor >= 0, 'shadowConfig.offsetFactor'),
+        assert(spreadFactor >= 0, 'shadowConfig.spreadFactor');
 
   /// 禁用
   final bool disable;
