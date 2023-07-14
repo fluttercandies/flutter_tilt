@@ -13,6 +13,7 @@ class Tilt extends StatefulWidget {
   const Tilt({
     Key? key,
     required this.child,
+    this.initTilt,
     this.angle = 10,
     this.borderRadius,
     this.clipBehavior = Clip.antiAlias,
@@ -23,10 +24,29 @@ class Tilt extends StatefulWidget {
 
   final Widget child;
 
+  /// 初始倾斜量
+  ///
+  /// {@template tilt.initTilt}
+  /// 最大倾斜角度依据 [angle]
+  ///
+  /// 正常范围 (x, y)：(1, 1) 至 (-1, -1)
+  ///
+  /// 你可以超过这个范围，但是手势移动过程中的最大倾斜量始终按照 [angle] 进行倾斜
+  ///
+  /// 例如：
+  /// * (0, 0) 会保持平面
+  /// * (1.0, 1.0) 会倾斜左上角 [angle] 最大角度
+  /// * (-1.0, -1.0) 会倾斜右下角 [angle] 最大角度
+  /// * (2, 2) 会倾斜左上角 [angle] 最大角度*2
+  /// {@endtemplate}
+  final Offset? initTilt;
+
   /// 可倾斜角度
   ///
   /// {@template tilt.angle}
-  /// 例如：0 会停止不动、180 会翻转...
+  /// 例如：
+  /// * 0 会停止不动
+  /// * 180 会翻转
   ///
   /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的阴影关系
   /// * [ShadowConfig.offsetFactor]
@@ -89,6 +109,7 @@ class _TiltState extends State<Tilt> {
       onResize: onResize,
       child: GesturesListener(
         child: TiltContainer(
+          initTilt: widget.initTilt,
           borderRadius: widget.borderRadius,
           clipBehavior: widget.clipBehavior,
           angle: widget.angle,

@@ -14,6 +14,7 @@ class TiltContainer extends StatefulWidget {
   const TiltContainer({
     Key? key,
     required this.child,
+    this.initTilt,
     required this.angle,
     this.borderRadius,
     required this.clipBehavior,
@@ -22,6 +23,11 @@ class TiltContainer extends StatefulWidget {
   }) : super(key: key);
 
   final Widget child;
+
+  /// 初始倾斜量
+  ///
+  /// {@macro tilt.initTilt}
+  final Offset? initTilt;
 
   /// 可倾斜角度
   ///
@@ -53,11 +59,11 @@ class _TiltContainerState extends State<TiltContainer> {
   late double width;
   late double height;
 
-  /// 坐标位置
-  late Offset position;
+  /// 初始坐标区域进度
+  late Offset initAreaProgress = widget.initTilt ?? Offset.zero;
 
-  /// 当前坐标的区域进度
-  late Offset areaProgress;
+  /// 当前坐标区域进度
+  late Offset areaProgress = initAreaProgress;
 
   /// 是否正在移动
   late bool isMove;
@@ -83,7 +89,7 @@ class _TiltContainerState extends State<TiltContainer> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
       duration: Duration(milliseconds: isMove ? 100 : 300),
-      tween: Tween<Offset>(end: isMove ? areaProgress : Offset.zero),
+      tween: Tween<Offset>(end: isMove ? areaProgress : initAreaProgress),
       builder: (BuildContext context, Offset value, Widget? child) {
         return IgnorePointer(
           ignoring: false,
@@ -102,7 +108,7 @@ class _TiltContainerState extends State<TiltContainer> {
               child: Stack(
                 alignment: AlignmentDirectional.center,
 
-                /// 避免暴露其他组件 [Clip.none] 时，默认赋值 [Clip.hardEdge]
+                /// 避免暴露其他组件，[Clip.none] 时，默认赋值 [Clip.hardEdge]
                 clipBehavior: widget.clipBehavior == Clip.none
                     ? Clip.hardEdge
                     : widget.clipBehavior,
@@ -128,8 +134,6 @@ class _TiltContainerState extends State<TiltContainer> {
                     ),
 
                   /// Resize
-                  ///
-                  /// 获取同级的尺寸
                   Positioned.fill(
                     child: LayoutBuilder(builder: (context, constraints) {
                       WidgetsBinding.instance.addPostFrameCallback(
