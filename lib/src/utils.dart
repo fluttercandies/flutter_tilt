@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/enums.dart';
+import 'package:flutter_tilt/src/type/tilt_direction_type.dart';
 
 /// 区域中心定位
 ///
@@ -86,16 +87,21 @@ Offset p2cAreaPosition(double width, double height, Offset position) {
 ///
 /// 可以定位当前坐标正处于的区域方向，以及区域内到边界的进度
 ///
-/// [width], [height] 区域尺寸
-///
-/// [position] 当前坐标定位
+/// * [width], [height] 区域尺寸
+/// * [position] 当前坐标定位
+/// * [tiltDirection] 倾斜方向限制
 ///
 /// (x, y) = (0, 0) 为中心点
 ///
 /// (x, y) 区域进度范围：(1, 1) 到 (-1,-1)
 ///
 /// 如果值超出了区域进度范围，那么代表这个坐标不在区域内，比如 (1.1, 1), (-1, 1.1)
-Offset p2cAreaProgress(double width, double height, Offset position) {
+Offset p2cAreaProgress(
+  double width,
+  double height,
+  Offset position,
+  List<TiltDirection>? tiltDirection,
+) {
   final Offset center = centerPosition(width, height);
   late double x = (center.dx - position.dx) / width * 2;
   late double y = (center.dy - position.dy) / height * 2;
@@ -105,6 +111,16 @@ Offset p2cAreaProgress(double width, double height, Offset position) {
   if (x < -1) x = -1;
   if (y > 1) y = 1;
   if (y < -1) y = -1;
+
+  /// 限制倾斜方向
+  if ((tiltDirection ?? []).isNotEmpty) {
+    final TiltDirection direction = TiltDirection.validator(
+      TiltDirection(x, y),
+      tiltDirection ?? [],
+    );
+    x = direction.dx;
+    y = direction.dy;
+  }
 
   return Offset(x, y);
 }

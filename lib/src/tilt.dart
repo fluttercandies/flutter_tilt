@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_tilt/src/utils.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
+import 'package:flutter_tilt/src/type/tilt_direction_type.dart';
 
 import 'package:flutter_tilt/src/tilt_container.dart';
 import 'package:flutter_tilt/src/gestures_listener.dart';
@@ -15,6 +16,7 @@ class Tilt extends StatefulWidget {
     required this.child,
     this.initTilt,
     this.angle = 10,
+    this.direction,
     this.borderRadius,
     this.clipBehavior = Clip.antiAlias,
     this.isOutsideAreaMove = true,
@@ -54,6 +56,15 @@ class Tilt extends StatefulWidget {
   /// * [ShadowConfig.blurRadius]
   /// {@endtemplate}
   final double angle;
+
+  /// 倾斜方向
+  ///
+  /// 允许多个方向的值，默认所有方向
+  ///
+  /// 内置一些常用的方向，例如：[TiltDirection.top]
+  ///
+  /// 如果还需要一些特殊的方向，可以像这样自定义 [TiltDirection(0.1, 0.1)]
+  final List<TiltDirection>? direction;
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
@@ -128,7 +139,12 @@ class _TiltState extends State<Tilt> {
       isInit = true;
       width = size.width;
       height = size.height;
-      areaProgress = p2cAreaProgress(width, height, Offset.zero);
+      areaProgress = p2cAreaProgress(
+        width,
+        height,
+        Offset.zero,
+        widget.direction,
+      );
     });
   }
 
@@ -137,7 +153,7 @@ class _TiltState extends State<Tilt> {
     if (!isInit) return;
     if (widget.isOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
-        areaProgress = p2cAreaProgress(width, height, offset);
+        areaProgress = p2cAreaProgress(width, height, offset, widget.direction);
         isMove = true;
       });
     } else {
@@ -149,7 +165,7 @@ class _TiltState extends State<Tilt> {
   void onGesturesStop(Offset offset) {
     if (!isInit) return;
     setState(() {
-      areaProgress = p2cAreaProgress(width, height, offset);
+      areaProgress = p2cAreaProgress(width, height, offset, widget.direction);
       isMove = false;
     });
   }
