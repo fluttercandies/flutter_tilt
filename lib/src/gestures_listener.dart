@@ -7,7 +7,7 @@ class GesturesListener extends StatelessWidget {
   /// 手势监听
   ///
   /// 对 Touch [TiltTouchListener] 和 Mouse [TiltMouseListener] 的监听触发
-  const GesturesListener({Key? key, required this.child}) : super(key: key);
+  const GesturesListener({super.key, required this.child});
 
   final Widget child;
 

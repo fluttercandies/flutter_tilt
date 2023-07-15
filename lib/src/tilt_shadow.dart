@@ -15,7 +15,7 @@ class TiltShadow extends StatelessWidget {
   ///
   /// {@macro tilt.ShadowConfig}
   const TiltShadow({
-    Key? key,
+    super.key,
     required this.child,
     required this.width,
     required this.height,
@@ -24,7 +24,7 @@ class TiltShadow extends StatelessWidget {
     required this.clipBehavior,
     required this.lightConfig,
     required this.shadowConfig,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final double width, height;

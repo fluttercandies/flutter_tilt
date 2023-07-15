@@ -12,14 +12,14 @@ import 'package:flutter_tilt/src/state/tilt_state.dart';
 
 class TiltContainer extends StatefulWidget {
   const TiltContainer({
-    Key? key,
+    super.key,
     required this.child,
     this.borderRadius,
     required this.clipBehavior,
     required this.tiltConfig,
     required this.lightConfig,
     required this.shadowConfig,
-  }) : super(key: key);
+  });
 
   final Widget child;
 

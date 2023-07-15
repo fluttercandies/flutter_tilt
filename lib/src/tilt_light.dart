@@ -16,14 +16,14 @@ class TiltLight extends StatelessWidget {
   ///
   /// {@macro tilt.LightConfig}
   const TiltLight({
-    Key? key,
+    super.key,
     required this.width,
     required this.height,
     required this.areaProgress,
     this.borderRadius,
     required this.clipBehavior,
     required this.lightConfig,
-  }) : super(key: key);
+  });
 
   final double width, height;
 
