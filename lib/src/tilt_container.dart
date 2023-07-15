@@ -83,13 +83,15 @@ class _TiltContainerState extends State<TiltContainer> {
           ignoring: false,
           child: Transform(
             alignment: AlignmentDirectional.center,
-            transform: tiltTransform(
-              width,
-              height,
-              value,
-              _tiltConfig.angle,
-              _tiltConfig.isReverse,
-            ),
+            transform: !_tiltConfig.disable
+                ? tiltTransform(
+                    width,
+                    height,
+                    value,
+                    _tiltConfig.angle,
+                    _tiltConfig.isReverse,
+                  )
+                : Matrix4.identity(),
 
             /// Shadow
             child: TiltShadow(

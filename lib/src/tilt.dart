@@ -14,6 +14,7 @@ class Tilt extends StatefulWidget {
   const Tilt({
     Key? key,
     required this.child,
+    this.disable = false,
     this.borderRadius,
     this.clipBehavior = Clip.antiAlias,
     this.tiltConfig = const TiltConfig(),
@@ -22,6 +23,9 @@ class Tilt extends StatefulWidget {
   }) : super(key: key);
 
   final Widget child;
+
+  /// 全部禁用
+  final bool disable;
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
@@ -44,6 +48,7 @@ class Tilt extends StatefulWidget {
 
 class _TiltState extends State<Tilt> {
   late final Widget _child = widget.child;
+  late final bool _disable = widget.disable;
   late final BorderRadiusGeometry? _borderRadius = widget.borderRadius;
   late final Clip _clipBehavior = widget.clipBehavior;
   late final TiltConfig _tiltConfig = widget.tiltConfig;
@@ -62,6 +67,13 @@ class _TiltState extends State<Tilt> {
 
   @override
   Widget build(BuildContext context) {
+    if (_disable) {
+      return Container(
+        decoration: BoxDecoration(borderRadius: _borderRadius),
+        clipBehavior: _clipBehavior,
+        child: _child,
+      );
+    }
     return TiltState(
       isInit: isInit,
       width: width,

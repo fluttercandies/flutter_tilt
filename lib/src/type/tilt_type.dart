@@ -7,14 +7,17 @@ import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 @immutable
 class TiltConfig {
   /// 倾斜配置
-  ///
   const TiltConfig({
+    this.disable = false,
     this.initTilt,
     this.angle = 10,
     this.direction,
     this.isOutsideAreaMove = true,
     this.isReverse = false,
   });
+
+  /// 禁用
+  final bool disable;
 
   /// 初始倾斜量
   ///
