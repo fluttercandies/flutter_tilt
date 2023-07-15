@@ -27,13 +27,13 @@ double p2pDistance(Offset p1, Offset p2) {
 /// * [width], [height] 区域尺寸
 /// * [areaProgress] 当前坐标的区域进度
 /// * [angle] 可旋转角度，为 0 将会停止不动
-/// * [isReverse] 倾斜是否反向，向上或向下倾斜
+/// * [enableReverse] 开启倾斜反向，向上或向下倾斜
 Matrix4 tiltTransform(
   double width,
   double height,
   Offset areaProgress,
   double angle,
-  bool isReverse,
+  bool enableReverse,
 ) {
   /// 旋转大小：区域进度 * 弧度
   final rotate = areaProgress * radian(angle);
@@ -45,8 +45,8 @@ Matrix4 tiltTransform(
     ..setEntry(3, 2, 0.5 / (width > height ? width : height))
 
     /// 旋转轴
-    ..rotateX(isReverse ? -rotateY : rotateY)
-    ..rotateY(isReverse ? rotateX : -rotateX);
+    ..rotateX(enableReverse ? -rotateY : rotateY)
+    ..rotateY(enableReverse ? rotateX : -rotateX);
 }
 
 /// 计算当前坐标相对于中心坐标的区域坐标
@@ -146,7 +146,7 @@ Offset progressPosition(double width, double height, Offset areaProgress) =>
 /// 可选项
 /// * [min] 最小进度限制 0-1
 /// * [max] 最大进度限制 0-1
-/// * [isReverse] 是否反向
+/// * [enableReverse] 开启反向
 ///
 double directionProgress<T>(
   double width,
@@ -155,7 +155,7 @@ double directionProgress<T>(
   T direction, {
   double min = 0,
   double max = 1,
-  bool isReverse = false,
+  bool enableReverse = false,
 }) {
   assert(min <= max && min >= 0 && max <= 1);
 
@@ -281,7 +281,7 @@ double directionProgress<T>(
   progressData = progressData * max;
 
   /// 反向
-  if (isReverse) progressData = -progressData;
+  if (enableReverse) progressData = -progressData;
 
   /// 避免超出范围
   if (progressData < min) progressData = min;

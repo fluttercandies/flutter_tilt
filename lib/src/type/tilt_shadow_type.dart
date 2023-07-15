@@ -13,9 +13,9 @@ class ShadowConfig {
   ///
   /// * 配置：阴影方向 [ShadowConfig.direction]
   ///   * 失效：光源方向 [LightConfig.direction]
-  ///   * 失效：光源反向 [LightConfig.isReverse]
-  /// * 配置：阴影反向 [ShadowConfig.isReverse]
-  ///   * 失效：光源反向 [LightConfig.isReverse]
+  ///   * 失效：光源反向 [LightConfig.enableReverse]
+  /// * 配置：阴影反向 [ShadowConfig.enableReverse]
+  ///   * 失效：光源反向 [LightConfig.enableReverse]
   /// {@endtemplate}
   const ShadowConfig({
     this.disable = false,
@@ -25,7 +25,7 @@ class ShadowConfig {
     this.spreadFactor = 0.0,
     this.blurRadius = 20,
     this.direction,
-    this.isReverse,
+    this.enableReverse,
   })  : assert(intensity >= 0 && intensity <= 1, 'shadowConfig.intensity'),
         assert(offsetFactor >= 0, 'shadowConfig.offsetFactor'),
         assert(spreadFactor >= 0, 'shadowConfig.spreadFactor');
@@ -61,15 +61,15 @@ class ShadowConfig {
   /// {@template tilt.ShadowConfig.direction}
   /// 指定后将不受以下影响
   /// * 失效：光源方向 [LightConfig.direction]
-  /// * 失效：光源反向 [LightConfig.isReverse]
+  /// * 失效：光源反向 [LightConfig.enableReverse]
   /// {@endtemplate}
   final ShadowDirection? direction;
 
-  /// 阴影是否反向
+  /// 开启阴影反向
   ///
-  /// {@template tilt.ShadowConfig.isReverse}
+  /// {@template tilt.ShadowConfig.enableReverse}
   /// 指定后将不受以下影响
-  /// * [LightConfig.isReverse] 光源反向
+  /// * [LightConfig.enableReverse] 光源反向
   /// {@endtemplate}
-  final bool? isReverse;
+  final bool? enableReverse;
 }

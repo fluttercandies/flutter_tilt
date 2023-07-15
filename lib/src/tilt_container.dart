@@ -93,7 +93,7 @@ class _TiltContainerState extends State<TiltContainer> {
                     height,
                     value,
                     _tiltConfig.angle,
-                    _tiltConfig.isReverse,
+                    _tiltConfig.enableReverse,
                   )
                 : Matrix4.identity(),
             child: TiltShadow(

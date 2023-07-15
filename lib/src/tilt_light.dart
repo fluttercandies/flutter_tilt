@@ -70,10 +70,10 @@ class TiltLight extends StatelessWidget {
         max: lightConfig.intensity,
       );
 
-  /// 是否反向
+  /// 开启反向
   ///
-  /// {@macro tilt.LightConfig.isReverse}
-  bool get isReverse => lightConfig.isReverse ?? false;
+  /// {@macro tilt.LightConfig.enableReverse}
+  bool get enableReverse => lightConfig.enableReverse ?? false;
 
   /// 禁用光源
   bool get lightDisable =>
@@ -85,10 +85,10 @@ class TiltLight extends StatelessWidget {
   Widget build(BuildContext context) {
     if (lightDisable) return const SizedBox();
     return Positioned(
-      left: isReverse ? positionX : null,
-      top: isReverse ? positionY : null,
-      right: !isReverse ? positionX : null,
-      bottom: !isReverse ? positionY : null,
+      left: enableReverse ? positionX : null,
+      top: enableReverse ? positionY : null,
+      right: !enableReverse ? positionX : null,
+      bottom: !enableReverse ? positionY : null,
       child: Container(
         width: spreadW,
         height: spreadH,

@@ -12,8 +12,8 @@ class TiltConfig {
     this.initTilt,
     this.angle = 10,
     this.direction,
-    this.isOutsideAreaMove = true,
-    this.isReverse = false,
+    this.enableReverse = false,
+    this.enableOutsideAreaMove = true,
     this.enableMouseHover = true,
   });
 
@@ -60,28 +60,28 @@ class TiltConfig {
   /// 如果还需要一些特殊的方向，可以像这样自定义 [TiltDirection(0.1, 0.1)]
   final List<TiltDirection>? direction;
 
-  /// 倾斜过程中区域外是否可以继续移动
+  /// 开启倾斜反向
+  ///
+  /// {@template tilt.TiltConfig.enableReverse}
+  /// 切换触摸区域向上或向下倾斜
+  ///
+  /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的关系效果
+  /// * [LightConfig.enableReverse]
+  /// * [ShadowConfig.enableReverse]
+  /// {@endtemplate}
+  final bool enableReverse;
+
+  /// 开启倾斜过程中区域外可以继续移动
   ///
   /// `仅对手势按下后的移动有效`
-  /// [GesturesListener] 触发的 [TiltTouchListener.onPointerMove]
+  /// [GesturesListener] 触发的 [Listener.onPointerMove]
   ///
   /// 当触发手势移动的倾斜过程中，
   /// 手势移动到区域外是否可以继续移动。
   ///
   /// * true: 手势触发过程中超出区域可以继续移动
   /// * flase: 超出区域后回到初始状态
-  final bool isOutsideAreaMove;
-
-  /// 倾斜是否反向
-  ///
-  /// {@template tilt.TiltConfig.isReverse}
-  /// 切换触摸区域向上或向下倾斜
-  ///
-  /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的关系效果
-  /// * [LightConfig.isReverse]
-  /// * [ShadowConfig.isReverse]
-  /// {@endtemplate}
-  final bool isReverse;
+  final bool enableOutsideAreaMove;
 
   /// 启用鼠标 Hover 触发倾斜
   final bool enableMouseHover;

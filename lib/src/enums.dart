@@ -49,7 +49,7 @@ enum LightDirection {
 ///
 /// 指定后将不受以下影响
 /// * [LightConfig.direction] 光源方向
-/// * [LightConfig.isReverse] 光源反向
+/// * [LightConfig.enableReverse] 光源反向
 ///
 enum ShadowDirection {
   /// 禁用阴影

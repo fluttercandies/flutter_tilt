@@ -100,12 +100,12 @@ class TiltShadow extends StatelessWidget {
   /// 阴影扩散半径距离 - 阴影扩散半径距离还原
   double get spreadRadius => spreadRadiusDistance - spreadRadiusRevert;
 
-  /// 是否反向（受光源影响）
+  /// 开启反向（受光源影响）
   ///
-  /// {@macro tilt.ShadowConfig.isReverse}
-  bool get isReverse =>
-      shadowConfig.isReverse ??
-      (shadowConfig.direction == null && (lightConfig.isReverse == true));
+  /// {@macro tilt.ShadowConfig.enableReverse}
+  bool get enableReverse =>
+      shadowConfig.enableReverse ??
+      (shadowConfig.direction == null && (lightConfig.enableReverse == true));
 
   /// 禁用阴影
   bool get shadowDisable =>
@@ -121,7 +121,7 @@ class TiltShadow extends StatelessWidget {
           if (!shadowDisable)
             BoxShadow(
               color: shadowConfig.color.withOpacity(showShadow),
-              offset: isReverse ? -offset : offset,
+              offset: enableReverse ? -offset : offset,
               blurRadius: blurRadius,
               spreadRadius: spreadRadius,
               blurStyle: BlurStyle.normal,

@@ -116,7 +116,7 @@ class _TiltState extends State<Tilt> {
   /// 手势移动触发
   void onGesturesMove(Offset offset) {
     if (!isInit) return;
-    if (_tiltConfig.isOutsideAreaMove || isInRange(width, height, offset)) {
+    if (_tiltConfig.enableOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
         areaProgress = p2cAreaProgress(
           width,

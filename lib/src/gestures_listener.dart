@@ -8,7 +8,7 @@ import 'package:flutter_tilt/src/state/tilt_state.dart';
 class GesturesListener extends StatelessWidget {
   /// 手势监听
   ///
-  /// 对 Touch [TiltTouchListener] 和 Mouse [TiltMouseListener] 的监听触发
+  /// 对 Touch [Listener] 和 Mouse [MouseRegion] 的监听触发
   const GesturesListener({
     super.key,
     required this.child,
