@@ -156,7 +156,7 @@ class TiltMouseListener extends SingleChildRenderObjectWidget {
   /// Because the widget conditionally creates the `MouseRegion`, and leaks the
   /// hover state, it needs to take the restriction into consideration. In this
   /// case, since it has access to the event that triggers the disappearance of
-  /// the `MouseRegion`, it triggers the exit callback during that event
+  /// the `MouseRegion`, it simply trigger the exit callback during that event
   /// as well.
   ///
   /// ** See code in examples/api/lib/widgets/basic/mouse_region.on_exit.1.dart **
@@ -232,15 +232,9 @@ class TiltMouseListener extends SingleChildRenderObjectWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     final List<String> listeners = <String>[];
-    if (onEnter != null) {
-      listeners.add('enter');
-    }
-    if (onExit != null) {
-      listeners.add('exit');
-    }
-    if (onHover != null) {
-      listeners.add('hover');
-    }
+    if (onEnter != null) listeners.add('enter');
+    if (onExit != null) listeners.add('exit');
+    if (onHover != null) listeners.add('hover');
     properties.add(
         IterableProperty<String>('listeners', listeners, ifEmpty: '<none>'));
     properties.add(

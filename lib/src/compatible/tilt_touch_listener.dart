@@ -34,7 +34,7 @@ import 'package:flutter/widgets.dart';
 class TiltTouchListener extends SingleChildRenderObjectWidget {
   /// Creates a widget that forwards point events to callbacks.
   ///
-  /// The [behavior] argument defaults to [HitTestBehavior.deferToChild].
+  /// The [behavior] argument defaults to [HitTestBehavior.translucent].
   const TiltTouchListener({
     Key? key,
     this.onPointerDown,
@@ -42,9 +42,6 @@ class TiltTouchListener extends SingleChildRenderObjectWidget {
     this.onPointerUp,
     this.onPointerHover,
     this.onPointerCancel,
-    this.onPointerPanZoomStart,
-    this.onPointerPanZoomUpdate,
-    this.onPointerPanZoomEnd,
     this.onPointerSignal,
 
     /// Change the default to translucent
@@ -75,15 +72,6 @@ class TiltTouchListener extends SingleChildRenderObjectWidget {
   /// no longer directed towards this receiver.
   final PointerCancelEventListener? onPointerCancel;
 
-  /// Called when a pan/zoom begins such as from a trackpad gesture.
-  final PointerPanZoomStartEventListener? onPointerPanZoomStart;
-
-  /// Called when a pan/zoom is updated.
-  final PointerPanZoomUpdateEventListener? onPointerPanZoomUpdate;
-
-  /// Called when a pan/zoom finishes.
-  final PointerPanZoomEndEventListener? onPointerPanZoomEnd;
-
   /// Called when a pointer signal occurs over this object.
   ///
   /// See also:
@@ -103,9 +91,6 @@ class TiltTouchListener extends SingleChildRenderObjectWidget {
       onPointerUp: onPointerUp,
       onPointerHover: onPointerHover,
       onPointerCancel: onPointerCancel,
-      onPointerPanZoomStart: onPointerPanZoomStart,
-      onPointerPanZoomUpdate: onPointerPanZoomUpdate,
-      onPointerPanZoomEnd: onPointerPanZoomEnd,
       onPointerSignal: onPointerSignal,
       behavior: behavior,
     );
@@ -120,9 +105,6 @@ class TiltTouchListener extends SingleChildRenderObjectWidget {
       ..onPointerUp = onPointerUp
       ..onPointerHover = onPointerHover
       ..onPointerCancel = onPointerCancel
-      ..onPointerPanZoomStart = onPointerPanZoomStart
-      ..onPointerPanZoomUpdate = onPointerPanZoomUpdate
-      ..onPointerPanZoomEnd = onPointerPanZoomEnd
       ..onPointerSignal = onPointerSignal
       ..behavior = behavior;
   }
@@ -136,9 +118,6 @@ class TiltTouchListener extends SingleChildRenderObjectWidget {
       if (onPointerUp != null) 'up',
       if (onPointerHover != null) 'hover',
       if (onPointerCancel != null) 'cancel',
-      if (onPointerPanZoomStart != null) 'panZoomStart',
-      if (onPointerPanZoomUpdate != null) 'panZoomUpdate',
-      if (onPointerPanZoomEnd != null) 'panZoomEnd',
       if (onPointerSignal != null) 'signal',
     ];
     properties.add(
