@@ -14,6 +14,7 @@ class TiltConfig {
     this.direction,
     this.isOutsideAreaMove = true,
     this.isReverse = false,
+    this.enableMouseHover = true,
   });
 
   /// 禁用
@@ -81,6 +82,9 @@ class TiltConfig {
   /// * [ShadowConfig.isReverse]
   /// {@endtemplate}
   final bool isReverse;
+
+  /// 启用鼠标 Hover 触发倾斜
+  final bool enableMouseHover;
 }
 
 /// 倾斜方向

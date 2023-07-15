@@ -84,6 +84,7 @@ class _TiltState extends State<Tilt> {
       onStop: onGesturesStop,
       onResize: onResize,
       child: GesturesListener(
+        tiltConfig: _tiltConfig,
         child: TiltContainer(
           borderRadius: _borderRadius,
           clipBehavior: _clipBehavior,

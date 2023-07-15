@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:flutter_tilt/src/type/tilt_type.dart';
+
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 
 /// 手势监听
@@ -7,9 +9,14 @@ class GesturesListener extends StatelessWidget {
   /// 手势监听
   ///
   /// 对 Touch [TiltTouchListener] 和 Mouse [TiltMouseListener] 的监听触发
-  const GesturesListener({super.key, required this.child});
+  const GesturesListener({
+    super.key,
+    required this.child,
+    required this.tiltConfig,
+  });
 
   final Widget child;
+  final TiltConfig tiltConfig;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,9 @@ class GesturesListener extends StatelessWidget {
         onPointerUp: (e) => tiltState.onStop(e.localPosition),
         onPointerCancel: (e) => tiltState.onStop(e.localPosition),
         child: MouseRegion(
-          onHover: (e) => tiltState.onMove(e.localPosition),
+          onHover: tiltConfig.enableMouseHover
+              ? (e) => tiltState.onMove(e.localPosition)
+              : null,
           onExit: (e) => tiltState.onStop(e.localPosition),
           child: child,
         ),
