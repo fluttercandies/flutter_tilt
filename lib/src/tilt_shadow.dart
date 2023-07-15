@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
 import 'package:flutter_tilt/src/enums.dart';
+import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
@@ -20,9 +21,9 @@ class TiltShadow extends StatelessWidget {
     required this.width,
     required this.height,
     required this.areaProgress,
-    required this.angle,
     this.borderRadius,
     required this.clipBehavior,
+    required this.tiltConfig,
     required this.lightConfig,
     required this.shadowConfig,
   }) : super(key: key);
@@ -34,16 +35,14 @@ class TiltShadow extends StatelessWidget {
   /// 当前坐标的区域进度
   final Offset areaProgress;
 
-  /// 可倾斜角度
-  ///
-  /// {@macro tilt.angle}
-  final double angle;
-
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
 
   /// Clip
   final Clip clipBehavior;
+
+  /// 倾斜配置
+  final TiltConfig tiltConfig;
 
   /// 光源配置
   final LightConfig lightConfig;
@@ -69,14 +68,6 @@ class TiltShadow extends StatelessWidget {
         shadowConfig.direction ?? lightConfig.direction,
         max: shadowConfig.intensity,
       );
-
-  /// 是否反向（受光源影响）
-  ///
-  /// {@macro tilt.ShadowConfig.isReverse}
-  bool get isReverse =>
-      shadowConfig.isReverse ??
-      ((lightConfig.isReverse && shadowConfig.direction == null) &&
-          (lightConfig.isReverse && shadowConfig.isReverse == null));
 
   /// 阴影当前偏移距离
   ///
@@ -114,6 +105,13 @@ class TiltShadow extends StatelessWidget {
   ///
   /// 阴影扩散半径距离 - 阴影扩散半径距离还原
   double get spreadRadius => spreadRadiusDistance - spreadRadiusRevert;
+
+  /// 是否反向（受倾斜、光源影响）
+  ///
+  /// {@macro tilt.ShadowConfig.isReverse}
+  bool get isReverse =>
+      shadowConfig.isReverse ??
+      (shadowConfig.direction == null && (lightConfig.isReverse == true));
 
   /// 禁用
   bool get shadowDisable =>

@@ -17,7 +17,7 @@ class LightConfig {
     this.color = const Color(0xFFFFFFFF),
     this.intensity = 0.4,
     this.direction = LightDirection.around,
-    this.isReverse = false,
+    this.isReverse,
   }) : assert(intensity >= 0 && intensity <= 1, 'shadowConfig.intensity');
 
   /// 禁用
@@ -46,11 +46,11 @@ class LightConfig {
   /// 光源是否反向
   ///
   /// {@template tilt.LightConfig.isReverse}
-  /// 光源方向会影响以下阴影效果，
+  /// 光源反向会影响以下阴影效果，
   /// 如果需要改变阴影效果，请指定阴影配置 [ShadowConfig]
   ///
   /// * 阴影方向 [ShadowConfig.direction]
   /// * 阴影反向 [ShadowConfig.isReverse]
   /// {@endtemplate}
-  final bool isReverse;
+  final bool? isReverse;
 }

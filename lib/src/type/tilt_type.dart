@@ -1,5 +1,85 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:flutter_tilt/src/type/tilt_light_type.dart';
+import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
+
+/// 倾斜配置
+@immutable
+class TiltConfig {
+  /// 倾斜配置
+  ///
+  const TiltConfig({
+    this.initTilt,
+    this.angle = 10,
+    this.direction,
+    this.isOutsideAreaMove = true,
+    this.isReverse = false,
+  });
+
+  /// 初始倾斜量
+  ///
+  /// {@template tilt.TiltConfig.initTilt}
+  /// 最大倾斜角度依据 [angle]
+  ///
+  /// 正常范围 (x, y)：(1, 1) 至 (-1, -1)
+  ///
+  /// 你可以超过这个范围，但是手势移动过程中的最大倾斜量始终按照 [angle] 进行倾斜
+  ///
+  /// 例如：
+  /// * (0, 0) 会保持平面
+  /// * (1.0, 1.0) 会倾斜左上角 [angle] 最大角度
+  /// * (-1.0, -1.0) 会倾斜右下角 [angle] 最大角度
+  /// * (2, 2) 会倾斜左上角 [angle] 最大角度*2
+  /// {@endtemplate}
+  final Offset? initTilt;
+
+  /// 可倾斜角度
+  ///
+  /// {@template tilt.TiltConfig.angle}
+  /// 例如：
+  /// * 0 会停止不动
+  /// * 180 会翻转
+  ///
+  /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的阴影关系
+  /// * [ShadowConfig.offsetFactor]
+  /// * [ShadowConfig.spreadFactor]
+  /// * [ShadowConfig.blurRadius]
+  /// {@endtemplate}
+  final double angle;
+
+  /// 倾斜方向
+  ///
+  /// 允许多个方向的值，默认所有方向
+  ///
+  /// 内置一些常用的方向，例如：[TiltDirection.top]
+  ///
+  /// 如果还需要一些特殊的方向，可以像这样自定义 [TiltDirection(0.1, 0.1)]
+  final List<TiltDirection>? direction;
+
+  /// 倾斜过程中区域外是否可以继续移动
+  ///
+  /// `仅对手势按下后的移动有效`
+  /// [GesturesListener] 触发的 [TiltTouchListener.onPointerMove]
+  ///
+  /// 当触发手势移动的倾斜过程中，
+  /// 手势移动到区域外是否可以继续移动。
+  ///
+  /// * true: 手势触发过程中超出区域可以继续移动
+  /// * flase: 超出区域后回到初始状态
+  final bool isOutsideAreaMove;
+
+  /// 倾斜是否反向
+  ///
+  /// {@template tilt.TiltConfig.isReverse}
+  /// 切换触摸区域向上或向下倾斜
+  ///
+  /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的关系效果
+  /// * [LightConfig.isReverse]
+  /// * [ShadowConfig.isReverse]
+  /// {@endtemplate}
+  final bool isReverse;
+}
+
 /// 倾斜方向
 @immutable
 class TiltDirection {

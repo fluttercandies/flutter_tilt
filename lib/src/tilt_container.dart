@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
 import 'package:flutter_tilt/src/enums.dart';
+import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
@@ -14,31 +15,23 @@ class TiltContainer extends StatefulWidget {
   const TiltContainer({
     Key? key,
     required this.child,
-    this.initTilt,
-    required this.angle,
     this.borderRadius,
     required this.clipBehavior,
+    required this.tiltConfig,
     required this.lightConfig,
     required this.shadowConfig,
   }) : super(key: key);
 
   final Widget child;
 
-  /// 初始倾斜量
-  ///
-  /// {@macro tilt.initTilt}
-  final Offset? initTilt;
-
-  /// 可倾斜角度
-  ///
-  /// {@macro tilt.angle}
-  final double angle;
-
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
 
   /// Clip
   final Clip clipBehavior;
+
+  /// 倾斜配置
+  final TiltConfig tiltConfig;
 
   /// 光源配置
   final LightConfig lightConfig;
@@ -53,14 +46,11 @@ class TiltContainer extends StatefulWidget {
 class _TiltContainerState extends State<TiltContainer> {
   late TiltState tiltState;
 
-  /// 是否初始化
-  late bool isInit;
-
   late double width;
   late double height;
 
   /// 初始坐标区域进度
-  late Offset initAreaProgress = widget.initTilt ?? Offset.zero;
+  late Offset initAreaProgress = _tiltConfig.initTilt ?? Offset.zero;
 
   /// 当前坐标区域进度
   late Offset areaProgress = initAreaProgress;
@@ -68,17 +58,25 @@ class _TiltContainerState extends State<TiltContainer> {
   /// 是否正在移动
   late bool isMove;
 
+  /// 倾斜配置
+  late final TiltConfig _tiltConfig = widget.tiltConfig;
+
+  /// 光源配置
+  late final LightConfig _lightConfig = widget.lightConfig;
+
+  /// 阴影配置
+  late final ShadowConfig _shadowConfig = widget.shadowConfig;
+
   /// 是否禁用光源
-  late bool lightDisable = widget.lightConfig.disable ||
-      widget.lightConfig.direction == LightDirection.none ||
-      widget.lightConfig.intensity == 0;
+  late bool lightDisable = _lightConfig.disable ||
+      _lightConfig.direction == LightDirection.none ||
+      _lightConfig.intensity == 0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     tiltState = TiltState.of(context)!;
 
-    isInit = tiltState.isInit;
     width = tiltState.width;
     height = tiltState.height;
     areaProgress = tiltState.areaProgress;
@@ -95,16 +93,22 @@ class _TiltContainerState extends State<TiltContainer> {
           ignoring: false,
           child: Transform(
             alignment: AlignmentDirectional.center,
-            transform: tiltTransform(width, height, value, widget.angle),
+            transform: tiltTransform(
+              width,
+              height,
+              value,
+              _tiltConfig.angle,
+              _tiltConfig.isReverse,
+            ),
             child: TiltShadow(
               width: width,
               height: height,
               areaProgress: value,
-              angle: widget.angle,
               borderRadius: widget.borderRadius,
               clipBehavior: widget.clipBehavior,
-              lightConfig: widget.lightConfig,
-              shadowConfig: widget.shadowConfig,
+              tiltConfig: _tiltConfig,
+              lightConfig: _lightConfig,
+              shadowConfig: _shadowConfig,
               child: Stack(
                 alignment: AlignmentDirectional.center,
 
@@ -130,7 +134,8 @@ class _TiltContainerState extends State<TiltContainer> {
                       areaProgress: value,
                       borderRadius: widget.borderRadius,
                       clipBehavior: widget.clipBehavior,
-                      lightConfig: widget.lightConfig,
+                      tiltConfig: _tiltConfig,
+                      lightConfig: _lightConfig,
                     ),
 
                   /// Resize

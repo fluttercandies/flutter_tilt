@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
+import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
-import 'package:flutter_tilt/src/type/tilt_direction_type.dart';
 
 import 'package:flutter_tilt/src/tilt_container.dart';
 import 'package:flutter_tilt/src/gestures_listener.dart';
@@ -14,57 +14,14 @@ class Tilt extends StatefulWidget {
   const Tilt({
     Key? key,
     required this.child,
-    this.initTilt,
-    this.angle = 10,
-    this.direction,
     this.borderRadius,
     this.clipBehavior = Clip.antiAlias,
-    this.isOutsideAreaMove = true,
+    this.tiltConfig = const TiltConfig(),
     this.lightConfig = const LightConfig(),
     this.shadowConfig = const ShadowConfig(),
   }) : super(key: key);
 
   final Widget child;
-
-  /// 初始倾斜量
-  ///
-  /// {@template tilt.initTilt}
-  /// 最大倾斜角度依据 [angle]
-  ///
-  /// 正常范围 (x, y)：(1, 1) 至 (-1, -1)
-  ///
-  /// 你可以超过这个范围，但是手势移动过程中的最大倾斜量始终按照 [angle] 进行倾斜
-  ///
-  /// 例如：
-  /// * (0, 0) 会保持平面
-  /// * (1.0, 1.0) 会倾斜左上角 [angle] 最大角度
-  /// * (-1.0, -1.0) 会倾斜右下角 [angle] 最大角度
-  /// * (2, 2) 会倾斜左上角 [angle] 最大角度*2
-  /// {@endtemplate}
-  final Offset? initTilt;
-
-  /// 可倾斜角度
-  ///
-  /// {@template tilt.angle}
-  /// 例如：
-  /// * 0 会停止不动
-  /// * 180 会翻转
-  ///
-  /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的阴影关系
-  /// * [ShadowConfig.offsetFactor]
-  /// * [ShadowConfig.spreadFactor]
-  /// * [ShadowConfig.blurRadius]
-  /// {@endtemplate}
-  final double angle;
-
-  /// 倾斜方向
-  ///
-  /// 允许多个方向的值，默认所有方向
-  ///
-  /// 内置一些常用的方向，例如：[TiltDirection.top]
-  ///
-  /// 如果还需要一些特殊的方向，可以像这样自定义 [TiltDirection(0.1, 0.1)]
-  final List<TiltDirection>? direction;
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
@@ -72,17 +29,8 @@ class Tilt extends StatefulWidget {
   /// Clip
   final Clip clipBehavior;
 
-  /// 倾斜过程中区域外是否可以继续移动
-  ///
-  /// `仅对手势按下后的移动有效`
-  /// [GesturesListener] 触发的 [TiltTouchListener.onPointerMove]
-  ///
-  /// 当触发手势移动的倾斜过程中，
-  /// 手势移动到区域外是否可以继续移动。
-  ///
-  /// * true: 手势触发过程中超出区域可以继续移动
-  /// * flase: 超出区域后回到初始状态
-  final bool isOutsideAreaMove;
+  /// 倾斜配置
+  final TiltConfig tiltConfig;
 
   /// 光源配置
   final LightConfig lightConfig;
@@ -107,6 +55,15 @@ class _TiltState extends State<Tilt> {
   /// 是否正在移动
   late bool isMove = false;
 
+  /// 倾斜配置
+  late final TiltConfig _tiltConfig = widget.tiltConfig;
+
+  /// 光源配置
+  late final LightConfig _lightConfig = widget.lightConfig;
+
+  /// 阴影配置
+  late final ShadowConfig _shadowConfig = widget.shadowConfig;
+
   @override
   Widget build(BuildContext context) {
     return TiltState(
@@ -120,12 +77,11 @@ class _TiltState extends State<Tilt> {
       onResize: onResize,
       child: GesturesListener(
         child: TiltContainer(
-          initTilt: widget.initTilt,
           borderRadius: widget.borderRadius,
           clipBehavior: widget.clipBehavior,
-          angle: widget.angle,
-          lightConfig: widget.lightConfig,
-          shadowConfig: widget.shadowConfig,
+          tiltConfig: _tiltConfig,
+          lightConfig: _lightConfig,
+          shadowConfig: _shadowConfig,
           child: widget.child,
         ),
       ),
@@ -143,7 +99,7 @@ class _TiltState extends State<Tilt> {
         width,
         height,
         Offset.zero,
-        widget.direction,
+        _tiltConfig.direction,
       );
     });
   }
@@ -151,9 +107,14 @@ class _TiltState extends State<Tilt> {
   /// 手势移动触发
   void onGesturesMove(Offset offset) {
     if (!isInit) return;
-    if (widget.isOutsideAreaMove || isInRange(width, height, offset)) {
+    if (_tiltConfig.isOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
-        areaProgress = p2cAreaProgress(width, height, offset, widget.direction);
+        areaProgress = p2cAreaProgress(
+          width,
+          height,
+          offset,
+          _tiltConfig.direction,
+        );
         isMove = true;
       });
     } else {
@@ -165,7 +126,12 @@ class _TiltState extends State<Tilt> {
   void onGesturesStop(Offset offset) {
     if (!isInit) return;
     setState(() {
-      areaProgress = p2cAreaProgress(width, height, offset, widget.direction);
+      areaProgress = p2cAreaProgress(
+        width,
+        height,
+        offset,
+        _tiltConfig.direction,
+      );
       isMove = false;
     });
   }

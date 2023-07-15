@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/type/tilt_direction_type.dart';
+import 'package:flutter_tilt/src/type/tilt_type.dart';
 
 /// 区域中心定位
 ///
@@ -24,16 +24,16 @@ double p2pDistance(Offset p1, Offset p2) {
 
 /// 计算当前坐标进度的倾斜
 ///
-/// [width], [height] 区域尺寸
-///
-/// [areaProgress] 当前坐标的区域进度
-///
-/// [angle] 可旋转角度，为 0 将会停止不动
+/// * [width], [height] 区域尺寸
+/// * [areaProgress] 当前坐标的区域进度
+/// * [angle] 可旋转角度，为 0 将会停止不动
+/// * [isReverse] 倾斜是否反向，向上或向下倾斜
 Matrix4 tiltTransform(
   double width,
   double height,
   Offset areaProgress,
   double angle,
+  bool isReverse,
 ) {
   /// 旋转大小：区域进度 * 弧度
   final rotate = areaProgress * radian(angle);
@@ -45,8 +45,8 @@ Matrix4 tiltTransform(
     ..setEntry(3, 2, 0.5 / (width > height ? width : height))
 
     /// 旋转轴
-    ..rotateY(-rotateX)
-    ..rotateX(rotateY);
+    ..rotateX(isReverse ? -rotateY : rotateY)
+    ..rotateY(isReverse ? rotateX : -rotateX);
 }
 
 /// 计算当前坐标相对于中心坐标的区域坐标
