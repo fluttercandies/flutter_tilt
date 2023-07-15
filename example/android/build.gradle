@@ -1,24 +1,20 @@
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.6.10'
     repositories {
-        // google()
-        // mavenCentral()
-        maven{ url 'https://maven.aliyun.com/repository/public' }
-        maven{ url 'https://maven.aliyun.com/repository/google' }
+        google()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath 'com.android.tools.build:gradle:7.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 allprojects {
     repositories {
-        // google()
-        // mavenCentral()
-        maven{ url 'https://maven.aliyun.com/repository/public' }
-        maven{ url 'https://maven.aliyun.com/repository/google' }
+        google()
+        mavenCentral()
     }
 }
 
@@ -30,6 +26,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-tasks.register("clean", Delete) {
+task clean(type: Delete) {
     delete rootProject.buildDir
 }
