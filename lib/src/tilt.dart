@@ -43,26 +43,22 @@ class Tilt extends StatefulWidget {
 }
 
 class _TiltState extends State<Tilt> {
+  late final Widget _child = widget.child;
+  late final BorderRadiusGeometry? _borderRadius = widget.borderRadius;
+  late final Clip _clipBehavior = widget.clipBehavior;
+  late final TiltConfig _tiltConfig = widget.tiltConfig;
+  late final LightConfig _lightConfig = widget.lightConfig;
+  late final ShadowConfig _shadowConfig = widget.shadowConfig;
+
   /// 是否初始化
   late bool isInit = false;
-
-  late double width = 0;
-  late double height = 0;
+  late double width = 0, height = 0;
 
   /// 当前坐标的区域进度
   late Offset areaProgress = Offset.zero;
 
   /// 是否正在移动
   late bool isMove = false;
-
-  /// 倾斜配置
-  late final TiltConfig _tiltConfig = widget.tiltConfig;
-
-  /// 光源配置
-  late final LightConfig _lightConfig = widget.lightConfig;
-
-  /// 阴影配置
-  late final ShadowConfig _shadowConfig = widget.shadowConfig;
 
   @override
   Widget build(BuildContext context) {
@@ -77,12 +73,12 @@ class _TiltState extends State<Tilt> {
       onResize: onResize,
       child: GesturesListener(
         child: TiltContainer(
-          borderRadius: widget.borderRadius,
-          clipBehavior: widget.clipBehavior,
+          borderRadius: _borderRadius,
+          clipBehavior: _clipBehavior,
           tiltConfig: _tiltConfig,
           lightConfig: _lightConfig,
           shadowConfig: _shadowConfig,
-          child: widget.child,
+          child: _child,
         ),
       ),
     );

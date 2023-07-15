@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/utils.dart';
-import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 
 /// 光源
@@ -22,12 +22,10 @@ class TiltLight extends StatelessWidget {
     required this.areaProgress,
     this.borderRadius,
     required this.clipBehavior,
-    required this.tiltConfig,
     required this.lightConfig,
   }) : super(key: key);
 
-  final double width;
-  final double height;
+  final double width, height;
 
   /// 当前坐标的区域进度
   final Offset areaProgress;
@@ -37,9 +35,6 @@ class TiltLight extends StatelessWidget {
 
   /// Clip
   final Clip clipBehavior;
-
-  /// 倾斜配置
-  final TiltConfig tiltConfig;
 
   /// 光源配置
   final LightConfig lightConfig;
@@ -80,8 +75,15 @@ class TiltLight extends StatelessWidget {
   /// {@macro tilt.LightConfig.isReverse}
   bool get isReverse => lightConfig.isReverse ?? false;
 
+  /// 禁用光源
+  bool get lightDisable =>
+      lightConfig.disable ||
+      lightConfig.intensity == 0 ||
+      lightConfig.direction == LightDirection.none;
+
   @override
   Widget build(BuildContext context) {
+    if (lightDisable) return const SizedBox();
     return Positioned(
       left: isReverse ? positionX : null,
       top: isReverse ? positionY : null,

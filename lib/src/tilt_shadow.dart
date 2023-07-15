@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
 import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
@@ -23,14 +22,12 @@ class TiltShadow extends StatelessWidget {
     required this.areaProgress,
     this.borderRadius,
     required this.clipBehavior,
-    required this.tiltConfig,
     required this.lightConfig,
     required this.shadowConfig,
   }) : super(key: key);
 
   final Widget child;
-  final double width;
-  final double height;
+  final double width, height;
 
   /// 当前坐标的区域进度
   final Offset areaProgress;
@@ -41,9 +38,6 @@ class TiltShadow extends StatelessWidget {
   /// Clip
   final Clip clipBehavior;
 
-  /// 倾斜配置
-  final TiltConfig tiltConfig;
-
   /// 光源配置
   final LightConfig lightConfig;
 
@@ -51,10 +45,10 @@ class TiltShadow extends StatelessWidget {
   final ShadowConfig shadowConfig;
 
   /// 当前坐标的区域进度
-  Offset get p2cProgress => -areaProgress;
+  Offset get progress => -areaProgress;
 
   /// 距离中心的进度
-  double get centerProgress => p2pDistance(Offset.zero, p2cProgress);
+  double get centerProgress => p2pDistance(Offset.zero, progress);
 
   /// 阴影显示（受光源影响）
   ///
@@ -73,7 +67,7 @@ class TiltShadow extends StatelessWidget {
   ///
   /// 阴影进度 * 阴影偏移系数的距离（相对当前尺寸的中心）
   Offset get offset =>
-      p2cProgress *
+      progress *
       p2pDistance(
         centerPosition(width, height),
         centerPosition(width, height) * (shadowConfig.offsetFactor + 1),
@@ -106,14 +100,14 @@ class TiltShadow extends StatelessWidget {
   /// 阴影扩散半径距离 - 阴影扩散半径距离还原
   double get spreadRadius => spreadRadiusDistance - spreadRadiusRevert;
 
-  /// 是否反向（受倾斜、光源影响）
+  /// 是否反向（受光源影响）
   ///
   /// {@macro tilt.ShadowConfig.isReverse}
   bool get isReverse =>
       shadowConfig.isReverse ??
       (shadowConfig.direction == null && (lightConfig.isReverse == true));
 
-  /// 禁用
+  /// 禁用阴影
   bool get shadowDisable =>
       shadowConfig.disable ||
       shadowConfig.intensity == 0 ||

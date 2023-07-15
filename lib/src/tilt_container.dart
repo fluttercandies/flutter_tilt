@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
-import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
@@ -44,33 +43,24 @@ class TiltContainer extends StatefulWidget {
 }
 
 class _TiltContainerState extends State<TiltContainer> {
-  late TiltState tiltState;
-
-  late double width;
-  late double height;
+  late final Widget _child = widget.child;
+  late final BorderRadiusGeometry? _borderRadius = widget.borderRadius;
+  late final Clip _clipBehavior = widget.clipBehavior;
+  late final TiltConfig _tiltConfig = widget.tiltConfig;
+  late final LightConfig _lightConfig = widget.lightConfig;
+  late final ShadowConfig _shadowConfig = widget.shadowConfig;
 
   /// 初始坐标区域进度
-  late Offset initAreaProgress = _tiltConfig.initTilt ?? Offset.zero;
+  late final Offset _initAreaProgress = _tiltConfig.initTilt ?? Offset.zero;
+
+  late TiltState tiltState;
+  late double width, height;
 
   /// 当前坐标区域进度
-  late Offset areaProgress = initAreaProgress;
+  late Offset areaProgress = _initAreaProgress;
 
   /// 是否正在移动
   late bool isMove;
-
-  /// 倾斜配置
-  late final TiltConfig _tiltConfig = widget.tiltConfig;
-
-  /// 光源配置
-  late final LightConfig _lightConfig = widget.lightConfig;
-
-  /// 阴影配置
-  late final ShadowConfig _shadowConfig = widget.shadowConfig;
-
-  /// 是否禁用光源
-  late bool lightDisable = _lightConfig.disable ||
-      _lightConfig.direction == LightDirection.none ||
-      _lightConfig.intensity == 0;
 
   @override
   void didChangeDependencies() {
@@ -87,7 +77,7 @@ class _TiltContainerState extends State<TiltContainer> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
       duration: Duration(milliseconds: isMove ? 100 : 300),
-      tween: Tween<Offset>(end: isMove ? areaProgress : initAreaProgress),
+      tween: Tween<Offset>(end: isMove ? areaProgress : _initAreaProgress),
       builder: (BuildContext context, Offset value, Widget? child) {
         return IgnorePointer(
           ignoring: false,
@@ -100,43 +90,41 @@ class _TiltContainerState extends State<TiltContainer> {
               _tiltConfig.angle,
               _tiltConfig.isReverse,
             ),
+
+            /// Shadow
             child: TiltShadow(
               width: width,
               height: height,
               areaProgress: value,
-              borderRadius: widget.borderRadius,
-              clipBehavior: widget.clipBehavior,
-              tiltConfig: _tiltConfig,
+              borderRadius: _borderRadius,
+              clipBehavior: _clipBehavior,
               lightConfig: _lightConfig,
               shadowConfig: _shadowConfig,
               child: Stack(
                 alignment: AlignmentDirectional.center,
 
                 /// 避免暴露其他组件，[Clip.none] 时，默认赋值 [Clip.hardEdge]
-                clipBehavior: widget.clipBehavior == Clip.none
-                    ? Clip.hardEdge
-                    : widget.clipBehavior,
+                clipBehavior:
+                    _clipBehavior == Clip.none ? Clip.hardEdge : _clipBehavior,
                 children: [
                   /// Body
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: widget.borderRadius,
+                      borderRadius: _borderRadius,
                     ),
-                    clipBehavior: widget.clipBehavior,
+                    clipBehavior: _clipBehavior,
                     child: child,
                   ),
 
                   /// Light
-                  if (!lightDisable)
-                    TiltLight(
-                      width: width,
-                      height: height,
-                      areaProgress: value,
-                      borderRadius: widget.borderRadius,
-                      clipBehavior: widget.clipBehavior,
-                      tiltConfig: _tiltConfig,
-                      lightConfig: _lightConfig,
-                    ),
+                  TiltLight(
+                    width: width,
+                    height: height,
+                    areaProgress: value,
+                    borderRadius: _borderRadius,
+                    clipBehavior: _clipBehavior,
+                    lightConfig: _lightConfig,
+                  ),
 
                   /// Resize
                   Positioned.fill(
@@ -153,7 +141,7 @@ class _TiltContainerState extends State<TiltContainer> {
           ),
         );
       },
-      child: widget.child,
+      child: _child,
     );
   }
 }
