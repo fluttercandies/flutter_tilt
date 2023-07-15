@@ -54,6 +54,9 @@ class _TiltContainerState extends State<TiltContainer> {
   late final Offset _initAreaProgress = _tiltConfig.initTilt ?? Offset.zero;
 
   late TiltState tiltState;
+
+  /// 是否初始化
+  late bool isInit;
   late double width, height;
 
   /// 当前坐标区域进度
@@ -67,6 +70,7 @@ class _TiltContainerState extends State<TiltContainer> {
     super.didChangeDependencies();
     tiltState = TiltState.of(context)!;
 
+    isInit = tiltState.isInit;
     width = tiltState.width;
     height = tiltState.height;
     areaProgress = tiltState.areaProgress;
@@ -83,7 +87,7 @@ class _TiltContainerState extends State<TiltContainer> {
           ignoring: false,
           child: Transform(
             alignment: AlignmentDirectional.center,
-            transform: !_tiltConfig.disable
+            transform: isInit && !_tiltConfig.disable
                 ? tiltTransform(
                     width,
                     height,
@@ -92,8 +96,6 @@ class _TiltContainerState extends State<TiltContainer> {
                     _tiltConfig.isReverse,
                   )
                 : Matrix4.identity(),
-
-            /// Shadow
             child: TiltShadow(
               width: width,
               height: height,
@@ -118,7 +120,6 @@ class _TiltContainerState extends State<TiltContainer> {
                     child: child,
                   ),
 
-                  /// Light
                   TiltLight(
                     width: width,
                     height: height,
