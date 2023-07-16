@@ -90,20 +90,23 @@ class TiltLight extends StatelessWidget {
       top: enableReverse ? positionY : null,
       right: !enableReverse ? positionX : null,
       bottom: !enableReverse ? positionY : null,
-      child: Container(
-        width: spreadW,
-        height: spreadH,
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            radius: 0.5,
-            colors: [
-              lightConfig.color.withOpacity(showProgress),
-              lightConfig.color.withOpacity(0),
-            ],
-            stops: const [0.01, 0.99],
-            tileMode: TileMode.clamp,
+      child: IgnorePointer(
+        ignoring: true,
+        child: Container(
+          width: spreadW,
+          height: spreadH,
+          decoration: BoxDecoration(
+            gradient: RadialGradient(
+              radius: 0.5,
+              colors: [
+                lightConfig.color.withOpacity(showProgress),
+                lightConfig.color.withOpacity(0),
+              ],
+              stops: const [0.01, 0.99],
+              tileMode: TileMode.clamp,
+            ),
+            // borderRadius: borderRadius,
           ),
-          // borderRadius: borderRadius,
         ),
         // clipBehavior: clipBehavior,
       ),
