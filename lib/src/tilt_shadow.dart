@@ -50,6 +50,9 @@ class TiltShadow extends StatelessWidget {
   /// 距离中心的进度
   double get centerProgress => p2pDistance(Offset.zero, progress);
 
+  /// 距离中心的进度最大值
+  double get centerMaxProgress => centerProgress > 1 ? 1 : centerProgress;
+
   /// 阴影显示（受光源影响）
   ///
   /// 用于阴影颜色，限制最大进度表示强度（透明度）
@@ -78,10 +81,16 @@ class TiltShadow extends StatelessWidget {
   Offset get offset =>
       (enableReverse ? -baseOffset : baseOffset) - shadowConfig.offsetOrigin;
 
-  /// 阴影模糊半径
+  /// 阴影模糊半径进度
   ///
-  /// 距离中心的进度 * 模糊半径
-  double get blurRadius => centerProgress * shadowConfig.blurRadius;
+  /// 距离中心的进度 * 最大模糊半径
+  double get blurRadiusProgress =>
+      centerMaxProgress * shadowConfig.maxBlurRadius;
+
+  /// 阴影模糊半径
+  double get blurRadius => blurRadiusProgress < shadowConfig.minBlurRadius
+      ? shadowConfig.minBlurRadius
+      : blurRadiusProgress;
 
   /// 阴影扩散半径距离
   ///
@@ -98,7 +107,7 @@ class TiltShadow extends StatelessWidget {
   /// (阴影扩散半径距离 + 初始固定扩散值，随进度还原至 0)
   double get spreadRadiusRevert =>
       (spreadRadiusDistance + ((width < height ? width : height) / 10)) *
-      (1 - (centerProgress > 1 ? 1 : centerProgress));
+      (1 - centerMaxProgress);
 
   /// 阴影扩散半径
   ///
@@ -121,7 +130,7 @@ class TiltShadow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(spreadRadius);
+    print(blurRadius);
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
