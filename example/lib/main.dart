@@ -20,15 +20,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class CounterController extends ChangeNotifier {
+  ValueNotifier<int> counter = ValueNotifier(0);
+}
+
 class TiltDemo extends StatelessWidget {
   const TiltDemo({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final CounterController counterController = CounterController();
+
     return Scaffold(
-      backgroundColor: Color(0xFF0C0C0C),
+      backgroundColor: const Color(0xFF0C0C0C),
       body: Center(
-        /// Tilt Demo
         child: Tilt(
           borderRadius: BorderRadius.circular(24),
           tiltConfig: const TiltConfig(angle: 15),
@@ -39,15 +44,15 @@ class TiltDemo extends StatelessWidget {
           shadowConfig: const ShadowConfig(
             minIntensity: 0.05,
             maxIntensity: 0.3,
-            spreadOrigin: -10,
+            spreadInitial: -10,
             minBlurRadius: 10,
             maxBlurRadius: 20,
           ),
-          child: const SizedBox(
-            width: 250,
-            height: 400,
-            child: MyHomePage(title: 'Flutter Tilt Demo'),
-          ),
+          childInner: [
+            CounterText(controller: counterController),
+            CounterActionButton(controller: counterController),
+          ],
+          child: const MyHomePage(title: 'Flutter Tilt Demo'),
         ),
       ),
     );
@@ -64,43 +69,84 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 250,
+      height: 400,
+      child: Scaffold(
+        backgroundColor: const Color(0x2026262B),
+        appBar: AppBar(
+          title: Text(
+            widget.title,
+            style: const TextStyle(fontSize: 18),
+          ),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const <Widget>[
+              Text(
+                'You have pushed the button this many times:',
+                style: TextStyle(fontSize: 10, color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CounterActionButton extends StatelessWidget {
+  const CounterActionButton({super.key, required this.controller});
+  final CounterController controller;
 
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    controller.counter.value++;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0x2026262B),
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: const TextStyle(fontSize: 18),
+    return Positioned(
+      bottom: 20,
+      right: 20,
+      child: TiltParallax(
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: FloatingActionButton(
+            onPressed: _incrementCounter,
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-              style: TextStyle(fontSize: 10, color: Colors.white),
-            ),
-            Text(
-              '$_counter',
-              style: const TextStyle(fontSize: 20, color: Colors.white),
-            ),
-          ],
+    );
+  }
+}
+
+class CounterText extends StatelessWidget {
+  const CounterText({super.key, required this.controller});
+  final CounterController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      top: -20,
+      child: Center(
+        child: TiltParallax(
+          size: const Offset(-10, -10),
+          child: ValueListenableBuilder(
+            valueListenable: controller.counter,
+            builder: (_, counter, child) {
+              return Text(
+                '$counter',
+                style: const TextStyle(fontSize: 20, color: Colors.white),
+              );
+            },
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
