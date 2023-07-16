@@ -22,8 +22,9 @@ class ShadowConfig {
     this.color = const Color(0xFF9E9E9E),
     this.minIntensity = 0.0,
     this.maxIntensity = 0.5,
-    this.originOffset = const Offset(0, 0),
+    this.offsetOrigin = const Offset(0, 0),
     this.offsetFactor = 0.1,
+    this.spreadOrigin = 0.0,
     this.spreadFactor = 0.0,
     this.blurRadius = 20,
     this.direction,
@@ -52,9 +53,9 @@ class ShadowConfig {
   /// 为 0 时将没有光源
   final double maxIntensity;
 
-  /// 阴影偏移起始值
+  /// 阴影起始偏移点
   ///
-  /// {@template tilt.ShadowConfig.originOffset}
+  /// {@template tilt.ShadowConfig.offsetOrigin}
   /// 指定起始值以像素单位进行方向 (x, y) 偏移，
   /// 之后移动偏移将以该值作为起始点。
   ///
@@ -63,16 +64,23 @@ class ShadowConfig {
   /// * (40, 40) 向左上角偏移 40 像素
   /// * (-60, 0) 仅向右偏移 60 像素
   /// {@endtemplate}
-  final Offset originOffset;
+  final Offset offsetOrigin;
 
   /// 阴影偏移系数
   ///
   /// 移动时相对当前的尺寸进行偏移
   final double offsetFactor;
 
+  /// 阴影起始扩散半径
+  ///
+  /// {@template tilt.ShadowConfig.spreadOrigin}
+  /// 指定起始值以像素单位初始扩散半径
+  /// {@endtemplate}
+  final double spreadOrigin;
+
   /// 阴影扩散系数
   ///
-  /// 相对当前的尺寸进行扩散
+  /// 移动时相对当前的尺寸进行扩散
   final double spreadFactor;
 
   /// 阴影模糊半径

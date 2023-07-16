@@ -64,11 +64,6 @@ class TiltShadow extends StatelessWidget {
         max: shadowConfig.maxIntensity,
       );
 
-  /// 起始偏移量
-  ///
-  /// {@macro tilt.ShadowConfig.originOffset}
-  Offset get originOffset => shadowConfig.originOffset;
-
   /// 阴影当前偏移距离
   ///
   /// 阴影进度 * 阴影偏移系数的距离（相对当前尺寸的中心）
@@ -81,7 +76,7 @@ class TiltShadow extends StatelessWidget {
 
   /// 阴影偏移
   Offset get offset =>
-      (enableReverse ? -baseOffset : baseOffset) - originOffset;
+      (enableReverse ? -baseOffset : baseOffset) - shadowConfig.offsetOrigin;
 
   /// 阴影模糊半径
   ///
@@ -107,8 +102,9 @@ class TiltShadow extends StatelessWidget {
 
   /// 阴影扩散半径
   ///
-  /// 阴影扩散半径距离 - 阴影扩散半径距离还原
-  double get spreadRadius => spreadRadiusDistance - spreadRadiusRevert;
+  /// 阴影扩散半径距离 - 阴影扩散半径距离还原 + 起始扩散半径
+  double get spreadRadius =>
+      spreadRadiusDistance - spreadRadiusRevert + shadowConfig.spreadOrigin;
 
   /// 开启反向（受光源影响）
   ///
@@ -125,6 +121,7 @@ class TiltShadow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(spreadRadius);
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
