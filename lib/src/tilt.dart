@@ -1,3 +1,4 @@
+import 'dart:async' as async;
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
@@ -15,6 +16,7 @@ class Tilt extends StatefulWidget {
     super.key,
     required this.child,
     this.disable = false,
+    this.fps = 60,
     this.borderRadius,
     this.clipBehavior = Clip.antiAlias,
     this.tiltConfig = const TiltConfig(),
@@ -26,6 +28,13 @@ class Tilt extends StatefulWidget {
 
   /// 全部禁用
   final bool disable;
+
+  /// FPS
+  ///
+  /// 每秒手势触发帧数，帧数越高越平滑，但性能消耗越高。
+  ///
+  /// 推荐 60 FPS，如果遭遇性能问题，还可以使用人眼能够接受的 24 FPS
+  final int fps;
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
@@ -49,6 +58,7 @@ class Tilt extends StatefulWidget {
 class _TiltState extends State<Tilt> {
   late final Widget _child = widget.child;
   late final bool _disable = widget.disable;
+  late final int _fps = widget.fps;
   late final BorderRadiusGeometry? _borderRadius = widget.borderRadius;
   late final Clip _clipBehavior = widget.clipBehavior;
   late final TiltConfig _tiltConfig = widget.tiltConfig;
@@ -64,6 +74,9 @@ class _TiltState extends State<Tilt> {
 
   /// 是否正在移动
   late bool isMove = false;
+
+  /// FPS 计时器
+  async.Timer? _fpsTimer;
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +129,7 @@ class _TiltState extends State<Tilt> {
   /// 手势移动触发
   void onGesturesMove(Offset offset) {
     if (!isInit) return;
+    if (!fpsTimer()) return;
     if (_tiltConfig.enableOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
         areaProgress = p2cAreaProgress(
@@ -143,5 +157,18 @@ class _TiltState extends State<Tilt> {
       );
       isMove = false;
     });
+  }
+
+  /// FPS
+  bool fpsTimer() {
+    if (_fpsTimer == null) {
+      _fpsTimer = async.Timer(
+        Duration(milliseconds: (1 / _fps * 1000) ~/ 1),
+        () => _fpsTimer = null,
+      );
+      return true;
+    } else {
+      return false;
+    }
   }
 }
