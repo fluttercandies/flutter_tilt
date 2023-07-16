@@ -14,6 +14,7 @@ class TiltContainer extends StatefulWidget {
   const TiltContainer({
     super.key,
     required this.child,
+    required this.childInner,
     this.borderRadius,
     required this.clipBehavior,
     required this.tiltConfig,
@@ -21,7 +22,13 @@ class TiltContainer extends StatefulWidget {
     required this.shadowConfig,
   });
 
+  /// 主 child
   final Widget child;
+
+  /// 内部 child
+  ///
+  /// {@macro tilt.childInner}
+  final List<Widget> childInner;
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
@@ -44,6 +51,7 @@ class TiltContainer extends StatefulWidget {
 
 class _TiltContainerState extends State<TiltContainer> {
   late final Widget _child = widget.child;
+  late final List<Widget> _childInner = widget.childInner;
   late final BorderRadiusGeometry? _borderRadius = widget.borderRadius;
   late final Clip _clipBehavior = widget.clipBehavior;
   late final TiltConfig _tiltConfig = widget.tiltConfig;
@@ -95,50 +103,60 @@ class _TiltContainerState extends State<TiltContainer> {
                   _tiltConfig.enableReverse,
                 )
               : Matrix4.identity(),
-          child: TiltShadow(
-            width: width,
-            height: height,
-            areaProgress: value,
-            borderRadius: _borderRadius,
-            clipBehavior: _clipBehavior,
-            lightConfig: _lightConfig,
-            shadowConfig: _shadowConfig,
-            child: Stack(
-              alignment: AlignmentDirectional.center,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              /// Main Child
+              TiltShadow(
+                width: width,
+                height: height,
+                areaProgress: value,
+                borderRadius: _borderRadius,
+                clipBehavior: _clipBehavior,
+                lightConfig: _lightConfig,
+                shadowConfig: _shadowConfig,
+                child: Stack(
+                  alignment: AlignmentDirectional.center,
 
-              /// 避免暴露其他组件，[Clip.none] 时，默认赋值 [Clip.hardEdge]
-              clipBehavior:
-                  _clipBehavior == Clip.none ? Clip.hardEdge : _clipBehavior,
-              children: [
-                /// Body
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: _borderRadius,
-                  ),
-                  clipBehavior: _clipBehavior,
-                  child: child,
-                ),
+                  /// 避免暴露其他组件，[Clip.none] 时，默认赋值 [Clip.hardEdge]
+                  clipBehavior: _clipBehavior == Clip.none
+                      ? Clip.hardEdge
+                      : _clipBehavior,
+                  children: [
+                    /// Body
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: _borderRadius,
+                      ),
+                      clipBehavior: _clipBehavior,
+                      child: child,
+                    ),
 
-                TiltLight(
-                  width: width,
-                  height: height,
-                  areaProgress: value,
-                  borderRadius: _borderRadius,
-                  clipBehavior: _clipBehavior,
-                  lightConfig: _lightConfig,
-                ),
+                    TiltLight(
+                      width: width,
+                      height: height,
+                      areaProgress: value,
+                      borderRadius: _borderRadius,
+                      clipBehavior: _clipBehavior,
+                      lightConfig: _lightConfig,
+                    ),
 
-                /// Resize
-                Positioned.fill(
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    WidgetsBinding.instance.addPostFrameCallback(
-                      (_) => tiltState.onResize(constraints.biggest),
-                    );
-                    return const SizedBox();
-                  }),
+                    /// Resize
+                    Positioned.fill(
+                      child: LayoutBuilder(builder: (context, constraints) {
+                        WidgetsBinding.instance.addPostFrameCallback(
+                          (_) => tiltState.onResize(constraints.biggest),
+                        );
+                        return const SizedBox();
+                      }),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+
+              /// Inner Child
+              ..._childInner,
+            ],
           ),
         );
       },

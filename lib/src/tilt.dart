@@ -6,15 +6,21 @@ import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
-import 'package:flutter_tilt/src/tilt_container.dart';
 import 'package:flutter_tilt/src/gestures_listener.dart';
+import 'package:flutter_tilt/src/tilt_container.dart';
+import 'package:flutter_tilt/src/tilt_parallax_container.dart';
 
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 
+/// 倾斜
 class Tilt extends StatefulWidget {
+  /// 倾斜
+  ///
+  /// 在 [childInner] 中使用 [TiltParallax] 可以达到视差的效果
   const Tilt({
     super.key,
     required this.child,
+    this.childInner = const <Widget>[],
     this.disable = false,
     this.fps = 60,
     this.borderRadius,
@@ -24,7 +30,17 @@ class Tilt extends StatefulWidget {
     this.shadowConfig = const ShadowConfig(),
   });
 
+  /// 主 child
   final Widget child;
+
+  /// 内部 child
+  ///
+  /// {@template tilt.childInner}
+  /// 一般用作视差的 Widget
+  ///
+  /// 本身作为 [Stack]，可以搭配 [Stack] 相关布局，
+  /// {@endtemplate}
+  final List<Widget> childInner;
 
   /// 全部禁用
   final bool disable;
@@ -57,6 +73,7 @@ class Tilt extends StatefulWidget {
 
 class _TiltState extends State<Tilt> {
   late final Widget _child = widget.child;
+  late final List<Widget> _childInner = widget.childInner;
   late final bool _disable = widget.disable;
   late final int _fps = widget.fps;
   late final BorderRadiusGeometry? _borderRadius = widget.borderRadius;
@@ -104,6 +121,7 @@ class _TiltState extends State<Tilt> {
           tiltConfig: _tiltConfig,
           lightConfig: _lightConfig,
           shadowConfig: _shadowConfig,
+          childInner: _childInner,
           child: _child,
         ),
       ),
@@ -171,5 +189,34 @@ class _TiltState extends State<Tilt> {
     } else {
       return false;
     }
+  }
+}
+
+/// 倾斜视差
+class TiltParallax extends StatelessWidget {
+  /// 倾斜视差
+  ///
+  /// 一般用作视差的 Widget
+  ///
+  /// 只能在 [Tilt.childInner] 中使用
+  const TiltParallax({
+    super.key,
+    required this.child,
+    this.size = const Offset(10.0, 10.0),
+    this.filterQuality = FilterQuality.high,
+  });
+  final Widget child;
+
+  /// 视差大小 (x, y)
+  final Offset size;
+
+  final FilterQuality filterQuality;
+  @override
+  Widget build(BuildContext context) {
+    return TiltParallaxContainer(
+      size: size,
+      filterQuality: filterQuality,
+      child: child,
+    );
   }
 }
