@@ -16,7 +16,7 @@ class LightConfig {
     this.disable = false,
     this.color = const Color(0xFFFFFFFF),
     this.minIntensity = 0.0,
-    this.maxIntensity = 0.4,
+    this.maxIntensity = 0.5,
     this.direction = LightDirection.around,
     this.enableReverse,
   }) : assert(minIntensity <= maxIntensity &&
