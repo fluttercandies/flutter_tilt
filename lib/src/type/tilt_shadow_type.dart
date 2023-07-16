@@ -20,15 +20,19 @@ class ShadowConfig {
   const ShadowConfig({
     this.disable = false,
     this.color = const Color(0xFF9E9E9E),
-    this.intensity = 0.5,
+    this.minIntensity = 0.0,
+    this.maxIntensity = 0.5,
+    this.originOffset = const Offset(0, 0),
     this.offsetFactor = 0.1,
     this.spreadFactor = 0.0,
     this.blurRadius = 20,
     this.direction,
     this.enableReverse,
-  })  : assert(intensity >= 0 && intensity <= 1, 'shadowConfig.intensity'),
-        assert(offsetFactor >= 0, 'shadowConfig.offsetFactor'),
-        assert(spreadFactor >= 0, 'shadowConfig.spreadFactor');
+  })  : assert(minIntensity <= maxIntensity &&
+            minIntensity >= 0 &&
+            maxIntensity <= 1),
+        assert(offsetFactor >= 0),
+        assert(spreadFactor >= 0);
 
   /// 禁用
   final bool disable;
@@ -36,16 +40,34 @@ class ShadowConfig {
   /// 阴影颜色
   final Color color;
 
-  /// 阴影强度
+  /// 最小阴影强度
   ///
-  /// min: 0 max: 1
+  /// 范围：0 - 1
+  final double minIntensity;
+
+  /// 最大阴影强度
   ///
-  /// 为 0 时将没有阴影
-  final double intensity;
+  /// 范围：0 - 1
+  ///
+  /// 为 0 时将没有光源
+  final double maxIntensity;
+
+  /// 阴影偏移起始值
+  ///
+  /// {@template tilt.ShadowConfig.originOffset}
+  /// 指定起始值以像素单位进行方向 (x, y) 偏移，
+  /// 之后移动偏移将以该值作为起始点。
+  ///
+  /// 例如：
+  /// * (0, 0) 中心
+  /// * (40, 40) 向左上角偏移 40 像素
+  /// * (-60, 0) 仅向右偏移 60 像素
+  /// {@endtemplate}
+  final Offset originOffset;
 
   /// 阴影偏移系数
   ///
-  /// 相对当前的尺寸进行偏移
+  /// 移动时相对当前的尺寸进行偏移
   final double offsetFactor;
 
   /// 阴影扩散系数

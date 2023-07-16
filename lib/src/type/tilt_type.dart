@@ -45,9 +45,7 @@ class TiltConfig {
   /// * 180 会翻转
   ///
   /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的阴影关系
-  /// * [ShadowConfig.offsetFactor]
-  /// * [ShadowConfig.spreadFactor]
-  /// * [ShadowConfig.blurRadius]
+  /// * [ShadowConfig]
   /// {@endtemplate}
   final double angle;
 
