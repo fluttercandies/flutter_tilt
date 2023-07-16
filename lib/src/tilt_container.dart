@@ -51,7 +51,7 @@ class _TiltContainerState extends State<TiltContainer> {
   late final ShadowConfig _shadowConfig = widget.shadowConfig;
 
   /// 初始坐标区域进度
-  late final Offset _initAreaProgress = _tiltConfig.initTilt ?? Offset.zero;
+  late final Offset _initAreaProgress = _tiltConfig.origin ?? Offset.zero;
 
   late TiltState tiltState;
 
