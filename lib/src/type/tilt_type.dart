@@ -12,6 +12,7 @@ class TiltConfig {
     this.origin,
     this.angle = 10.0,
     this.direction,
+    this.enableRevert = true,
     this.enableReverse = false,
     this.enableOutsideAreaMove = true,
     this.enableMouseHover = true,
@@ -58,6 +59,12 @@ class TiltConfig {
   ///
   /// 如果还需要一些特殊的方向，可以像这样自定义 [TiltDirection(0.1, 0.1)]
   final List<TiltDirection>? direction;
+
+  /// 开启倾斜复原
+  ///
+  /// * true  退出触发区域后会复原至初始状态
+  /// * false 保留最后倾斜的状态
+  final bool enableRevert;
 
   /// 开启倾斜反向
   ///

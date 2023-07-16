@@ -148,6 +148,7 @@ class _TiltState extends State<Tilt> {
   /// 手势复原触发
   void onGesturesRevert(Offset offset) {
     if (!isInit) return;
+    if (!_tiltConfig.enableRevert) return;
     setState(() {
       areaProgress = p2cAreaProgress(
         width,
