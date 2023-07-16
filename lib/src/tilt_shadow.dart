@@ -130,7 +130,6 @@ class TiltShadow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(blurRadius);
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
