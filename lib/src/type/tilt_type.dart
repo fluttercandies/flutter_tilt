@@ -9,7 +9,7 @@ class TiltConfig {
   /// 倾斜配置
   const TiltConfig({
     this.disable = false,
-    this.origin,
+    this.initial,
     this.angle = 10.0,
     this.direction,
     this.enableRevert = true,
@@ -24,7 +24,7 @@ class TiltConfig {
 
   /// 初始倾斜量
   ///
-  /// {@template tilt.TiltConfig.origin}
+  /// {@template tilt.TiltConfig.initial}
   /// 最大倾斜角度依据 [angle]
   ///
   /// 正常范围 (x, y)：(1, 1) 至 (-1, -1)
@@ -37,7 +37,7 @@ class TiltConfig {
   /// * (-1.0, -1.0) 会倾斜右下角 [angle] 最大角度
   /// * (2, 2) 会倾斜左上角 [angle] 最大角度*2
   /// {@endtemplate}
-  final Offset? origin;
+  final Offset? initial;
 
   /// 可倾斜角度
   ///

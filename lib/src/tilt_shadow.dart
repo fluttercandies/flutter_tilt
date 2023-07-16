@@ -79,7 +79,7 @@ class TiltShadow extends StatelessWidget {
 
   /// 阴影偏移
   Offset get offset =>
-      (enableReverse ? -baseOffset : baseOffset) - shadowConfig.offsetOrigin;
+      (enableReverse ? -baseOffset : baseOffset) - shadowConfig.offsetInitial;
 
   /// 阴影模糊半径进度
   ///
@@ -113,7 +113,7 @@ class TiltShadow extends StatelessWidget {
   ///
   /// 阴影扩散半径距离 - 阴影扩散半径距离还原 + 起始扩散半径
   double get spreadRadius =>
-      spreadRadiusDistance - spreadRadiusRevert + shadowConfig.spreadOrigin;
+      spreadRadiusDistance - spreadRadiusRevert + shadowConfig.spreadInitial;
 
   /// 开启反向（受光源影响）
   ///
