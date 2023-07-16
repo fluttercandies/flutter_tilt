@@ -81,7 +81,7 @@ class _TiltState extends State<Tilt> {
       areaProgress: areaProgress,
       isMove: isMove,
       onMove: onGesturesMove,
-      onStop: onGesturesStop,
+      onRevert: onGesturesRevert,
       onResize: onResize,
       child: GesturesListener(
         tiltConfig: _tiltConfig,
@@ -127,12 +127,12 @@ class _TiltState extends State<Tilt> {
         isMove = true;
       });
     } else {
-      onGesturesStop(offset);
+      onGesturesRevert(offset);
     }
   }
 
-  /// 手势停止触发
-  void onGesturesStop(Offset offset) {
+  /// 手势复原触发
+  void onGesturesRevert(Offset offset) {
     if (!isInit) return;
     setState(() {
       areaProgress = p2cAreaProgress(

@@ -11,7 +11,7 @@ class TiltState extends InheritedWidget {
     required this.onResize,
     required this.isMove,
     required this.onMove,
-    required this.onStop,
+    required this.onRevert,
     required Widget child,
   }) : super(key: key, child: child);
 
@@ -36,8 +36,8 @@ class TiltState extends InheritedWidget {
   /// 坐标移动
   final void Function(Offset) onMove;
 
-  /// 停止移动
-  final void Function(Offset) onStop;
+  /// 坐标复原
+  final void Function(Offset) onRevert;
 
   static TiltState? of(BuildContext context) {
     final tilt = context.dependOnInheritedWidgetOfExactType<TiltState>();
