@@ -87,6 +87,7 @@ class _TiltContainerState extends State<TiltContainer> {
           ignoring: false,
           child: Transform(
             alignment: AlignmentDirectional.center,
+            filterQuality: _tiltConfig.filterQuality,
             transform: isInit && !_tiltConfig.disable
                 ? tiltTransform(
                     width,

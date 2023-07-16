@@ -15,6 +15,7 @@ class TiltConfig {
     this.enableReverse = false,
     this.enableOutsideAreaMove = true,
     this.enableMouseHover = true,
+    this.filterQuality = FilterQuality.high,
   });
 
   /// 禁用
@@ -83,6 +84,9 @@ class TiltConfig {
 
   /// 启用鼠标 Hover 触发倾斜
   final bool enableMouseHover;
+
+  /// FilterQuality
+  final FilterQuality filterQuality;
 }
 
 /// 倾斜方向
