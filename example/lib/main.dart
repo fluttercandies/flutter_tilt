@@ -26,7 +26,7 @@ class TiltDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Color(0xFF0C0C0C),
       body: Center(
         /// Tilt Demo
         child: Tilt(
@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0x20777777),
+      backgroundColor: const Color(0x2026262B),
       appBar: AppBar(
         title: Text(
           widget.title,
