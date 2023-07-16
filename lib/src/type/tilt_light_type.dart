@@ -20,8 +20,8 @@ class LightConfig {
     this.direction = LightDirection.around,
     this.enableReverse,
   }) : assert(minIntensity <= maxIntensity &&
-            minIntensity >= 0 &&
-            maxIntensity <= 1);
+            minIntensity >= 0.0 &&
+            maxIntensity <= 1.0);
 
   /// 禁用
   final bool disable;

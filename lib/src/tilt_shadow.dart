@@ -51,7 +51,7 @@ class TiltShadow extends StatelessWidget {
   double get centerProgress => p2pDistance(Offset.zero, progress);
 
   /// 距离中心的进度最大值
-  double get centerMaxProgress => centerProgress > 1 ? 1 : centerProgress;
+  double get centerMaxProgress => centerProgress > 1.0 ? 1.0 : centerProgress;
 
   /// 阴影显示（受光源影响）
   ///
@@ -74,7 +74,7 @@ class TiltShadow extends StatelessWidget {
       progress *
       p2pDistance(
         centerPosition(width, height),
-        centerPosition(width, height) * (shadowConfig.offsetFactor + 1),
+        centerPosition(width, height) * (shadowConfig.offsetFactor + 1.0),
       );
 
   /// 阴影偏移
@@ -97,7 +97,7 @@ class TiltShadow extends StatelessWidget {
   /// (距离中心的进度 * 阴影扩散系数)
   double get spreadRadiusDistance => p2pDistance(
         Offset(width, height),
-        Offset(width, height) * (shadowConfig.spreadFactor + 1),
+        Offset(width, height) * (shadowConfig.spreadFactor + 1.0),
       );
 
   /// 阴影扩散半径距离还原
@@ -106,7 +106,7 @@ class TiltShadow extends StatelessWidget {
   ///
   /// (阴影扩散半径距离 + 初始固定扩散值，随进度还原至 0)
   double get spreadRadiusRevert =>
-      (spreadRadiusDistance + ((width < height ? width : height) / 10)) *
+      (spreadRadiusDistance + ((width < height ? width : height) / 10.0)) *
       (1 - centerMaxProgress);
 
   /// 阴影扩散半径
@@ -125,7 +125,7 @@ class TiltShadow extends StatelessWidget {
   /// 禁用阴影
   bool get shadowDisable =>
       shadowConfig.disable ||
-      shadowConfig.maxIntensity == 0 ||
+      shadowConfig.maxIntensity == 0.0 ||
       shadowConfig.direction == ShadowDirection.none;
 
   @override

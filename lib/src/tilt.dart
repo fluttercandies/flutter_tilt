@@ -67,7 +67,7 @@ class _TiltState extends State<Tilt> {
 
   /// 是否初始化
   late bool isInit = false;
-  late double width = 0, height = 0;
+  late double width = 0.0, height = 0.0;
 
   /// 当前坐标的区域进度
   late Offset areaProgress = Offset.zero;

@@ -10,7 +10,7 @@ class TiltConfig {
   const TiltConfig({
     this.disable = false,
     this.origin,
-    this.angle = 10,
+    this.angle = 10.0,
     this.direction,
     this.enableReverse = false,
     this.enableOutsideAreaMove = true,
@@ -103,8 +103,8 @@ class TiltDirection {
   /// * (0, 1)    最上方
   /// * (0, 0.9)  上方 0.9 比例的位置
   const TiltDirection(this._dx, this._dy)
-      : assert(_dx <= 1 && _dx >= -1),
-        assert(_dy <= 1 && _dy >= -1);
+      : assert(_dx <= 1.0 && _dx >= -1.0),
+        assert(_dy <= 1.0 && _dy >= -1.0);
 
   final double _dx;
   final double _dy;
@@ -112,11 +112,11 @@ class TiltDirection {
   double get dx => _dx;
   double get dy => _dy;
 
-  static TiltDirection none = const TiltDirection(0, 0);
-  static TiltDirection top = const TiltDirection(0, 1);
-  static TiltDirection bottom = const TiltDirection(0, -1);
-  static TiltDirection left = const TiltDirection(1, 0);
-  static TiltDirection right = const TiltDirection(-1, 0);
+  static TiltDirection none = const TiltDirection(0.0, 0.0);
+  static TiltDirection top = const TiltDirection(0.0, 1.0);
+  static TiltDirection bottom = const TiltDirection(0.0, -1.0);
+  static TiltDirection left = const TiltDirection(1.0, 0.0);
+  static TiltDirection right = const TiltDirection(-1.0, 0.0);
   static TiltDirection topLeft = top + left;
   static TiltDirection topRight = top + right;
   static TiltDirection bottomLeft = bottom + left;
@@ -133,7 +133,7 @@ class TiltDirection {
     List<TiltDirection> validator,
   ) {
     final double x = tiltDirection.dx, y = tiltDirection.dy;
-    late double dx = 0, dy = 0;
+    late double dx = 0.0, dy = 0.0;
 
     for (TiltDirection value in validator) {
       /// 默认最大设置的验证范围，避免方向值超出验证值的时候会返回 0

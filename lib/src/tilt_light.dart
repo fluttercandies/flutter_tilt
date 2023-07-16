@@ -43,7 +43,7 @@ class TiltLight extends StatelessWidget {
   Offset get position => progressPosition(width, height, areaProgress);
 
   /// 尺寸扩散的倍数
-  double get spread => 4;
+  double get spread => 4.0;
 
   /// 扩散的尺寸 width
   double get spreadW => width * spread;
@@ -79,7 +79,7 @@ class TiltLight extends StatelessWidget {
   /// 禁用光源
   bool get lightDisable =>
       lightConfig.disable ||
-      lightConfig.maxIntensity == 0 ||
+      lightConfig.maxIntensity == 0.0 ||
       lightConfig.direction == LightDirection.none;
 
   @override

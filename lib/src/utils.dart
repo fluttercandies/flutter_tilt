@@ -11,7 +11,7 @@ import 'package:flutter_tilt/src/type/tilt_type.dart';
 Offset centerPosition(double width, double height) => Offset(width, height) / 2;
 
 /// 弧度
-double radian(double angle) => pi / 180 * angle;
+double radian(double angle) => pi / 180.0 * angle;
 
 /// 两点间的距离 sqrt((x1-x2)²+(y1-y2)²)
 ///
@@ -69,8 +69,8 @@ Offset p2cAreaPosition(double width, double height, Offset position) {
   late double x = center.dx - position.dx;
   late double y = center.dy - position.dy;
 
-  final double centerWidth = width / 2;
-  final double centerHeight = height / 2;
+  final double centerWidth = width / 2.0;
+  final double centerHeight = height / 2.0;
 
   /// 限制最大值
   if (x > centerWidth) x = centerWidth;
@@ -103,14 +103,14 @@ Offset p2cAreaProgress(
   List<TiltDirection>? tiltDirection,
 ) {
   final Offset center = centerPosition(width, height);
-  late double x = (center.dx - position.dx) / width * 2;
-  late double y = (center.dy - position.dy) / height * 2;
+  late double x = (center.dx - position.dx) / width * 2.0;
+  late double y = (center.dy - position.dy) / height * 2.0;
 
   /// 限制最大值
-  if (x > 1) x = 1;
-  if (x < -1) x = -1;
-  if (y > 1) y = 1;
-  if (y < -1) y = -1;
+  if (x > 1.0) x = 1.0;
+  if (x < -1.0) x = -1.0;
+  if (y > 1.0) y = 1.0;
+  if (y < -1.0) y = -1.0;
 
   /// 限制倾斜方向
   if ((tiltDirection ?? []).isNotEmpty) {
@@ -129,8 +129,8 @@ Offset p2cAreaProgress(
 ///
 Offset progressPosition(double width, double height, Offset areaProgress) =>
     Offset(
-      width / 2 * (1 - areaProgress.dx),
-      height / 2 * (1 - areaProgress.dy),
+      width / 2.0 * (1.0 - areaProgress.dx),
+      height / 2.0 * (1.0 - areaProgress.dy),
     );
 
 /// 计算提供的方向进度
@@ -153,11 +153,11 @@ double directionProgress<T>(
   double height,
   Offset areaProgress,
   T direction, {
-  double min = 0,
-  double max = 1,
+  double min = 0.0,
+  double max = 1.0,
   bool enableReverse = false,
 }) {
-  assert(min <= max && min >= 0 && max <= 1);
+  assert(min <= max && min >= 0.0 && max <= 1.0);
 
   /// 区域进度
   final Offset progress = -areaProgress;
@@ -216,11 +216,11 @@ double directionProgress<T>(
         progressData = (progressX - progressY);
         break;
       case LightDirection.xCenter:
-        if (progressY < 0) dataY = -progressY;
+        if (progressY < 0.0) dataY = -progressY;
         progressData = max - dataY;
         break;
       case LightDirection.yCenter:
-        if (progressX < 0) dataX = -progressX;
+        if (progressX < 0.0) dataX = -progressX;
         progressData = max - dataX;
         break;
     }
@@ -267,11 +267,11 @@ double directionProgress<T>(
         progressData = -(progressX - progressY);
         break;
       case ShadowDirection.xCenter:
-        if (progressY < 0) dataY = -progressY;
+        if (progressY < 0.0) dataY = -progressY;
         progressData = max - dataY;
         break;
       case ShadowDirection.yCenter:
-        if (progressX < 0) dataX = -progressX;
+        if (progressX < 0.0) dataX = -progressX;
         progressData = max - dataX;
         break;
     }
@@ -297,7 +297,7 @@ double directionProgress<T>(
 /// [position] 当前坐标定位
 bool isInRange(double width, double height, Offset position) {
   final double x = position.dx, y = position.dy;
-  return x <= width && x >= 0 && y <= height && y >= 0;
+  return x <= width && x >= 0.0 && y <= height && y >= 0.0;
 }
 
 /// 限制区域尺寸定位
