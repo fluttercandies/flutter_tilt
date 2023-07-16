@@ -15,10 +15,13 @@ class LightConfig {
   const LightConfig({
     this.disable = false,
     this.color = const Color(0xFFFFFFFF),
-    this.intensity = 0.4,
+    this.minIntensity = 0.0,
+    this.maxIntensity = 0.4,
     this.direction = LightDirection.around,
     this.enableReverse,
-  }) : assert(intensity >= 0 && intensity <= 1, 'shadowConfig.intensity');
+  }) : assert(minIntensity <= maxIntensity &&
+            minIntensity >= 0 &&
+            maxIntensity <= 1);
 
   /// 禁用
   final bool disable;
@@ -26,12 +29,17 @@ class LightConfig {
   /// 光源颜色
   final Color color;
 
-  /// 光源强度
+  /// 最小光源强度
   ///
-  /// min: 0 max: 1
+  /// 范围：0 - 1
+  final double minIntensity;
+
+  /// 最大光源强度
+  ///
+  /// 范围：0 - 1
   ///
   /// 为 0 时将没有光源
-  final double intensity;
+  final double maxIntensity;
 
   /// 光源方向
   ///

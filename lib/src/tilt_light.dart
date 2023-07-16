@@ -67,7 +67,8 @@ class TiltLight extends StatelessWidget {
         height,
         areaProgress,
         lightConfig.direction,
-        max: lightConfig.intensity,
+        min: lightConfig.minIntensity,
+        max: lightConfig.maxIntensity,
       );
 
   /// 开启反向
@@ -78,7 +79,7 @@ class TiltLight extends StatelessWidget {
   /// 禁用光源
   bool get lightDisable =>
       lightConfig.disable ||
-      lightConfig.intensity == 0 ||
+      lightConfig.maxIntensity == 0 ||
       lightConfig.direction == LightDirection.none;
 
   @override
