@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/utils.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';

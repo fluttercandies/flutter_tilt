@@ -30,13 +30,13 @@ class GesturesListener extends StatelessWidget {
       /// 手势监听
       child: Listener(
         onPointerMove: (e) => tiltState.onMove(e.localPosition),
-        onPointerUp: (e) => tiltState.onStop(e.localPosition),
-        onPointerCancel: (e) => tiltState.onStop(e.localPosition),
+        onPointerUp: (e) => tiltState.onRevert(e.localPosition),
+        onPointerCancel: (e) => tiltState.onRevert(e.localPosition),
         child: MouseRegion(
           onHover: tiltConfig.enableMouseHover
               ? (e) => tiltState.onMove(e.localPosition)
               : null,
-          onExit: (e) => tiltState.onStop(e.localPosition),
+          onExit: (e) => tiltState.onRevert(e.localPosition),
           child: child,
         ),
       ),
