@@ -46,11 +46,12 @@ class _TiltDemoState extends State<TiltDemo> {
           tiltConfig: const TiltConfig(angle: 15),
           lightConfig: const LightConfig(
             minIntensity: 0.1,
-            maxIntensity: 0.6,
+            maxIntensity: 0.4,
           ),
           shadowConfig: const ShadowConfig(
             minIntensity: 0.05,
-            spreadInitial: -5,
+            maxIntensity: 0.4,
+            offsetFactor: 0.08,
             minBlurRadius: 10,
             maxBlurRadius: 15,
           ),
@@ -107,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
       width: 250,
       height: 450,
       child: Scaffold(
-        backgroundColor: const Color(0x2026262B),
+        backgroundColor: const Color(0x206D6E6F),
         appBar: AppBar(
           title: Text(
             widget.title,
