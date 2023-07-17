@@ -72,8 +72,6 @@ class Tilt extends StatefulWidget {
 }
 
 class _TiltState extends State<Tilt> {
-  late final Widget _child = widget.child;
-  late final List<Widget> _childInner = widget.childInner;
   late final bool _disable = widget.disable;
   late final int _fps = widget.fps;
   late final BorderRadiusGeometry? _borderRadius = widget.borderRadius;
@@ -101,7 +99,7 @@ class _TiltState extends State<Tilt> {
       return Container(
         decoration: BoxDecoration(borderRadius: _borderRadius),
         clipBehavior: _clipBehavior,
-        child: _child,
+        child: widget.child,
       );
     }
     return TiltState(
@@ -121,8 +119,8 @@ class _TiltState extends State<Tilt> {
           tiltConfig: _tiltConfig,
           lightConfig: _lightConfig,
           shadowConfig: _shadowConfig,
-          childInner: _childInner,
-          child: _child,
+          childInner: widget.childInner,
+          child: widget.child,
         ),
       ),
     );

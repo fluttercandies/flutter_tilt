@@ -50,8 +50,6 @@ class TiltContainer extends StatefulWidget {
 }
 
 class _TiltContainerState extends State<TiltContainer> {
-  late final Widget _child = widget.child;
-  late final List<Widget> _childInner = widget.childInner;
   late final BorderRadiusGeometry? _borderRadius = widget.borderRadius;
   late final Clip _clipBehavior = widget.clipBehavior;
   late final TiltConfig _tiltConfig = widget.tiltConfig;
@@ -155,12 +153,12 @@ class _TiltContainerState extends State<TiltContainer> {
               ),
 
               /// Inner Child
-              ..._childInner,
+              ...widget.childInner,
             ],
           ),
         );
       },
-      child: _child,
+      child: widget.child,
     );
   }
 }
