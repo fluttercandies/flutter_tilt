@@ -46,7 +46,6 @@ class _TiltDemoState extends State<TiltDemo> {
           tiltConfig: const TiltConfig(angle: 15),
           lightConfig: const LightConfig(
             minIntensity: 0.1,
-            maxIntensity: 0.4,
           ),
           shadowConfig: const ShadowConfig(
             minIntensity: 0.05,
