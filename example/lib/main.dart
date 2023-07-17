@@ -20,37 +20,69 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CounterController extends ChangeNotifier {
-  ValueNotifier<int> counter = ValueNotifier(0);
-}
-
-class TiltDemo extends StatelessWidget {
+class TiltDemo extends StatefulWidget {
   const TiltDemo({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final CounterController counterController = CounterController();
+  State<TiltDemo> createState() => _TiltDemoState();
+}
 
+class _TiltDemoState extends State<TiltDemo> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0C0C0C),
+      backgroundColor: const Color(0xFFFFFFFF),
       body: Center(
         child: Tilt(
           borderRadius: BorderRadius.circular(24),
           tiltConfig: const TiltConfig(angle: 15),
           lightConfig: const LightConfig(
             minIntensity: 0.1,
-            maxIntensity: 0.3,
+            maxIntensity: 0.6,
           ),
           shadowConfig: const ShadowConfig(
             minIntensity: 0.05,
-            maxIntensity: 0.3,
-            spreadInitial: -10,
+            spreadInitial: -5,
             minBlurRadius: 10,
-            maxBlurRadius: 20,
+            maxBlurRadius: 15,
           ),
           childInner: [
-            CounterText(controller: counterController),
-            CounterActionButton(controller: counterController),
+            Positioned.fill(
+              top: -20,
+              child: Center(
+                child: TiltParallax(
+                  size: const Offset(-20, -20),
+                  child: Text(
+                    '$_counter',
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: TiltParallax(
+                size: const Offset(25, 25),
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: FloatingActionButton(
+                    onPressed: _incrementCounter,
+                    tooltip: 'Increment',
+                    child: const Icon(Icons.add),
+                  ),
+                ),
+              ),
+            ),
           ],
           child: const MyHomePage(title: 'Flutter Tilt Demo'),
         ),
@@ -73,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 250,
-      height: 400,
+      height: 450,
       child: Scaffold(
         backgroundColor: const Color(0x2026262B),
         appBar: AppBar(
@@ -87,64 +119,10 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: const <Widget>[
               Text(
-                'You have pushed the button this many times:',
-                style: TextStyle(fontSize: 10, color: Colors.white),
+                'You have pushed the button this many times',
+                style: TextStyle(fontSize: 10),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CounterActionButton extends StatelessWidget {
-  const CounterActionButton({super.key, required this.controller});
-  final CounterController controller;
-
-  void _incrementCounter() {
-    controller.counter.value++;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 20,
-      right: 20,
-      child: TiltParallax(
-        child: SizedBox(
-          width: 50,
-          height: 50,
-          child: FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CounterText extends StatelessWidget {
-  const CounterText({super.key, required this.controller});
-  final CounterController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned.fill(
-      top: -20,
-      child: Center(
-        child: TiltParallax(
-          size: const Offset(-10, -10),
-          child: ValueListenableBuilder(
-            valueListenable: controller.counter,
-            builder: (_, counter, child) {
-              return Text(
-                '$counter',
-                style: const TextStyle(fontSize: 20, color: Colors.white),
-              );
-            },
           ),
         ),
       ),
