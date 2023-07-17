@@ -5,6 +5,6 @@
 
   <br/>
 
-  <img src=".README/preview.gif" style="max-width: 320px; border-radius: 20px;" />
+  <img src=".README/preview.gif" width="320px" style="border-radius: 20px;" />
 </div>
 
