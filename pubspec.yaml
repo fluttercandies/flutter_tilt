@@ -1,14 +1,14 @@
 # https://dart.dev/tools/pub/pubspec
 name: flutter_tilt
-description: A new Flutter project.
+description: A parallax tilt hover effect.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+# publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # https://semver.org/spec/v2.0.0-rc.1.html
 # https://dart.dev/tools/pub/versioning#semantic-versions
 # https://dart.dev/tools/pub/dependencies#version-constraints
-version: 0.0.1
+version: 0.0.1-dev.0
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
