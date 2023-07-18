@@ -22,6 +22,27 @@
 
 <br/>
 
+<sub>
+
+- [特性](#特性-)
+  - [TODO](#TODO-)
+- [安装](#安装-)
+  - [版本兼容](#版本兼容-)
+  - [添加 flutter_tilt](#添加-flutter_tilt-)
+- [使用](#使用-)
+  - [简单用法：倾斜](#简单用法倾斜-)
+    - [Tilt widget 参数](#tilt-widget-参数)
+    - [TiltConfig](#tiltconfig)
+    - [LightConfig](#lightconfig)
+    - [ShadowConfig](#shadowconfig)
+  - [简单用法：视差](#简单用法视差-)
+    - [TiltParallax widget 参数](#tiltparallax-widget-参数)
+  - [许可证](#许可证-)
+
+</sub>
+
+<br/>
+
 
 ## 特性 ✨  
 
@@ -193,7 +214,7 @@ Tilt(
 | filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality。 |  
 
 
-## License 📄  
+## 许可证 📄  
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](https://github.com/AmosHuKe/flutter_tilt/blob/main/LICENSE)  
 根据 MIT 许可证开源。
