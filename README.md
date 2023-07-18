@@ -22,6 +22,42 @@ Language: English | [中文](README-ZH.md)</a>
 
 <br/>
 
+## Table of contents 🪄
+
+<sub>
+
+- [Features ✨](#features-)
+
+  - [TODO 💡](#todo-)
+
+- [Install 🎯](#install-)
+
+  - [Versions compatibility 🐦](#versions-compatibility-)
+
+  - [Add package 📦](#add-package-)
+
+- [Usage 📖](#usage-)
+
+  - [Simple usage: Tilt 📦](#simple-usage-tilt-)
+
+    - [Tilt widget parameters](#tilt-widget-parameters)
+
+    - [TiltConfig](#tiltconfig)
+
+    - [LightConfig](#lightconfig)
+
+    - [ShadowConfig](#shadowconfig)
+
+  - [Simple usage: Parallax 👀](#simple-usage-parallax-)
+
+    - [TiltParallax widget parameters](#tiltparallax-widget-parameters)
+
+- [License 📄](#license-)
+
+</sub>
+
+<br/>
+
 
 ## Features ✨  
 
@@ -49,7 +85,7 @@ Language: English | [中文](README-ZH.md)</a>
 | 0.0.1+ |  ✅  |  ✅  |  ✅  |  
 
 
-### Add Package 📦  
+### Add package 📦  
 
 Run this command with Flutter,
 ```sh
