@@ -22,27 +22,41 @@
 
 <br/>
 
+## 目录 🪄
+
 <sub>
 
 - [特性](#特性-)
-  - [TODO](#TODO-)
+  
+  - [TODO](#todo-)
+    
 - [安装](#安装-)
+  
   - [版本兼容](#版本兼容-)
+    
   - [添加 flutter_tilt](#添加-flutter_tilt-)
+    
 - [使用](#使用-)
+  
   - [简单用法：倾斜](#简单用法倾斜-)
+    
     - [Tilt widget 参数](#tilt-widget-参数)
+      
     - [TiltConfig](#tiltconfig)
+      
     - [LightConfig](#lightconfig)
+      
     - [ShadowConfig](#shadowconfig)
+      
   - [简单用法：视差](#简单用法视差-)
+    
     - [TiltParallax widget 参数](#tiltparallax-widget-参数)
-  - [许可证](#许可证-)
+      
+- [许可证](#许可证-)
 
 </sub>
 
 <br/>
-
 
 ## 特性 ✨  
 
