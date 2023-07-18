@@ -1,4 +1,6 @@
-<p align="right">Language: English | <a alt="中文" href="README-ZH.md">中文</a></p>
+Language: English | [中文](README-ZH.md)</a>
+
+<br/>
 
 <h1 align="center">Flutter Tilt</h1>
 
@@ -8,11 +10,13 @@
   <a href="https://github.com/AmosHuKe/flutter_tilt/blob/main/LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-green"/></a>
 </p>
 
+<p align="center">
+  <strong >Easily Apply Tilt Parallax Hover Effects on Flutter!</strong>
+</p>
+
+<br/>
+
 <div align="center">
-  <strong>Easily Apply Tilt Parallax Hover Effects on Flutter!</strong>
-
-  <br/>
-
   <img src="https://github.com/AmosHuKe/flutter_tilt/blob/main/.README/preview.gif?raw=true" width="320px" style="border-radius: 20px;" />
 </div>
 
@@ -32,9 +36,9 @@
 
 ### TODO 💡  
 
-[ ] Sensors  
-[ ] Tilt data callback  
-[ ] Tilt controller  
+- [ ] Sensors  
+- [ ] Tilt data callback  
+- [ ] Tilt controller  
 
 
 ## Install 🎯
@@ -45,7 +49,7 @@
 | 0.0.1+ |  ✅  |  ✅  |  ✅  |  
 
 
-### Pub add 📦  
+### Add Package 📦  
 
 Run this command with Flutter,
 ```sh
