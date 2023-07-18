@@ -8,7 +8,7 @@ description: Easily apply tilt parallax hover effects on Flutter!
 # https://semver.org/spec/v2.0.0-rc.1.html
 # https://dart.dev/tools/pub/versioning#semantic-versions
 # https://dart.dev/tools/pub/dependencies#version-constraints
-version: 0.0.1-dev.0
+version: 0.0.1-dev.1
 repository: https://github.com/AmosHuKe/flutter_tilt
 
 environment:
