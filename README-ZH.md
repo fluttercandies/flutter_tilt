@@ -1,4 +1,6 @@
-<p align="right">语言: <a alt="English" href="README.md">English</a> | 中文</p>
+语言：[English](README.md) | 中文
+
+<br/>
 
 <h1 align="center">Flutter Tilt</h1>
 
@@ -8,11 +10,13 @@
   <a href="https://github.com/AmosHuKe/flutter_tilt/blob/main/LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-green"/></a>
 </p>
 
+<p align="center">
+  <strong >在 Flutter 上轻松创建倾斜视差悬停效果！</strong>
+</p>
+
+<br/>
+
 <div align="center">
-  <strong>在 Flutter 上轻松创建倾斜视差悬停效果！</strong>
-
-  <br/>
-
   <img src="https://github.com/AmosHuKe/flutter_tilt/blob/main/.README/preview.gif?raw=true" width="320px" style="border-radius: 20px;" />
 </div>
 
@@ -32,9 +36,9 @@
 
 ### TODO 💡  
 
-[ ] 传感器触发  
-[ ] 倾斜数据回调  
-[ ] 倾斜控制器  
+- [ ] 传感器触发  
+- [ ] 倾斜数据回调  
+- [ ] 倾斜控制器  
 
 
 ## 安装 🎯
@@ -47,7 +51,7 @@
 
 ### 添加 flutter_tilt 📦  
 
-使用 Flutter 运行以下命令，
+使用 Flutter 运行以下指令，
 ```sh
 $ flutter pub add flutter_tilt
 ```
@@ -61,7 +65,7 @@ dependencies:
 
 ## 使用 📖  
 
-示例: [flutter_tilt/example](https://github.com/AmosHuKe/flutter_tilt/tree/main/example)
+示例：[flutter_tilt/example](https://github.com/AmosHuKe/flutter_tilt/tree/main/example)
 
 
 ### 简单用法：倾斜 📦  
