@@ -7,7 +7,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -92,7 +92,7 @@ class _TiltDemoState extends State<TiltDemo> {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -114,10 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
             style: const TextStyle(fontSize: 18),
           ),
         ),
-        body: Center(
+        body: const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
+            children: [
               Text(
                 'You have pushed the button this many times',
                 style: TextStyle(fontSize: 10),
