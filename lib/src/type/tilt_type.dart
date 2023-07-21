@@ -3,6 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
+import 'package:flutter_tilt/src/model/tilt_model.dart';
+
+/// 倾斜回调
+typedef TiltCallback = void Function(TiltDataModel tiltDataModel);
+
 /// 倾斜配置
 @immutable
 class TiltConfig {

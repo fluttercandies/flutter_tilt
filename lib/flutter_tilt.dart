@@ -8,3 +8,5 @@ export 'src/enums.dart';
 export 'src/type/tilt_type.dart';
 export 'src/type/tilt_light_type.dart';
 export 'src/type/tilt_shadow_type.dart';
+
+export 'src/model/tilt_model.dart';

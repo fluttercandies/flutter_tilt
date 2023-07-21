@@ -36,7 +36,7 @@ Matrix4 tiltTransform(
   bool enableReverse,
 ) {
   /// 旋转大小：区域进度 * 弧度
-  final rotate = areaProgress * radian(angle);
+  final rotate = rotateAxis(areaProgress * radian(angle), enableReverse);
   final double rotateX = rotate.dx, rotateY = rotate.dy;
 
   return Matrix4.identity()
@@ -45,9 +45,17 @@ Matrix4 tiltTransform(
     ..setEntry(3, 2, 0.5 / (width > height ? width : height))
 
     /// 旋转轴
-    ..rotateX(enableReverse ? -rotateY : rotateY)
-    ..rotateY(enableReverse ? rotateX : -rotateX);
+    ..rotateX(rotateX)
+    ..rotateY(rotateY);
 }
+
+/// 旋转轴
+///
+/// * [rotate] 旋转大小
+/// * [enableReverse] 反向
+Offset rotateAxis(Offset rotate, bool enableReverse) => enableReverse
+    ? Offset(-rotate.dy, rotate.dx)
+    : Offset(rotate.dy, -rotate.dx);
 
 /// 计算当前坐标相对于中心坐标的区域坐标
 ///

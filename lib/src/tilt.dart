@@ -5,6 +5,7 @@ import 'package:flutter_tilt/src/utils.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
+import 'package:flutter_tilt/src/type/gestures_type.dart';
 
 import 'package:flutter_tilt/src/gestures_listener.dart';
 import 'package:flutter_tilt/src/tilt_container.dart';
@@ -28,6 +29,10 @@ class Tilt extends StatefulWidget {
     this.tiltConfig = const TiltConfig(),
     this.lightConfig = const LightConfig(),
     this.shadowConfig = const ShadowConfig(),
+    this.onTiltBegin,
+    this.onTiltEnd,
+    this.onGestureMove,
+    this.onGestureLeave,
   });
 
   /// 主 child
@@ -66,6 +71,22 @@ class Tilt extends StatefulWidget {
 
   /// 阴影配置
   final ShadowConfig shadowConfig;
+
+  /// 触发倾斜开始
+  final TiltCallback? onTiltBegin;
+
+  /// 触发倾斜结束
+  final VoidCallback? onTiltEnd;
+
+  /// 触发手势移动
+  ///
+  /// [position] 当前坐标
+  final TiltGestureMoveCallback? onGestureMove;
+
+  /// 触发手势离开
+  ///
+  /// [position] 当前坐标
+  final TiltGestureLeaveCallback? onGestureLeave;
 
   @override
   State<Tilt> createState() => _TiltState();
@@ -119,6 +140,8 @@ class _TiltState extends State<Tilt> {
           tiltConfig: _tiltConfig,
           lightConfig: _lightConfig,
           shadowConfig: _shadowConfig,
+          onTiltBegin: widget.onTiltBegin,
+          onTiltEnd: widget.onTiltEnd,
           childInner: widget.childInner,
           child: widget.child,
         ),
@@ -146,6 +169,7 @@ class _TiltState extends State<Tilt> {
   void onGesturesMove(Offset offset) {
     if (!isInit) return;
     if (!fpsTimer()) return;
+    widget.onGestureMove != null ? widget.onGestureMove!(offset) : null;
     if (_tiltConfig.enableOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
         areaProgress = p2cAreaProgress(
@@ -164,6 +188,7 @@ class _TiltState extends State<Tilt> {
   /// 手势复原触发
   void onGesturesRevert(Offset offset) {
     if (!isInit) return;
+    widget.onGestureLeave != null ? widget.onGestureLeave!(offset) : null;
     if (!_tiltConfig.enableRevert) return;
     setState(() {
       areaProgress = p2cAreaProgress(

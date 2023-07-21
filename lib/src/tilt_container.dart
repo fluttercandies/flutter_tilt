@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter_tilt/src/utils.dart';
+import 'package:flutter_tilt/src/data/tilt_data.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
@@ -9,6 +9,7 @@ import 'package:flutter_tilt/src/tilt_light.dart';
 import 'package:flutter_tilt/src/tilt_shadow.dart';
 
 import 'package:flutter_tilt/src/state/tilt_state.dart';
+import 'package:flutter_tilt/src/model/tilt_model.dart';
 
 class TiltContainer extends StatefulWidget {
   const TiltContainer({
@@ -20,6 +21,8 @@ class TiltContainer extends StatefulWidget {
     required this.tiltConfig,
     required this.lightConfig,
     required this.shadowConfig,
+    this.onTiltBegin,
+    this.onTiltEnd,
   });
 
   /// 主 child
@@ -44,6 +47,12 @@ class TiltContainer extends StatefulWidget {
 
   /// 阴影配置
   final ShadowConfig shadowConfig;
+
+  /// 触发倾斜开始
+  final TiltCallback? onTiltBegin;
+
+  /// 触发倾斜结束
+  final VoidCallback? onTiltEnd;
 
   @override
   State<TiltContainer> createState() => _TiltContainerState();
@@ -88,19 +97,23 @@ class _TiltContainerState extends State<TiltContainer> {
     return TweenAnimationBuilder(
       duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(end: isMove ? areaProgress : _initAreaProgress),
+      onEnd: widget.onTiltEnd,
       builder: (BuildContext context, Offset value, Widget? child) {
+        final TiltDataModel tiltDataModel = TiltData(
+          isInit: isInit,
+          width: width,
+          height: height,
+          areaProgress: value,
+          tiltConfig: _tiltConfig,
+        ).data;
+        if (isInit && widget.onTiltBegin != null) {
+          widget.onTiltBegin!(tiltDataModel);
+        }
+
         return Transform(
           alignment: AlignmentDirectional.center,
           filterQuality: _tiltConfig.filterQuality,
-          transform: isInit && !_tiltConfig.disable
-              ? tiltTransform(
-                  width,
-                  height,
-                  value,
-                  _tiltConfig.angle,
-                  _tiltConfig.enableReverse,
-                )
-              : Matrix4.identity(),
+          transform: tiltDataModel.transform,
           child: Stack(
             clipBehavior: Clip.none,
             children: [
