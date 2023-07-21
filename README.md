@@ -73,7 +73,6 @@ Language: English | [中文](README-ZH.md)</a>
 ### TODO 💡  
 
 - [ ] Sensors  
-- [ ] Tilt data callback  
 - [ ] Tilt controller  
 
 
@@ -136,6 +135,10 @@ Tilt(
 | tiltConfig | `TiltConfig` | `TiltConfig()` | Tilt effect config. |  
 | lightConfig | `LightConfig` | `LightConfig()` | Light effect config. |  
 | shadowConfig | `ShadowConfig` | `ShadowConfig()` | Shadow effect config. |  
+| onTiltBegin | `void Function(TiltDataModel tiltDataModel)?` | `null` | Tilt begin callback. |  
+| onTiltEnd | `void Function()?` | `null` | Tilt end callback. |  
+| onGestureMove | `void Function(Offset position)?` | `null` | Gesture move callback. |  
+| onGestureLeave | `void Function(Offset position)?` | `null` | Gesture leave callback. |  
 
 
 ##### `TiltConfig`  
