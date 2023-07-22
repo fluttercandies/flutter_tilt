@@ -5,11 +5,11 @@ Language: English | [中文](README-ZH.md)</a>
 <h1 align="center">Flutter Tilt</h1>
 
 <p align="center">
-  <a href="https://pub.dev/packages/flutter_tilt"><img alt="package" src="https://img.shields.io/pub/v/flutter_tilt?color=3e4663&include_prereleases&label=stable&logo=dart"/></a>
-  <a href="https://pub.dev/packages/flutter_tilt"><img alt="package" src="https://img.shields.io/pub/v/flutter_tilt?color=3e4663&include_prereleases&label=dev&logo=dart"/></a>
-  <a href="https://pub.dev/packages/flutter_tilt/score"><img alt="pub points" src="https://img.shields.io/pub/points/flutter_tilt"/></a>
-  <a href="https://www.codefactor.io/repository/github/amoshuke/flutter_tilt"><img src="https://www.codefactor.io/repository/github/amoshuke/flutter_tilt/badge" alt="CodeFactor" /></a>
-  <a href="https://github.com/AmosHuKe/flutter_tilt/blob/main/LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-green"/></a>
+  <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/pub/v/flutter_tilt?color=3e4663&label=stable&logo=flutter" alt="stable package" /></a>
+  <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/pub/v/flutter_tilt?color=3e4663&label=dev&logo=flutter&include_prereleases" alt="dev package" /></a>
+  <a href="https://pub.dev/packages/flutter_tilt/score"><img src="https://img.shields.io/pub/points/flutter_tilt?logo=flutter" alt="pub points" /></a>
+  <a href="https://www.codefactor.io/repository/github/amoshuke/flutter_tilt"><img src="https://img.shields.io/codefactor/grade/github/amoshuke/flutter_tilt?logo=codefactor" alt="CodeFactor" /></a>
+  <a href="https://github.com/AmosHuKe/flutter_tilt/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License" /></a>
 </p>
 
 <p align="center">
