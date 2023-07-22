@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.2
+### Fixes
+- Fix code for `analysis_options` warnings.
+- Remove `TiltDirection` invalid `topBottom` and `leftRight`.
+
 ## 0.0.1
 ### New features
 - `Tilt` widget supports `onTiltBegin`, `onTiltEnd`, `onGestureMove`, `onGestureLeave`.
