@@ -36,7 +36,7 @@ Matrix4 tiltTransform(
   bool enableReverse,
 ) {
   /// 旋转大小：区域进度 * 弧度
-  final rotate = rotateAxis(areaProgress * radian(angle), enableReverse);
+  final Offset rotate = rotateAxis(areaProgress * radian(angle), enableReverse);
   final double rotateX = rotate.dx, rotateY = rotate.dy;
 
   return Matrix4.identity()
@@ -81,10 +81,18 @@ Offset p2cAreaPosition(double width, double height, Offset position) {
   final double centerHeight = height / 2.0;
 
   /// 限制最大值
-  if (x > centerWidth) x = centerWidth;
-  if (x < -centerWidth) x = -centerWidth;
-  if (y > centerHeight) y = centerHeight;
-  if (y < -centerHeight) y = -centerHeight;
+  if (x > centerWidth) {
+    x = centerWidth;
+  }
+  if (x < -centerWidth) {
+    x = -centerWidth;
+  }
+  if (y > centerHeight) {
+    y = centerHeight;
+  }
+  if (y < -centerHeight) {
+    y = -centerHeight;
+  }
 
   return Offset(x, y);
 }
@@ -115,16 +123,24 @@ Offset p2cAreaProgress(
   late double y = (center.dy - position.dy) / height * 2.0;
 
   /// 限制最大值
-  if (x > 1.0) x = 1.0;
-  if (x < -1.0) x = -1.0;
-  if (y > 1.0) y = 1.0;
-  if (y < -1.0) y = -1.0;
+  if (x > 1.0) {
+    x = 1.0;
+  }
+  if (x < -1.0) {
+    x = -1.0;
+  }
+  if (y > 1.0) {
+    y = 1.0;
+  }
+  if (y < -1.0) {
+    y = -1.0;
+  }
 
   /// 限制倾斜方向
-  if ((tiltDirection ?? []).isNotEmpty) {
+  if ((tiltDirection ?? <TiltDirection>[]).isNotEmpty) {
     final TiltDirection direction = TiltDirection.validator(
       TiltDirection(x, y),
-      tiltDirection ?? [],
+      tiltDirection ?? <TiltDirection>[],
     );
     x = direction.dx;
     y = direction.dy;
@@ -175,10 +191,10 @@ double directionProgress<T>(
   late double dataX = progressX, dataY = progressY;
 
   /// 距离中心
-  late double dataDistance = p2pDistance(Offset.zero, Offset(dataX, dataY));
+  final double dataDistance = p2pDistance(Offset.zero, Offset(dataX, dataY));
 
   /// 限制距离中心
-  late double constraintsDistance = dataDistance > max ? max : dataDistance;
+  final double constraintsDistance = dataDistance > max ? max : dataDistance;
 
   /// 进度
   late double progressData = min;
@@ -212,7 +228,7 @@ double directionProgress<T>(
         progressData = max - distance;
         break;
       case LightDirection.topLeft:
-        progressData = (progressX + progressY);
+        progressData = progressX + progressY;
         break;
       case LightDirection.bottomRight:
         progressData = -(progressX + progressY);
@@ -221,14 +237,18 @@ double directionProgress<T>(
         progressData = -(progressX - progressY);
         break;
       case LightDirection.bottomLeft:
-        progressData = (progressX - progressY);
+        progressData = progressX - progressY;
         break;
       case LightDirection.xCenter:
-        if (progressY < 0.0) dataY = -progressY;
+        if (progressY < 0.0) {
+          dataY = -progressY;
+        }
         progressData = max - dataY;
         break;
       case LightDirection.yCenter:
-        if (progressX < 0.0) dataX = -progressX;
+        if (progressX < 0.0) {
+          dataX = -progressX;
+        }
         progressData = max - dataX;
         break;
     }
@@ -266,20 +286,24 @@ double directionProgress<T>(
         progressData = -(progressX + progressY);
         break;
       case ShadowDirection.bottomRight:
-        progressData = (progressX + progressY);
+        progressData = progressX + progressY;
         break;
       case ShadowDirection.topRight:
-        progressData = (progressX - progressY);
+        progressData = progressX - progressY;
         break;
       case ShadowDirection.bottomLeft:
         progressData = -(progressX - progressY);
         break;
       case ShadowDirection.xCenter:
-        if (progressY < 0.0) dataY = -progressY;
+        if (progressY < 0.0) {
+          dataY = -progressY;
+        }
         progressData = max - dataY;
         break;
       case ShadowDirection.yCenter:
-        if (progressX < 0.0) dataX = -progressX;
+        if (progressX < 0.0) {
+          dataX = -progressX;
+        }
         progressData = max - dataX;
         break;
     }
@@ -289,11 +313,17 @@ double directionProgress<T>(
   progressData = progressData * max;
 
   /// 反向
-  if (enableReverse) progressData = -progressData;
+  if (enableReverse) {
+    progressData = -progressData;
+  }
 
   /// 避免超出范围
-  if (progressData < min) progressData = min;
-  if (progressData > max) progressData = max;
+  if (progressData < min) {
+    progressData = min;
+  }
+  if (progressData > max) {
+    progressData = max;
+  }
 
   return progressData;
 }
@@ -315,9 +345,17 @@ bool isInRange(double width, double height, Offset position) {
 Offset constraintsPosition(double width, double height, Offset position) {
   late double constraintWidth = position.dx;
   late double constraintHidth = position.dy;
-  if (constraintWidth > width) constraintWidth = width;
-  if (constraintWidth < -width) constraintWidth = -width;
-  if (constraintHidth > height) constraintHidth = height;
-  if (constraintHidth < -height) constraintHidth = -height;
+  if (constraintWidth > width) {
+    constraintWidth = width;
+  }
+  if (constraintWidth < -width) {
+    constraintWidth = -width;
+  }
+  if (constraintHidth > height) {
+    constraintHidth = height;
+  }
+  if (constraintHidth < -height) {
+    constraintHidth = -height;
+  }
   return Offset(constraintWidth, constraintHidth);
 }

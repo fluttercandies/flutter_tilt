@@ -22,7 +22,7 @@ class ShadowConfig {
     this.color = const Color(0xFF9E9E9E),
     this.minIntensity = 0.0,
     this.maxIntensity = 0.5,
-    this.offsetInitial = const Offset(0.0, 0.0),
+    this.offsetInitial = Offset.zero,
     this.offsetFactor = 0.1,
     this.spreadInitial = 0.0,
     this.spreadFactor = 0.0,
@@ -30,9 +30,11 @@ class ShadowConfig {
     this.maxBlurRadius = 20.0,
     this.direction,
     this.enableReverse,
-  })  : assert(minIntensity <= maxIntensity &&
-            minIntensity >= 0.0 &&
-            maxIntensity <= 1.0),
+  })  : assert(
+          minIntensity <= maxIntensity &&
+              minIntensity >= 0.0 &&
+              maxIntensity <= 1.0,
+        ),
         assert(offsetFactor >= 0.0),
         assert(spreadFactor >= 0.0),
         assert(minBlurRadius <= maxBlurRadius && minBlurRadius >= 0.0);

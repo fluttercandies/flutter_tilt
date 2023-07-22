@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
-
 import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/utils.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
+import 'package:flutter_tilt/src/utils.dart';
 
 /// 光源
 class TiltLight extends StatelessWidget {
@@ -53,7 +52,10 @@ class TiltLight extends StatelessWidget {
 
   /// 当前坐标相对于中心坐标的区域坐标
   Offset get p2cPosition => -p2cAreaPosition(
-      spreadW, spreadH, constraintsPosition(width, height, position));
+        spreadW,
+        spreadH,
+        constraintsPosition(width, height, position),
+      );
 
   /// 定位 x （从中心位置开始）
   double get positionX => p2cPosition.dx;
@@ -84,26 +86,25 @@ class TiltLight extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (lightDisable) return const SizedBox();
+    if (lightDisable) {
+      return const SizedBox();
+    }
     return Positioned(
       left: enableReverse ? positionX : null,
       top: enableReverse ? positionY : null,
       right: !enableReverse ? positionX : null,
       bottom: !enableReverse ? positionY : null,
       child: IgnorePointer(
-        ignoring: true,
         child: Container(
           width: spreadW,
           height: spreadH,
           decoration: BoxDecoration(
             gradient: RadialGradient(
-              radius: 0.5,
-              colors: [
+              colors: <Color>[
                 lightConfig.color.withOpacity(showProgress),
                 lightConfig.color.withOpacity(0),
               ],
-              stops: const [0.01, 0.99],
-              tileMode: TileMode.clamp,
+              stops: const <double>[0.01, 0.99],
             ),
             // borderRadius: borderRadius,
           ),

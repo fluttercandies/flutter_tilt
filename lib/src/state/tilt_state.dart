@@ -40,7 +40,8 @@ class TiltState extends InheritedWidget {
   final void Function(Offset) onRevert;
 
   static TiltState? of(BuildContext context) {
-    final tilt = context.dependOnInheritedWidgetOfExactType<TiltState>();
+    final TiltState? tilt =
+        context.dependOnInheritedWidgetOfExactType<TiltState>();
     assert(tilt != null, 'No TiltState found in context');
     return tilt;
   }
@@ -48,11 +49,21 @@ class TiltState extends InheritedWidget {
   @override
   bool updateShouldNotify(TiltState oldWidget) {
     late bool update = false;
-    if (isInit != oldWidget.isInit) update = true;
-    if (width != oldWidget.width) update = true;
-    if (height != oldWidget.height) update = true;
-    if (areaProgress != oldWidget.areaProgress) update = true;
-    if (isMove != oldWidget.isMove) update = true;
+    if (isInit != oldWidget.isInit) {
+      update = true;
+    }
+    if (width != oldWidget.width) {
+      update = true;
+    }
+    if (height != oldWidget.height) {
+      update = true;
+    }
+    if (areaProgress != oldWidget.areaProgress) {
+      update = true;
+    }
+    if (isMove != oldWidget.isMove) {
+      update = true;
+    }
     return update;
   }
 }

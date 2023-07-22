@@ -1,9 +1,8 @@
 import 'package:flutter/widgets.dart';
-
-import 'package:flutter_tilt/src/utils.dart';
 import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
+import 'package:flutter_tilt/src/utils.dart';
 
 /// 阴影
 class TiltShadow extends StatelessWidget {
@@ -132,14 +131,13 @@ class TiltShadow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: [
+        boxShadow: <BoxShadow>[
           if (!shadowDisable)
             BoxShadow(
               color: shadowConfig.color.withOpacity(showShadow),
               offset: offset,
               blurRadius: blurRadius,
               spreadRadius: spreadRadius,
-              blurStyle: BlurStyle.normal,
             ),
         ],
         borderRadius: borderRadius,

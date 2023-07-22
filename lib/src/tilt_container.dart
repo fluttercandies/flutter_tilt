@@ -1,15 +1,12 @@
 import 'package:flutter/widgets.dart';
-
 import 'package:flutter_tilt/src/data/tilt_data.dart';
-import 'package:flutter_tilt/src/type/tilt_type.dart';
-import 'package:flutter_tilt/src/type/tilt_light_type.dart';
-import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
-
+import 'package:flutter_tilt/src/model/tilt_model.dart';
+import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/tilt_light.dart';
 import 'package:flutter_tilt/src/tilt_shadow.dart';
-
-import 'package:flutter_tilt/src/state/tilt_state.dart';
-import 'package:flutter_tilt/src/model/tilt_model.dart';
+import 'package:flutter_tilt/src/type/tilt_light_type.dart';
+import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
+import 'package:flutter_tilt/src/type/tilt_type.dart';
 
 class TiltContainer extends StatefulWidget {
   const TiltContainer({
@@ -94,7 +91,7 @@ class _TiltContainerState extends State<TiltContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return TweenAnimationBuilder(
+    return TweenAnimationBuilder<Offset>(
       duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(end: isMove ? areaProgress : _initAreaProgress),
       onEnd: widget.onTiltEnd,
@@ -116,7 +113,7 @@ class _TiltContainerState extends State<TiltContainer> {
           transform: tiltDataModel.transform,
           child: Stack(
             clipBehavior: Clip.none,
-            children: [
+            children: <Widget>[
               /// Main Child
               TiltShadow(
                 width: width,
@@ -133,7 +130,7 @@ class _TiltContainerState extends State<TiltContainer> {
                   clipBehavior: _clipBehavior == Clip.none
                       ? Clip.hardEdge
                       : _clipBehavior,
-                  children: [
+                  children: <Widget>[
                     /// Body
                     Container(
                       decoration: BoxDecoration(
@@ -154,12 +151,17 @@ class _TiltContainerState extends State<TiltContainer> {
 
                     /// Resize
                     Positioned.fill(
-                      child: LayoutBuilder(builder: (context, constraints) {
-                        WidgetsBinding.instance.addPostFrameCallback(
-                          (_) => tiltState.onResize(constraints.biggest),
-                        );
-                        return const SizedBox();
-                      }),
+                      child: LayoutBuilder(
+                        builder: (
+                          BuildContext context,
+                          BoxConstraints constraints,
+                        ) {
+                          WidgetsBinding.instance.addPostFrameCallback(
+                            (_) => tiltState.onResize(constraints.biggest),
+                          );
+                          return const SizedBox();
+                        },
+                      ),
                     ),
                   ],
                 ),

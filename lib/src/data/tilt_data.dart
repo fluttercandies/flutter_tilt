@@ -1,10 +1,7 @@
 import 'package:flutter/widgets.dart';
-
-import 'package:flutter_tilt/src/utils.dart';
-
-import 'package:flutter_tilt/src/type/tilt_type.dart';
-
 import 'package:flutter_tilt/src/model/tilt_model.dart';
+import 'package:flutter_tilt/src/type/tilt_type.dart';
+import 'package:flutter_tilt/src/utils.dart';
 
 /// 倾斜数据
 @immutable

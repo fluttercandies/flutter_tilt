@@ -50,7 +50,7 @@ class _TiltParallaxContainerState extends State<TiltParallaxContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return TweenAnimationBuilder(
+    return TweenAnimationBuilder<Offset>(
       duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(end: isMove ? areaProgress : Offset.zero),
       builder: (BuildContext context, Offset value, Widget? child) {
