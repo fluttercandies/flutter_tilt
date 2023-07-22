@@ -28,5 +28,5 @@ dev_dependencies:
 flutter:
 
 screenshots:
-  - description: 'Example'
+  - description: 'Example Preview GIF'
     path: README/preview.gif
