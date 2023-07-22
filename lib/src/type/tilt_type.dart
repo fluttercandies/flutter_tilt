@@ -1,9 +1,7 @@
 import 'package:flutter/widgets.dart';
-
+import 'package:flutter_tilt/src/model/tilt_model.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
-
-import 'package:flutter_tilt/src/model/tilt_model.dart';
 
 /// 倾斜回调
 typedef TiltCallback = void Function(TiltDataModel tiltDataModel);
@@ -133,8 +131,6 @@ class TiltDirection {
   static TiltDirection topRight = top + right;
   static TiltDirection bottomLeft = bottom + left;
   static TiltDirection bottomRight = bottom + right;
-  static TiltDirection topBottom = top + bottom;
-  static TiltDirection leftRight = left + right;
 
   /// 验证合法的方向并返回方向数据
   ///
@@ -147,18 +143,34 @@ class TiltDirection {
     final double x = tiltDirection.dx, y = tiltDirection.dy;
     late double dx = 0.0, dy = 0.0;
 
-    for (TiltDirection value in validator) {
+    for (final TiltDirection value in validator) {
       /// 默认最大设置的验证范围，避免方向值超出验证值的时候会返回 0
-      if (x > 0) dx = dx > value.dx ? dx : value.dx;
-      if (y > 0) dy = dy > value.dy ? dy : value.dy;
-      if (x < 0) dx = dx < value.dx ? dx : value.dx;
-      if (y < 0) dy = dy < value.dy ? dy : value.dy;
+      if (x > 0) {
+        dx = dx > value.dx ? dx : value.dx;
+      }
+      if (y > 0) {
+        dy = dy > value.dy ? dy : value.dy;
+      }
+      if (x < 0) {
+        dx = dx < value.dx ? dx : value.dx;
+      }
+      if (y < 0) {
+        dy = dy < value.dy ? dy : value.dy;
+      }
 
       /// 符合项
-      if (x > 0 && x <= value.dx) dx = x;
-      if (y > 0 && y <= value.dy) dy = y;
-      if (x < 0 && x >= value.dx) dx = x;
-      if (y < 0 && y >= value.dy) dy = y;
+      if (x > 0 && x <= value.dx) {
+        dx = x;
+      }
+      if (y > 0 && y <= value.dy) {
+        dy = y;
+      }
+      if (x < 0 && x >= value.dx) {
+        dx = x;
+      }
+      if (y < 0 && y >= value.dy) {
+        dy = y;
+      }
     }
     return TiltDirection(dx, dy);
   }
