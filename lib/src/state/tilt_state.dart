@@ -3,7 +3,8 @@ import 'package:flutter/widgets.dart';
 /// Tilt
 class TiltState extends InheritedWidget {
   const TiltState({
-    Key? key,
+    super.key,
+    required super.child,
     required this.isInit,
     required this.width,
     required this.height,
@@ -12,8 +13,7 @@ class TiltState extends InheritedWidget {
     required this.isMove,
     required this.onMove,
     required this.onRevert,
-    required Widget child,
-  }) : super(key: key, child: child);
+  });
 
   /// 是否初始化
   final bool isInit;
