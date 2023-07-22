@@ -19,7 +19,7 @@ Language: English | [中文](README-ZH.md)</a>
 <br/>
 
 <div align="center">
-  <img src="https://github.com/AmosHuKe/flutter_tilt/blob/main/.README/preview.gif?raw=true" width="320px" style="border-radius: 20px;" />
+  <img src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview.gif?raw=true" width="320px" style="border-radius: 20px;" />
 </div>
 
 <br/>

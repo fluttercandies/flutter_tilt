@@ -25,3 +25,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
+
+screenshots:
+  - description: 'Example'
+    path: README/preview.gif
