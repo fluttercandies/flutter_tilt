@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.2
+## 0.0.1
 ### New features
 - `Tilt` widget supports `onTiltBegin`, `onTiltEnd`, `onGestureMove`, `onGestureLeave`.
 - Upgrade `example` Flutter 3.10.6.  
