@@ -30,8 +30,6 @@ Language: English | [中文](README-ZH.md)</a>
 
 - [Features ✨](#features-)
 
-  - [TODO 💡](#todo-)
-
 - [Install 🎯](#install-)
 
   - [Versions compatibility 🐦](#versions-compatibility-)
@@ -72,16 +70,10 @@ Language: English | [中文](README-ZH.md)</a>
 - ⚙️ Many custom parameters
 
 
-### TODO 💡  
-
-- [ ] Sensors  
-- [ ] Tilt controller  
-
-
 ## Install 🎯
 ### Versions compatibility 🐦  
 
-|        | 3.0.x | 3.3.x | 3.10.x |  
+|-       | 3.0.x | 3.3.x | 3.10.x |  
 |--------|:-----:|:-----:|:------:|  
 | 0.0.1+ |  ✅  |  ✅  |  ✅  |  
 

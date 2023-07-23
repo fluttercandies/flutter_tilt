@@ -45,12 +45,12 @@ class ShadowConfig {
   /// 阴影颜色
   final Color color;
 
-  /// 最小阴影强度
+  /// 最小阴影强度（不透明度）
   ///
   /// 范围：0 - 1
   final double minIntensity;
 
-  /// 最大阴影强度
+  /// 最大阴影强度（不透明度）
   ///
   /// 范围：0 - 1
   ///
@@ -106,7 +106,7 @@ class ShadowConfig {
   ///
   /// {@template tilt.ShadowConfig.enableReverse}
   /// 指定后将不受以下影响
-  /// * [LightConfig.enableReverse] 光源反向
+  /// * 失效：光源反向 [LightConfig.enableReverse]
   /// {@endtemplate}
   final bool? enableReverse;
 }

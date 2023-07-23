@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-/// Tilt
+/// Tilt State
 class TiltState extends InheritedWidget {
+  /// Tilt State
   const TiltState({
     super.key,
     required super.child,

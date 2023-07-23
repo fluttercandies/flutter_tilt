@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+
 import 'package:flutter_tilt/src/data/tilt_data.dart';
 import 'package:flutter_tilt/src/model/tilt_model.dart';
 import 'package:flutter_tilt/src/state/tilt_state.dart';

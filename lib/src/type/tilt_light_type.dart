@@ -31,12 +31,12 @@ class LightConfig {
   /// 光源颜色
   final Color color;
 
-  /// 最小光源强度
+  /// 最小光源强度（不透明度）
   ///
   /// 范围：0 - 1
   final double minIntensity;
 
-  /// 最大光源强度
+  /// 最大光源强度（不透明度）
   ///
   /// 范围：0 - 1
   ///

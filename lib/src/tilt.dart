@@ -1,6 +1,6 @@
 import 'dart:async' as async;
-
 import 'package:flutter/widgets.dart';
+
 import 'package:flutter_tilt/src/gestures_listener.dart';
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/tilt_container.dart';
@@ -70,18 +70,18 @@ class Tilt extends StatefulWidget {
   /// 阴影配置
   final ShadowConfig shadowConfig;
 
-  /// 触发倾斜开始
+  /// 倾斜触发开始
   final TiltCallback? onTiltBegin;
 
-  /// 触发倾斜结束
+  /// 倾斜触发结束
   final VoidCallback? onTiltEnd;
 
-  /// 触发手势移动
+  /// 手势移动触发
   ///
   /// [position] 当前坐标
   final TiltGestureMoveCallback? onGestureMove;
 
-  /// 触发手势离开
+  /// 手势离开触发
   ///
   /// [position] 当前坐标
   final TiltGestureLeaveCallback? onGestureLeave;

@@ -6,7 +6,7 @@ import 'package:flutter_tilt/src/state/tilt_state.dart';
 class TiltParallaxContainer extends StatefulWidget {
   /// 倾斜视差
   ///
-  /// 一般用作视差的 Widget
+  /// 用作视差的 Widget
   ///
   /// 只能在 [Tilt.childInner] 中使用
   const TiltParallaxContainer({
