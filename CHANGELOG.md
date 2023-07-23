@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.0.3
 ### Fixes
 - Fix `onGestureLeave` trigger when `TiltConfig.enableMouseHover = false`.
 
