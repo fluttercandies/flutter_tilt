@@ -28,17 +28,17 @@ Language: English | [中文](README-ZH.md)</a>
 
 <sub>
 
-- [Features ✨](#features-)
+- [Features](#features-)
 
-- [Install 🎯](#install-)
+- [Install](#install-)
 
-  - [Versions compatibility 🐦](#versions-compatibility-)
+  - [Versions compatibility](#versions-compatibility-)
 
-  - [Add package 📦](#add-package-)
+  - [Add package](#add-package-)
 
-- [Usage 📖](#usage-)
+- [Usage](#usage-)
 
-  - [Simple usage: Tilt 📦](#simple-usage-tilt-)
+  - [Simple usage: Tilt](#simple-usage-tilt-)
 
     - [Tilt widget parameters](#tilt-widget-parameters)
 
@@ -48,11 +48,11 @@ Language: English | [中文](README-ZH.md)</a>
 
     - [ShadowConfig](#shadowconfig)
 
-  - [Simple usage: Parallax 👀](#simple-usage-parallax-)
+  - [Simple usage: Parallax](#simple-usage-parallax-)
 
     - [TiltParallax widget parameters](#tiltparallax-widget-parameters)
 
-- [License 📄](#license-)
+- [License](#license-)
 
 </sub>
 
