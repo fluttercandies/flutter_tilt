@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
 
@@ -37,7 +38,9 @@ class GesturesListener extends StatelessWidget {
           onHover: tiltConfig.enableMouseHover
               ? (PointerHoverEvent e) => tiltState.onMove(e.localPosition)
               : null,
-          onExit: (PointerExitEvent e) => tiltState.onRevert(e.localPosition),
+          onExit: tiltConfig.enableMouseHover
+              ? (PointerExitEvent e) => tiltState.onRevert(e.localPosition)
+              : null,
           child: child,
         ),
       ),
