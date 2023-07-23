@@ -7,7 +7,7 @@ Language: English | [中文](README-ZH.md)</a>
 <p align="center">
   <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/pub/v/flutter_tilt?color=3e4663&label=stable&logo=flutter" alt="stable package" /></a>
   <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/pub/v/flutter_tilt?color=3e4663&label=dev&logo=flutter&include_prereleases" alt="dev package" /></a>
-  <a href="https://pub.dev/packages/flutter_tilt/score"><img src="https://img.shields.io/pub/points/flutter_tilt?logo=flutter" alt="pub points" /></a>
+  <a href="https://pub.dev/packages/flutter_tilt/score"><img src="https://img.shields.io/pub/points/flutter_tilt?color=2E8B57&logo=flutter" alt="pub points" /></a>
   <a href="https://www.codefactor.io/repository/github/amoshuke/flutter_tilt"><img src="https://img.shields.io/codefactor/grade/github/amoshuke/flutter_tilt?logo=codefactor" alt="CodeFactor" /></a>
   <a href="https://github.com/AmosHuKe/flutter_tilt/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License" /></a>
 </p>
