@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+### Fixes
+- Fix `onGestureLeave` trigger when `TiltConfig.enableMouseHover = false`.
+
 ## 0.0.2
 ### Fixes
 - Fix code for `analysis_options` warnings.
