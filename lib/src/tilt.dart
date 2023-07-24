@@ -1,11 +1,11 @@
 import 'dart:async' as async;
 import 'package:flutter/widgets.dart';
 
+import 'package:flutter_tilt/src/data/tilt_data.dart';
 import 'package:flutter_tilt/src/gestures_listener.dart';
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/tilt_container.dart';
 import 'package:flutter_tilt/src/tilt_parallax_container.dart';
-import 'package:flutter_tilt/src/type/gestures_type.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
@@ -27,8 +27,6 @@ class Tilt extends StatefulWidget {
     this.tiltConfig = const TiltConfig(),
     this.lightConfig = const LightConfig(),
     this.shadowConfig = const ShadowConfig(),
-    this.onTiltBegin,
-    this.onTiltEnd,
     this.onGestureMove,
     this.onGestureLeave,
   });
@@ -70,21 +68,11 @@ class Tilt extends StatefulWidget {
   /// 阴影配置
   final ShadowConfig shadowConfig;
 
-  /// 倾斜触发开始
-  final TiltCallback? onTiltBegin;
-
-  /// 倾斜触发结束
-  final VoidCallback? onTiltEnd;
-
   /// 手势移动触发
-  ///
-  /// [position] 当前坐标
-  final TiltGestureMoveCallback? onGestureMove;
+  final TiltCallback? onGestureMove;
 
   /// 手势离开触发
-  ///
-  /// [position] 当前坐标
-  final TiltGestureLeaveCallback? onGestureLeave;
+  final TiltCallback? onGestureLeave;
 
   @override
   State<Tilt> createState() => _TiltState();
@@ -100,10 +88,8 @@ class _TiltState extends State<Tilt> {
   TiltConfig get _tiltConfig => widget.tiltConfig;
   LightConfig get _lightConfig => widget.lightConfig;
   ShadowConfig get _shadowConfig => widget.shadowConfig;
-  TiltCallback? get _onTiltBegin => widget.onTiltBegin;
-  VoidCallback? get _onTiltEnd => widget.onTiltEnd;
-  TiltGestureMoveCallback? get _onGestureMove => widget.onGestureMove;
-  TiltGestureLeaveCallback? get _onGestureLeave => widget.onGestureLeave;
+  TiltCallback? get _onGestureMove => widget.onGestureMove;
+  TiltCallback? get _onGestureLeave => widget.onGestureLeave;
 
   /// 是否初始化
   late bool isInit = false;
@@ -137,8 +123,6 @@ class _TiltState extends State<Tilt> {
           tiltConfig: _tiltConfig,
           lightConfig: _lightConfig,
           shadowConfig: _shadowConfig,
-          onTiltBegin: _onTiltBegin,
-          onTiltEnd: _onTiltEnd,
           childInner: _childInner,
           child: _child,
         ),
@@ -172,9 +156,6 @@ class _TiltState extends State<Tilt> {
     if (!fpsTimer()) {
       return;
     }
-    if (_onGestureMove != null) {
-      _onGestureMove!(offset);
-    }
     if (_tiltConfig.enableOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
         areaProgress = p2cAreaProgress(
@@ -185,6 +166,18 @@ class _TiltState extends State<Tilt> {
         );
         isMove = true;
       });
+
+      if (_onGestureMove != null) {
+        _onGestureMove!(
+          TiltData(
+            isInit: isInit,
+            width: width,
+            height: height,
+            areaProgress: areaProgress,
+            tiltConfig: _tiltConfig,
+          ).data,
+        );
+      }
     } else {
       onGesturesRevert(offset);
     }
@@ -194,9 +187,6 @@ class _TiltState extends State<Tilt> {
   void onGesturesRevert(Offset offset) {
     if (!isInit || _disable) {
       return;
-    }
-    if (_onGestureLeave != null) {
-      _onGestureLeave!(offset);
     }
     if (!_tiltConfig.enableRevert) {
       return;
@@ -210,6 +200,18 @@ class _TiltState extends State<Tilt> {
       );
       isMove = false;
     });
+
+    if (_onGestureLeave != null) {
+      _onGestureLeave!(
+        TiltData(
+          isInit: isInit,
+          width: width,
+          height: height,
+          areaProgress: Offset.zero,
+          tiltConfig: _tiltConfig,
+        ).data,
+      );
+    }
   }
 
   /// FPS

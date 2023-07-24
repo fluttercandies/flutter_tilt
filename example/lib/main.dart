@@ -84,20 +84,13 @@ class _TiltDemoState extends State<TiltDemo> {
               ),
             ),
           ],
-          // onTiltBegin: (TiltDataModel tiltDataModel) {
-          //   print('--- onTiltBegin ---');
+          // onGestureMove: (TiltDataModel tiltDataModel) {
+          //   print('--- onGestureMove ---');
           //   print(tiltDataModel.areaProgress);
           // },
-          // onTiltEnd: () {
-          //   print('--- onTiltEnd ---');
-          // },
-          // onGestureMove: (Offset position) {
-          //   print('--- onGestureMove ---');
-          //   print(position);
-          // },
-          // onGestureLeave: (Offset position) {
+          // onGestureLeave: (TiltDataModel tiltDataModel) {
           //   print('--- onGestureLeave ---');
-          //   print(position);
+          //   print(tiltDataModel.areaProgress);
           // },
           child: const MyHomePage(title: 'Flutter Tilt Demo'),
         ),

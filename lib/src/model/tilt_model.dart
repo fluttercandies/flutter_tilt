@@ -5,10 +5,14 @@ import 'package:flutter/widgets.dart';
 class TiltDataModel {
   /// 倾斜数据
   const TiltDataModel({
+    required this.position,
     required this.areaProgress,
     required this.transform,
     required this.angle,
   });
+
+  /// 当前坐标
+  final Offset position;
 
   /// 区域进度
   ///

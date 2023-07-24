@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/data/tilt_data.dart';
-import 'package:flutter_tilt/src/model/tilt_model.dart';
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/tilt_light.dart';
 import 'package:flutter_tilt/src/tilt_shadow.dart';
@@ -19,8 +18,6 @@ class TiltContainer extends StatefulWidget {
     required this.tiltConfig,
     required this.lightConfig,
     required this.shadowConfig,
-    this.onTiltBegin,
-    this.onTiltEnd,
   });
 
   /// 主 child
@@ -46,12 +43,6 @@ class TiltContainer extends StatefulWidget {
   /// 阴影配置
   final ShadowConfig shadowConfig;
 
-  /// 触发倾斜开始
-  final TiltCallback? onTiltBegin;
-
-  /// 触发倾斜结束
-  final VoidCallback? onTiltEnd;
-
   @override
   State<TiltContainer> createState() => _TiltContainerState();
 }
@@ -64,8 +55,6 @@ class _TiltContainerState extends State<TiltContainer> {
   TiltConfig get _tiltConfig => widget.tiltConfig;
   LightConfig get _lightConfig => widget.lightConfig;
   ShadowConfig get _shadowConfig => widget.shadowConfig;
-  TiltCallback? get _onTiltBegin => widget.onTiltBegin;
-  VoidCallback? get _onTiltEnd => widget.onTiltEnd;
 
   /// 初始坐标区域进度
   late final Offset _initAreaProgress = _tiltConfig.initial ?? Offset.zero;
@@ -99,25 +88,19 @@ class _TiltContainerState extends State<TiltContainer> {
     return TweenAnimationBuilder<Offset>(
       duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(end: isMove ? areaProgress : _initAreaProgress),
-      onEnd: _onTiltEnd,
       builder: (BuildContext context, Offset value, Widget? child) {
-        final TiltDataModel tiltDataModel = TiltData(
+        final TiltData tiltData = TiltData(
           isInit: isInit,
           width: width,
           height: height,
           areaProgress: value,
           tiltConfig: _tiltConfig,
-        ).data;
-        if (isInit && _onTiltBegin != null) {
-          WidgetsBinding.instance.addPostFrameCallback(
-            (_) => _onTiltBegin!(tiltDataModel),
-          );
-        }
+        );
 
         return Transform(
           alignment: AlignmentDirectional.center,
           filterQuality: _tiltConfig.filterQuality,
-          transform: tiltDataModel.transform,
+          transform: tiltData.transform,
           child: Stack(
             clipBehavior: Clip.none,
             children: <Widget>[

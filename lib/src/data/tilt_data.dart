@@ -33,10 +33,14 @@ class TiltData {
 
   /// 倾斜数据
   TiltDataModel get data => TiltDataModel(
+        position: position,
         transform: transform,
         areaProgress: areaProgress,
         angle: angle,
       );
+
+  /// 当前坐标
+  Offset get position => progressPosition(width, height, areaProgress);
 
   /// Transform
   Matrix4 get transform => isInit && !disable
