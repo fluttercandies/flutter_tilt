@@ -91,13 +91,19 @@ class Tilt extends StatefulWidget {
 }
 
 class _TiltState extends State<Tilt> {
-  late final bool _disable = widget.disable;
-  late final int _fps = widget.fps;
-  late final BorderRadiusGeometry? _borderRadius = widget.borderRadius;
-  late final Clip _clipBehavior = widget.clipBehavior;
-  late final TiltConfig _tiltConfig = widget.tiltConfig;
-  late final LightConfig _lightConfig = widget.lightConfig;
-  late final ShadowConfig _shadowConfig = widget.shadowConfig;
+  Widget get _child => widget.child;
+  List<Widget> get _childInner => widget.childInner;
+  bool get _disable => widget.disable;
+  int get _fps => widget.fps;
+  BorderRadiusGeometry? get _borderRadius => widget.borderRadius;
+  Clip get _clipBehavior => widget.clipBehavior;
+  TiltConfig get _tiltConfig => widget.tiltConfig;
+  LightConfig get _lightConfig => widget.lightConfig;
+  ShadowConfig get _shadowConfig => widget.shadowConfig;
+  TiltCallback? get _onTiltBegin => widget.onTiltBegin;
+  VoidCallback? get _onTiltEnd => widget.onTiltEnd;
+  TiltGestureMoveCallback? get _onGestureMove => widget.onGestureMove;
+  TiltGestureLeaveCallback? get _onGestureLeave => widget.onGestureLeave;
 
   /// 是否初始化
   late bool isInit = false;
@@ -114,13 +120,6 @@ class _TiltState extends State<Tilt> {
 
   @override
   Widget build(BuildContext context) {
-    if (_disable) {
-      return Container(
-        decoration: BoxDecoration(borderRadius: _borderRadius),
-        clipBehavior: _clipBehavior,
-        child: widget.child,
-      );
-    }
     return TiltState(
       isInit: isInit,
       width: width,
@@ -138,10 +137,10 @@ class _TiltState extends State<Tilt> {
           tiltConfig: _tiltConfig,
           lightConfig: _lightConfig,
           shadowConfig: _shadowConfig,
-          onTiltBegin: widget.onTiltBegin,
-          onTiltEnd: widget.onTiltEnd,
-          childInner: widget.childInner,
-          child: widget.child,
+          onTiltBegin: _onTiltBegin,
+          onTiltEnd: _onTiltEnd,
+          childInner: _childInner,
+          child: _child,
         ),
       ),
     );
@@ -167,14 +166,14 @@ class _TiltState extends State<Tilt> {
 
   /// 手势移动触发
   void onGesturesMove(Offset offset) {
-    if (!isInit) {
+    if (!isInit || _disable) {
       return;
     }
     if (!fpsTimer()) {
       return;
     }
-    if (widget.onGestureMove != null) {
-      widget.onGestureMove!(offset);
+    if (_onGestureMove != null) {
+      _onGestureMove!(offset);
     }
     if (_tiltConfig.enableOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
@@ -193,11 +192,11 @@ class _TiltState extends State<Tilt> {
 
   /// 手势复原触发
   void onGesturesRevert(Offset offset) {
-    if (!isInit) {
+    if (!isInit || _disable) {
       return;
     }
-    if (widget.onGestureLeave != null) {
-      widget.onGestureLeave!(offset);
+    if (_onGestureLeave != null) {
+      _onGestureLeave!(offset);
     }
     if (!_tiltConfig.enableRevert) {
       return;

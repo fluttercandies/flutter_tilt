@@ -28,8 +28,9 @@ class TiltParallaxContainer extends StatefulWidget {
 }
 
 class _TiltParallaxContainerState extends State<TiltParallaxContainer> {
-  late final Offset _size = widget.size;
-  late final FilterQuality _filterQuality = widget.filterQuality;
+  Widget get _child => widget.child;
+  Offset get _size => widget.size;
+  FilterQuality get _filterQuality => widget.filterQuality;
 
   late TiltState tiltState;
 
@@ -61,7 +62,7 @@ class _TiltParallaxContainerState extends State<TiltParallaxContainer> {
           child: child,
         );
       },
-      child: widget.child,
+      child: _child,
     );
   }
 }

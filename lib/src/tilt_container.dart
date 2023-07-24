@@ -57,11 +57,15 @@ class TiltContainer extends StatefulWidget {
 }
 
 class _TiltContainerState extends State<TiltContainer> {
-  late final BorderRadiusGeometry? _borderRadius = widget.borderRadius;
-  late final Clip _clipBehavior = widget.clipBehavior;
-  late final TiltConfig _tiltConfig = widget.tiltConfig;
-  late final LightConfig _lightConfig = widget.lightConfig;
-  late final ShadowConfig _shadowConfig = widget.shadowConfig;
+  Widget get _child => widget.child;
+  List<Widget> get _childInner => widget.childInner;
+  BorderRadiusGeometry? get _borderRadius => widget.borderRadius;
+  Clip get _clipBehavior => widget.clipBehavior;
+  TiltConfig get _tiltConfig => widget.tiltConfig;
+  LightConfig get _lightConfig => widget.lightConfig;
+  ShadowConfig get _shadowConfig => widget.shadowConfig;
+  TiltCallback? get _onTiltBegin => widget.onTiltBegin;
+  VoidCallback? get _onTiltEnd => widget.onTiltEnd;
 
   /// 初始坐标区域进度
   late final Offset _initAreaProgress = _tiltConfig.initial ?? Offset.zero;
@@ -95,7 +99,7 @@ class _TiltContainerState extends State<TiltContainer> {
     return TweenAnimationBuilder<Offset>(
       duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(end: isMove ? areaProgress : _initAreaProgress),
-      onEnd: widget.onTiltEnd,
+      onEnd: _onTiltEnd,
       builder: (BuildContext context, Offset value, Widget? child) {
         final TiltDataModel tiltDataModel = TiltData(
           isInit: isInit,
@@ -104,8 +108,8 @@ class _TiltContainerState extends State<TiltContainer> {
           areaProgress: value,
           tiltConfig: _tiltConfig,
         ).data;
-        if (isInit && widget.onTiltBegin != null) {
-          widget.onTiltBegin!(tiltDataModel);
+        if (isInit && _onTiltBegin != null) {
+          _onTiltBegin!(tiltDataModel);
         }
 
         return Transform(
@@ -141,6 +145,7 @@ class _TiltContainerState extends State<TiltContainer> {
                       child: child,
                     ),
 
+                    /// Light
                     TiltLight(
                       width: width,
                       height: height,
@@ -169,12 +174,12 @@ class _TiltContainerState extends State<TiltContainer> {
               ),
 
               /// Inner Child
-              ...widget.childInner,
+              ..._childInner,
             ],
           ),
         );
       },
-      child: widget.child,
+      child: _child,
     );
   }
 }
