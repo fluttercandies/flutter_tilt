@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Fixes
-- Fix `Tilt.onTiltBegin` can't setState.
+- Remove `onTiltBegin`, `onTiltEnd` and add `tiltDataModel` callback values to `onGestureMove`, `onGestureLeave`.
 
 ## 0.0.5
 ### Fixes
