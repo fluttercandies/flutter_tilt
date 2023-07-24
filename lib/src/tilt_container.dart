@@ -109,7 +109,9 @@ class _TiltContainerState extends State<TiltContainer> {
           tiltConfig: _tiltConfig,
         ).data;
         if (isInit && _onTiltBegin != null) {
-          _onTiltBegin!(tiltDataModel);
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => _onTiltBegin!(tiltDataModel),
+          );
         }
 
         return Transform(
