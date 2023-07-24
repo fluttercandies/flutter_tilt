@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.5
+### Fixes
+- Fix can't change parameters.
+- Fix `Tilt.childInner` is removed when `Tilt.disable` is used.
+
 ## 0.0.3
 ### Fixes
 - Fix `onGestureLeave` trigger when `TiltConfig.enableMouseHover = false`.
