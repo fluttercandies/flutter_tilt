@@ -20,6 +20,8 @@ Language: English | [中文](README-ZH.md)</a>
 
 <div align="center">
   <img src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview.gif?raw=true" width="320px" style="border-radius: 20px;" />
+
+  <p>Check out the <a href="https://amoshuke.github.io/flutter_tilt_book">Live Demo</a> (🚧 WIP)<p>
 </div>
 
 <br/>
