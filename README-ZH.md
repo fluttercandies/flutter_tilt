@@ -129,10 +129,8 @@ Tilt(
 | tiltConfig | `TiltConfig` | `TiltConfig()` | 倾斜效果配置。 |  
 | lightConfig | `LightConfig` | `LightConfig()` | 光照效果配置。 |  
 | shadowConfig | `ShadowConfig` | `ShadowConfig()` | 阴影效果配置。 |  
-| onTiltBegin | `void Function(TiltDataModel tiltDataModel)?` | `null` | 倾斜开始的回调触发。 |  
-| onTiltEnd | `void Function()?` | `null` | 倾斜结束的回调触发。 |  
-| onGestureMove | `void Function(Offset position)?` | `null` | 手势移动的回调触发。 |  
-| onGestureLeave | `void Function(Offset position)?` | `null` | 手势离开的回调触发。 |  
+| onGestureMove | `void Function(TiltDataModel tiltDataModel)?` | `null` | 手势移动的回调触发。 |  
+| onGestureLeave | `void Function(TiltDataModel tiltDataModel)?` | `null` | 手势离开的回调触发。 |  
 
 
 ##### `TiltConfig`  
