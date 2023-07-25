@@ -35,4 +35,6 @@ topics:
 
 screenshots:
   - description: 'Example Preview GIF'
+    path: README/preview2-small.gif
+  - description: 'Example Preview GIF'
     path: README/preview-small.gif
