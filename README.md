@@ -19,7 +19,7 @@ Language: English | [中文](README-ZH.md)</a>
 </p>
 
 <p align="center">
-  <strong >Easily Apply Tilt Parallax Hover Effects on Flutter!</strong>
+  <strong >Easily Apply Tilt Parallax Hover Effects for Flutter!</strong>
 </p>
 
 <br/>
