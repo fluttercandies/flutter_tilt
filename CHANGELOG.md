@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.7
+- Docs
+
 ## 0.0.6
 ### Fixes
 - Remove `onTiltBegin`, `onTiltEnd` and add `tiltDataModel` callback values to `onGestureMove`, `onGestureLeave`.
