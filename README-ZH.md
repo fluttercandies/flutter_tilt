@@ -2,6 +2,12 @@
 
 <br/>
 
+<div align="center">
+  <img src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview2.gif?raw=true"/>
+</div>
+
+<br/>
+
 <h1 align="center">Flutter Tilt</h1>
 
 <p align="center">
