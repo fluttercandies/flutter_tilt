@@ -94,3 +94,6 @@ enum ShadowDirection {
   /// 仅 y 轴中心阴影
   yCenter,
 }
+
+/// 手势类型
+enum GesturesType { touch, hover }

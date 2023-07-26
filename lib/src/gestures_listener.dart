@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
 
@@ -29,17 +30,26 @@ class GesturesListener extends StatelessWidget {
 
       /// 手势监听
       child: Listener(
-        onPointerMove: (PointerMoveEvent e) =>
-            tiltState.onMove(e.localPosition),
-        onPointerUp: (PointerUpEvent e) => tiltState.onRevert(e.localPosition),
-        onPointerCancel: (PointerCancelEvent e) =>
-            tiltState.onRevert(e.localPosition),
+        onPointerMove: (PointerMoveEvent e) => tiltState.onMove(
+          e.localPosition,
+          GesturesType.touch,
+        ),
+        onPointerUp: (PointerUpEvent e) => tiltState.onRevert(
+          e.localPosition,
+          GesturesType.touch,
+        ),
+        onPointerCancel: (PointerCancelEvent e) => tiltState.onRevert(
+          e.localPosition,
+          GesturesType.touch,
+        ),
         child: MouseRegion(
           onHover: tiltConfig.enableMouseHover
-              ? (PointerHoverEvent e) => tiltState.onMove(e.localPosition)
+              ? (PointerHoverEvent e) =>
+                  tiltState.onMove(e.localPosition, GesturesType.hover)
               : null,
           onExit: tiltConfig.enableMouseHover
-              ? (PointerExitEvent e) => tiltState.onRevert(e.localPosition)
+              ? (PointerExitEvent e) =>
+                  tiltState.onRevert(e.localPosition, GesturesType.hover)
               : null,
           child: child,
         ),

@@ -1,11 +1,15 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/model/tilt_model.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
 /// 倾斜回调
-typedef TiltCallback = void Function(TiltDataModel tiltDataModel);
+typedef TiltCallback = void Function(
+  TiltDataModel tiltDataModel,
+  GesturesType gesturesType,
+);
 
 /// 倾斜配置
 @immutable

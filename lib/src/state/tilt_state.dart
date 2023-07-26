@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:flutter_tilt/src/enums.dart';
+
 /// Tilt State
 class TiltState extends InheritedWidget {
   /// Tilt State
@@ -35,10 +37,10 @@ class TiltState extends InheritedWidget {
   final void Function(Size) onResize;
 
   /// 坐标移动
-  final void Function(Offset) onMove;
+  final void Function(Offset, GesturesType) onMove;
 
   /// 坐标复原
-  final void Function(Offset) onRevert;
+  final void Function(Offset, GesturesType) onRevert;
 
   static TiltState? of(BuildContext context) {
     final TiltState? tilt =

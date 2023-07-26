@@ -2,6 +2,7 @@ import 'dart:async' as async;
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/data/tilt_data.dart';
+import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/gestures_listener.dart';
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/tilt_container.dart';
@@ -91,12 +92,15 @@ class _TiltState extends State<Tilt> {
   TiltCallback? get _onGestureMove => widget.onGestureMove;
   TiltCallback? get _onGestureLeave => widget.onGestureLeave;
 
+  /// 初始坐标区域进度
+  Offset get _initAreaProgress => _tiltConfig.initial ?? Offset.zero;
+
   /// 是否初始化
   late bool isInit = false;
   late double width = 0.0, height = 0.0;
 
   /// 当前坐标的区域进度
-  late Offset areaProgress = Offset.zero;
+  late Offset areaProgress = _initAreaProgress;
 
   /// 是否正在移动
   late bool isMove = false;
@@ -139,17 +143,13 @@ class _TiltState extends State<Tilt> {
       isInit = true;
       width = size.width;
       height = size.height;
-      areaProgress = p2cAreaProgress(
-        width,
-        height,
-        Offset.zero,
-        _tiltConfig.direction,
-      );
     });
   }
 
   /// 手势移动触发
-  void onGesturesMove(Offset offset) {
+  ///
+  /// [offset] 当前坐标
+  void onGesturesMove(Offset offset, GesturesType gesturesType) {
     if (!isInit || _disable) {
       return;
     }
@@ -176,26 +176,32 @@ class _TiltState extends State<Tilt> {
             areaProgress: areaProgress,
             tiltConfig: _tiltConfig,
           ).data,
+          gesturesType,
         );
       }
     } else {
-      onGesturesRevert(offset);
+      onGesturesRevert(offset, gesturesType);
     }
   }
 
   /// 手势复原触发
-  void onGesturesRevert(Offset offset) {
+  ///
+  /// [offset] 当前坐标
+  void onGesturesRevert(Offset offset, GesturesType gesturesType) {
     if (!isInit || _disable) {
       return;
     }
-    if (!_tiltConfig.enableRevert) {
-      return;
-    }
+
+    /// 是否还原的取值
+    final Offset position = _tiltConfig.enableRevert
+        ? progressPosition(width, height, _initAreaProgress)
+        : offset;
+
     setState(() {
       areaProgress = p2cAreaProgress(
         width,
         height,
-        offset,
+        position,
         _tiltConfig.direction,
       );
       isMove = false;
@@ -207,9 +213,10 @@ class _TiltState extends State<Tilt> {
           isInit: isInit,
           width: width,
           height: height,
-          areaProgress: Offset.zero,
+          areaProgress: areaProgress,
           tiltConfig: _tiltConfig,
         ).data,
+        gesturesType,
       );
     }
   }

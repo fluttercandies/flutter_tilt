@@ -57,7 +57,7 @@ class _TiltContainerState extends State<TiltContainer> {
   ShadowConfig get _shadowConfig => widget.shadowConfig;
 
   /// 初始坐标区域进度
-  late final Offset _initAreaProgress = _tiltConfig.initial ?? Offset.zero;
+  Offset get _initAreaProgress => _tiltConfig.initial ?? Offset.zero;
 
   late TiltState tiltState;
 
@@ -66,7 +66,7 @@ class _TiltContainerState extends State<TiltContainer> {
   late double width, height;
 
   /// 当前坐标区域进度
-  late Offset areaProgress = _initAreaProgress;
+  late Offset areaProgress;
 
   /// 是否正在移动
   late bool isMove;
@@ -87,7 +87,11 @@ class _TiltContainerState extends State<TiltContainer> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<Offset>(
       duration: Duration(milliseconds: isMove ? 100 : 300),
-      tween: Tween<Offset>(end: isMove ? areaProgress : _initAreaProgress),
+      tween: Tween<Offset>(
+        end: isMove || !_tiltConfig.enableRevert
+            ? areaProgress
+            : _initAreaProgress,
+      ),
       builder: (BuildContext context, Offset value, Widget? child) {
         final TiltData tiltData = TiltData(
           isInit: isInit,
