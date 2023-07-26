@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.8
+### New features
+- Add `GesturesType` to `onGestureMove` and `onGestureLeave`.
+
+### Improvements
+- Update the trigger of `onGestureLeave` when `TiltConfig.enableRevert = false`.
+- Update `TiltConfig.enableRevert`.
+
+### Fixes
+- Fix `areaProgress` changing after resize.
+
 ## 0.0.7
 - Docs
 

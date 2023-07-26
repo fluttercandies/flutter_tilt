@@ -137,8 +137,8 @@ Tilt(
 | tiltConfig | `TiltConfig` | `TiltConfig()` | Tilt effect config. |  
 | lightConfig | `LightConfig` | `LightConfig()` | Light effect config. |  
 | shadowConfig | `ShadowConfig` | `ShadowConfig()` | Shadow effect config. |  
-| onGestureMove | `void Function(TiltDataModel tiltDataModel)?` | `null` | Gesture move callback. |  
-| onGestureLeave | `void Function(TiltDataModel tiltDataModel)?` | `null` | Gesture leave callback. |  
+| onGestureMove | `void Function(TiltDataModel, GesturesType)?` | `null` | Gesture move callback. |  
+| onGestureLeave | `void Function(TiltDataModel, GesturesType)?` | `null` | Gesture leave callback. |  
 
 
 ##### `TiltConfig`  
