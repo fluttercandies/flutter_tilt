@@ -91,12 +91,13 @@ class _TiltContainerState extends State<TiltContainer> {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<Offset>(
-      duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(
         end: isMove || !_tiltConfig.enableRevert
             ? areaProgress
             : _initAreaProgress,
       ),
+      duration: isMove ? _tiltConfig.moveDuration : _tiltConfig.leaveDuration,
+      curve: isMove ? _tiltConfig.moveCurve : _tiltConfig.leaveCurve,
       builder: (BuildContext context, Offset value, Widget? child) {
         final TiltData tiltData = TiltData(
           isInit: isInit,

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/state/tilt_state.dart';
+import 'package:flutter_tilt/src/type/tilt_type.dart';
 
 /// 倾斜视差
 class TiltParallaxContainer extends StatefulWidget {
@@ -40,6 +41,9 @@ class _TiltParallaxContainerState extends State<TiltParallaxContainer> {
   /// 是否正在移动
   late bool isMove;
 
+  /// 倾斜配置
+  late TiltConfig tiltConfig;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -47,13 +51,15 @@ class _TiltParallaxContainerState extends State<TiltParallaxContainer> {
 
     areaProgress = tiltState.areaProgress;
     isMove = tiltState.isMove;
+    tiltConfig = tiltState.tiltConfig;
   }
 
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<Offset>(
-      duration: Duration(milliseconds: isMove ? 100 : 300),
       tween: Tween<Offset>(end: isMove ? areaProgress : Offset.zero),
+      duration: isMove ? tiltConfig.moveDuration : tiltConfig.leaveDuration,
+      curve: isMove ? tiltConfig.moveCurve : tiltConfig.leaveCurve,
       builder: (BuildContext context, Offset value, Widget? child) {
         return Transform(
           filterQuality: _filterQuality,

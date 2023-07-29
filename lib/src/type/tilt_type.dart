@@ -24,6 +24,10 @@ class TiltConfig {
     this.enableReverse = false,
     this.enableOutsideAreaMove = true,
     this.enableMouseHover = true,
+    this.moveDuration = const Duration(milliseconds: 100),
+    this.leaveDuration = const Duration(milliseconds: 300),
+    this.moveCurve = Curves.linear,
+    this.leaveCurve = Curves.linear,
     this.filterQuality = FilterQuality.high,
   });
 
@@ -99,6 +103,18 @@ class TiltConfig {
 
   /// 启用鼠标 Hover 触发倾斜
   final bool enableMouseHover;
+
+  /// 手势移动时的动画持续时间
+  final Duration moveDuration;
+
+  /// 手势离开后的动画持续时间
+  final Duration leaveDuration;
+
+  /// 手势移动时的动画曲线
+  final Curve moveCurve;
+
+  /// 手势离开后的动画曲线
+  final Curve leaveCurve;
 
   /// FilterQuality
   final FilterQuality filterQuality;

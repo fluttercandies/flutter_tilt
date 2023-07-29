@@ -121,9 +121,10 @@ class _TiltState extends State<Tilt> {
       height: height,
       areaProgress: areaProgress,
       isMove: isMove,
+      tiltConfig: _tiltConfig,
+      onResize: onResize,
       onMove: onGesturesMove,
       onRevert: onGesturesRevert,
-      onResize: onResize,
       child: GesturesListener(
         tiltConfig: _tiltConfig,
         child: TiltContainer(

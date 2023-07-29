@@ -153,6 +153,10 @@ Tilt(
 | enableReverse | `bool` | `false` | Tilt reverse, can be tilted up or down. |  
 | enableOutsideAreaMove | `bool` | `true` | Tilt can continue to be triggered outside the area. <br/> (`only when the pointer is pressed and moved`) |  
 | enableMouseHover | `bool` | `true` | Mouse hover to trigger tilt. |  
+| moveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during gesture move. |  
+| leaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after gesture leave. |  
+| moveCurve | `Curve` | `Curves.linear` | Animation curve during gesture move. |  
+| leaveCurve | `Curve` | `Curves.linear` | Animation curve after gesture leave. |  
 | filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality. |  
 
 

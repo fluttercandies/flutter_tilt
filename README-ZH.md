@@ -153,6 +153,10 @@ Tilt(
 | enableReverse | `bool` | `false` | 倾斜反向，可以向上或向下倾斜。 |  
 | enableOutsideAreaMove | `bool` | `true` | 可以继续在区域外触发倾斜。 <br/> (`仅在指针按下并移动时`) |  
 | enableMouseHover | `bool` | `true` | 鼠标 hover 触发倾斜。 |  
+| moveDuration | `Duration` | `Duration(milliseconds: 100)` | 手势移动时的动画持续时间。 |  
+| leaveDuration | `Duration` | `Duration(milliseconds: 300)` | 手势离开后的动画持续时间。 |  
+| moveCurve | `Curve` | `Curves.linear` | 手势移动时的动画曲线。 |  
+| leaveCurve | `Curve` | `Curves.linear` | 手势离开后的动画曲线。 |  
 | filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality。 |  
 
 

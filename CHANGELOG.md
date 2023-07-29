@@ -1,8 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.0.9
 ### New features
-- Add `border` to the `Tilt` widget.
+- Add `border` to `Tilt` widget.
+- Add animate `moveDuration`, `leaveDuration`, `moveCurve`, `leaveCurve` to `TiltConfig`.
 
 ## 0.0.8
 ### New features

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/enums.dart';
+import 'package:flutter_tilt/src/type/tilt_type.dart';
 
 /// Tilt State
 class TiltState extends InheritedWidget {
@@ -12,8 +13,9 @@ class TiltState extends InheritedWidget {
     required this.width,
     required this.height,
     required this.areaProgress,
-    required this.onResize,
     required this.isMove,
+    required this.tiltConfig,
+    required this.onResize,
     required this.onMove,
     required this.onRevert,
   });
@@ -32,6 +34,9 @@ class TiltState extends InheritedWidget {
 
   /// 是否正在移动
   final bool isMove;
+
+  /// 倾斜配置
+  final TiltConfig tiltConfig;
 
   /// 调整尺寸
   final void Function(Size) onResize;
@@ -65,6 +70,9 @@ class TiltState extends InheritedWidget {
       update = true;
     }
     if (isMove != oldWidget.isMove) {
+      update = true;
+    }
+    if (tiltConfig != oldWidget.tiltConfig) {
       update = true;
     }
     return update;
