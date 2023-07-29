@@ -1,5 +1,5 @@
 语言：[English](README.md) | 中文  
-查看 [在线示例](https://amoshuke.github.io/flutter_tilt_book)  
+查看：[在线示例](https://amoshuke.github.io/flutter_tilt_book)  
 
 <br/>
 
