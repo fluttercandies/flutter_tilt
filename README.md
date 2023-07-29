@@ -131,7 +131,8 @@ Tilt(
 | childInner | `List<Widget>` | `<Widget>[]` | As with Stack, you can use the Stack layout to create widgets that are above the child. <br/> e.g. parallax effects. |  
 | disable | `bool` | `false` | Disable all effects. |  
 | fps | `int` | `60` | Gesture triggered frames. |  
-| borderRadius | `BorderRadiusGeometry?` | `null` | If non-null, the corners of this box are rounded by this `BorderRadius`. |  
+| border | `BoxBorder?` | `null` | BoxDecoration border. |  
+| borderRadius | `BorderRadiusGeometry?` | `null` | BoxDecoration borderRadius. |  
 | clipBehavior | `Clip` | `Clip.antiAlias` | Flutter clipBehavior. |  
 | tiltConfig | `TiltConfig` | `TiltConfig()` | Tilt effect config. |  
 | lightConfig | `LightConfig` | `LightConfig()` | Light effect config. |  

@@ -131,7 +131,8 @@ Tilt(
 | childInner | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 child 上方的 widget。 <br/> 例如：视差效果。 |  
 | disable | `bool` | `false` | 禁用所有效果。 |  
 | fps | `int` | `60` | 手势触发的帧数。 |  
-| borderRadius | `BorderRadiusGeometry?` | `null` | 如果不为空，则按照 `BorderRadius` 的值进行圆角处理。 |  
+| border | `BoxBorder?` | `null` | BoxDecoration border。 |  
+| borderRadius | `BorderRadiusGeometry?` | `null` | BoxDecoration borderRadius。 |  
 | clipBehavior | `Clip` | `Clip.antiAlias` | Flutter 中的 clipBehavior。 |  
 | tiltConfig | `TiltConfig` | `TiltConfig()` | 倾斜效果配置。 |  
 | lightConfig | `LightConfig` | `LightConfig()` | 光照效果配置。 |  

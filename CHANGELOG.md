@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+### New features
+- Add `border` to the `Tilt` widget.
+
 ## 0.0.8
 ### New features
 - Add `GesturesType` to `onGestureMove` and `onGestureLeave`.

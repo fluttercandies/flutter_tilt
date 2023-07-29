@@ -13,6 +13,7 @@ class TiltContainer extends StatefulWidget {
     super.key,
     required this.child,
     required this.childInner,
+    this.border,
     this.borderRadius,
     required this.clipBehavior,
     required this.tiltConfig,
@@ -27,6 +28,9 @@ class TiltContainer extends StatefulWidget {
   ///
   /// {@macro tilt.childInner}
   final List<Widget> childInner;
+
+  /// Border
+  final BoxBorder? border;
 
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
@@ -50,6 +54,7 @@ class TiltContainer extends StatefulWidget {
 class _TiltContainerState extends State<TiltContainer> {
   Widget get _child => widget.child;
   List<Widget> get _childInner => widget.childInner;
+  BoxBorder? get _border => widget.border;
   BorderRadiusGeometry? get _borderRadius => widget.borderRadius;
   Clip get _clipBehavior => widget.clipBehavior;
   TiltConfig get _tiltConfig => widget.tiltConfig;
@@ -113,6 +118,7 @@ class _TiltContainerState extends State<TiltContainer> {
                 width: width,
                 height: height,
                 areaProgress: value,
+                border: _border,
                 borderRadius: _borderRadius,
                 clipBehavior: _clipBehavior,
                 lightConfig: _lightConfig,
@@ -139,8 +145,6 @@ class _TiltContainerState extends State<TiltContainer> {
                       width: width,
                       height: height,
                       areaProgress: value,
-                      borderRadius: _borderRadius,
-                      clipBehavior: _clipBehavior,
                       lightConfig: _lightConfig,
                     ),
 

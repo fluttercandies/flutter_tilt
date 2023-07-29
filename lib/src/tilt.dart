@@ -23,6 +23,7 @@ class Tilt extends StatefulWidget {
     this.childInner = const <Widget>[],
     this.disable = false,
     this.fps = 60,
+    this.border,
     this.borderRadius,
     this.clipBehavior = Clip.antiAlias,
     this.tiltConfig = const TiltConfig(),
@@ -54,6 +55,9 @@ class Tilt extends StatefulWidget {
   /// 推荐 60 FPS，如果遭遇性能问题，还可以使用人眼能够接受的 24 FPS
   final int fps;
 
+  /// Border
+  final BoxBorder? border;
+
   /// BorderRadius
   final BorderRadiusGeometry? borderRadius;
 
@@ -84,6 +88,7 @@ class _TiltState extends State<Tilt> {
   List<Widget> get _childInner => widget.childInner;
   bool get _disable => widget.disable;
   int get _fps => widget.fps;
+  BoxBorder? get _border => widget.border;
   BorderRadiusGeometry? get _borderRadius => widget.borderRadius;
   Clip get _clipBehavior => widget.clipBehavior;
   TiltConfig get _tiltConfig => widget.tiltConfig;
@@ -122,6 +127,7 @@ class _TiltState extends State<Tilt> {
       child: GesturesListener(
         tiltConfig: _tiltConfig,
         child: TiltContainer(
+          border: _border,
           borderRadius: _borderRadius,
           clipBehavior: _clipBehavior,
           tiltConfig: _tiltConfig,
