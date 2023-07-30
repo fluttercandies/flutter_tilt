@@ -1,5 +1,6 @@
 Language: English | [中文](README-ZH.md)  
-Check out the [Live Demo](https://amoshuke.github.io/flutter_tilt_book)  
+Check out the [Live Demo][].  
+See the [Migration Guide][] to learn how to migrate between breaking changes.  
 
 <br/>
 
@@ -49,6 +50,8 @@ Check out the [Live Demo](https://amoshuke.github.io/flutter_tilt_book)
 
     - [Tilt widget parameters](#tilt-widget-parameters)
 
+    - [ChildLayout](#childlayout)
+
     - [TiltConfig](#tiltconfig)
 
     - [LightConfig](#lightconfig)
@@ -72,6 +75,7 @@ Check out the [Live Demo](https://amoshuke.github.io/flutter_tilt_book)
 - 🔦 Light effect
 - 💡 Shadow effect
 - 👀 Parallax effect
+- 🧱 Multiple layouts
 - 👇 Supports mouse and touch events
 - 🖼️ Smooth animation
 - ⚙️ Many custom parameters
@@ -128,7 +132,7 @@ Tilt(
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | Create a widget that its child widget can be tilted. |  
-| childInner | `List<Widget>` | `<Widget>[]` | As with Stack, you can use the Stack layout to create widgets that are above the child. <br/> e.g. parallax effects. |  
+| childLayout | `ChildLayout` | `ChildLayout()` | Other child layouts. <br/> e.g. parallax inner, outer, behind. |  
 | disable | `bool` | `false` | Disable all effects. |  
 | fps | `int` | `60` | Gesture triggered frames. |  
 | border | `BoxBorder?` | `null` | BoxDecoration border. |  
@@ -139,6 +143,15 @@ Tilt(
 | shadowConfig | `ShadowConfig` | `ShadowConfig()` | Shadow effect config. |  
 | onGestureMove | `void Function(TiltDataModel, GesturesType)?` | `null` | Gesture move callback. |  
 | onGestureLeave | `void Function(TiltDataModel, GesturesType)?` | `null` | Gesture leave callback. |  
+
+
+##### `ChildLayout`  
+
+| Parameter | Type | Default | Description |  
+| --- | --- | --- | --- |
+| outer | `List<Widget>` | `<Widget>[]` | As with Stack, you can use the Stack layout to create widgets that are outer of the child. <br/> e.g. parallax effects. |  
+| inner | `List<Widget>` | `<Widget>[]` | As with Stack, you can use the Stack layout to create widgets that are inner of the child. <br/> e.g. parallax effects. |  
+| behind | `List<Widget>` | `<Widget>[]` | As with Stack, you can use the Stack layout to create widgets that are behind of the child. <br/> e.g. parallax effects. |  
 
 
 ##### `TiltConfig`  
@@ -198,25 +211,25 @@ import 'package:flutter_tilt/flutter_tilt.dart';
 
 ...
 Tilt(
-  childInner: const [
-    /// Parallax here
-    Positioned.fill(
-      child: Center(
+  childLayout: const ChildLayout(
+    outer: [
+      /// Parallax here
+      Positioned(
         child: TiltParallax(
           child: Text('Parallax'),
         ),
       ),
-    ),
-    /// Parallax here
-    Positioned.fill(
-      top: 20.0,
-      left: 20.0,
-      child: TiltParallax(
-        size: Offset(-10.0, -10.0),
-        child: Text('Tilt'),
+      /// Parallax here
+      Positioned(
+        top: 20.0,
+        left: 20.0,
+        child: TiltParallax(
+          size: Offset(-10.0, -10.0),
+          child: Text('Tilt'),
+        ),
       ),
-    ),
-  ],
+    ],
+  ),
   child: Container(
     width: 150.0,
     height: 300.0,
@@ -242,3 +255,6 @@ Tilt(
 Open sourced under the MIT license.  
 
 © AmosHuKe
+
+[Live Demo]: https://amoshuke.github.io/flutter_tilt_book
+[Migration Guide]: https://github.com/AmosHuKe/flutter_tilt/blob/main/guides/migration_guide.md

@@ -1,5 +1,6 @@
 语言：[English](README.md) | 中文  
-查看：[在线示例](https://amoshuke.github.io/flutter_tilt_book)  
+查看：[在线示例][]  
+查看：[迁移指南][] 了解如何从破坏性改动中迁移为可用代码  
 
 <br/>
 
@@ -49,6 +50,8 @@
 
     - [Tilt widget 参数](#tilt-widget-参数)
 
+    - [ChildLayout](#childlayout)
+
     - [TiltConfig](#tiltconfig)
 
     - [LightConfig](#lightconfig)
@@ -72,6 +75,7 @@
 - 🔦 光照效果
 - 💡 阴影效果
 - 👀 视差效果
+- 🧱 多种布局位置
 - 👇 支持鼠标和触摸事件
 - 🖼️ 流畅的动画
 - ⚙️ 许多自定义参数
@@ -128,7 +132,7 @@ Tilt(
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | 创建一个 widget，使 child widget 有倾斜效果。 |  
-| childInner | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 child 上方的 widget。 <br/> 例如：视差效果。 |  
+| childLayout | `ChildLayout` | `ChildLayout()` | 其它 child 布局. <br/> 例如：位于 child 外部、内部、后面的视差布局. |  
 | disable | `bool` | `false` | 禁用所有效果。 |  
 | fps | `int` | `60` | 手势触发的帧数。 |  
 | border | `BoxBorder?` | `null` | BoxDecoration border。 |  
@@ -139,6 +143,15 @@ Tilt(
 | shadowConfig | `ShadowConfig` | `ShadowConfig()` | 阴影效果配置。 |  
 | onGestureMove | `void Function(TiltDataModel, GesturesType)?` | `null` | 手势移动的回调触发。 |  
 | onGestureLeave | `void Function(TiltDataModel, GesturesType)?` | `null` | 手势离开的回调触发。 |  
+
+
+##### `ChildLayout`  
+
+| 参数名 | 类型 | 默认值 | 描述 |  
+| --- | --- | --- | --- |
+| outer | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 `child 外部` 的 widget。 <br/> 例如：视差效果。 |  
+| inner | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 `child 内部` 的 widget。 <br/> 例如：视差效果。 |  
+| behind | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 `child 后面` 的 widget。 <br/> 例如：视差效果。 |  
 
 
 ##### `TiltConfig`  
@@ -198,25 +211,25 @@ import 'package:flutter_tilt/flutter_tilt.dart';
 
 ...
 Tilt(
-  childInner: const [
-    /// 此处为视差
-    Positioned.fill(
-      child: Center(
+  childLayout: const ChildLayout(
+    outer: [
+      /// 此处为视差
+      Positioned(
         child: TiltParallax(
           child: Text('Parallax'),
         ),
       ),
-    ),
-    /// 此处为视差
-    Positioned.fill(
-      top: 20.0,
-      left: 20.0,
-      child: TiltParallax(
-        size: Offset(-10.0, -10.0),
-        child: Text('Tilt'),
+      /// 此处为视差
+      Positioned(
+        top: 20.0,
+        left: 20.0,
+        child: TiltParallax(
+          size: Offset(-10.0, -10.0),
+          child: Text('Tilt'),
+        ),
       ),
-    ),
-  ],
+    ],
+  ),
   child: Container(
     width: 150.0,
     height: 300.0,
@@ -242,3 +255,6 @@ Tilt(
 根据 MIT 许可证开源。
 
 © AmosHuKe
+
+[在线示例]: https://amoshuke.github.io/flutter_tilt_book
+[迁移指南]: https://github.com/AmosHuKe/flutter_tilt/blob/main/guides/migration_guide.md
