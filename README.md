@@ -91,12 +91,14 @@ See the [Migration Guide][] to learn how to migrate between breaking changes.
 
 ### Add package 📦  
 
-Run this command with Flutter,
+Run this command with Flutter,  
+
 ```sh
 $ flutter pub add flutter_tilt
 ```
 
-or add `flutter_tilt` to `pubspec.yaml` dependencies manually.
+or add `flutter_tilt` to `pubspec.yaml` dependencies manually.  
+
 ```yaml
 dependencies:
   flutter_tilt: ^latest_version
@@ -110,7 +112,8 @@ Example: [flutter_tilt/example](https://github.com/AmosHuKe/flutter_tilt/tree/ma
 
 ### Simple usage: Tilt 📦  
 
-`Tilt` widget will have default tilt, shadow, and light effects.
+`Tilt` widget will have default tilt, shadow, and light effects.  
+
 ```dart
 /// Import flutter_tilt
 import 'package:flutter_tilt/flutter_tilt.dart';
@@ -203,8 +206,8 @@ Tilt(
 
 ### Simple usage: Parallax 👀  
 
-`TiltParallax` widget can only be used in the `childInner` of `Tilt` widget.   
-`childInner` is the same as `Stack` widget.
+`TiltParallax` widget can only be used in the `childLayout` of `Tilt` widget.   
+
 ```dart
 /// Import flutter_tilt
 import 'package:flutter_tilt/flutter_tilt.dart';

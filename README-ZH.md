@@ -91,12 +91,14 @@
 
 ### 添加 flutter_tilt 📦  
 
-使用 Flutter 运行以下指令，
+使用 Flutter 运行以下指令，  
+
 ```sh
 $ flutter pub add flutter_tilt
 ```
 
-或手动将 `flutter_tilt` 添加到 `pubspec.yaml` 依赖项中。
+或手动将 `flutter_tilt` 添加到 `pubspec.yaml` 依赖项中。  
+
 ```yaml
 dependencies:
   flutter_tilt: ^latest_version
@@ -110,7 +112,8 @@ dependencies:
 
 ### 简单用法：倾斜 📦  
 
-`Tilt` widget 默认有倾斜、阴影和光照的效果。
+`Tilt` widget 默认有倾斜、阴影和光照的效果。  
+
 ```dart
 /// 导入 flutter_tilt
 import 'package:flutter_tilt/flutter_tilt.dart';
@@ -203,8 +206,8 @@ Tilt(
 
 ### 简单用法：视差 👀  
 
-`TiltParallax` widget 只能在 `Tilt` widget 的 `childInner` 中使用。  
-`childInner` 与 `Stack` widget 相同。
+`TiltParallax` widget 只能在 `Tilt` widget 的 `childLayout` 中使用。  
+
 ```dart
 /// 导入 flutter_tilt
 import 'package:flutter_tilt/flutter_tilt.dart';
