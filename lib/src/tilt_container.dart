@@ -12,7 +12,7 @@ class TiltContainer extends StatefulWidget {
   const TiltContainer({
     super.key,
     required this.child,
-    required this.childInner,
+    required this.childLayout,
     this.border,
     this.borderRadius,
     required this.clipBehavior,
@@ -24,10 +24,8 @@ class TiltContainer extends StatefulWidget {
   /// 主 child
   final Widget child;
 
-  /// 内部 child
-  ///
-  /// {@macro tilt.childInner}
-  final List<Widget> childInner;
+  /// child 其他布局
+  final ChildLayout childLayout;
 
   /// Border
   final BoxBorder? border;
@@ -53,7 +51,7 @@ class TiltContainer extends StatefulWidget {
 
 class _TiltContainerState extends State<TiltContainer> {
   Widget get _child => widget.child;
-  List<Widget> get _childInner => widget.childInner;
+  ChildLayout get _childLayout => widget.childLayout;
   BoxBorder? get _border => widget.border;
   BorderRadiusGeometry? get _borderRadius => widget.borderRadius;
   Clip get _clipBehavior => widget.clipBehavior;
@@ -112,9 +110,13 @@ class _TiltContainerState extends State<TiltContainer> {
           filterQuality: _tiltConfig.filterQuality,
           transform: tiltData.transform,
           child: Stack(
+            alignment: AlignmentDirectional.center,
             clipBehavior: Clip.none,
             children: <Widget>[
-              /// Main Child
+              /// behind child
+              ..._childLayout.behind,
+
+              /// main child
               TiltShadow(
                 width: width,
                 height: height,
@@ -132,7 +134,7 @@ class _TiltContainerState extends State<TiltContainer> {
                       ? Clip.hardEdge
                       : _clipBehavior,
                   children: <Widget>[
-                    /// Body
+                    /// body
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: _borderRadius,
@@ -141,7 +143,7 @@ class _TiltContainerState extends State<TiltContainer> {
                       child: child,
                     ),
 
-                    /// Light
+                    /// light
                     TiltLight(
                       width: width,
                       height: height,
@@ -149,7 +151,7 @@ class _TiltContainerState extends State<TiltContainer> {
                       lightConfig: _lightConfig,
                     ),
 
-                    /// Resize
+                    /// resize
                     Positioned.fill(
                       child: LayoutBuilder(
                         builder: (
@@ -163,12 +165,15 @@ class _TiltContainerState extends State<TiltContainer> {
                         },
                       ),
                     ),
+
+                    /// inner child
+                    ..._childLayout.inner,
                   ],
                 ),
               ),
 
-              /// Inner Child
-              ..._childInner,
+              /// outer child
+              ..._childLayout.outer,
             ],
           ),
         );

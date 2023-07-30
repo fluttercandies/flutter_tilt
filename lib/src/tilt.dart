@@ -20,7 +20,7 @@ class Tilt extends StatefulWidget {
   const Tilt({
     super.key,
     required this.child,
-    this.childInner = const <Widget>[],
+    this.childLayout = const ChildLayout(),
     this.disable = false,
     this.fps = 60,
     this.border,
@@ -36,14 +36,8 @@ class Tilt extends StatefulWidget {
   /// 主 child
   final Widget child;
 
-  /// 内部 child
-  ///
-  /// {@template tilt.childInner}
-  /// 一般用作视差的 Widget
-  ///
-  /// 本身作为 [Stack]，可以搭配 [Stack] 相关布局，
-  /// {@endtemplate}
-  final List<Widget> childInner;
+  /// child 其他布局
+  final ChildLayout childLayout;
 
   /// 全部禁用
   final bool disable;
@@ -85,7 +79,7 @@ class Tilt extends StatefulWidget {
 
 class _TiltState extends State<Tilt> {
   Widget get _child => widget.child;
-  List<Widget> get _childInner => widget.childInner;
+  ChildLayout get _childLayout => widget.childLayout;
   bool get _disable => widget.disable;
   int get _fps => widget.fps;
   BoxBorder? get _border => widget.border;
@@ -134,7 +128,7 @@ class _TiltState extends State<Tilt> {
           tiltConfig: _tiltConfig,
           lightConfig: _lightConfig,
           shadowConfig: _shadowConfig,
-          childInner: _childInner,
+          childLayout: _childLayout,
           child: _child,
         ),
       ),

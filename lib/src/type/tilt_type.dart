@@ -120,6 +120,50 @@ class TiltConfig {
   final FilterQuality filterQuality;
 }
 
+/// child 其他布局
+@immutable
+class ChildLayout {
+  /// child 其他布局
+  const ChildLayout({
+    this.outer = const <Widget>[],
+    this.inner = const <Widget>[],
+    this.behind = const <Widget>[],
+  });
+
+  /// 外部
+  ///
+  /// {@template tilt.ChildLayout.outer}
+  /// 位于 [child] 外部，布局会超出 [child] 显示。
+  ///
+  /// 本身作为 [Stack]，可以搭配 [Stack] 相关布局，
+  ///
+  /// 一般用作视差的 Widget
+  /// {@endtemplate}
+  final List<Widget> outer;
+
+  /// 内部
+  ///
+  /// {@template tilt.ChildLayout.inner}
+  /// 位于 [child] 内部，布局不会超出 [child] 显示。
+  ///
+  /// 本身作为 [Stack]，可以搭配 [Stack] 相关布局，
+  ///
+  /// 一般用作视差的 Widget
+  /// {@endtemplate}
+  final List<Widget> inner;
+
+  /// 后面
+  ///
+  /// {@template tilt.ChildLayout.behind}
+  /// 位于 [child] 后面，布局会超出 [child] 显示。
+  ///
+  /// 本身作为 [Stack]，可以搭配 [Stack] 相关布局，
+  ///
+  /// 一般用作视差的 Widget
+  /// {@endtemplate}
+  final List<Widget> behind;
+}
+
 /// 倾斜方向
 @immutable
 class TiltDirection {
