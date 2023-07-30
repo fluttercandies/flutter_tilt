@@ -148,7 +148,7 @@ Tilt(
 | onGestureLeave | `void Function(TiltDataModel, GesturesType)?` | `null` | Gesture leave callback. |  
 
 
-##### `ChildLayout`  
+##### ChildLayout  
 
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
@@ -157,7 +157,7 @@ Tilt(
 | behind | `List<Widget>` | `<Widget>[]` | As with Stack, you can use the Stack layout to create widgets that are behind of the child. <br/> e.g. parallax effects. |  
 
 
-##### `TiltConfig`  
+##### TiltConfig  
 
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
@@ -176,7 +176,7 @@ Tilt(
 | filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality. |  
 
 
-##### `LightConfig`  
+##### LightConfig  
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
 | disable | `bool` | `false` | Only disable the light effect. |  
@@ -187,7 +187,7 @@ Tilt(
 | enableReverse | `bool` | `false` | Reverse light direction. <br/> Affects: <br/> `[ShadowConfig.direction]` (not affected after configuration). <br/> `[ShadowConfig.enableReverse]` (not affected after configuration). |  
 
 
-##### `ShadowConfig`  
+##### ShadowConfig  
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
 | disable | `bool` | `false` | Only disable the shadow effect. |  

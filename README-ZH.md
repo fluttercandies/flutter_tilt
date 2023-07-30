@@ -148,7 +148,7 @@ Tilt(
 | onGestureLeave | `void Function(TiltDataModel, GesturesType)?` | `null` | 手势离开的回调触发。 |  
 
 
-##### `ChildLayout`  
+##### ChildLayout  
 
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |
@@ -157,7 +157,7 @@ Tilt(
 | behind | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 `child 后面` 的 widget。 <br/> 例如：视差效果。 |  
 
 
-##### `TiltConfig`  
+##### TiltConfig  
 
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |
@@ -176,7 +176,7 @@ Tilt(
 | filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality。 |  
 
 
-##### `LightConfig`  
+##### LightConfig  
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |
 | disable | `bool` | `false` | 仅禁用光照效果。 |  
@@ -187,7 +187,7 @@ Tilt(
 | enableReverse | `bool` | `false` | 方向光照方向。 <br/> 影响：<br/> `[ShadowConfig.direction]`（配置后不受影响）。 <br/> `[ShadowConfig.enableReverse]`（配置后不受影响）。 |  
 
 
-##### `ShadowConfig`  
+##### ShadowConfig  
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |
 | disable | `bool` | `false` | 仅禁用阴影效果。 |  
