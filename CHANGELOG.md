@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## Unreleased
+
+### Fixes
+
+- Fix trigger touch and hover at the same time.
+
 ## 0.1.0
 
 ### Breaking changes
