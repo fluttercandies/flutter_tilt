@@ -347,14 +347,14 @@ Offset constraintsPosition(double width, double height, Offset position) {
   if (constraintWidth > width) {
     constraintWidth = width;
   }
-  if (constraintWidth < -width) {
-    constraintWidth = -width;
+  if (constraintWidth < 0) {
+    constraintWidth = 0;
   }
   if (constraintHidth > height) {
     constraintHidth = height;
   }
-  if (constraintHidth < -height) {
-    constraintHidth = -height;
+  if (constraintHidth < 0) {
+    constraintHidth = 0;
   }
   return Offset(constraintWidth, constraintHidth);
 }

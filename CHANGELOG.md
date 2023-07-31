@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## Unreleased
+
+### Fixes
+
+- Fix `constraintsPosition` min value is wrong.
+
 ## 0.1.1
 
 ### Fixes
