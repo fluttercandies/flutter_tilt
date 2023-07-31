@@ -79,3 +79,6 @@ build/
 
 # FVM
 .fvm/
+
+# test
+coverage
