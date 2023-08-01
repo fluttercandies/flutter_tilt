@@ -19,14 +19,13 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.0.0'
+          # flutter-version: '3.0.0'
       - name: Prepare dependencies
-        run: |
-          cd test
-          flutter pub get
-      - name: coverage
+        run: flutter pub get
+      - name: Coverage
         run: flutter test --coverage
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: "coverage/coverage.json"
