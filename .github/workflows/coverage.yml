@@ -22,7 +22,7 @@ jobs:
       - name: Prepare dependencies
         run: flutter pub get
       - name: coverage
-        run: flutter test --coverage
+        run: flutter test test --coverage
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
