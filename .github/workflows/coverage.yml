@@ -1,4 +1,5 @@
 name: coverage
+run-name: "Coverage"
 
 on:
   push:
@@ -11,7 +12,7 @@ on:
       - "**.md"
       
 jobs:
-  check-bats-version:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,9 +21,11 @@ jobs:
           channel: 'stable'
           flutter-version: '3.0.0'
       - name: Prepare dependencies
-        run: flutter pub get
+        run: |
+          cd test
+          flutter pub get
       - name: coverage
-        run: flutter test test --coverage
+        run: flutter test --coverage
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
