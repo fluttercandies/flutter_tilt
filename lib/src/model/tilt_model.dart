@@ -44,4 +44,27 @@ class TiltDataModel {
   /// * (-angle, -angle) 倾斜右下角 [TiltConfig.angle] 最大角度
   /// {@endtemplate}
   final Offset angle;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is TiltDataModel &&
+        other.position == position &&
+        other.areaProgress == areaProgress &&
+        other.transform == transform &&
+        other.angle == angle;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        position.hashCode,
+        areaProgress.hashCode,
+        transform.hashCode,
+        angle.hashCode,
+      );
 }
