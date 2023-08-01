@@ -136,10 +136,10 @@ Offset p2cAreaProgress(
   }
 
   /// 限制倾斜方向
-  if ((tiltDirection ?? <TiltDirection>[]).isNotEmpty) {
+  if (<TiltDirection>[...?tiltDirection].isNotEmpty) {
     final TiltDirection direction = TiltDirection.validator(
       TiltDirection(x, y),
-      tiltDirection ?? <TiltDirection>[],
+      <TiltDirection>[...?tiltDirection],
     );
     x = direction.dx;
     y = direction.dy;
