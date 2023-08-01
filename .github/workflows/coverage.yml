@@ -15,9 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v3.0.0
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          flutter-version: '3.0.0'
       - name: Prepare dependencies
         run: flutter pub get
       - name: coverage
