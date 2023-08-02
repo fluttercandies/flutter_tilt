@@ -4,7 +4,7 @@ import 'package:flutter_tilt/flutter_tilt.dart';
 import 'tilt_widget.dart';
 
 void main() {
-  group('tilt touch gestures', () {
+  group('tilt gestures touch ', () {
     const TiltConfig tiltConfig = TiltConfig();
     final Finder tiltScaffoldFinder = find.byKey(const Key('tilt_scaffold'));
     final Finder tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
