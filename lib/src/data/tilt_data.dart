@@ -59,9 +59,6 @@ class TiltData {
   Offset get angle =>
       rotateAxis(areaProgress * tiltConfig.angle, tiltConfig.enableReverse);
 
-  /// 反向
-  bool get enableReverse => tiltConfig.enableReverse;
-
   /// 禁用
   bool get disable => tiltConfig.disable;
 }
