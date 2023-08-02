@@ -232,6 +232,7 @@ void main() {
         TiltWidget(
           tiltConfig: TiltConfig(
             direction: <TiltDirection>[
+              TiltDirection.none,
               TiltDirection.top,
               TiltDirection.bottom,
               TiltDirection.left,
