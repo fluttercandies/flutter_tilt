@@ -5,7 +5,7 @@ import 'package:flutter_tilt/flutter_tilt.dart';
 import 'tilt_widget.dart';
 
 void main() {
-  group('tilt hover gestures', () {
+  group('tilt gestures hover', () {
     const TiltConfig tiltConfig = TiltConfig();
     final Finder tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
     final Finder childFinder = find.text('Tilt');
@@ -130,6 +130,7 @@ void main() {
       await tester.sendEventToBinding(
         testPointer.hover(hoverEventLocation + const Offset(0.0, -6.0)),
       );
+      await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
       expect(_gesturesType, GesturesType.hover);
       expect(_tiltData, _leaveTiltDataExpect, reason: '倾斜-超范围');
@@ -193,6 +194,7 @@ void main() {
       await tester.sendEventToBinding(
         testPointer.hover(hoverEventLocation + const Offset(0.0, 6.0)),
       );
+      await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
       expect(_gesturesType, GesturesType.hover);
       expect(_tiltData, _leaveTiltDataExpect, reason: '倾斜-超范围');
@@ -256,6 +258,7 @@ void main() {
       await tester.sendEventToBinding(
         testPointer.hover(hoverEventLocation + const Offset(-6.0, 0.0)),
       );
+      await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
       expect(_gesturesType, GesturesType.hover);
       expect(_tiltData, _leaveTiltDataExpect, reason: '倾斜-超范围');
@@ -319,6 +322,7 @@ void main() {
       await tester.sendEventToBinding(
         testPointer.hover(hoverEventLocation + const Offset(6.0, 0.0)),
       );
+      await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
       expect(_gesturesType, GesturesType.hover);
       expect(_tiltData, _leaveTiltDataExpect, reason: '倾斜-超范围');
@@ -382,6 +386,7 @@ void main() {
       await tester.sendEventToBinding(
         testPointer.hover(hoverEventLocation + const Offset(-6.0, -6.0)),
       );
+      await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
       expect(_gesturesType, GesturesType.hover);
       expect(_tiltData, _leaveTiltDataExpect, reason: '倾斜-超范围');
@@ -445,6 +450,7 @@ void main() {
       await tester.sendEventToBinding(
         testPointer.hover(hoverEventLocation + const Offset(6.0, -6.0)),
       );
+      await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
       expect(_gesturesType, GesturesType.hover);
       expect(_tiltData, _leaveTiltDataExpect, reason: '倾斜-超范围');
@@ -508,6 +514,7 @@ void main() {
       await tester.sendEventToBinding(
         testPointer.hover(hoverEventLocation + const Offset(-6.0, 6.0)),
       );
+      await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
       expect(_gesturesType, GesturesType.hover);
       expect(_tiltData, _leaveTiltDataExpect, reason: '倾斜-超范围');
@@ -571,6 +578,7 @@ void main() {
       await tester.sendEventToBinding(
         testPointer.hover(hoverEventLocation + const Offset(6.0, 6.0)),
       );
+      await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
       expect(_gesturesType, GesturesType.hover);
       expect(_tiltData, _leaveTiltDataExpect, reason: '倾斜-超范围');
