@@ -14,7 +14,7 @@ on:
     paths-ignore:
       - "**.md"
       - "example/**"
-      
+
 jobs:
   test:
     runs-on: ubuntu-latest
