@@ -4,11 +4,12 @@ import 'package:flutter_tilt/flutter_tilt.dart';
 import 'tilt_widget.dart';
 
 void main() {
-  group('tilt gestures touch ', () {
+  group('tilt gestures touch', () {
     const TiltConfig tiltConfig = TiltConfig();
     final Finder tiltScaffoldFinder = find.byKey(const Key('tilt_scaffold'));
     final Finder tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
     final Finder childFinder = find.text('Tilt');
+    final TestPointer testPointer = TestPointer();
 
     testWidgets('gestures move leave', (WidgetTester tester) async {
       TiltDataModel? _moveTiltData;
@@ -64,6 +65,17 @@ void main() {
       expect(childFinder, findsOneWidget);
       expect(_leaveGesturesType, GesturesType.touch);
       expect(_leaveTiltData, _leaveTiltDataExpect);
+    });
+    testWidgets('onPointerCancel', (WidgetTester tester) async {
+      await tester.pumpWidget(const TiltWidget());
+
+      final Offset location = tester.getCenter(tiltWidgetFinder);
+      await tester.sendEventToBinding(testPointer.down(location));
+      await tester.sendEventToBinding(testPointer.cancel());
+      await tester.pumpAndSettle();
+      expect(childFinder, findsOneWidget);
+
+      await tester.sendEventToBinding(testPointer.removePointer());
     });
     testWidgets('move top', (WidgetTester tester) async {
       TiltDataModel? _tiltData;
