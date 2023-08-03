@@ -7,6 +7,7 @@ import 'package:flutter_tilt/src/tilt_shadow.dart';
 import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
+import 'package:flutter_tilt/src/utils.dart';
 
 class TiltContainer extends StatefulWidget {
   const TiltContainer({
@@ -59,9 +60,6 @@ class _TiltContainerState extends State<TiltContainer> {
   LightConfig get _lightConfig => widget.lightConfig;
   ShadowConfig get _shadowConfig => widget.shadowConfig;
 
-  /// 初始坐标区域进度
-  Offset get _initAreaProgress => _tiltConfig.initial ?? Offset.zero;
-
   late TiltState tiltState;
 
   /// 是否初始化
@@ -90,9 +88,7 @@ class _TiltContainerState extends State<TiltContainer> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<Offset>(
       tween: Tween<Offset>(
-        end: isMove || !_tiltConfig.enableRevert
-            ? areaProgress
-            : _initAreaProgress,
+        end: tiltTweenAnimationEnd(isMove, _tiltConfig, areaProgress),
       ),
       duration: isMove ? _tiltConfig.moveDuration : _tiltConfig.leaveDuration,
       curve: isMove ? _tiltConfig.moveCurve : _tiltConfig.leaveCurve,

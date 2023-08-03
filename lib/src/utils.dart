@@ -358,3 +358,16 @@ Offset constraintsPosition(double width, double height, Offset position) {
   }
   return Offset(constraintWidth, constraintHidth);
 }
+
+/// Tilt TweenAnimation End
+/// - [isMove] 是否移动
+/// - [tiltConfig] TiltConfig
+/// - [areaProgress] 当前进度
+Offset tiltTweenAnimationEnd(
+  bool isMove,
+  TiltConfig tiltConfig,
+  Offset areaProgress,
+) =>
+    isMove || !tiltConfig.enableRevert
+        ? areaProgress
+        : (tiltConfig.initial ?? Offset.zero);

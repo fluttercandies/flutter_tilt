@@ -7,6 +7,7 @@ See the [Migration Guide](guides/migration_guide.md) for the details of breaking
 ### Fixes
 
 - Fix `constraintsPosition` min value is wrong.
+- Fix `TiltParallax` widget not following `Tilt` widget.
 
 ## 0.1.1
 
