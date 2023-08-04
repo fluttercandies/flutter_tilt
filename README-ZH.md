@@ -5,8 +5,8 @@
 <br/>
 
 <div align="center">
-  <img height="180" src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview2.gif?raw=true" alt="示例预览 GIF - 图片视差" />
-  <img height="180" src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview3-small.gif?raw=true" alt="示例预览 GIF - 布局" />
+  <img height="180" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview2.gif" alt="示例预览 GIF - 图片视差" />
+  <img height="180" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview3-small.gif" alt="示例预览 GIF - 布局" />
 </div>
 
 <br/>
@@ -29,7 +29,7 @@
 <br/>
 
 <div align="center">
-  <img width="320px" src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview.gif?raw=true" style="border-radius: 20px;" alt="示例预览 GIF"/>
+  <img width="320px" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview.gif" style="border-radius: 20px;" alt="示例预览 GIF"/>
 </div>
 
 <br/>
