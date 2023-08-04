@@ -29,6 +29,7 @@
 .pub-cache/
 .pub/
 build/
+coverage/
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -78,6 +79,3 @@ build/
 
 # FVM
 .fvm/
-
-# test
-coverage
