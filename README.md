@@ -5,8 +5,8 @@ See the [Migration Guide][] to learn how to migrate between breaking changes.
 <br/>
 
 <div align="center">
-  <img height="180" src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview2.gif?raw=true"/>
-  <img height="180" src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview3-small.gif?raw=true"/>
+  <img height="180" src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview2.gif?raw=true" alt="Example Preview GIF - Parallax image" />
+  <img height="180" src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview3-small.gif?raw=true" alt="Example Preview GIF - Layout" />
 </div>
 
 <br/>
@@ -29,7 +29,7 @@ See the [Migration Guide][] to learn how to migrate between breaking changes.
 <br/>
 
 <div align="center">
-  <img src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview.gif?raw=true" width="320px" style="border-radius: 20px;" />
+  <img width="320px" src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview.gif?raw=true" style="border-radius: 20px;" alt="Example Preview GIF"/>
 </div>
 
 <br/>
