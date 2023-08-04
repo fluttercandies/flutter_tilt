@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'dart:math';
 import 'package:flutter/widgets.dart';
 
@@ -80,18 +82,10 @@ Offset p2cAreaPosition(double width, double height, Offset position) {
   final double centerHeight = height / 2.0;
 
   /// 限制最大值
-  if (x > centerWidth) {
-    x = centerWidth;
-  }
-  if (x < -centerWidth) {
-    x = -centerWidth;
-  }
-  if (y > centerHeight) {
-    y = centerHeight;
-  }
-  if (y < -centerHeight) {
-    y = -centerHeight;
-  }
+  if (x > centerWidth) x = centerWidth;
+  if (x < -centerWidth) x = -centerWidth;
+  if (y > centerHeight) y = centerHeight;
+  if (y < -centerHeight) y = -centerHeight;
 
   return Offset(x, y);
 }
@@ -120,26 +114,21 @@ Offset p2cAreaProgress(
   final Offset center = centerPosition(width, height);
   late double x = (center.dx - position.dx) / width * 2.0;
   late double y = (center.dy - position.dy) / height * 2.0;
+  final List<TiltDirection> tiltDirectionList = <TiltDirection>[
+    ...?tiltDirection,
+  ];
 
   /// 限制最大值
-  if (x > 1.0) {
-    x = 1.0;
-  }
-  if (x < -1.0) {
-    x = -1.0;
-  }
-  if (y > 1.0) {
-    y = 1.0;
-  }
-  if (y < -1.0) {
-    y = -1.0;
-  }
+  if (x > 1.0) x = 1.0;
+  if (x < -1.0) x = -1.0;
+  if (y > 1.0) y = 1.0;
+  if (y < -1.0) y = -1.0;
 
   /// 限制倾斜方向
-  if (<TiltDirection>[...?tiltDirection].isNotEmpty) {
+  if (tiltDirectionList.isNotEmpty) {
     final TiltDirection direction = TiltDirection.validator(
       TiltDirection(x, y),
-      <TiltDirection>[...?tiltDirection],
+      tiltDirectionList,
     );
     x = direction.dx;
     y = direction.dy;
@@ -239,15 +228,11 @@ double directionProgress<T>(
         progressData = progressX - progressY;
         break;
       case LightDirection.xCenter:
-        if (progressY < 0.0) {
-          dataY = -progressY;
-        }
+        if (progressY < 0.0) dataY = -progressY;
         progressData = max - dataY;
         break;
       case LightDirection.yCenter:
-        if (progressX < 0.0) {
-          dataX = -progressX;
-        }
+        if (progressX < 0.0) dataX = -progressX;
         progressData = max - dataX;
         break;
     }
@@ -294,15 +279,11 @@ double directionProgress<T>(
         progressData = -(progressX - progressY);
         break;
       case ShadowDirection.xCenter:
-        if (progressY < 0.0) {
-          dataY = -progressY;
-        }
+        if (progressY < 0.0) dataY = -progressY;
         progressData = max - dataY;
         break;
       case ShadowDirection.yCenter:
-        if (progressX < 0.0) {
-          dataX = -progressX;
-        }
+        if (progressX < 0.0) dataX = -progressX;
         progressData = max - dataX;
         break;
     }
@@ -312,17 +293,11 @@ double directionProgress<T>(
   progressData = progressData * max;
 
   /// 反向
-  if (enableReverse) {
-    progressData = -progressData;
-  }
+  if (enableReverse) progressData = -progressData;
 
   /// 避免超出范围
-  if (progressData < min) {
-    progressData = min;
-  }
-  if (progressData > max) {
-    progressData = max;
-  }
+  if (progressData < min) progressData = min;
+  if (progressData > max) progressData = max;
 
   return progressData;
 }
@@ -344,18 +319,12 @@ bool isInRange(double width, double height, Offset position) {
 Offset constraintsPosition(double width, double height, Offset position) {
   late double constraintWidth = position.dx;
   late double constraintHidth = position.dy;
-  if (constraintWidth > width) {
-    constraintWidth = width;
-  }
-  if (constraintWidth < 0) {
-    constraintWidth = 0;
-  }
-  if (constraintHidth > height) {
-    constraintHidth = height;
-  }
-  if (constraintHidth < 0) {
-    constraintHidth = 0;
-  }
+
+  if (constraintWidth > width) constraintWidth = width;
+  if (constraintWidth < 0) constraintWidth = 0;
+  if (constraintHidth > height) constraintHidth = height;
+  if (constraintHidth < 0) constraintHidth = 0;
+
   return Offset(constraintWidth, constraintHidth);
 }
 

@@ -55,26 +55,11 @@ class TiltState extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(TiltState oldWidget) {
-    late bool update = false;
-    if (isInit != oldWidget.isInit) {
-      update = true;
-    }
-    if (width != oldWidget.width) {
-      update = true;
-    }
-    if (height != oldWidget.height) {
-      update = true;
-    }
-    if (areaProgress != oldWidget.areaProgress) {
-      update = true;
-    }
-    if (isMove != oldWidget.isMove) {
-      update = true;
-    }
-    if (tiltConfig != oldWidget.tiltConfig) {
-      update = true;
-    }
-    return update;
-  }
+  bool updateShouldNotify(TiltState oldWidget) =>
+      isInit != oldWidget.isInit ||
+      width != oldWidget.width ||
+      height != oldWidget.height ||
+      areaProgress != oldWidget.areaProgress ||
+      isMove != oldWidget.isMove ||
+      tiltConfig != oldWidget.tiltConfig;
 }

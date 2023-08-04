@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'dart:async' as async;
 import 'package:flutter/widgets.dart';
 
@@ -137,9 +139,7 @@ class _TiltState extends State<Tilt> {
 
   /// 调整尺寸
   void onResize(Size size) {
-    if (isInit) {
-      return;
-    }
+    if (isInit) return;
     setState(() {
       isInit = true;
       width = size.width;
@@ -151,12 +151,8 @@ class _TiltState extends State<Tilt> {
   ///
   /// [offset] 当前坐标
   void onGesturesMove(Offset offset, GesturesType gesturesType) {
-    if (!isInit || _disable) {
-      return;
-    }
-    if (!fpsTimer()) {
-      return;
-    }
+    if (!isInit || _disable) return;
+    if (!fpsTimer()) return;
     if (_tiltConfig.enableOutsideAreaMove || isInRange(width, height, offset)) {
       setState(() {
         areaProgress = p2cAreaProgress(
@@ -189,9 +185,7 @@ class _TiltState extends State<Tilt> {
   ///
   /// [offset] 当前坐标
   void onGesturesRevert(Offset offset, GesturesType gesturesType) {
-    if (!isInit || _disable) {
-      return;
-    }
+    if (!isInit || _disable) return;
 
     /// 是否还原的取值
     final Offset position = _tiltConfig.enableRevert
