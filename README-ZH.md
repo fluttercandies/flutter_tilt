@@ -2,14 +2,7 @@
 🎁 查看：[在线示例][]  
 💡 查看：[迁移指南][] 了解如何从破坏性改动中迁移为可用代码  
 
-<br/>
-
-<div align="center">
-  <img height="180" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview2.gif" alt="示例预览 GIF - 图片视差" />
-  <img height="180" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview3-small.gif" alt="示例预览 GIF - 布局" />
-</div>
-
-<br/>
+<br/><br/>
 
 <h1 align="center">Flutter Tilt</h1>
 
@@ -29,7 +22,21 @@
 <br/>
 
 <div align="center">
-  <img width="320px" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview.gif" style="border-radius: 20px;" alt="示例预览 GIF"/>
+  <table width="640" align="center" border="0">
+    <tr>
+      <td align="center" rowspan="2">
+        <img width="320px" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview.gif" alt="示例预览 GIF" />
+      </td>
+      <td align="center">
+        <img width="320" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview2.gif" alt="示例预览 GIF - 图片视差" />
+      </td>
+    </tr>	
+    <tr>
+      <td align="center">
+        <img width="320" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview3-small.gif" alt="示例预览 GIF - 布局" />
+      </td>
+    </tr>	
+  </table>
 </div>
 
 <br/>

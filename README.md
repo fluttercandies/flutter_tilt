@@ -2,14 +2,7 @@
 🎁 Check out the [Live Demo][].  
 💡 See the [Migration Guide][] to learn how to migrate between breaking changes.  
 
-<br/>
-
-<div align="center">
-  <img height="180" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview2.gif" alt="Example Preview GIF - Parallax image" />
-  <img height="180" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
-</div>
-
-<br/>
+<br/><br/>
 
 <h1 align="center">Flutter Tilt</h1>
 
@@ -29,7 +22,21 @@
 <br/>
 
 <div align="center">
-  <img width="320px" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview.gif" style="border-radius: 20px;" alt="Example Preview GIF"/>
+  <table width="640" align="center" border="0">
+    <tr>
+      <td align="center" rowspan="2">
+        <img width="320px" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview.gif" alt="Example Preview GIF" />
+      </td>
+      <td align="center">
+        <img width="320" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview2.gif" alt="Example Preview GIF - Parallax image" />
+      </td>
+    </tr>	
+    <tr>
+      <td align="center">
+        <img width="320" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
+      </td>
+    </tr>	
+  </table>
 </div>
 
 <br/>
