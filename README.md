@@ -1,6 +1,6 @@
-Language: English | [中文](README-ZH.md)  
-Check out the [Live Demo][].  
-See the [Migration Guide][] to learn how to migrate between breaking changes.  
+📓 Language: English | [中文](README-ZH.md)  
+🎁 Check out the [Live Demo][].  
+💡 See the [Migration Guide][] to learn how to migrate between breaking changes.  
 
 <br/>
 
