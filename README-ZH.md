@@ -35,7 +35,13 @@
       <td align="center">
         <img width="320" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview3-small.gif" alt="示例预览 GIF - 布局" />
       </td>
-    </tr>	
+    </tr>
+    <tr>
+      <td align="center" colspan="2">
+
+查看 [在线示例][]
+      </td>
+    </tr>
   </table>
 </div>
 

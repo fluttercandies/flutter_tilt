@@ -35,7 +35,13 @@
       <td align="center">
         <img width="320" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
       </td>
-    </tr>	
+    </tr>
+    <tr>
+      <td align="center" colspan="2">
+
+Check out the [Live Demo][].
+      </td>
+    </tr>
   </table>
 </div>
 
