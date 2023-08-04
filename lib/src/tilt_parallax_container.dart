@@ -5,7 +5,8 @@ import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/utils.dart';
 
 /// 倾斜视差
-class TiltParallaxContainer extends StatefulWidget {
+@immutable
+class TiltParallaxContainer extends StatelessWidget {
   /// 倾斜视差
   ///
   /// 用作视差的 Widget
@@ -26,37 +27,12 @@ class TiltParallaxContainer extends StatefulWidget {
   final FilterQuality filterQuality;
 
   @override
-  State<TiltParallaxContainer> createState() => _TiltParallaxContainerState();
-}
-
-class _TiltParallaxContainerState extends State<TiltParallaxContainer> {
-  Widget get _child => widget.child;
-  Offset get _size => widget.size;
-  FilterQuality get _filterQuality => widget.filterQuality;
-
-  late TiltState tiltState;
-
-  /// 当前坐标区域进度
-  late Offset areaProgress;
-
-  /// 是否正在移动
-  late bool isMove;
-
-  /// 倾斜配置
-  late TiltConfig tiltConfig;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    tiltState = TiltState.of(context)!;
-
-    areaProgress = tiltState.areaProgress;
-    isMove = tiltState.isMove;
-    tiltConfig = tiltState.tiltConfig;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final TiltState tiltState = TiltState.of(context)!;
+    final Offset areaProgress = tiltState.areaProgress;
+    final bool isMove = tiltState.isMove;
+    final TiltConfig tiltConfig = tiltState.tiltConfig;
+
     return TweenAnimationBuilder<Offset>(
       tween: Tween<Offset>(
         end: tiltTweenAnimationEnd(isMove, tiltConfig, areaProgress),
@@ -65,13 +41,13 @@ class _TiltParallaxContainerState extends State<TiltParallaxContainer> {
       curve: isMove ? tiltConfig.moveCurve : tiltConfig.leaveCurve,
       builder: (BuildContext context, Offset value, Widget? child) {
         return Transform(
-          filterQuality: _filterQuality,
+          filterQuality: filterQuality,
           transform: Matrix4.identity()
-            ..translate(value.dx * _size.dx, value.dy * _size.dy),
+            ..translate(value.dx * size.dx, value.dy * size.dy),
           child: child,
         );
       },
-      child: _child,
+      child: child,
     );
   }
 }
