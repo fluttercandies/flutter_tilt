@@ -5,7 +5,8 @@ See the [Migration Guide][] to learn how to migrate between breaking changes.
 <br/>
 
 <div align="center">
-  <img src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview2.gif?raw=true"/>
+  <img height="180" src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview2.gif?raw=true"/>
+  <img height="180" src="https://github.com/AmosHuKe/flutter_tilt/blob/main/README/preview3-small.gif?raw=true"/>
 </div>
 
 <br/>
