@@ -35,6 +35,7 @@ void main() {
         const Duration(milliseconds: 1000),
       );
       await tester.pump(const Duration(milliseconds: 1000));
+      expect(scrollController.offset, 0.0);
       expect(childFinder, findsOneWidget);
 
       /// onHorizontalDragUpdate
@@ -44,6 +45,7 @@ void main() {
         const Duration(milliseconds: 1000),
       );
       await tester.pump(const Duration(milliseconds: 1000));
+      expect(scrollController.offset, 0.0);
       expect(childFinder, findsOneWidget);
 
       /// scroll
@@ -51,8 +53,10 @@ void main() {
         scrollFinder,
         const Offset(0.0, -100.0),
         const Duration(milliseconds: 1000),
+        warnIfMissed: false,
       );
       await tester.pump(const Duration(milliseconds: 1000));
+      expect(scrollController.offset, 100.0);
       expect(childFinder, findsNothing);
     });
   });
