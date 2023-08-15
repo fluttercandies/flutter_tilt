@@ -59,11 +59,13 @@
 
   - [添加 flutter_tilt](#添加-flutter_tilt-)
 
+- [简单用法](#简单用法-)
+
+  - [倾斜](#倾斜-)
+
+  - [视差](#视差-)
+
 - [使用](#使用-)
-
-  - [简单用法：倾斜](#简单用法倾斜-)
-
-  - [简单用法：视差](#简单用法视差-)
 
   - [Tilt widget 参数][]
 
@@ -120,12 +122,12 @@ dependencies:
 ```
 
 
-## 使用 📖  
+## 简单用法 📖  
 
 示例：[flutter_tilt/example][]
 
 
-### 简单用法：倾斜 📦  
+### 倾斜 📦  
 
 [Tilt][Tilt widget 参数] widget 默认有倾斜、阴影和光照的效果。  
 
@@ -145,7 +147,7 @@ Tilt(
 ```
 
 
-### 简单用法：视差 👀  
+### 视差 👀  
 
 [TiltParallax][TiltParallax widget 参数] widget 只能在 `Tilt` widget 的 `childLayout` 中使用。  
 
@@ -184,6 +186,7 @@ Tilt(
 ```
 
 
+## 使用 📖  
 ### `Tilt` widget 参数 🤖  
 
 | 参数名 | 类型 | 默认值 | 描述 |  
@@ -211,7 +214,7 @@ Tilt(
 | filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality。 |  
 
 
-### ChildLayout ⚙️  
+### ChildLayout 📄  
 
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |
@@ -220,7 +223,7 @@ Tilt(
 | behind | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 `child 后面` 的 widget。 <br/> 例如：视差效果。 |  
 
 
-### TiltConfig ⚙️  
+### TiltConfig 📄  
 
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |
@@ -239,7 +242,7 @@ Tilt(
 | filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality。 |  
 
 
-### LightConfig ⚙️  
+### LightConfig 📄  
 
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |
@@ -251,7 +254,7 @@ Tilt(
 | enableReverse | `bool` | `false` | 方向光照方向。 <br/> 影响：<br/> `[ShadowConfig.direction]`（配置后不受影响）。 <br/> `[ShadowConfig.enableReverse]`（配置后不受影响）。 |  
 
 
-### ShadowConfig ⚙️  
+### ShadowConfig 📄  
 
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |

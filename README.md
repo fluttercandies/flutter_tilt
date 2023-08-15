@@ -59,11 +59,13 @@ Check out the [Live Demo][].
 
   - [Add package](#add-package-)
 
+- [Simple usage](#simple-usage-)
+
+  - [Tilt](#tilt-)
+
+  - [Parallax](#parallax-)
+
 - [Usage](#usage-)
-
-  - [Simple usage: Tilt](#simple-usage-tilt-)
-
-  - [Simple usage: Parallax](#simple-usage-parallax-)
 
   - [Tilt widget parameters][]
 
@@ -120,12 +122,12 @@ dependencies:
 ```
 
 
-## Usage 📖  
+## Simple usage 📖  
 
 Example: [flutter_tilt/example][]
 
 
-### Simple usage: Tilt 📦  
+### Tilt 📦  
 
 [Tilt][Tilt widget parameters] widget will have default tilt, shadow, and light effects.  
 
@@ -145,7 +147,7 @@ Tilt(
 ```
 
 
-### Simple usage: Parallax 👀  
+### Parallax 👀  
 
 [TiltParallax][TiltParallax widget parameters] widget can only be used in the `childLayout` of `Tilt` widget.   
 
@@ -184,6 +186,7 @@ Tilt(
 ```
 
 
+## Usage 📖  
 ### `Tilt` widget parameters 🤖  
 
 | Parameter | Type | Default | Description |  
@@ -211,7 +214,7 @@ Tilt(
 | filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality. |  
 
 
-### ChildLayout ⚙️  
+### ChildLayout 📄  
 
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
@@ -220,7 +223,7 @@ Tilt(
 | behind | `List<Widget>` | `<Widget>[]` | As with Stack, you can use the Stack layout to create widgets that are behind of the child. <br/> e.g. parallax effects. |  
 
 
-### TiltConfig ⚙️  
+### TiltConfig 📄  
 
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
@@ -239,7 +242,7 @@ Tilt(
 | filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality. |  
 
 
-### LightConfig ⚙️  
+### LightConfig 📄  
 
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
@@ -251,7 +254,7 @@ Tilt(
 | enableReverse | `bool` | `false` | Reverse light direction. <br/> Affects: <br/> `[ShadowConfig.direction]` (not affected after configuration). <br/> `[ShadowConfig.enableReverse]` (not affected after configuration). |  
 
 
-### ShadowConfig ⚙️  
+### ShadowConfig 📄  
 
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
