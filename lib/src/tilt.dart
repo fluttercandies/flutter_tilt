@@ -1,5 +1,3 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'dart:async' as async;
 import 'package:flutter/widgets.dart';
 

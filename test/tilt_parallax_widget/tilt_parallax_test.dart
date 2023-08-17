@@ -23,7 +23,7 @@ void main() {
                     child: Text('outer'),
                   ),
                 ),
-              )
+              ),
             ],
             inner: <Widget>[
               Positioned(
@@ -34,7 +34,7 @@ void main() {
                     child: Text('inner'),
                   ),
                 ),
-              )
+              ),
             ],
             behind: <Widget>[
               Positioned(
@@ -45,7 +45,7 @@ void main() {
                     child: Text('behind'),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
