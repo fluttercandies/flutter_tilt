@@ -28,7 +28,7 @@ class TiltConfig {
     this.leaveDuration = const Duration(milliseconds: 300),
     this.moveCurve = Curves.linear,
     this.leaveCurve = Curves.linear,
-    this.filterQuality = FilterQuality.high,
+    this.filterQuality,
   });
 
   /// 禁用
@@ -117,7 +117,7 @@ class TiltConfig {
   final Curve leaveCurve;
 
   /// FilterQuality
-  final FilterQuality filterQuality;
+  final FilterQuality? filterQuality;
 }
 
 /// child 其他布局

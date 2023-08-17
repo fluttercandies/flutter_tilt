@@ -2,6 +2,13 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## Unreleased
+
+### Improvements
+
+- Update `FilterQuality` parameter of `Tilt` and `TiltParallax` widgets is `null` by default.
+- Upgrade Example of Flutter to 3.13.0
+
 ## 1.0.2
 
 - Doc

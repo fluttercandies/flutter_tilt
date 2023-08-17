@@ -217,6 +217,6 @@ class TiltParallax extends TiltParallaxContainer {
     super.key,
     required super.child,
     super.size = const Offset(10.0, 10.0),
-    super.filterQuality = FilterQuality.high,
+    super.filterQuality,
   });
 }

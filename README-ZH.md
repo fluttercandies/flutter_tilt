@@ -211,7 +211,7 @@ Tilt(
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | 创建视差 widget。 |  
 | size | `Offset` | `Offset(10.0, 10.0)` | 视差大小（像素单位）。 |  
-| filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality。 |  
+| filterQuality | `FilterQuality` | `null` | Flutter FilterQuality。 |  
 
 
 ### ChildLayout 📄  
@@ -239,7 +239,7 @@ Tilt(
 | leaveDuration | `Duration` | `Duration(milliseconds: 300)` | 手势离开后的动画持续时间。 |  
 | moveCurve | `Curve` | `Curves.linear` | 手势移动时的动画曲线。 |  
 | leaveCurve | `Curve` | `Curves.linear` | 手势离开后的动画曲线。 |  
-| filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality。 |  
+| filterQuality | `FilterQuality` | `null` | Flutter FilterQuality。 |  
 
 
 ### LightConfig 📄  

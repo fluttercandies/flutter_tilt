@@ -211,7 +211,7 @@ Tilt(
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | Create a widget with parallax. |  
 | size | `Offset` | `Offset(10.0, 10.0)` | Parallax size (pixel). |  
-| filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality. |  
+| filterQuality | `FilterQuality` | `null` | Flutter FilterQuality. |  
 
 
 ### ChildLayout 📄  
@@ -239,7 +239,7 @@ Tilt(
 | leaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after gesture leave. |  
 | moveCurve | `Curve` | `Curves.linear` | Animation curve during gesture move. |  
 | leaveCurve | `Curve` | `Curves.linear` | Animation curve after gesture leave. |  
-| filterQuality | `FilterQuality` | `FilterQuality.high` | Flutter FilterQuality. |  
+| filterQuality | `FilterQuality` | `null` | Flutter FilterQuality. |  
 
 
 ### LightConfig 📄  

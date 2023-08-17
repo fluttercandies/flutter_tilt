@@ -16,7 +16,7 @@ class TiltParallaxContainer extends StatelessWidget {
     super.key,
     required this.child,
     required this.size,
-    required this.filterQuality,
+    this.filterQuality,
   });
 
   final Widget child;
@@ -24,7 +24,7 @@ class TiltParallaxContainer extends StatelessWidget {
   /// 视差大小 (x, y)
   final Offset size;
 
-  final FilterQuality filterQuality;
+  final FilterQuality? filterQuality;
 
   @override
   Widget build(BuildContext context) {
