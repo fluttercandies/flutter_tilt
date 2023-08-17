@@ -101,9 +101,9 @@ Check out the [Live Demo][].
 ## Install 🎯
 ### Versions compatibility 🐦  
 
-|-       | 3.0.x | 3.3.x | 3.10.x |  
-|--------|:-----:|:-----:|:------:|  
-| 0.0.1+ |  ✅  |  ✅  |  ✅  |  
+| Flutter | 3.0.0+ |  
+|---------|:------:|  
+| flutter_tilt 0.0.1+ | ✅ |  
 
 
 ### Add package 📦  
