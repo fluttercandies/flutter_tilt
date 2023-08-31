@@ -1,9 +1,12 @@
 import 'dart:async' as async;
 import 'package:flutter/widgets.dart';
 
+import 'package:sensors_plus/sensors_plus.dart';
+
 import 'package:flutter_tilt/src/data/tilt_data.dart';
 import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/gestures_listener.dart';
+import 'package:flutter_tilt/src/sensors_listener.dart';
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/tilt_container.dart';
 import 'package:flutter_tilt/src/tilt_parallax_container.dart';
@@ -83,6 +86,13 @@ class _TiltState extends State<Tilt> {
   /// FPS 计时器
   async.Timer? _fpsTimer;
 
+  /// 是否传感器监听
+  bool isSensorsListener = true;
+
+  /// 传感器坐标
+  late Offset sensorsPosition =
+      progressPosition(width, height, _initAreaProgress);
+
   @override
   void dispose() {
     _fpsTimer?.cancel();
@@ -91,29 +101,40 @@ class _TiltState extends State<Tilt> {
 
   @override
   Widget build(BuildContext context) {
-    return TiltState(
-      isInit: isInit,
-      width: width,
-      height: height,
-      areaProgress: areaProgress,
-      isMove: isMove,
-      tiltConfig: _tiltConfig,
-      onResize: onResize,
-      onMove: onGesturesMove,
-      onRevert: onGesturesRevert,
-      child: GesturesListener(
-        tiltConfig: _tiltConfig,
-        child: TiltContainer(
-          border: _border,
-          borderRadius: _borderRadius,
-          clipBehavior: _clipBehavior,
-          tiltConfig: _tiltConfig,
-          lightConfig: _lightConfig,
-          shadowConfig: _shadowConfig,
-          childLayout: _childLayout,
-          child: _child,
-        ),
-      ),
+    return SensorsListener(
+      isSensorsListener: isSensorsListener,
+      fps: _fps,
+      position: sensorsPosition,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (isSensorsListener) onGesturesSensors(snapshot.data!);
+          return TiltState(
+            isInit: isInit,
+            width: width,
+            height: height,
+            areaProgress: areaProgress,
+            isMove: isMove,
+            tiltConfig: _tiltConfig,
+            onResize: onResize,
+            onMove: onGesturesMove,
+            onRevert: onGesturesRevert,
+            child: GesturesListener(
+              tiltConfig: _tiltConfig,
+              child: TiltContainer(
+                border: _border,
+                borderRadius: _borderRadius,
+                clipBehavior: _clipBehavior,
+                tiltConfig: _tiltConfig,
+                lightConfig: _lightConfig,
+                shadowConfig: _shadowConfig,
+                childLayout: _childLayout,
+                child: _child,
+              ),
+            ),
+          );
+        }
+        return SizedBox();
+      },
     );
   }
 
@@ -124,6 +145,46 @@ class _TiltState extends State<Tilt> {
       isInit = true;
       width = size.width;
       height = size.height;
+      sensorsPosition = progressPosition(width, height, areaProgress);
+    });
+  }
+
+  /// 手势传感器触发
+  void onGesturesSensors(GyroscopeEvent gyroscopeEvent) {
+    if (!isInit || _disable) return;
+    sensorsPosition += Offset(gyroscopeEvent.y, gyroscopeEvent.x) * 20;
+    sensorsPosition = constraintsPosition(width, height, sensorsPosition);
+    areaProgress = p2cAreaProgress(
+      width,
+      height,
+      sensorsPosition,
+      _tiltConfig.direction,
+    );
+    isMove = true;
+
+    if (_onGestureMove != null) {
+      _onGestureMove!(
+        TiltData(
+          isInit: isInit,
+          width: width,
+          height: height,
+          areaProgress: areaProgress,
+          tiltConfig: _tiltConfig,
+        ).data,
+        GesturesType.sensors,
+      );
+    }
+  }
+
+  /// 开启手势传感器
+  void openGesturesSensors(Offset position) {
+    // 传感器处理
+    Future.delayed(_tiltConfig.leaveDuration, () {
+      setState(() {
+        /// 开启传感器监听
+        isSensorsListener = true;
+        sensorsPosition = position;
+      });
     });
   }
 
@@ -142,6 +203,9 @@ class _TiltState extends State<Tilt> {
           _tiltConfig.direction,
         );
         isMove = true;
+
+        /// 停止传感器监听
+        isSensorsListener = false;
       });
 
       if (_onGestureMove != null) {
@@ -181,6 +245,8 @@ class _TiltState extends State<Tilt> {
       );
       isMove = false;
     });
+
+    openGesturesSensors(position);
 
     if (_onGestureLeave != null) {
       _onGestureLeave!(

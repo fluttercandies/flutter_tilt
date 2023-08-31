@@ -20,6 +20,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  stream_transform: ^2.1.0
+  sensors_plus: ^3.0.3
 
 dev_dependencies:
   flutter_test:
