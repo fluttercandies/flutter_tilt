@@ -6,7 +6,7 @@ See the [Migration Guide](guides/migration_guide.md) for the details of breaking
 
 ### Fixes
 
-- Fix `TiltConfig(enableReverse: true)` is not used in `TiltParallaxContainer`.
+- Fix `TiltConfig(enableReverse: true)` is not used in `TiltParallax`.
 - Fix fps timer not canceled.
 
 
