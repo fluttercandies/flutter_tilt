@@ -58,5 +58,58 @@ void main() {
       expect(innerLocation, const Offset(25, 15));
       expect(behindLocation, const Offset(25, 15));
     });
+    testWidgets('TiltConfig enableReverse true', (WidgetTester tester) async {
+      final Finder outerFinder = find.text('outer');
+      final Finder innerFinder = find.text('inner');
+      final Finder behindFinder = find.text('behind');
+
+      await tester.pumpWidget(
+        const TiltParallaxWidget(
+          tiltConfig: TiltConfig(initial: Offset(1, 0), enableReverse: true),
+          childLayout: ChildLayout(
+            outer: <Widget>[
+              Positioned(
+                child: TiltParallax(
+                  child: SizedBox(
+                    width: 10,
+                    height: 10,
+                    child: Text('outer'),
+                  ),
+                ),
+              ),
+            ],
+            inner: <Widget>[
+              Positioned(
+                child: TiltParallax(
+                  child: SizedBox(
+                    width: 10,
+                    height: 10,
+                    child: Text('inner'),
+                  ),
+                ),
+              ),
+            ],
+            behind: <Widget>[
+              Positioned(
+                child: TiltParallax(
+                  child: SizedBox(
+                    width: 10,
+                    height: 10,
+                    child: Text('behind'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+
+      final Offset outerLocation = tester.getCenter(outerFinder);
+      final Offset innerLocation = tester.getCenter(innerFinder);
+      final Offset behindLocation = tester.getCenter(behindFinder);
+      expect(outerLocation, const Offset(5, 15));
+      expect(innerLocation, const Offset(5, 15));
+      expect(behindLocation, const Offset(5, 15));
+    });
   });
 }
