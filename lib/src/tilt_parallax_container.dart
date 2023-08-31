@@ -42,12 +42,31 @@ class TiltParallaxContainer extends StatelessWidget {
       builder: (BuildContext context, Offset value, Widget? child) {
         return Transform(
           filterQuality: filterQuality,
-          transform: Matrix4.identity()
-            ..translate(value.dx * size.dx, value.dy * size.dy),
+          transform: tiltParallaxTransform(
+            value,
+            size,
+            tiltConfig.enableReverse,
+          ),
           child: child,
         );
       },
       child: child,
     );
+  }
+
+  /// 计算当前倾斜视差
+  ///
+  /// - [areaProgress] 当前坐标的区域进度
+  /// - [size] 视差大小
+  /// - [enableReverse] 开启倾斜反向，向上或向下倾斜
+  Matrix4 tiltParallaxTransform(
+    Offset areaProgress,
+    Offset size,
+    bool enableReverse,
+  ) {
+    final Offset offset = enableReverse
+        ? Offset(-size.dx * areaProgress.dx, -size.dy * areaProgress.dy)
+        : Offset(size.dx * areaProgress.dx, size.dy * areaProgress.dy);
+    return Matrix4.identity()..translate(offset.dx, offset.dy);
   }
 }

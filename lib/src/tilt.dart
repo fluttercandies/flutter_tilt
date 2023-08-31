@@ -84,6 +84,12 @@ class _TiltState extends State<Tilt> {
   async.Timer? _fpsTimer;
 
   @override
+  void dispose() {
+    _fpsTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TiltState(
       isInit: isInit,

@@ -2,6 +2,14 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 1.0.4
+
+### Fixes
+
+- Fix `TiltConfig(enableReverse: true)` is not used in `TiltParallaxContainer`.
+- Fix fps timer not canceled.
+
+
 ## 1.0.3
 
 ### Improvements
