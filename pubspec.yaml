@@ -1,6 +1,6 @@
 # https://dart.dev/tools/pub/pubspec
 name: flutter_tilt
-description: Easily apply tilt parallax hover effects for Flutter, which supports tilt, light, shadow effects, and many custom parameters.
+description: Easily apply tilt parallax hover effects for Flutter, which supports tilt, light, shadow effects, gyroscope sensors and many custom parameters.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 # publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -8,14 +8,14 @@ description: Easily apply tilt parallax hover effects for Flutter, which support
 # https://semver.org/spec/v2.0.0-rc.1.html
 # https://dart.dev/tools/pub/versioning#semantic-versions
 # https://dart.dev/tools/pub/dependencies#version-constraints
-version: 1.0.4
+version: 2.0.0-dev.0
 homepage: https://amoshuke.github.io/flutter_tilt_book
 repository: https://github.com/AmosHuKe/flutter_tilt
 issue_tracker: https://github.com/AmosHuKe/flutter_tilt/issues
 
 environment:
-  sdk: '>=2.17.0 <4.0.0'
-  flutter: ">=3.0.0"
+  sdk: '>=2.18.0 <4.0.0'
+  flutter: ">=3.3.0"
 
 dependencies:
   flutter:
@@ -34,7 +34,7 @@ topics:
   - tilt
   - skew
   - parallax
-  - hover
+  - sensor
   - widget
 
 screenshots:

@@ -2,6 +2,18 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## Unreleased
+
+### Breaking changes
+
+- Minimum flutter version 3.3.0
+- Changed `enableMouseHover` in `TiltConfig` to `enableGestureHover`.
+
+### New features
+
+- Add sensor gesture (configuration: `enableGestureSensors`, `sensorFactor`, `sensorMoveDuration`), default configuration is `TiltConfig(enableGestureSensors = true)`.
+- Add touch gesture configuration, default is `TiltConfig(enableGestureTouch = true)`.
+
 ## 1.0.4
 
 ### Fixes

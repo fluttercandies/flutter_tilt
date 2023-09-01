@@ -59,6 +59,10 @@ Check out the [Live Demo][].
 
   - [Add package](#add-package-)
 
+- [Sensors compatibility](#sensors-compatibility-)
+
+  - [Platform Support](#platform-support-)
+
 - [Simple usage](#simple-usage-)
 
   - [Tilt](#tilt-)
@@ -92,8 +96,9 @@ Check out the [Live Demo][].
 - 🔦 Light effect
 - 💡 Shadow effect
 - 👀 Parallax effect
+- 📱 Gyroscope sensor support ([more](#sensors-compatibility-))
 - 🧱 Multiple layouts
-- 👇 Supports mouse and touch events
+- 👇 Supports hover, touch and sensors events
 - 🖼️ Smooth animation
 - ⚙️ Many custom parameters
 
@@ -101,9 +106,10 @@ Check out the [Live Demo][].
 ## Install 🎯
 ### Versions compatibility 🐦  
 
-| Flutter | 3.0.0+ |  
-|---------|:------:|  
-| flutter_tilt 0.0.1+ | ✅ |  
+|       Flutter       | 3.0.0+ | 3.3.0+ |  
+|      ---------      |:------:|:------:|  
+| flutter_tilt 2.0.0+ |  ❌  |  ✅  |  
+| flutter_tilt 0.0.1+ |  ✅  |  ❌  |  
 
 
 ### Add package 📦  
@@ -120,6 +126,16 @@ or add `flutter_tilt` to `pubspec.yaml` dependencies manually.
 dependencies:
   flutter_tilt: ^latest_version
 ```
+
+
+## Sensors compatibility 📱
+### Platform support 🎈
+
+Sensors are triggered only on these platforms.
+
+| Android |  iOS  |  Web  | macOS | Linux | Windows |  
+| :-----: | :---: | :---: | :---: | :---: | :-----: |  
+|   ✅   |   ✅  |  ✅  |   ❌  |  ❌  |    ❌   |  
 
 
 ## Simple usage 📖  
@@ -233,13 +249,17 @@ Tilt(
 | direction | `List<TiltDirection>?` | `null` | Tilt Direction, multiple directions, customized direction values. |  
 | enableRevert | `bool` | `true` | Enable Tilt Revert, will revert to the initial state. |  
 | enableReverse | `bool` | `false` | Tilt reverse, can be tilted up or down. |  
-| enableOutsideAreaMove | `bool` | `true` | Tilt can continue to be triggered outside the area. <br/> (`only when the pointer is pressed and moved`) |  
-| enableMouseHover | `bool` | `true` | Mouse hover to trigger tilt. |  
-| moveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during gesture move. |  
-| leaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after gesture leave. |  
-| moveCurve | `Curve` | `Curves.linear` | Animation curve during gesture move. |  
-| leaveCurve | `Curve` | `Curves.linear` | Animation curve after gesture leave. |  
 | filterQuality | `FilterQuality` | `null` | Flutter FilterQuality. |  
+| enableGestureSensors | `bool` | `true` | Gyroscope sensor triggered tilt. |  
+| sensorFactor | `double` | `10.0` | Sensor trigger factor (sensitivity). |  
+| sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | Animation duration during sensor move. |  
+| enableGestureHover | `bool` | `true` | Hover gesture triggered tilt. |  
+| enableGestureTouch | `bool` | `true` | Touch gesture triggered tilt. |  
+| enableOutsideAreaMove | `bool` | `true` | Tilt can continue to be triggered outside the area. <br/> (`only when the pointer is pressed and moved`) |  
+| moveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during gesture move (touch, hover gestures only). |  
+| leaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after gesture leave (touch, hover gestures only). |  
+| moveCurve | `Curve` | `Curves.linear` | Animation curve during gesture move (touch, hover gestures only). |  
+| leaveCurve | `Curve` | `Curves.linear` | Animation curve after gesture leave (touch, hover gestures only). |  
 
 
 ### LightConfig 📄  

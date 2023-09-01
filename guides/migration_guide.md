@@ -4,7 +4,27 @@ This document gathered all breaking changes and migrations requirement between m
 
 ## Major versions
 
+- [2.0.0](#200)
 - [0.1.0](#010)
+
+## 2.0.0
+
+### Summary
+
+- Minimum flutter version 3.3.0
+- Changed `enableMouseHover` in `TiltConfig` to `enableGestureHover`.
+
+### Details
+
+```diff
+Tilt(
+  tiltConfig: TiltConfig(
+-   enableMouseHover: false
++   enableGestureHover: false
+  )
+  ...
+)
+```
 
 ## 0.1.0
 

@@ -59,6 +59,10 @@
 
   - [添加 flutter_tilt](#添加-flutter_tilt-)
 
+- [传感器兼容](#传感器兼容-)
+
+  - [平台支持](#平台支持-)
+
 - [简单用法](#简单用法-)
 
   - [倾斜](#倾斜-)
@@ -92,8 +96,9 @@
 - 🔦 光照效果
 - 💡 阴影效果
 - 👀 视差效果
+- 📱 陀螺仪传感器支持（[更多信息](#传感器兼容-)）
 - 🧱 多种布局位置
-- 👇 支持鼠标和触摸事件
+- 👇 支持鼠标、触摸和传感器事件
 - 🖼️ 流畅的动画
 - ⚙️ 许多自定义参数
 
@@ -101,9 +106,10 @@
 ## 安装 🎯
 ### 版本兼容 🐦  
 
-| Flutter | 3.0.0+ |  
-|---------|:------:|  
-| flutter_tilt 0.0.1+ | ✅ |  
+|       Flutter       | 3.0.0+ | 3.3.0+ |  
+|      ---------      |:------:|:------:|  
+| flutter_tilt 2.0.0+ |  ❌  |  ✅  |  
+| flutter_tilt 0.0.1+ |  ✅  |  ❌  |  
 
 
 ### 添加 flutter_tilt 📦  
@@ -120,6 +126,16 @@ $ flutter pub add flutter_tilt
 dependencies:
   flutter_tilt: ^latest_version
 ```
+
+
+## 传感器兼容 📱
+### 平台支持 🎈
+
+传感器仅在以下平台触发。
+
+| Android |  iOS  |  Web  | macOS | Linux | Windows |  
+| :-----: | :---: | :---: | :---: | :---: | :-----: |  
+|   ✅   |   ✅  |  ✅  |   ❌  |  ❌  |    ❌   |  
 
 
 ## 简单用法 📖  
@@ -233,13 +249,17 @@ Tilt(
 | direction | `List<TiltDirection>?` | `null` | 倾斜方向，多方向、自定义方向值。 |  
 | enableRevert | `bool` | `true` | 启用倾斜复原，会复原至初始状态。 |  
 | enableReverse | `bool` | `false` | 倾斜反向，可以向上或向下倾斜。 |  
-| enableOutsideAreaMove | `bool` | `true` | 可以继续在区域外触发倾斜。 <br/> (`仅在指针按下并移动时`) |  
-| enableMouseHover | `bool` | `true` | 鼠标 hover 触发倾斜。 |  
-| moveDuration | `Duration` | `Duration(milliseconds: 100)` | 手势移动时的动画持续时间。 |  
-| leaveDuration | `Duration` | `Duration(milliseconds: 300)` | 手势离开后的动画持续时间。 |  
-| moveCurve | `Curve` | `Curves.linear` | 手势移动时的动画曲线。 |  
-| leaveCurve | `Curve` | `Curves.linear` | 手势离开后的动画曲线。 |  
 | filterQuality | `FilterQuality` | `null` | Flutter FilterQuality。 |  
+| enableGestureSensors | `bool` | `true` | 陀螺仪传感器触发倾斜。 |  
+| sensorFactor | `double` | `10.0` | 传感器触发系数（灵敏度）。 |  
+| sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | 传感器移动时的动画持续时间。 |  
+| enableGestureHover | `bool` | `true` | Hover 手势触发倾斜。 |  
+| enableGestureTouch | `bool` | `true` | Touch 手势触发倾斜。 |  
+| enableOutsideAreaMove | `bool` | `true` | 可以继续在区域外触发倾斜。 <br/> (`仅在指针 touch 按下并移动时`) |  
+| moveDuration | `Duration` | `Duration(milliseconds: 100)` | 手势移动时的动画持续时间（仅 touch, hover 手势）。 |  
+| leaveDuration | `Duration` | `Duration(milliseconds: 300)` | 手势离开后的动画持续时间（仅 touch, hover 手势）。 |  
+| moveCurve | `Curve` | `Curves.linear` | 手势移动时的动画曲线（仅 touch, hover 手势）。 |  
+| leaveCurve | `Curve` | `Curves.linear` | 手势离开后的动画曲线（仅 touch, hover 手势）。 |  
 
 
 ### LightConfig 📄  
