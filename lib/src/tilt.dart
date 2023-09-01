@@ -70,6 +70,13 @@ class _TiltState extends State<Tilt> {
   TiltCallback? get _onGestureMove => widget.onGestureMove;
   TiltCallback? get _onGestureLeave => widget.onGestureLeave;
 
+  /// 是否传感器监听
+  bool get isSensorsListener =>
+      canSensorsPlatformSupport &&
+      !_disable &&
+      _tiltConfig.enableGestureSensors &&
+      canSensorsListener;
+
   /// 初始坐标区域进度
   Offset get _initAreaProgress => _tiltConfig.initial ?? Offset.zero;
 
@@ -91,8 +98,11 @@ class _TiltState extends State<Tilt> {
   /// FPS 计时器
   async.Timer? _fpsTimer;
 
-  /// 是否传感器监听
-  bool isSensorsListener = true;
+  /// 传感器平台支持
+  final bool canSensorsPlatformSupport = sensorsPlatformSupport();
+
+  /// 传感器监听
+  late bool canSensorsListener = _tiltConfig.enableGestureSensors;
 
   /// 传感器坐标
   late Offset sensorsPosition =
@@ -112,9 +122,8 @@ class _TiltState extends State<Tilt> {
       tiltConfig: _tiltConfig,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          if (_tiltConfig.enableGestureSensors && isSensorsListener) {
-            onGesturesSensors(snapshot.data!);
-          }
+          onGesturesSensors(snapshot.data!);
+
           return TiltState(
             isInit: isInit,
             width: width,
@@ -159,6 +168,7 @@ class _TiltState extends State<Tilt> {
 
   /// 手势传感器触发
   void onGesturesSensors(GyroscopeEvent gyroscopeEvent) {
+    if (!isSensorsListener) return;
     if (!isInit || _disable) return;
     if (!fpsTimer()) return;
     sensorsPosition +=
@@ -173,17 +183,23 @@ class _TiltState extends State<Tilt> {
     isMove = true;
     currentGesturesType = GesturesType.sensors;
 
-    onGestureMove(areaProgress, GesturesType.sensors);
+    WidgetsBinding.instance.endOfFrame.then(
+      (_) {
+        if (mounted) onGestureMove(areaProgress, GesturesType.sensors);
+      },
+    );
   }
 
   /// 开启手势传感器
   void enableGesturesSensors(Offset position) {
+    if (isSensorsListener) return;
+
     /// 同时开启手势 Touch Hover Sensors 时，
     /// 避免 Touch Hover 动画未结束时开启 Sensors，
     /// 和谐共处。
     Future.delayed(_tiltConfig.leaveDuration, () {
       setState(() {
-        isSensorsListener = true;
+        canSensorsListener = true;
         sensorsPosition = position;
       });
     });
@@ -191,12 +207,16 @@ class _TiltState extends State<Tilt> {
 
   /// 关闭手势传感器
   void disableGesturesSensors() {
-    if (!isSensorsListener) return;
+    if (!canSensorsListener) return;
     setState(() {
-      isSensorsListener = false;
+      canSensorsListener = false;
     });
 
-    onGestureLeave(areaProgress, GesturesType.sensors);
+    WidgetsBinding.instance.endOfFrame.then(
+      (_) {
+        if (mounted) onGestureLeave(areaProgress, GesturesType.sensors);
+      },
+    );
   }
 
   /// 手势移动触发

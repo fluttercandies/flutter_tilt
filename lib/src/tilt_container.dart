@@ -162,9 +162,11 @@ class _TiltContainerState extends State<TiltContainer> {
                           BuildContext context,
                           BoxConstraints constraints,
                         ) {
-                          WidgetsBinding.instance.addPostFrameCallback(
-                            (_) => tiltState.onResize(constraints.biggest),
-                          );
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            if (mounted) {
+                              tiltState.onResize(constraints.biggest);
+                            }
+                          });
                           return const SizedBox();
                         },
                       ),

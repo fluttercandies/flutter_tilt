@@ -1,8 +1,22 @@
+import 'dart:io';
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
+
+/// 传感器平台支持
+bool sensorsPlatformSupport() {
+  bool support = false;
+  if (kIsWeb) return true;
+  if (Platform.isAndroid) {
+    support = true;
+  } else if (Platform.isIOS) {
+    support = true;
+  }
+  return support;
+}
 
 /// 区域中心定位
 ///

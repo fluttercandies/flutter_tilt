@@ -133,9 +133,9 @@ dependencies:
 
 Sensors are triggered only on these platforms.
 
-| Android |  iOS  |  Web  | macOS | Linux | Windows |  
-| :-----: | :---: | :---: | :---: | :---: | :-----: |  
-|   ✅   |   ✅  |  ✅  |   ❌  |  ❌  |    ❌   |  
+| Android |  iOS  |  Web (HTTPS)  | macOS | Linux | Windows |  
+| :-----: | :---: | :-----------: | :---: | :---: | :-----: |  
+|   ✅   |   ✅  |      ✅      |   ❌  |  ❌  |    ❌   |  
 
 
 ## Simple usage 📖  
