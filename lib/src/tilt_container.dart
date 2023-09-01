@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/data/tilt_data.dart';
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/tilt_light.dart';
@@ -64,6 +65,8 @@ class _TiltContainerState extends State<TiltContainer> {
 
   /// 是否初始化
   late bool isInit;
+
+  /// 尺寸
   late double width, height;
 
   /// 当前坐标区域进度
@@ -71,6 +74,9 @@ class _TiltContainerState extends State<TiltContainer> {
 
   /// 是否正在移动
   late bool isMove;
+
+  /// 当前手势类型
+  late GesturesType currentGesturesType;
 
   @override
   void didChangeDependencies() {
@@ -82,6 +88,7 @@ class _TiltContainerState extends State<TiltContainer> {
     height = tiltState.height;
     areaProgress = tiltState.areaProgress;
     isMove = tiltState.isMove;
+    currentGesturesType = tiltState.currentGesturesType;
   }
 
   @override
@@ -90,8 +97,9 @@ class _TiltContainerState extends State<TiltContainer> {
       tween: Tween<Offset>(
         end: tiltTweenAnimationEnd(isMove, _tiltConfig, areaProgress),
       ),
-      duration: isMove ? _tiltConfig.moveDuration : _tiltConfig.leaveDuration,
-      curve: isMove ? _tiltConfig.moveCurve : _tiltConfig.leaveCurve,
+      duration:
+          tiltTweenAnimationDuration(isMove, currentGesturesType, _tiltConfig),
+      curve: tiltTweenAnimationCurve(isMove, currentGesturesType, _tiltConfig),
       builder: (BuildContext context, Offset value, Widget? child) {
         final TiltData tiltData = TiltData(
           isInit: isInit,

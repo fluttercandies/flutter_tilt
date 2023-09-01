@@ -552,7 +552,7 @@ void main() {
 
       await tester.pumpWidget(
         TiltWidget(
-          tiltConfig: const TiltConfig(enableMouseHover: false),
+          tiltConfig: const TiltConfig(enableGestureHover: false),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             _tiltData = tiltData;
             _gesturesType = gesturesType;

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/utils.dart';
@@ -31,14 +32,16 @@ class TiltParallaxContainer extends StatelessWidget {
     final TiltState tiltState = TiltState.of(context)!;
     final Offset areaProgress = tiltState.areaProgress;
     final bool isMove = tiltState.isMove;
+    final GesturesType currentGesturesType = tiltState.currentGesturesType;
     final TiltConfig tiltConfig = tiltState.tiltConfig;
 
     return TweenAnimationBuilder<Offset>(
       tween: Tween<Offset>(
         end: tiltTweenAnimationEnd(isMove, tiltConfig, areaProgress),
       ),
-      duration: isMove ? tiltConfig.moveDuration : tiltConfig.leaveDuration,
-      curve: isMove ? tiltConfig.moveCurve : tiltConfig.leaveCurve,
+      duration:
+          tiltTweenAnimationDuration(isMove, currentGesturesType, tiltConfig),
+      curve: tiltTweenAnimationCurve(isMove, currentGesturesType, tiltConfig),
       builder: (BuildContext context, Offset value, Widget? child) {
         return Transform(
           filterQuality: filterQuality,

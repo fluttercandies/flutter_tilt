@@ -22,13 +22,17 @@ class TiltConfig {
     this.direction,
     this.enableRevert = true,
     this.enableReverse = false,
+    this.filterQuality,
+    this.enableGestureSensors = true,
+    this.sensorFactor = 10.0,
+    this.sensorMoveDuration = const Duration(milliseconds: 50),
+    this.enableGestureHover = true,
+    this.enableGestureTouch = true,
     this.enableOutsideAreaMove = true,
-    this.enableMouseHover = true,
     this.moveDuration = const Duration(milliseconds: 100),
     this.leaveDuration = const Duration(milliseconds: 300),
     this.moveCurve = Curves.linear,
     this.leaveCurve = Curves.linear,
-    this.filterQuality,
   });
 
   /// 禁用
@@ -89,9 +93,29 @@ class TiltConfig {
   /// {@endtemplate}
   final bool enableReverse;
 
+  /// FilterQuality
+  final FilterQuality? filterQuality;
+
+  /// 开启传感器触发倾斜
+  ///
+  /// 设备陀螺仪传感器触发倾斜
+  final bool enableGestureSensors;
+
+  /// 传感器触发系数（灵敏度）
+  final double sensorFactor;
+
+  /// 传感器移动时的动画持续时间
+  final Duration sensorMoveDuration;
+
+  /// 开启手势 Hover 触发倾斜
+  final bool enableGestureHover;
+
+  /// 开启手势 Touch 触发倾斜
+  final bool enableGestureTouch;
+
   /// 开启倾斜过程中区域外可以继续移动
   ///
-  /// `仅对手势按下后的移动有效`
+  /// `仅对手势 Touch 按下后的移动有效`
   /// [GesturesListener] 触发的 [Listener.onPointerMove]
   ///
   /// 当触发手势移动的倾斜过程中，
@@ -101,23 +125,25 @@ class TiltConfig {
   /// * flase: 超出区域后回到初始状态
   final bool enableOutsideAreaMove;
 
-  /// 启用鼠标 Hover 触发倾斜
-  final bool enableMouseHover;
-
   /// 手势移动时的动画持续时间
+  ///
+  /// `仅对手势 Touch Hover 有效`
   final Duration moveDuration;
 
   /// 手势离开后的动画持续时间
+  ///
+  /// `仅对手势 Touch Hover 有效`
   final Duration leaveDuration;
 
   /// 手势移动时的动画曲线
+  ///
+  /// `仅对手势 Touch Hover 有效`
   final Curve moveCurve;
 
   /// 手势离开后的动画曲线
+  ///
+  /// `仅对手势 Touch Hover 有效`
   final Curve leaveCurve;
-
-  /// FilterQuality
-  final FilterQuality? filterQuality;
 }
 
 /// child 其他布局

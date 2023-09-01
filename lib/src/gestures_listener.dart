@@ -41,24 +41,30 @@ class _GesturesListenerState extends State<GesturesListener> {
 
       /// 手势监听
       child: Listener(
-        onPointerMove: (PointerMoveEvent e) {
-          isTouch = true;
-          tiltState.onMove(e.localPosition, GesturesType.touch);
-        },
-        onPointerUp: (PointerUpEvent e) {
-          isTouch = false;
-          tiltState.onRevert(e.localPosition, GesturesType.touch);
-        },
-        onPointerCancel: (PointerCancelEvent e) {
-          isTouch = false;
-          tiltState.onRevert(e.localPosition, GesturesType.touch);
-        },
+        onPointerMove: _tiltConfig.enableGestureTouch
+            ? (PointerMoveEvent e) {
+                isTouch = true;
+                tiltState.onMove(e.localPosition, GesturesType.touch);
+              }
+            : null,
+        onPointerUp: _tiltConfig.enableGestureTouch
+            ? (PointerUpEvent e) {
+                isTouch = false;
+                tiltState.onRevert(e.localPosition, GesturesType.touch);
+              }
+            : null,
+        onPointerCancel: _tiltConfig.enableGestureTouch
+            ? (PointerCancelEvent e) {
+                isTouch = false;
+                tiltState.onRevert(e.localPosition, GesturesType.touch);
+              }
+            : null,
         child: MouseRegion(
-          onHover: _tiltConfig.enableMouseHover && !isTouch
+          onHover: _tiltConfig.enableGestureHover && !isTouch
               ? (PointerHoverEvent e) =>
                   tiltState.onMove(e.localPosition, GesturesType.hover)
               : null,
-          onExit: _tiltConfig.enableMouseHover && !isTouch
+          onExit: _tiltConfig.enableGestureHover && !isTouch
               ? (PointerExitEvent e) =>
                   tiltState.onRevert(e.localPosition, GesturesType.hover)
               : null,

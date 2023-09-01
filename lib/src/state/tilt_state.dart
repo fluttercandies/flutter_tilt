@@ -14,6 +14,7 @@ class TiltState extends InheritedWidget {
     required this.height,
     required this.areaProgress,
     required this.isMove,
+    required this.currentGesturesType,
     required this.tiltConfig,
     required this.onResize,
     required this.onMove,
@@ -34,6 +35,9 @@ class TiltState extends InheritedWidget {
 
   /// 是否正在移动
   final bool isMove;
+
+  /// 当前手势类型
+  final GesturesType currentGesturesType;
 
   /// 倾斜配置
   final TiltConfig tiltConfig;
@@ -61,5 +65,6 @@ class TiltState extends InheritedWidget {
       height != oldWidget.height ||
       areaProgress != oldWidget.areaProgress ||
       isMove != oldWidget.isMove ||
+      currentGesturesType != oldWidget.currentGesturesType ||
       tiltConfig != oldWidget.tiltConfig;
 }
