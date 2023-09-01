@@ -43,7 +43,7 @@ class _TiltDemoState extends State<TiltDemo> {
       body: Center(
         child: Tilt(
           borderRadius: BorderRadius.circular(24),
-          tiltConfig: const TiltConfig(angle: 15),
+          tiltConfig: const TiltConfig(angle: 15, sensorFactor: 20),
           lightConfig: const LightConfig(
             minIntensity: 0.1,
           ),
