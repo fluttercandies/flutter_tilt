@@ -1,12 +1,10 @@
 import 'dart:async' as async;
 import 'package:flutter/widgets.dart';
 
-import 'package:sensors_plus/sensors_plus.dart';
-
 import 'package:flutter_tilt/src/data/tilt_data.dart';
 import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/gestures_listener.dart';
-import 'package:flutter_tilt/src/sensors_listener.dart';
+import 'package:flutter_tilt/src/tilt_stream_builder.dart';
 import 'package:flutter_tilt/src/state/tilt_state.dart';
 import 'package:flutter_tilt/src/tilt_container.dart';
 import 'package:flutter_tilt/src/tilt_parallax_container.dart';
@@ -14,6 +12,7 @@ import 'package:flutter_tilt/src/type/tilt_light_type.dart';
 import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
 import 'package:flutter_tilt/src/utils.dart';
+import 'package:flutter_tilt/src/model/tilt_model.dart';
 
 /// 倾斜
 class Tilt extends TiltContainer {
@@ -56,7 +55,7 @@ class Tilt extends TiltContainer {
   State<Tilt> createState() => _TiltState();
 }
 
-class _TiltState extends State<Tilt> {
+class _TiltState extends State<Tilt> with TickerProviderStateMixin {
   Widget get _child => widget.child;
   ChildLayout get _childLayout => widget.childLayout;
   bool get _disable => widget.disable;
@@ -70,21 +69,14 @@ class _TiltState extends State<Tilt> {
   TiltCallback? get _onGestureMove => widget.onGestureMove;
   TiltCallback? get _onGestureLeave => widget.onGestureLeave;
 
-  /// 是否传感器监听
-  bool get isSensorsListener =>
-      canSensorsPlatformSupport &&
-      !_disable &&
-      _tiltConfig.enableGestureSensors &&
-      canSensorsListener;
-
   /// 初始坐标区域进度
   Offset get _initAreaProgress => _tiltConfig.initial ?? Offset.zero;
 
   /// 是否初始化
-  late bool isInit = false;
+  bool isInit = false;
 
   /// 尺寸
-  late double width = 0.0, height = 0.0;
+  double width = 0.0, height = 0.0;
 
   /// 当前坐标的区域进度
   late Offset areaProgress = _initAreaProgress;
@@ -98,45 +90,48 @@ class _TiltState extends State<Tilt> {
   /// FPS 计时器
   async.Timer? _fpsTimer;
 
-  /// 传感器平台支持
-  final bool canSensorsPlatformSupport = sensorsPlatformSupport();
+  late async.StreamController<TiltStream> tiltStreamController;
 
-  /// 传感器监听
-  late bool canSensorsListener = _tiltConfig.enableGestureSensors;
-
-  /// 传感器坐标
-  late Offset sensorsPosition =
+  /// 当前坐标
+  late Offset currentPosition =
       progressPosition(width, height, _initAreaProgress);
+
+  @override
+  void initState() {
+    super.initState();
+    tiltStreamController = async.StreamController<TiltStream>.broadcast();
+  }
 
   @override
   void dispose() {
     _fpsTimer?.cancel();
+    tiltStreamController.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SensorsListener(
-      isSensorsListener: isSensorsListener,
-      position: sensorsPosition,
+    return GesturesListener(
+      tiltStreamController: tiltStreamController,
       tiltConfig: _tiltConfig,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          onGesturesSensors(snapshot.data!);
-
-          return TiltState(
-            isInit: isInit,
-            width: width,
-            height: height,
-            areaProgress: areaProgress,
-            isMove: isMove,
-            currentGesturesType: currentGesturesType,
-            tiltConfig: _tiltConfig,
-            onResize: onResize,
-            onMove: onGesturesMove,
-            onRevert: onGesturesRevert,
-            child: GesturesListener(
+      child: TiltStreamBuilder(
+        tiltStreamController: tiltStreamController,
+        position: currentPosition,
+        isInit: isInit,
+        disable: _disable,
+        tiltConfig: _tiltConfig,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            onGesturesStream(snapshot.data!);
+            return TiltState(
+              isInit: isInit,
+              width: width,
+              height: height,
+              areaProgress: areaProgress,
+              isMove: isMove,
+              currentGesturesType: currentGesturesType,
               tiltConfig: _tiltConfig,
+              onResize: onResize,
               child: TiltContainer(
                 border: _border,
                 borderRadius: _borderRadius,
@@ -147,11 +142,11 @@ class _TiltState extends State<Tilt> {
                 childLayout: _childLayout,
                 child: _child,
               ),
-            ),
-          );
-        }
-        return SizedBox();
-      },
+            );
+          }
+          return SizedBox();
+        },
+      ),
     );
   }
 
@@ -162,61 +157,38 @@ class _TiltState extends State<Tilt> {
       isInit = true;
       width = size.width;
       height = size.height;
-      sensorsPosition = progressPosition(width, height, areaProgress);
+      currentPosition = progressPosition(width, height, areaProgress);
     });
   }
 
-  /// 手势传感器触发
-  void onGesturesSensors(GyroscopeEvent gyroscopeEvent) {
-    if (!isSensorsListener) return;
+  /// 手势 Stream 触发
+  void onGesturesStream(TiltStream tiltStream) {
+    if (tiltStream.gesturesType == GesturesType.none) return;
     if (!isInit || _disable) return;
-    if (!fpsTimer()) return;
-    sensorsPosition +=
-        Offset(gyroscopeEvent.y, gyroscopeEvent.x) * _tiltConfig.sensorFactor;
-    sensorsPosition = constraintsPosition(width, height, sensorsPosition);
-    areaProgress = p2cAreaProgress(
-      width,
-      height,
-      sensorsPosition,
-      _tiltConfig.direction,
-    );
-    isMove = true;
-    currentGesturesType = GesturesType.sensors;
-
-    WidgetsBinding.instance.endOfFrame.then(
-      (_) {
-        if (mounted) onGestureMove(areaProgress, GesturesType.sensors);
-      },
-    );
-  }
-
-  /// 开启手势传感器
-  void enableGesturesSensors(Offset position) {
-    if (isSensorsListener) return;
-
-    /// 同时开启手势 Touch Hover Sensors 时，
-    /// 避免 Touch Hover 动画未结束时开启 Sensors，
-    /// 和谐共处。
-    Future.delayed(_tiltConfig.leaveDuration, () {
-      setState(() {
-        canSensorsListener = true;
-        sensorsPosition = position;
-      });
-    });
-  }
-
-  /// 关闭手势传感器
-  void disableGesturesSensors() {
-    if (!canSensorsListener) return;
-    setState(() {
-      canSensorsListener = false;
-    });
-
-    WidgetsBinding.instance.endOfFrame.then(
-      (_) {
-        if (mounted) onGestureLeave(areaProgress, GesturesType.sensors);
-      },
-    );
+    switch (tiltStream.gesturesType) {
+      case GesturesType.touch:
+        if (tiltStream.enableSensors ?? true) {
+          onGesturesRevert(tiltStream.position, tiltStream.gesturesType);
+        } else {
+          onGesturesMove(tiltStream.position, tiltStream.gesturesType);
+        }
+        break;
+      case GesturesType.hover:
+        if (tiltStream.enableSensors ?? true) {
+          onGesturesRevert(tiltStream.position, tiltStream.gesturesType);
+        } else {
+          onGesturesMove(tiltStream.position, tiltStream.gesturesType);
+        }
+        break;
+      case GesturesType.sensors:
+        currentPosition += tiltStream.position * _tiltConfig.sensorFactor;
+        onGesturesSensorsRevert();
+        currentPosition = constraintsPosition(width, height, currentPosition);
+        onGesturesMove(currentPosition, tiltStream.gesturesType);
+        break;
+      case GesturesType.none:
+        break;
+    }
   }
 
   /// 手势移动触发
@@ -226,18 +198,16 @@ class _TiltState extends State<Tilt> {
     if (!isInit || _disable) return;
     if (!fpsTimer()) return;
     if (_tiltConfig.enableOutsideAreaMove || isInRange(width, height, offset)) {
-      setState(() {
-        areaProgress = p2cAreaProgress(
-          width,
-          height,
-          offset,
-          _tiltConfig.direction,
-        );
-        isMove = true;
-        currentGesturesType = gesturesType;
-      });
+      currentPosition = offset;
+      areaProgress = p2cAreaProgress(
+        width,
+        height,
+        offset,
+        _tiltConfig.direction,
+      );
+      isMove = true;
+      currentGesturesType = gesturesType;
 
-      disableGesturesSensors();
       onGestureMove(areaProgress, gesturesType);
     } else {
       onGesturesRevert(offset, gesturesType);
@@ -255,19 +225,35 @@ class _TiltState extends State<Tilt> {
         ? progressPosition(width, height, _initAreaProgress)
         : offset;
 
-    setState(() {
-      areaProgress = p2cAreaProgress(
-        width,
-        height,
-        position,
-        _tiltConfig.direction,
-      );
-      isMove = false;
-      currentGesturesType = gesturesType;
-    });
+    areaProgress = p2cAreaProgress(
+      width,
+      height,
+      position,
+      _tiltConfig.direction,
+    );
+    isMove = false;
+    currentGesturesType = gesturesType;
 
-    enableGesturesSensors(position);
     onGestureLeave(areaProgress, gesturesType);
+  }
+
+  /// 手势传感器复原触发
+  ///
+  /// 开启 [TiltConfig.enableGestureSensors] 的情况下，Touch, Hover, Sensors 都只能使用这种方式还原，
+  /// 并且 Sensors 只会触发 onGestureMove，不会触发 onGestureLeave
+  void onGesturesSensorsRevert() {
+    if (!_tiltConfig.enableRevert) return;
+
+    /// 默认坐标
+    final Offset initPosition =
+        progressPosition(width, height, _initAreaProgress);
+
+    /// 渐渐还原
+    currentPosition -= Offset(
+          currentPosition.dx - initPosition.dx,
+          currentPosition.dy - initPosition.dy,
+        ) *
+        (1 / double.parse(_fps.toString()) / 5);
   }
 
   /// FPS
@@ -288,16 +274,20 @@ class _TiltState extends State<Tilt> {
   /// - [areaProgress] 当前坐标的区域进度
   void onGestureMove(Offset areaProgress, GesturesType gesturesType) {
     if (_onGestureMove != null) {
-      _onGestureMove!(
-        TiltData(
-          isInit: isInit,
-          width: width,
-          height: height,
-          areaProgress: areaProgress,
-          tiltConfig: _tiltConfig,
-        ).data,
-        gesturesType,
-      );
+      WidgetsBinding.instance.endOfFrame.then((_) {
+        if (mounted) {
+          _onGestureMove!(
+            TiltData(
+              isInit: isInit,
+              width: width,
+              height: height,
+              areaProgress: areaProgress,
+              tiltConfig: _tiltConfig,
+            ).data,
+            gesturesType,
+          );
+        }
+      });
     }
   }
 
@@ -306,16 +296,20 @@ class _TiltState extends State<Tilt> {
   /// - [areaProgress] 当前坐标的区域进度
   void onGestureLeave(Offset areaProgress, GesturesType gesturesType) {
     if (_onGestureLeave != null) {
-      _onGestureLeave!(
-        TiltData(
-          isInit: isInit,
-          width: width,
-          height: height,
-          areaProgress: areaProgress,
-          tiltConfig: _tiltConfig,
-        ).data,
-        gesturesType,
-      );
+      WidgetsBinding.instance.endOfFrame.then((_) {
+        if (mounted) {
+          _onGestureLeave!(
+            TiltData(
+              isInit: isInit,
+              width: width,
+              height: height,
+              areaProgress: areaProgress,
+              tiltConfig: _tiltConfig,
+            ).data,
+            gesturesType,
+          );
+        }
+      });
     }
   }
 }

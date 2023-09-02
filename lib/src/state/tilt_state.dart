@@ -17,8 +17,6 @@ class TiltState extends InheritedWidget {
     required this.currentGesturesType,
     required this.tiltConfig,
     required this.onResize,
-    required this.onMove,
-    required this.onRevert,
   });
 
   /// 是否初始化
@@ -44,12 +42,6 @@ class TiltState extends InheritedWidget {
 
   /// 调整尺寸
   final void Function(Size) onResize;
-
-  /// 坐标移动
-  final void Function(Offset, GesturesType) onMove;
-
-  /// 坐标复原
-  final void Function(Offset, GesturesType) onRevert;
 
   static TiltState? of(BuildContext context) {
     final TiltState? tilt =

@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import 'package:flutter_tilt/src/enums.dart';
+
 /// 倾斜数据
 @immutable
 class TiltDataModel {
@@ -67,4 +69,22 @@ class TiltDataModel {
         transform.hashCode,
         angle.hashCode,
       );
+}
+
+/// 倾斜 Stream
+@immutable
+class TiltStream {
+  const TiltStream({
+    required this.position,
+    required this.gesturesType,
+    this.enableSensors,
+  });
+
+  /// 当前坐标
+  final Offset position;
+
+  final GesturesType gesturesType;
+
+  /// 是否开启传感器
+  final bool? enableSensors;
 }
