@@ -182,6 +182,7 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
         }
         break;
       case GesturesType.sensors:
+        // Sensors 只会触发 onGestureMove，不会触发 onGestureLeave
         currentPosition += tiltStream.position * _tiltConfig.sensorFactor;
         onGesturesSensorsRevert();
         currentPosition = constraintsPosition(width, height, currentPosition);
@@ -208,7 +209,6 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
       );
       isMove = true;
       currentGesturesType = gesturesType;
-
       onGestureMove(areaProgress, gesturesType);
     } else {
       onGesturesRevert(offset, gesturesType);
@@ -234,16 +234,14 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
     );
     isMove = false;
     currentGesturesType = gesturesType;
-
     onGestureLeave(areaProgress, gesturesType);
   }
 
   /// 手势传感器复原触发
   ///
-  /// 开启 [TiltConfig.enableGestureSensors] 的情况下，Touch, Hover, Sensors 都只能使用这种方式还原，
-  /// 并且 Sensors 只会触发 onGestureMove，不会触发 onGestureLeave
+  /// Sensors 只会触发 onGestureMove，不会触发 onGestureLeave
   void onGesturesSensorsRevert() {
-    if (!_tiltConfig.enableRevert) return;
+    if (!_tiltConfig.enableSensorRevert) return;
 
     /// 默认坐标
     final Offset initPosition =

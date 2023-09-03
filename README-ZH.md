@@ -247,15 +247,16 @@ Tilt(
 | initial | `Offset?` | `null` | 倾斜进度的初始值，范围 `(x, y)：(1, 1) 至 (-1, -1)`，<br/> 你可以超过这个范围，但是手势移动过程中的最大倾斜角度始终按照 `[TiltConfig.angle]` 进行倾斜。 <br/> 例如：(0.0, 0.0) 中心 <br/> (1.0, 1.0) 左上角最大倾斜角度 `[TiltConfig.angle]`。 |  
 | angle | `double` | `10.0` | 最大倾斜角度。 <br/> 例如：180 会翻转。 |  
 | direction | `List<TiltDirection>?` | `null` | 倾斜方向，多方向、自定义方向值。 |  
-| enableRevert | `bool` | `true` | 启用倾斜复原，会复原至初始状态。 |  
 | enableReverse | `bool` | `false` | 倾斜反向，可以向上或向下倾斜。 |  
 | filterQuality | `FilterQuality` | `null` | Flutter FilterQuality。 |  
 | enableGestureSensors | `bool` | `true` | 陀螺仪传感器触发倾斜。 |  
 | sensorFactor | `double` | `10.0` | 传感器触发系数（灵敏度）。 |  
+| enableSensorRevert | `bool` | `true` | 启用传感器倾斜复原，会复原至初始状态。 |  
 | sensorRevertFactor | `double` | `0.05` | 传感器复原系数（阻尼），数值范围：`0-1`。 |  
 | sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | 传感器移动时的动画持续时间。 |  
 | enableGestureHover | `bool` | `true` | Hover 手势触发倾斜。 |  
 | enableGestureTouch | `bool` | `true` | Touch 手势触发倾斜。 |  
+| enableRevert | `bool` | `true` | 启用倾斜复原，会复原至初始状态（仅 touch, hover 手势）。 |  
 | enableOutsideAreaMove | `bool` | `true` | 可以继续在区域外触发倾斜。 <br/> (`仅在指针 touch 按下并移动时`) |  
 | moveDuration | `Duration` | `Duration(milliseconds: 100)` | 手势移动时的动画持续时间（仅 touch, hover 手势）。 |  
 | leaveDuration | `Duration` | `Duration(milliseconds: 300)` | 手势离开后的动画持续时间（仅 touch, hover 手势）。 |  

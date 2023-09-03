@@ -20,15 +20,16 @@ class TiltConfig {
     this.initial,
     this.angle = 10.0,
     this.direction,
-    this.enableRevert = true,
     this.enableReverse = false,
     this.filterQuality,
     this.enableGestureSensors = true,
     this.sensorFactor = 10.0,
+    this.enableSensorRevert = true,
     this.sensorRevertFactor = 0.05,
     this.sensorMoveDuration = const Duration(milliseconds: 50),
     this.enableGestureHover = true,
     this.enableGestureTouch = true,
+    this.enableRevert = true,
     this.enableOutsideAreaMove = true,
     this.moveDuration = const Duration(milliseconds: 100),
     this.leaveDuration = const Duration(milliseconds: 300),
@@ -77,12 +78,6 @@ class TiltConfig {
   /// 如果还需要一些特殊的方向，可以像这样自定义 [TiltDirection(0.1, 0.1)]
   final List<TiltDirection>? direction;
 
-  /// 开启倾斜复原
-  ///
-  /// * true  退出触发区域后会复原至初始状态
-  /// * false 保留最后倾斜的状态
-  final bool enableRevert;
-
   /// 开启倾斜反向
   ///
   /// {@template tilt.TiltConfig.enableReverse}
@@ -105,6 +100,12 @@ class TiltConfig {
   /// 传感器触发系数（灵敏度）
   final double sensorFactor;
 
+  /// 开启传感器倾斜复原
+  ///
+  /// * true  倾斜后会按照 [sensorRevertFactor] 复原至初始状态
+  /// * false 保留最后倾斜的状态
+  final bool enableSensorRevert;
+
   /// 传感器复原系数（阻尼）
   ///
   /// 阻尼范围：0-1
@@ -118,6 +119,14 @@ class TiltConfig {
 
   /// 开启手势 Touch 触发倾斜
   final bool enableGestureTouch;
+
+  /// 开启倾斜复原
+  ///
+  /// `仅对手势 Touch Hover 有效`
+  ///
+  /// * true  退出触发区域后会复原至初始状态
+  /// * false 保留最后倾斜的状态
+  final bool enableRevert;
 
   /// 开启倾斜过程中区域外可以继续移动
   ///

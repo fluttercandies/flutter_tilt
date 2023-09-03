@@ -247,15 +247,16 @@ Tilt(
 | initial | `Offset?` | `null` | Initial tilt progress, range `(x, y): (1, 1) to (-1, -1)`, <br/> you can exceed the range, but the maximum tilt angle during gesture movement is always tilted according to `[TiltConfig.angle]`. <br/> e.g. (0.0, 0.0) center <br/> (1.0, 1.0) Maximum tilt top left `[TiltConfig.angle]`. |  
 | angle | `double` | `10.0` | Maximum tilt angle. <br/> e.g. 180 will flip. |  
 | direction | `List<TiltDirection>?` | `null` | Tilt Direction, multiple directions, customized direction values. |  
-| enableRevert | `bool` | `true` | Enable Tilt Revert, will revert to the initial state. |  
 | enableReverse | `bool` | `false` | Tilt reverse, can be tilted up or down. |  
 | filterQuality | `FilterQuality` | `null` | Flutter FilterQuality. |  
 | enableGestureSensors | `bool` | `true` | Gyroscope sensor triggered tilt. |  
 | sensorFactor | `double` | `10.0` | Sensor trigger factor (sensitivity). |  
+| enableSensorRevert | `bool` | `true` | Enable sensor tilt revert, will revert to the initial state. |  
 | sensorRevertFactor | `double` | `0.05` | Sensor revert factor (damping), range of values: `0-1`. |  
 | sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | Animation duration during sensor move. |  
 | enableGestureHover | `bool` | `true` | Hover gesture triggered tilt. |  
 | enableGestureTouch | `bool` | `true` | Touch gesture triggered tilt. |  
+| enableRevert | `bool` | `true` | Enable tilt tevert, will revert to the initial state (touch, hover gestures only). |  
 | enableOutsideAreaMove | `bool` | `true` | Tilt can continue to be triggered outside the area. <br/> (`only when the pointer is pressed and moved`) |  
 | moveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during gesture move (touch, hover gestures only). |  
 | leaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after gesture leave (touch, hover gestures only). |  

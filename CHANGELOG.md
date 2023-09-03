@@ -11,7 +11,7 @@ See the [Migration Guide](guides/migration_guide.md) for the details of breaking
 
 ### New features
 
-- Add sensor gesture (configuration: `enableGestureSensors`, `sensorFactor`, `sensorRevertFactor`, `sensorMoveDuration`), default configuration is `TiltConfig(enableGestureSensors = true)`.
+- Add sensor gesture (configuration: `enableGestureSensors`, `sensorFactor`, `enableSensorRevert`, `sensorRevertFactor`, `sensorMoveDuration`), default configuration is `TiltConfig(enableGestureSensors = true)`.
 - Add touch gesture configuration, default is `TiltConfig(enableGestureTouch = true)`.
 
 ## 1.0.4
