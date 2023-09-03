@@ -122,30 +122,27 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
         disable: _disable,
         tiltConfig: _tiltConfig,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            onGesturesStream(snapshot.data!);
-            return TiltState(
-              isInit: isInit,
-              width: width,
-              height: height,
-              areaProgress: areaProgress,
-              isMove: isMove,
-              currentGesturesType: currentGesturesType,
+          onGesturesStream(snapshot.data);
+          return TiltState(
+            isInit: isInit,
+            width: width,
+            height: height,
+            areaProgress: areaProgress,
+            isMove: isMove,
+            currentGesturesType: currentGesturesType,
+            tiltConfig: _tiltConfig,
+            onResize: onResize,
+            child: TiltContainer(
+              border: _border,
+              borderRadius: _borderRadius,
+              clipBehavior: _clipBehavior,
               tiltConfig: _tiltConfig,
-              onResize: onResize,
-              child: TiltContainer(
-                border: _border,
-                borderRadius: _borderRadius,
-                clipBehavior: _clipBehavior,
-                tiltConfig: _tiltConfig,
-                lightConfig: _lightConfig,
-                shadowConfig: _shadowConfig,
-                childLayout: _childLayout,
-                child: _child,
-              ),
-            );
-          }
-          return SizedBox();
+              lightConfig: _lightConfig,
+              shadowConfig: _shadowConfig,
+              childLayout: _childLayout,
+              child: _child,
+            ),
+          );
         },
       ),
     );
@@ -153,17 +150,19 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
 
   /// 调整尺寸
   void onResize(Size size) {
+    width = size.width;
+    height = size.height;
+
     if (isInit) return;
     setState(() {
       isInit = true;
-      width = size.width;
-      height = size.height;
       currentPosition = progressPosition(width, height, _initAreaProgress);
     });
   }
 
   /// 手势 Stream 触发
-  void onGesturesStream(TiltStream tiltStream) {
+  void onGesturesStream(TiltStream? tiltStream) {
+    if (tiltStream == null) return;
     if (tiltStream.gesturesType == GesturesType.none) return;
     if (!isInit || _disable) return;
     switch (tiltStream.gesturesType) {
