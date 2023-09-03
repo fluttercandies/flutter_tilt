@@ -50,7 +50,7 @@ void main() {
           ),
         ),
       );
-
+      await tester.pumpAndSettle();
       final Offset outerLocation = tester.getCenter(outerFinder);
       final Offset innerLocation = tester.getCenter(innerFinder);
       final Offset behindLocation = tester.getCenter(behindFinder);
@@ -103,7 +103,7 @@ void main() {
           ),
         ),
       );
-
+      await tester.pumpAndSettle();
       final Offset outerLocation = tester.getCenter(outerFinder);
       final Offset innerLocation = tester.getCenter(innerFinder);
       final Offset behindLocation = tester.getCenter(behindFinder);

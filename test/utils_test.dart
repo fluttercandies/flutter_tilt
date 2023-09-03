@@ -5,6 +5,10 @@ import 'package:flutter_tilt/src/utils.dart';
 
 void main() {
   group('utils', () {
+    test('sensorsPlatformSupport', () {
+      expect(sensorsPlatformSupport(), false);
+    });
+
     test('centerPosition', () {
       expect(centerPosition(100, 100), const Offset(50.0, 50.0));
       expect(radian(10), 0.17453292519943295);
@@ -605,6 +609,103 @@ void main() {
         constraintsPosition(1.0, 1.0, const Offset(-0.1, -0.1)),
         Offset.zero,
         reason: '超出最小范围',
+      );
+    });
+
+    test('tiltTweenAnimationEnd', () {
+      final tiltConfig = TiltConfig();
+      final Offset areaProgress = Offset(1.0, 1.0);
+      expect(
+        tiltTweenAnimationEnd(false, tiltConfig, areaProgress),
+        tiltConfig.initial ?? Offset.zero,
+      );
+      expect(
+        tiltTweenAnimationEnd(
+          false,
+          TiltConfig(enableRevert: false),
+          areaProgress,
+        ),
+        areaProgress,
+      );
+      expect(
+        tiltTweenAnimationEnd(
+          false,
+          TiltConfig(initial: Offset(0.5, 0.5)),
+          areaProgress,
+        ),
+        Offset(0.5, 0.5),
+      );
+    });
+
+    test('tiltTweenAnimationDuration', () {
+      final tiltConfig = TiltConfig();
+      expect(
+        tiltTweenAnimationDuration(false, GesturesType.none, tiltConfig),
+        Duration(milliseconds: 0),
+      );
+      expect(
+        tiltTweenAnimationDuration(true, GesturesType.none, tiltConfig),
+        Duration(milliseconds: 0),
+      );
+      expect(
+        tiltTweenAnimationDuration(false, GesturesType.touch, tiltConfig),
+        tiltConfig.leaveDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(true, GesturesType.touch, tiltConfig),
+        tiltConfig.moveDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(false, GesturesType.hover, tiltConfig),
+        tiltConfig.leaveDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(true, GesturesType.hover, tiltConfig),
+        tiltConfig.moveDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(false, GesturesType.sensors, tiltConfig),
+        tiltConfig.sensorMoveDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(true, GesturesType.sensors, tiltConfig),
+        tiltConfig.sensorMoveDuration,
+      );
+    });
+
+    test('tiltTweenAnimationCurve', () {
+      final tiltConfig = TiltConfig();
+      expect(
+        tiltTweenAnimationCurve(false, GesturesType.none, tiltConfig),
+        Curves.linear,
+      );
+      expect(
+        tiltTweenAnimationCurve(true, GesturesType.none, tiltConfig),
+        Curves.linear,
+      );
+      expect(
+        tiltTweenAnimationCurve(false, GesturesType.touch, tiltConfig),
+        tiltConfig.leaveCurve,
+      );
+      expect(
+        tiltTweenAnimationCurve(true, GesturesType.touch, tiltConfig),
+        tiltConfig.moveCurve,
+      );
+      expect(
+        tiltTweenAnimationCurve(false, GesturesType.hover, tiltConfig),
+        tiltConfig.leaveCurve,
+      );
+      expect(
+        tiltTweenAnimationCurve(true, GesturesType.hover, tiltConfig),
+        tiltConfig.moveCurve,
+      );
+      expect(
+        tiltTweenAnimationCurve(false, GesturesType.sensors, tiltConfig),
+        Curves.linear,
+      );
+      expect(
+        tiltTweenAnimationCurve(true, GesturesType.sensors, tiltConfig),
+        Curves.linear,
       );
     });
   });

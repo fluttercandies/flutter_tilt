@@ -34,7 +34,7 @@ void main() {
         const Offset(0.0, -100.0),
         const Duration(milliseconds: 1000),
       );
-      await tester.pump(const Duration(milliseconds: 1000));
+      await tester.pumpAndSettle();
       expect(scrollController.offset, 0.0);
       expect(childFinder, findsOneWidget);
 
@@ -44,7 +44,7 @@ void main() {
         const Offset(-100.0, 0.0),
         const Duration(milliseconds: 1000),
       );
-      await tester.pump(const Duration(milliseconds: 1000));
+      await tester.pumpAndSettle();
       expect(scrollController.offset, 0.0);
       expect(childFinder, findsOneWidget);
 
@@ -55,7 +55,7 @@ void main() {
         const Duration(milliseconds: 1000),
         warnIfMissed: false,
       );
-      await tester.pump(const Duration(milliseconds: 1000));
+      await tester.pumpAndSettle();
       expect(scrollController.offset, 100.0);
       expect(childFinder, findsNothing);
     });

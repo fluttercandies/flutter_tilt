@@ -523,7 +523,62 @@ void main() {
       expect(_leaveCount > 1, true);
       expect(_leaveTiltData, _tiltDataExpect2);
     });
-    testWidgets('enableMouseHover false', (WidgetTester tester) async {
+    testWidgets('enableGestureTouch false', (WidgetTester tester) async {
+      TiltDataModel? _tiltData;
+      GesturesType? _gesturesType;
+      final TiltDataModel _tiltDataExpect = TiltDataModel(
+        angle: Offset(-8.0, 8.0),
+        areaProgress: const Offset(-0.8, -0.8),
+        position: Offset(9.0, 9.0),
+        transform: Matrix4(
+          0.9902680687415704,
+          -0.019369152030840567,
+          -0.13781867790849958,
+          -0.006890933895424981,
+          0.0,
+          0.9902680687415704,
+          -0.13917310096006544,
+          -0.006958655048003273,
+          0.13917310096006544,
+          0.13781867790849958,
+          0.9806308479691596,
+          0.04903154239845798,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+        ),
+      );
+
+      await tester.pumpWidget(
+        TiltWidget(
+          tiltConfig: const TiltConfig(enableGestureTouch: false),
+          onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
+            _tiltData = tiltData;
+            _gesturesType = gesturesType;
+          },
+        ),
+      );
+
+      /// touch
+      await tester.fling(tiltWidgetFinder, const Offset(5.0, 5.0), 0.1);
+      expect(childFinder, findsOneWidget);
+      expect(_gesturesType, null);
+      expect(_tiltData, null);
+
+      /// hover
+      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      await tester.sendEventToBinding(
+        testPointer.hover(hoverEventLocation + const Offset(4.0, 4.0)),
+      );
+      await tester.pumpAndSettle();
+      expect(childFinder, findsOneWidget);
+      expect(_gesturesType, GesturesType.hover);
+      expect(_tiltData, _tiltDataExpect);
+
+      await tester.sendEventToBinding(testPointer.removePointer());
+    });
+    testWidgets('enableGestureHover false', (WidgetTester tester) async {
       TiltDataModel? _tiltData;
       GesturesType? _gesturesType;
       final TiltDataModel _tiltDataExpect = TiltDataModel(

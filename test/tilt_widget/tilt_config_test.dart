@@ -9,6 +9,7 @@ void main() {
   group('tilt config', () {
     testWidgets('default', (WidgetTester tester) async {
       await tester.pumpWidget(const TiltWidget());
+      await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
     });
     testWidgets('disable true', (WidgetTester tester) async {
@@ -45,8 +46,8 @@ void main() {
         const Offset(0.0, 5.0),
         const Duration(milliseconds: 1000),
       );
-      await tester.pump(const Duration(milliseconds: 1000));
-      expect(count, 61);
+      await tester.pumpAndSettle();
+      expect(count, 60);
 
       /// 30 fps
       count = 0;
@@ -64,8 +65,8 @@ void main() {
         const Offset(0.0, 5.0),
         const Duration(milliseconds: 1000),
       );
-      await tester.pump(const Duration(milliseconds: 1000));
-      expect(count, 31);
+      await tester.pumpAndSettle();
+      expect(count, 30);
 
       /// 10 fps
       count = 0;
@@ -77,14 +78,13 @@ void main() {
           },
         ),
       );
-
       await tester.timedDrag(
         tiltWidgetFinder,
         const Offset(0.0, 5.0),
         const Duration(milliseconds: 1000),
       );
-      await tester.pump(const Duration(milliseconds: 1000));
-      expect(count, 11);
+      await tester.pumpAndSettle();
+      expect(count, 10);
     });
   });
 }
