@@ -613,8 +613,8 @@ void main() {
     });
 
     test('tiltTweenAnimationEnd', () {
-      final tiltConfig = TiltConfig();
-      final Offset areaProgress = Offset(1.0, 1.0);
+      const tiltConfig = TiltConfig();
+      const Offset areaProgress = Offset(1.0, 1.0);
       expect(
         tiltTweenAnimationEnd(false, tiltConfig, areaProgress),
         tiltConfig.initial ?? Offset.zero,
@@ -622,7 +622,7 @@ void main() {
       expect(
         tiltTweenAnimationEnd(
           false,
-          TiltConfig(enableRevert: false),
+          const TiltConfig(enableRevert: false),
           areaProgress,
         ),
         areaProgress,
@@ -630,22 +630,22 @@ void main() {
       expect(
         tiltTweenAnimationEnd(
           false,
-          TiltConfig(initial: Offset(0.5, 0.5)),
+          const TiltConfig(initial: Offset(0.5, 0.5)),
           areaProgress,
         ),
-        Offset(0.5, 0.5),
+        const Offset(0.5, 0.5),
       );
     });
 
     test('tiltTweenAnimationDuration', () {
-      final tiltConfig = TiltConfig();
+      const tiltConfig = TiltConfig();
       expect(
         tiltTweenAnimationDuration(false, GesturesType.none, tiltConfig),
-        Duration(milliseconds: 0),
+        Duration.zero,
       );
       expect(
         tiltTweenAnimationDuration(true, GesturesType.none, tiltConfig),
-        Duration(milliseconds: 0),
+        Duration.zero,
       );
       expect(
         tiltTweenAnimationDuration(false, GesturesType.touch, tiltConfig),
@@ -674,7 +674,7 @@ void main() {
     });
 
     test('tiltTweenAnimationCurve', () {
-      final tiltConfig = TiltConfig();
+      const tiltConfig = TiltConfig();
       expect(
         tiltTweenAnimationCurve(false, GesturesType.none, tiltConfig),
         Curves.linear,

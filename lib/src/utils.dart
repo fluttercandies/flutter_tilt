@@ -366,7 +366,7 @@ Duration tiltTweenAnimationDuration(
   late Duration duration;
   switch (currentGesturesType) {
     case GesturesType.none:
-      duration = Duration(milliseconds: 0);
+      duration = Duration.zero;
       break;
     case GesturesType.touch:
       duration = isMove ? tiltConfig.moveDuration : tiltConfig.leaveDuration;

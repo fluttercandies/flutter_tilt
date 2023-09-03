@@ -96,7 +96,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
           ),
         )
         .combineLatest(
-          Stream<void>.periodic(Duration(milliseconds: 0)),
+          Stream<void>.periodic(Duration.zero),
           (p0, _) => p0,
         );
   }
@@ -144,8 +144,9 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     if (tiltStream.gesturesType == GesturesType.sensors) {
       if (canSensorsPlatformSupport &&
           enableSensors &&
-          _gesturesHarmonizerTimer == null)
+          _gesturesHarmonizerTimer == null) {
         return latestTiltStream = tiltStream;
+      }
     }
     if (tiltStream.gesturesType == GesturesType.none) {
       latestTiltStream = tiltStream;
@@ -160,7 +161,6 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   /// 避免 touch、hover 离开后的动画与 sensors 冲突（出现闪现）
   void gesturesHarmonizerTimer() {
     _gesturesHarmonizerTimer?.cancel();
-    _gesturesHarmonizerTimer == null;
     _gesturesHarmonizerTimer = async.Timer(
       tiltConfig.leaveDuration,
       () => _gesturesHarmonizerTimer = null,

@@ -11,9 +11,9 @@ void main() {
   final TestPointer testPointer = TestPointer(1, PointerDeviceKind.mouse);
   group('tilt TiltConfig', () {
     testWidgets('disable true', (WidgetTester tester) async {
-      TiltDataModel? _tiltData;
-      GesturesType? _gesturesType;
-      final TiltDataModel _tiltDataExpect = TiltDataModel(
+      TiltDataModel? tiltDataTest;
+      GesturesType? gesturesTypeTest;
+      final TiltDataModel tiltDataExpect = TiltDataModel(
         angle: Offset(tiltConfig.angle, 0.0),
         areaProgress: const Offset(0.0, 1.0),
         position: const Offset(5.0, 0.0),
@@ -41,20 +41,20 @@ void main() {
         TiltWidget(
           tiltConfig: const TiltConfig(disable: true),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
         ),
       );
       await tester.fling(tiltWidgetFinder, const Offset(0.0, -5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.touch);
-      expect(_tiltData, _tiltDataExpect);
+      expect(gesturesTypeTest, GesturesType.touch);
+      expect(tiltDataTest, tiltDataExpect);
     });
     testWidgets('initial', (WidgetTester tester) async {
-      TiltDataModel? _tiltData;
-      GesturesType? _gesturesType;
-      final TiltDataModel _tiltDataInitialExpect = TiltDataModel(
+      TiltDataModel? tiltDataTest;
+      GesturesType? gesturesTypeTest;
+      final TiltDataModel tiltDataInitialExpect = TiltDataModel(
         angle: Offset(tiltConfig.angle, -tiltConfig.angle),
         areaProgress: const Offset(1.0, 1.0),
         position: Offset.zero,
@@ -77,7 +77,7 @@ void main() {
           1.0,
         ),
       );
-      final TiltDataModel _tiltDataExpect = TiltDataModel(
+      final TiltDataModel tiltDataExpect = TiltDataModel(
         angle: const Offset(-8.0, 8.0),
         areaProgress: const Offset(-0.8, -0.8),
         position: const Offset(9.0, 9.0),
@@ -105,12 +105,12 @@ void main() {
         TiltWidget(
           tiltConfig: const TiltConfig(initial: Offset(1.0, 1.0)),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
           onGestureLeave: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
         ),
       );
@@ -124,8 +124,8 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.hover);
-      expect(_tiltData, _tiltDataExpect, reason: '倾斜');
+      expect(gesturesTypeTest, GesturesType.hover);
+      expect(tiltDataTest, tiltDataExpect, reason: '倾斜');
 
       /// 还原
       await tester.sendEventToBinding(
@@ -133,15 +133,15 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.hover);
-      expect(_tiltData, _tiltDataInitialExpect, reason: '还原');
+      expect(gesturesTypeTest, GesturesType.hover);
+      expect(tiltDataTest, tiltDataInitialExpect, reason: '还原');
 
       await tester.sendEventToBinding(testPointer.removePointer());
     });
     testWidgets('angle', (WidgetTester tester) async {
-      TiltDataModel? _tiltData;
-      GesturesType? _gesturesType;
-      final TiltDataModel _tiltDataExpect = TiltDataModel(
+      TiltDataModel? tiltDataTest;
+      GesturesType? gesturesTypeTest;
+      final TiltDataModel tiltDataExpect = TiltDataModel(
         angle: const Offset(20.0, -20.0),
         areaProgress: const Offset(1.0, 1.0),
         position: Offset.zero,
@@ -168,20 +168,20 @@ void main() {
         TiltWidget(
           tiltConfig: const TiltConfig(angle: 20),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
         ),
       );
       await tester.fling(tiltWidgetFinder, const Offset(-5.0, -5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.touch);
-      expect(_tiltData, _tiltDataExpect);
+      expect(gesturesTypeTest, GesturesType.touch);
+      expect(tiltDataTest, tiltDataExpect);
     });
     testWidgets('direction all', (WidgetTester tester) async {
-      TiltDataModel? _tiltData;
-      GesturesType? _gesturesType;
-      final TiltDataModel _tiltDataExpect = TiltDataModel(
+      TiltDataModel? tiltDataTest;
+      GesturesType? gesturesTypeTest;
+      final TiltDataModel tiltDataExpect = TiltDataModel(
         angle: Offset(tiltConfig.angle, -tiltConfig.angle),
         areaProgress: const Offset(1.0, 1.0),
         position: Offset.zero,
@@ -204,7 +204,7 @@ void main() {
           1.0,
         ),
       );
-      final TiltDataModel _tiltDataExpect2 = TiltDataModel(
+      final TiltDataModel tiltDataExpect2 = TiltDataModel(
         angle: Offset(-tiltConfig.angle, tiltConfig.angle),
         areaProgress: const Offset(-1.0, -1.0),
         position: Offset(tiltConfig.angle, tiltConfig.angle),
@@ -244,8 +244,8 @@ void main() {
             ],
           ),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
         ),
       );
@@ -253,19 +253,19 @@ void main() {
       /// 左上
       await tester.fling(tiltWidgetFinder, const Offset(-5.0, -5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.touch);
-      expect(_tiltData, _tiltDataExpect);
+      expect(gesturesTypeTest, GesturesType.touch);
+      expect(tiltDataTest, tiltDataExpect);
 
       /// 右下
       await tester.fling(tiltWidgetFinder, const Offset(5.0, 5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.touch);
-      expect(_tiltData, _tiltDataExpect2);
+      expect(gesturesTypeTest, GesturesType.touch);
+      expect(tiltDataTest, tiltDataExpect2);
     });
     testWidgets('direction part', (WidgetTester tester) async {
-      TiltDataModel? _tiltData;
-      GesturesType? _gesturesType;
-      final TiltDataModel _tiltDataExpect = TiltDataModel(
+      TiltDataModel? tiltDataTest;
+      GesturesType? gesturesTypeTest;
+      final TiltDataModel tiltDataExpect = TiltDataModel(
         angle: Offset(tiltConfig.angle, -tiltConfig.angle),
         areaProgress: const Offset(1.0, 1.0),
         position: Offset.zero,
@@ -288,7 +288,7 @@ void main() {
           1.0,
         ),
       );
-      final TiltDataModel _tiltDataExpect2 = TiltDataModel(
+      final TiltDataModel tiltDataExpect2 = TiltDataModel(
         angle: Offset.zero,
         areaProgress: Offset.zero,
         position: const Offset(5.0, 5.0),
@@ -318,8 +318,8 @@ void main() {
             direction: <TiltDirection>[TiltDirection.top, TiltDirection.left],
           ),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
         ),
       );
@@ -327,19 +327,19 @@ void main() {
       /// 合法
       await tester.fling(tiltWidgetFinder, const Offset(-5.0, -5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.touch);
-      expect(_tiltData, _tiltDataExpect);
+      expect(gesturesTypeTest, GesturesType.touch);
+      expect(tiltDataTest, tiltDataExpect);
 
       /// 不合法
       await tester.fling(tiltWidgetFinder, const Offset(5.0, 5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.touch);
-      expect(_tiltData, _tiltDataExpect2);
+      expect(gesturesTypeTest, GesturesType.touch);
+      expect(tiltDataTest, tiltDataExpect2);
     });
     testWidgets('enableRevert false', (WidgetTester tester) async {
-      TiltDataModel? _tiltData;
-      GesturesType? _gesturesType;
-      final TiltDataModel _tiltDataExpect = TiltDataModel(
+      TiltDataModel? tiltDataTest;
+      GesturesType? gesturesTypeTest;
+      final TiltDataModel tiltDataExpect = TiltDataModel(
         angle: Offset(tiltConfig.angle, -tiltConfig.angle),
         areaProgress: const Offset(1.0, 1.0),
         position: Offset.zero,
@@ -367,12 +367,12 @@ void main() {
         TiltWidget(
           tiltConfig: const TiltConfig(enableRevert: false),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
           onGestureLeave: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
         ),
       );
@@ -386,8 +386,8 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.hover);
-      expect(_tiltData, _tiltDataExpect, reason: '倾斜');
+      expect(gesturesTypeTest, GesturesType.hover);
+      expect(tiltDataTest, tiltDataExpect, reason: '倾斜');
 
       /// 不还原
       await tester.sendEventToBinding(
@@ -395,15 +395,15 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.hover);
-      expect(_tiltData, _tiltDataExpect, reason: '不还原');
+      expect(gesturesTypeTest, GesturesType.hover);
+      expect(tiltDataTest, tiltDataExpect, reason: '不还原');
 
       await tester.sendEventToBinding(testPointer.removePointer());
     });
     testWidgets('enableReverse true', (WidgetTester tester) async {
-      TiltDataModel? _tiltData;
-      GesturesType? _gesturesType;
-      final TiltDataModel _tiltDataExpect = TiltDataModel(
+      TiltDataModel? tiltDataTest;
+      GesturesType? gesturesTypeTest;
+      final TiltDataModel tiltDataExpect = TiltDataModel(
         angle: Offset(-tiltConfig.angle, tiltConfig.angle),
         areaProgress: const Offset(1.0, 1.0),
         position: Offset.zero,
@@ -431,24 +431,24 @@ void main() {
         TiltWidget(
           tiltConfig: const TiltConfig(enableReverse: true),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
         ),
       );
 
       await tester.fling(tiltWidgetFinder, const Offset(-5.0, -5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.touch);
-      expect(_tiltData, _tiltDataExpect);
+      expect(gesturesTypeTest, GesturesType.touch);
+      expect(tiltDataTest, tiltDataExpect);
     });
     testWidgets('enableOutsideAreaMove false', (WidgetTester tester) async {
-      TiltDataModel? _moveTiltData;
-      TiltDataModel? _leaveTiltData;
-      GesturesType? _moveGesturesType;
-      GesturesType? _leaveGesturesType;
-      int _leaveCount = 0;
-      final TiltDataModel _tiltDataExpect = TiltDataModel(
+      TiltDataModel? moveTiltDataTest;
+      TiltDataModel? leaveTiltDataTest;
+      GesturesType? moveGesturesTypeTest;
+      GesturesType? leaveGesturesTypeTest;
+      int leaveCountTest = 0;
+      final TiltDataModel tiltDataExpect = TiltDataModel(
         angle: Offset(tiltConfig.angle, -tiltConfig.angle),
         areaProgress: const Offset(1.0, 1.0),
         position: Offset.zero,
@@ -471,7 +471,7 @@ void main() {
           1.0,
         ),
       );
-      final TiltDataModel _tiltDataExpect2 = TiltDataModel(
+      final TiltDataModel tiltDataExpect2 = TiltDataModel(
         angle: Offset.zero,
         areaProgress: Offset.zero,
         position: const Offset(5.0, 5.0),
@@ -499,13 +499,13 @@ void main() {
         TiltWidget(
           tiltConfig: const TiltConfig(enableOutsideAreaMove: false),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _moveTiltData = tiltData;
-            _moveGesturesType = gesturesType;
+            moveTiltDataTest = tiltData;
+            moveGesturesTypeTest = gesturesType;
           },
           onGestureLeave: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _leaveCount++;
-            _leaveTiltData = tiltData;
-            _leaveGesturesType = gesturesType;
+            leaveCountTest++;
+            leaveTiltDataTest = tiltData;
+            leaveGesturesTypeTest = gesturesType;
           },
         ),
       );
@@ -513,23 +513,23 @@ void main() {
       /// 倾斜-不超范围
       await tester.fling(tiltWidgetFinder, const Offset(-5.0, -5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_moveGesturesType, GesturesType.touch);
-      expect(_moveTiltData, _tiltDataExpect);
+      expect(moveGesturesTypeTest, GesturesType.touch);
+      expect(moveTiltDataTest, tiltDataExpect);
 
       /// 倾斜-超范围
       await tester.fling(tiltWidgetFinder, const Offset(-6.0, -6.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_leaveGesturesType, GesturesType.touch);
-      expect(_leaveCount > 1, true);
-      expect(_leaveTiltData, _tiltDataExpect2);
+      expect(leaveGesturesTypeTest, GesturesType.touch);
+      expect(leaveCountTest > 1, true);
+      expect(leaveTiltDataTest, tiltDataExpect2);
     });
     testWidgets('enableGestureTouch false', (WidgetTester tester) async {
-      TiltDataModel? _tiltData;
-      GesturesType? _gesturesType;
-      final TiltDataModel _tiltDataExpect = TiltDataModel(
-        angle: Offset(-8.0, 8.0),
+      TiltDataModel? tiltDataTest;
+      GesturesType? gesturesTypeTest;
+      final TiltDataModel tiltDataExpect = TiltDataModel(
+        angle: const Offset(-8.0, 8.0),
         areaProgress: const Offset(-0.8, -0.8),
-        position: Offset(9.0, 9.0),
+        position: const Offset(9.0, 9.0),
         transform: Matrix4(
           0.9902680687415704,
           -0.019369152030840567,
@@ -554,8 +554,8 @@ void main() {
         TiltWidget(
           tiltConfig: const TiltConfig(enableGestureTouch: false),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
         ),
       );
@@ -563,8 +563,8 @@ void main() {
       /// touch
       await tester.fling(tiltWidgetFinder, const Offset(5.0, 5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, null);
-      expect(_tiltData, null);
+      expect(gesturesTypeTest, null);
+      expect(tiltDataTest, null);
 
       /// hover
       final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
@@ -573,15 +573,15 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.hover);
-      expect(_tiltData, _tiltDataExpect);
+      expect(gesturesTypeTest, GesturesType.hover);
+      expect(tiltDataTest, tiltDataExpect);
 
       await tester.sendEventToBinding(testPointer.removePointer());
     });
     testWidgets('enableGestureHover false', (WidgetTester tester) async {
-      TiltDataModel? _tiltData;
-      GesturesType? _gesturesType;
-      final TiltDataModel _tiltDataExpect = TiltDataModel(
+      TiltDataModel? tiltDataTest;
+      GesturesType? gesturesTypeTest;
+      final TiltDataModel tiltDataExpect = TiltDataModel(
         angle: Offset(-tiltConfig.angle, tiltConfig.angle),
         areaProgress: const Offset(-1.0, -1.0),
         position: Offset(tiltConfig.angle, tiltConfig.angle),
@@ -609,8 +609,8 @@ void main() {
         TiltWidget(
           tiltConfig: const TiltConfig(enableGestureHover: false),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltDataTest = tiltData;
+            gesturesTypeTest = gesturesType;
           },
         ),
       );
@@ -622,14 +622,14 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, null);
-      expect(_tiltData, null);
+      expect(gesturesTypeTest, null);
+      expect(tiltDataTest, null);
 
       /// touch
       await tester.fling(tiltWidgetFinder, const Offset(5.0, 5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, GesturesType.touch);
-      expect(_tiltData, _tiltDataExpect);
+      expect(gesturesTypeTest, GesturesType.touch);
+      expect(tiltDataTest, tiltDataExpect);
 
       await tester.sendEventToBinding(testPointer.removePointer());
     });

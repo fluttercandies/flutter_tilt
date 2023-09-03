@@ -13,21 +13,21 @@ void main() {
       expect(childFinder, findsOneWidget);
     });
     testWidgets('disable true', (WidgetTester tester) async {
-      TiltDataModel? _tiltData;
-      GesturesType? _gesturesType;
+      TiltDataModel? tiltData;
+      GesturesType? gesturesType;
       await tester.pumpWidget(
         TiltWidget(
           disable: true,
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            _tiltData = tiltData;
-            _gesturesType = gesturesType;
+            tiltData = tiltData;
+            gesturesType = gesturesType;
           },
         ),
       );
       await tester.fling(tiltWidgetFinder, const Offset(0.0, -5.0), 0.1);
       expect(childFinder, findsOneWidget);
-      expect(_gesturesType, null);
-      expect(_tiltData, null);
+      expect(gesturesType, null);
+      expect(tiltData, null);
     });
     testWidgets('fps', (WidgetTester tester) async {
       int count = 0;

@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.0.0-dev.1
+
+### Improvements
+
+- Update lints
+
 ## 2.0.0-dev.0
 
 ### Breaking changes
