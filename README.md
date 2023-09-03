@@ -63,6 +63,8 @@ Check out the [Live Demo][].
 
   - [Platform Support](#platform-support-)
 
+- [Gesture priority](#gesture-priority-)
+
 - [Simple usage](#simple-usage-)
 
   - [Tilt](#tilt-)
@@ -136,6 +138,13 @@ Sensors are triggered only on these platforms.
 | Android |  iOS  |  Web (HTTPS)  | macOS | Linux | Windows |  
 | :-----: | :---: | :-----------: | :---: | :---: | :-----: |  
 |   ✅   |   ✅  |      ✅      |   ❌  |  ❌  |    ❌   |  
+
+
+## Gesture priority 📱
+
+When multiple gestures are enabled, they are triggered based on priority:
+
+> Touch > Hover > Sensors
 
 
 ## Simple usage 📖  
