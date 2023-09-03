@@ -90,6 +90,7 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
   /// FPS 计时器
   async.Timer? _fpsTimer;
 
+  /// Touch 和 Hover 的 TiltStreamController
   late async.StreamController<TiltStream> tiltStreamController;
 
   /// 当前坐标
@@ -224,7 +225,7 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
     final Offset position = _tiltConfig.enableRevert
         ? progressPosition(width, height, _initAreaProgress)
         : offset;
-
+    currentPosition = position;
     areaProgress = p2cAreaProgress(
       width,
       height,

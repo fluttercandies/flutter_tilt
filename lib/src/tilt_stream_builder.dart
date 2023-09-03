@@ -59,24 +59,14 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   /// 是否开启 Stream
   bool get enableStream => !disable && canSensorsPlatformSupport;
 
-  /// Touch, Hover 的 Stream
-  Stream<TiltStream> get currentTiltStream => tiltStreamController.stream;
-
-  /// 陀螺仪 Stream
-  Stream<TiltStream> get currentGyroscopeStream => gyroscopeEvents
-      .map<TiltStream>(
-        (gyroscopeEvent) => TiltStream(
-          position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
-          gesturesType: GesturesType.sensors,
-        ),
-      )
-      .combineLatest(
-        Stream<void>.periodic(Duration(milliseconds: 0)),
-        (p0, _) => p0,
-      );
-
   /// 传感器平台支持
   final bool canSensorsPlatformSupport = sensorsPlatformSupport();
+
+  /// Touch, Hover 的 Stream
+  late Stream<TiltStream> currentTiltStream;
+
+  /// 陀螺仪 Stream
+  late Stream<TiltStream> currentGyroscopeStream;
 
   /// 是否开启传感器
   late bool enableSensors = tiltConfig.enableGestureSensors;
@@ -84,6 +74,9 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   /// 最新 TiltStream（缓存）
   late TiltStream latestTiltStream =
       TiltStream(position: position, gesturesType: GesturesType.none);
+
+  /// 手势协调器
+  async.Timer? _gesturesHarmonizerTimer;
 
   @override
   void initState() {
@@ -99,10 +92,23 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
           )
           .cancel();
     }
+    currentTiltStream = tiltStreamController.stream;
+    currentGyroscopeStream = gyroscopeEvents
+        .map<TiltStream>(
+          (gyroscopeEvent) => TiltStream(
+            position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
+            gesturesType: GesturesType.sensors,
+          ),
+        )
+        .combineLatest(
+          Stream<void>.periodic(Duration(milliseconds: 0)),
+          (p0, _) => p0,
+        );
   }
 
   @override
   void dispose() {
+    _gesturesHarmonizerTimer?.cancel();
     tiltStreamController.close();
     super.dispose();
   }
@@ -128,7 +134,8 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     if (tiltStream.gesturesType == GesturesType.touch ||
         tiltStream.gesturesType == GesturesType.hover) {
       /// 避免 touch、hover 与 sensors 冲突
-      if (tiltStream.enableSensors ?? enableSensors) {
+      if (tiltStream.enableSensors ?? enableSensors && !enableSensors) {
+        gesturesHarmonizerTimer();
         enableSensors = true;
       } else {
         enableSensors = false;
@@ -136,8 +143,23 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
       latestTiltStream = tiltStream;
     }
     if (tiltStream.gesturesType == GesturesType.sensors) {
-      if (enableSensors) return latestTiltStream = tiltStream;
+      if (enableSensors && _gesturesHarmonizerTimer == null)
+        return latestTiltStream = tiltStream;
     }
     return latestTiltStream;
+  }
+
+  /// 手势协调器
+  ///
+  /// 开启避免 touch、hover 与 sensors 冲突的计时器
+  ///
+  /// 避免 touch、hover 离开后的动画与 sensors 冲突（出现闪现）
+  void gesturesHarmonizerTimer() {
+    _gesturesHarmonizerTimer?.cancel();
+    _gesturesHarmonizerTimer == null;
+    _gesturesHarmonizerTimer = async.Timer(
+      tiltConfig.leaveDuration,
+      () => _gesturesHarmonizerTimer = null,
+    );
   }
 }
