@@ -58,8 +58,6 @@ class TiltLight extends StatelessWidget {
 
   /// 光源方向进度
   double get showProgress => directionProgress(
-        width,
-        height,
         areaProgress,
         lightConfig.direction,
         min: lightConfig.minIntensity,

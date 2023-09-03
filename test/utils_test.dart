@@ -163,8 +163,6 @@ void main() {
       /// enableReverse = false
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, 1.0),
           LightDirection.bottom,
         ),
@@ -173,8 +171,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, -1.0),
           LightDirection.bottom,
         ),
@@ -183,8 +179,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, -1.0),
           ShadowDirection.bottom,
         ),
@@ -193,8 +187,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, 1.0),
           ShadowDirection.bottom,
         ),
@@ -205,8 +197,6 @@ void main() {
       /// enableReverse = true
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, -1.0),
           LightDirection.bottom,
           enableReverse: true,
@@ -216,8 +206,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, 1.0),
           LightDirection.bottom,
           enableReverse: true,
@@ -227,8 +215,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, 1.0),
           ShadowDirection.bottom,
           enableReverse: true,
@@ -238,8 +224,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, -1.0),
           ShadowDirection.bottom,
           enableReverse: true,
@@ -251,8 +235,6 @@ void main() {
     test('directionProgress LightDirection', () {
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           LightDirection.none,
         ),
@@ -260,8 +242,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           LightDirection.all,
         ),
@@ -269,8 +249,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           Offset.zero,
           LightDirection.all,
         ),
@@ -278,8 +256,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, -1.0),
           LightDirection.all,
         ),
@@ -287,8 +263,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           LightDirection.around,
         ),
@@ -296,8 +270,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           Offset.zero,
           LightDirection.around,
         ),
@@ -305,8 +277,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, -1.0),
           LightDirection.around,
         ),
@@ -314,8 +284,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, -1.0),
           LightDirection.top,
         ),
@@ -323,8 +291,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, 1.0),
           LightDirection.bottom,
         ),
@@ -332,8 +298,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, 0.0),
           LightDirection.left,
         ),
@@ -341,8 +305,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 0.0),
           LightDirection.right,
         ),
@@ -350,8 +312,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           Offset.zero,
           LightDirection.center,
         ),
@@ -359,8 +319,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           LightDirection.center,
         ),
@@ -368,8 +326,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, -1.0),
           LightDirection.topLeft,
         ),
@@ -377,8 +333,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, -1.0),
           LightDirection.topRight,
         ),
@@ -386,8 +340,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, 1.0),
           LightDirection.bottomLeft,
         ),
@@ -395,8 +347,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           LightDirection.bottomRight,
         ),
@@ -404,8 +354,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, 0.0),
           LightDirection.xCenter,
         ),
@@ -413,8 +361,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           Offset.zero,
           LightDirection.xCenter,
         ),
@@ -422,8 +368,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 0.0),
           LightDirection.xCenter,
         ),
@@ -431,8 +375,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           LightDirection.xCenter,
         ),
@@ -440,8 +382,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, -1.0),
           LightDirection.yCenter,
         ),
@@ -449,8 +389,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           Offset.zero,
           LightDirection.yCenter,
         ),
@@ -458,8 +396,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, 1.0),
           LightDirection.yCenter,
         ),
@@ -467,8 +403,6 @@ void main() {
       );
       expect(
         directionProgress<LightDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           LightDirection.yCenter,
         ),
@@ -478,8 +412,6 @@ void main() {
     test('directionProgress ShadowDirection', () {
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           ShadowDirection.none,
         ),
@@ -487,8 +419,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           ShadowDirection.all,
         ),
@@ -496,8 +426,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           Offset.zero,
           ShadowDirection.all,
         ),
@@ -505,8 +433,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, -1.0),
           ShadowDirection.all,
         ),
@@ -514,8 +440,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           ShadowDirection.around,
         ),
@@ -523,8 +447,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           Offset.zero,
           ShadowDirection.around,
         ),
@@ -532,8 +454,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, -1.0),
           ShadowDirection.around,
         ),
@@ -541,8 +461,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, 1.0),
           ShadowDirection.top,
         ),
@@ -550,8 +468,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, -1.0),
           ShadowDirection.bottom,
         ),
@@ -559,8 +475,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 0.0),
           ShadowDirection.left,
         ),
@@ -568,8 +482,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, 0.0),
           ShadowDirection.right,
         ),
@@ -577,8 +489,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           Offset.zero,
           ShadowDirection.center,
         ),
@@ -586,8 +496,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           ShadowDirection.center,
         ),
@@ -595,8 +503,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           ShadowDirection.topLeft,
         ),
@@ -604,8 +510,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, 1.0),
           ShadowDirection.topRight,
         ),
@@ -613,8 +517,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, -1.0),
           ShadowDirection.bottomLeft,
         ),
@@ -622,8 +524,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, -1.0),
           ShadowDirection.bottomRight,
         ),
@@ -631,8 +531,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(-1.0, 0.0),
           ShadowDirection.xCenter,
         ),
@@ -640,8 +538,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           Offset.zero,
           ShadowDirection.xCenter,
         ),
@@ -649,8 +545,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 0.0),
           ShadowDirection.xCenter,
         ),
@@ -658,8 +552,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           ShadowDirection.xCenter,
         ),
@@ -667,8 +559,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, -1.0),
           ShadowDirection.yCenter,
         ),
@@ -676,8 +566,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           Offset.zero,
           ShadowDirection.yCenter,
         ),
@@ -685,8 +573,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(0.0, 1.0),
           ShadowDirection.yCenter,
         ),
@@ -694,8 +580,6 @@ void main() {
       );
       expect(
         directionProgress<ShadowDirection>(
-          100.0,
-          100.0,
           const Offset(1.0, 1.0),
           ShadowDirection.yCenter,
         ),

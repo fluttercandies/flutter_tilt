@@ -173,8 +173,6 @@ Offset progressPosition(double width, double height, Offset areaProgress) =>
 /// * [enableReverse] 开启反向
 ///
 double directionProgress<T>(
-  double width,
-  double height,
   Offset areaProgress,
   T direction, {
   double min = 0.0,

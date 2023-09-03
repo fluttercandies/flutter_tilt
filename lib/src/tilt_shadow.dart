@@ -63,8 +63,6 @@ class TiltShadow extends StatelessWidget {
   ///
   /// {@macro tilt.ShadowConfig.direction}
   double get showShadow => directionProgress(
-        width,
-        height,
         areaProgress,
         shadowConfig.direction ?? lightConfig.direction,
         min: shadowConfig.minIntensity,
