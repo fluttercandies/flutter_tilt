@@ -25,6 +25,7 @@ class TiltConfig {
     this.filterQuality,
     this.enableGestureSensors = true,
     this.sensorFactor = 10.0,
+    this.sensorRevertFactor = 0.05,
     this.sensorMoveDuration = const Duration(milliseconds: 50),
     this.enableGestureHover = true,
     this.enableGestureTouch = true,
@@ -33,7 +34,7 @@ class TiltConfig {
     this.leaveDuration = const Duration(milliseconds: 300),
     this.moveCurve = Curves.linear,
     this.leaveCurve = Curves.linear,
-  });
+  }) : assert(sensorRevertFactor >= 0 && sensorRevertFactor <= 1);
 
   /// 禁用
   final bool disable;
@@ -103,6 +104,11 @@ class TiltConfig {
 
   /// 传感器触发系数（灵敏度）
   final double sensorFactor;
+
+  /// 传感器复原系数（阻尼）
+  ///
+  /// 阻尼范围：0-1
+  final double sensorRevertFactor;
 
   /// 传感器移动时的动画持续时间
   final Duration sensorMoveDuration;

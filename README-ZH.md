@@ -252,6 +252,7 @@ Tilt(
 | filterQuality | `FilterQuality` | `null` | Flutter FilterQuality。 |  
 | enableGestureSensors | `bool` | `true` | 陀螺仪传感器触发倾斜。 |  
 | sensorFactor | `double` | `10.0` | 传感器触发系数（灵敏度）。 |  
+| sensorRevertFactor | `double` | `0.05` | 传感器复原系数（阻尼），数值范围：`0-1`。 |  
 | sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | 传感器移动时的动画持续时间。 |  
 | enableGestureHover | `bool` | `true` | Hover 手势触发倾斜。 |  
 | enableGestureTouch | `bool` | `true` | Touch 手势触发倾斜。 |  

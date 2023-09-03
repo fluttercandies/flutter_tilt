@@ -157,7 +157,7 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
       isInit = true;
       width = size.width;
       height = size.height;
-      currentPosition = progressPosition(width, height, areaProgress);
+      currentPosition = progressPosition(width, height, _initAreaProgress);
     });
   }
 
@@ -248,12 +248,12 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
     final Offset initPosition =
         progressPosition(width, height, _initAreaProgress);
 
-    /// 渐渐还原
+    /// 还原
     currentPosition -= Offset(
           currentPosition.dx - initPosition.dx,
           currentPosition.dy - initPosition.dy,
         ) *
-        (1 / double.parse(_fps.toString()) / 5);
+        _tiltConfig.sensorRevertFactor;
   }
 
   /// FPS

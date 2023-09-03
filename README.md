@@ -252,6 +252,7 @@ Tilt(
 | filterQuality | `FilterQuality` | `null` | Flutter FilterQuality. |  
 | enableGestureSensors | `bool` | `true` | Gyroscope sensor triggered tilt. |  
 | sensorFactor | `double` | `10.0` | Sensor trigger factor (sensitivity). |  
+| sensorRevertFactor | `double` | `0.05` | Sensor revert factor (damping), range of values: `0-1`. |  
 | sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | Animation duration during sensor move. |  
 | enableGestureHover | `bool` | `true` | Hover gesture triggered tilt. |  
 | enableGestureTouch | `bool` | `true` | Touch gesture triggered tilt. |  
