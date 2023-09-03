@@ -123,6 +123,7 @@ Offset p2cAreaProgress(
   Offset position,
   List<TiltDirection>? tiltDirection,
 ) {
+  if (width == 0.0 || height == 0.0) return Offset.zero;
   final Offset center = centerPosition(width, height);
   late double x = (center.dx - position.dx) / width * 2.0;
   late double y = (center.dy - position.dy) / height * 2.0;
@@ -151,11 +152,13 @@ Offset p2cAreaProgress(
 
 /// 通过 [p2cAreaProgress] 的进度，获得当前坐标位置
 ///
-Offset progressPosition(double width, double height, Offset areaProgress) =>
-    Offset(
-      width / 2.0 * (1.0 - areaProgress.dx),
-      height / 2.0 * (1.0 - areaProgress.dy),
-    );
+Offset progressPosition(double width, double height, Offset areaProgress) {
+  if (width == 0.0 || height == 0.0) return Offset.zero;
+  return Offset(
+    width / 2.0 * (1.0 - areaProgress.dx),
+    height / 2.0 * (1.0 - areaProgress.dy),
+  );
+}
 
 /// 计算提供的方向进度
 ///

@@ -76,7 +76,7 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
   bool isInit = false;
 
   /// 尺寸
-  double width = 0.0, height = 0.0;
+  double width = 0.1, height = 0.1;
 
   /// 当前坐标的区域进度
   late Offset areaProgress = _initAreaProgress;
@@ -92,6 +92,8 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
 
   /// Touch 和 Hover 的 TiltStreamController
   late async.StreamController<TiltStream> tiltStreamController;
+
+  int i = 0;
 
   /// 当前坐标
   late Offset currentPosition =
@@ -118,7 +120,6 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
       child: TiltStreamBuilder(
         tiltStreamController: tiltStreamController,
         position: currentPosition,
-        isInit: isInit,
         disable: _disable,
         tiltConfig: _tiltConfig,
         builder: (context, snapshot) {
@@ -148,16 +149,15 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
     );
   }
 
-  /// 调整尺寸
+  /// 调整尺寸及初始参数
   void onResize(Size size) {
     width = size.width;
     height = size.height;
 
-    if (isInit) return;
-    setState(() {
+    if (!isInit) {
       isInit = true;
       currentPosition = progressPosition(width, height, _initAreaProgress);
-    });
+    }
   }
 
   /// 手势 Stream 触发

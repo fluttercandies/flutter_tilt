@@ -17,7 +17,6 @@ class TiltStreamBuilder extends StatefulWidget {
   const TiltStreamBuilder({
     super.key,
     required this.tiltStreamController,
-    required this.isInit,
     required this.disable,
     required this.tiltConfig,
     required this.position,
@@ -26,9 +25,6 @@ class TiltStreamBuilder extends StatefulWidget {
 
   /// Touch 和 Hover 的 TiltStreamController
   final async.StreamController<TiltStream> tiltStreamController;
-
-  /// 是否初始化
-  final bool isInit;
 
   /// 是否禁用
   final bool disable;
@@ -47,7 +43,6 @@ class TiltStreamBuilder extends StatefulWidget {
 }
 
 class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
-  bool get isInit => widget.isInit;
   bool get disable => widget.disable;
   TiltConfig get tiltConfig => widget.tiltConfig;
   Offset get position => widget.position;
@@ -57,7 +52,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
       widget.builder;
 
   /// 是否开启 Stream
-  bool get enableStream => !disable && canSensorsPlatformSupport;
+  bool get enableStream => !disable;
 
   /// 传感器平台支持
   final bool canSensorsPlatformSupport = sensorsPlatformSupport();
@@ -83,7 +78,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     super.initState();
 
     /// 避免没有陀螺仪的设备使用
-    if (enableStream && enableSensors) {
+    if (canSensorsPlatformSupport && enableStream && enableSensors) {
       gyroscopeEvents
           .listen(
             null,
@@ -116,9 +111,10 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<TiltStream>(
-      stream: isInit && enableStream
+      stream: enableStream
           ? currentTiltStream.mergeAll([
-              if (enableSensors) currentGyroscopeStream,
+              if (canSensorsPlatformSupport && enableSensors)
+                currentGyroscopeStream,
             ]).map(filterTiltStream)
           : null,
       initialData: TiltStream(
@@ -134,7 +130,8 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     if (tiltStream.gesturesType == GesturesType.touch ||
         tiltStream.gesturesType == GesturesType.hover) {
       /// 避免 touch、hover 与 sensors 冲突
-      if (tiltConfig.enableGestureSensors &&
+      if (canSensorsPlatformSupport &&
+          tiltConfig.enableGestureSensors &&
           (tiltStream.enableSensors ?? enableSensors) &&
           !enableSensors) {
         gesturesHarmonizerTimer();
@@ -145,8 +142,13 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
       latestTiltStream = tiltStream;
     }
     if (tiltStream.gesturesType == GesturesType.sensors) {
-      if (enableSensors && _gesturesHarmonizerTimer == null)
+      if (canSensorsPlatformSupport &&
+          enableSensors &&
+          _gesturesHarmonizerTimer == null)
         return latestTiltStream = tiltStream;
+    }
+    if (tiltStream.gesturesType == GesturesType.none) {
+      latestTiltStream = tiltStream;
     }
     return latestTiltStream;
   }
