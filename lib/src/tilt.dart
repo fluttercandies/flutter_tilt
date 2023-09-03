@@ -55,7 +55,7 @@ class Tilt extends TiltContainer {
   State<Tilt> createState() => _TiltState();
 }
 
-class _TiltState extends State<Tilt> with TickerProviderStateMixin {
+class _TiltState extends State<Tilt> {
   Widget get _child => widget.child;
   ChildLayout get _childLayout => widget.childLayout;
   bool get _disable => widget.disable;
@@ -92,8 +92,6 @@ class _TiltState extends State<Tilt> with TickerProviderStateMixin {
 
   /// Touch 和 Hover 的 TiltStreamController
   late async.StreamController<TiltStream> tiltStreamController;
-
-  int i = 0;
 
   /// 当前坐标
   late Offset currentPosition =
