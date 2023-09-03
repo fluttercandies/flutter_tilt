@@ -134,7 +134,9 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     if (tiltStream.gesturesType == GesturesType.touch ||
         tiltStream.gesturesType == GesturesType.hover) {
       /// 避免 touch、hover 与 sensors 冲突
-      if (tiltStream.enableSensors ?? enableSensors && !enableSensors) {
+      if (tiltConfig.enableGestureSensors &&
+          (tiltStream.enableSensors ?? enableSensors) &&
+          !enableSensors) {
         gesturesHarmonizerTimer();
         enableSensors = true;
       } else {
