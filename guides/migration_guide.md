@@ -17,11 +17,25 @@ This document gathered all breaking changes and migrations requirement between m
 
 ### Details
 
+#### Changed `enableMouseHover` in `TiltConfig` to `enableGestureHover`.
+
 ```diff
 Tilt(
   tiltConfig: TiltConfig(
 -   enableMouseHover: false
 +   enableGestureHover: false
+  )
+  ...
+)
+```
+
+#### To keep the tilt
+
+```diff
+Tilt(
+  tiltConfig: TiltConfig(
++    enableRevert: false,
++    enableSensorRevert: false,
   )
   ...
 )
