@@ -111,7 +111,7 @@ Check out the [Live Demo][].
 |       Flutter       | 3.0.0+ | 3.3.0+ |  
 |      ---------      |:------:|:------:|  
 | flutter_tilt 2.0.0+ |  ❌  |  ✅  |  
-| flutter_tilt 0.0.1+ |  ✅  |  ❌  |  
+| flutter_tilt 1.0.0+ |  ✅  |  ❌  |  
 
 
 ### Add package 📦  
