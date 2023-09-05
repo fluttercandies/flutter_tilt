@@ -38,6 +38,9 @@ class _GesturesListenerState extends State<GesturesListener> {
   /// 避免 touch 和 hover 同时触发，导致 hover 离开的时候会“闪现”
   bool isTouch = false;
 
+  /// 避免 hover 未 Enter 时就触发
+  bool isHover = false;
+
   @override
   Widget build(BuildContext context) {
     /// 不受滑动影响
@@ -54,7 +57,7 @@ class _GesturesListenerState extends State<GesturesListener> {
                   TiltStream(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
-                    enableSensors: false,
+                    enableRevert: false,
                   ),
                 );
               }
@@ -66,7 +69,7 @@ class _GesturesListenerState extends State<GesturesListener> {
                   TiltStream(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
-                    enableSensors: true,
+                    enableRevert: true,
                   ),
                 );
               }
@@ -78,30 +81,41 @@ class _GesturesListenerState extends State<GesturesListener> {
                   TiltStream(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
-                    enableSensors: true,
+                    enableRevert: true,
                   ),
                 );
               }
             : null,
         child: MouseRegion(
-          onHover: _tiltConfig.enableGestureHover && !isTouch
-              ? (PointerHoverEvent e) {
-                  _tiltStreamController.add(
-                    TiltStream(
-                      position: e.localPosition,
-                      gesturesType: GesturesType.hover,
-                      enableSensors: false,
-                    ),
-                  );
+          onEnter: _tiltConfig.enableGestureHover
+              ? (PointerEnterEvent e) {
+                  if (isTouch) return;
+                  isHover = true;
                 }
               : null,
-          onExit: _tiltConfig.enableGestureHover && !isTouch
+          onHover: _tiltConfig.enableGestureHover
+              ? (PointerHoverEvent e) {
+                  if (isHover) {
+                    if (isTouch) return;
+                    _tiltStreamController.add(
+                      TiltStream(
+                        position: e.localPosition,
+                        gesturesType: GesturesType.hover,
+                        enableRevert: false,
+                      ),
+                    );
+                  }
+                }
+              : null,
+          onExit: _tiltConfig.enableGestureHover
               ? (PointerExitEvent e) {
+                  if (isTouch) return;
+                  isHover = false;
                   _tiltStreamController.add(
                     TiltStream(
                       position: e.localPosition,
                       gesturesType: GesturesType.hover,
-                      enableSensors: true,
+                      enableRevert: true,
                     ),
                   );
                 }

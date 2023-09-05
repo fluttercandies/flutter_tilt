@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## Unreleased
+
+### Improvements
+
+- Gesture optimization.
+
 ## 2.0.0-dev.2
 
 ### Improvements

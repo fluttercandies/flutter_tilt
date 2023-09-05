@@ -165,14 +165,14 @@ class _TiltState extends State<Tilt> {
     if (!isInit || _disable) return;
     switch (tiltStream.gesturesType) {
       case GesturesType.touch:
-        if (tiltStream.enableSensors ?? true) {
+        if (tiltStream.enableRevert ?? true) {
           onGesturesRevert(tiltStream.position, tiltStream.gesturesType);
         } else {
           onGesturesMove(tiltStream.position, tiltStream.gesturesType);
         }
         break;
       case GesturesType.hover:
-        if (tiltStream.enableSensors ?? true) {
+        if (tiltStream.enableRevert ?? true) {
           onGesturesRevert(tiltStream.position, tiltStream.gesturesType);
         } else {
           onGesturesMove(tiltStream.position, tiltStream.gesturesType);

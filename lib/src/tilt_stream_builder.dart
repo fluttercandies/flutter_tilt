@@ -127,29 +127,32 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
 
   /// 过滤 TiltStream
   TiltStream filterTiltStream(TiltStream tiltStream) {
-    if (tiltStream.gesturesType == GesturesType.touch ||
-        tiltStream.gesturesType == GesturesType.hover) {
-      /// 避免 touch、hover 与 sensors 冲突
-      if (canSensorsPlatformSupport &&
-          tiltConfig.enableGestureSensors &&
-          (tiltStream.enableSensors ?? enableSensors) &&
-          !enableSensors) {
-        gesturesHarmonizerTimer();
-        enableSensors = true;
-      } else {
-        enableSensors = false;
-      }
-      latestTiltStream = tiltStream;
-    }
-    if (tiltStream.gesturesType == GesturesType.sensors) {
-      if (canSensorsPlatformSupport &&
-          enableSensors &&
-          _gesturesHarmonizerTimer == null) {
-        return latestTiltStream = tiltStream;
-      }
-    }
-    if (tiltStream.gesturesType == GesturesType.none) {
-      latestTiltStream = tiltStream;
+    switch (tiltStream.gesturesType) {
+      case GesturesType.none:
+        latestTiltStream = tiltStream;
+        break;
+      case GesturesType.touch:
+        // 避免 touch 与 sensors 冲突
+        if (canSensorsPlatformSupport &&
+            tiltConfig.enableGestureSensors &&
+            (tiltStream.enableRevert ?? enableSensors)) {
+          gesturesHarmonizerTimer();
+          enableSensors = true;
+        } else {
+          enableSensors = false;
+        }
+        latestTiltStream = tiltStream;
+        break;
+      case GesturesType.hover:
+        latestTiltStream = tiltStream;
+        break;
+      case GesturesType.sensors:
+        if (canSensorsPlatformSupport &&
+            enableSensors &&
+            _gesturesHarmonizerTimer == null) {
+          return latestTiltStream = tiltStream;
+        }
+        break;
     }
     return latestTiltStream;
   }

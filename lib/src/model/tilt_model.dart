@@ -77,7 +77,7 @@ class TiltStream {
   const TiltStream({
     required this.position,
     required this.gesturesType,
-    this.enableSensors,
+    this.enableRevert,
   });
 
   /// 当前坐标
@@ -85,6 +85,6 @@ class TiltStream {
 
   final GesturesType gesturesType;
 
-  /// 是否开启传感器
-  final bool? enableSensors;
+  /// 是否开启复原
+  final bool? enableRevert;
 }
