@@ -9,7 +9,7 @@ import 'package:flutter_tilt/src/type/tilt_type.dart';
 /// 传感器平台支持
 bool sensorsPlatformSupport() {
   bool support = false;
-  if (kIsWeb) support = true;
+  if (kIsWeb) return support = true;
   if (Platform.isAndroid) support = true;
   if (Platform.isIOS) support = true;
   return support;
