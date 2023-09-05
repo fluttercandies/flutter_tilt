@@ -13,6 +13,7 @@ This document gathered all breaking changes and migrations requirement between m
 
 - Minimum flutter version 3.3.0
 - Changed `enableMouseHover` in `TiltConfig` to `enableGestureHover`.
+- To keep the tilt, you need to configure `TiltConfig(enableRevert: false, enableSensorRevert: false,)`.
 
 ### Details
 
