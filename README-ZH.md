@@ -132,9 +132,12 @@ dependencies:
 
 传感器仅在以下平台触发。
 
-| Android |  iOS  |                                                     Web (HTTPS)                                                     | macOS | Linux | Windows |  
-| :-----: | :---: | :-----------------------------------------------------------------------------------------------------------------: | :---: | :---: | :-----: |  
-|   ✅   |   ✅  | [Browser compatibility](https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope/Gyroscope#browser_compatibility) |   ❌  |  ❌  |    ❌   |  
+| Android |  iOS  |                 Web (HTTPS)                  | macOS | Linux | Windows |  
+| :-----: | :---: | :------------------------------------------: | :---: | :---: | :-----: |  
+|   ✅   |   ✅  | [浏览器兼容][Gyroscope Browser compatibility] |  ❌  |   ❌  |   ❌   |  
+
+* 目前 Web 使用 [Sensor API - Gyroscope][]，但它不兼容部分主流浏览器，比如 Safari、Firefox。  
+  之后也许会替换为 [DeviceMotionEvent][]。
 
 
 ## 手势优先级 📱
@@ -316,3 +319,6 @@ Tilt(
 [TiltConfig]: #tiltconfig-
 [LightConfig]: #lightconfig-
 [ShadowConfig]: #shadowconfig-
+[Gyroscope Browser compatibility]: https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope/Gyroscope#browser_compatibility
+[Sensor API - Gyroscope]: https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope
+[DeviceMotionEvent]: https://developer.mozilla.org/zh-CN/docs/Web/API/DeviceMotionEvent

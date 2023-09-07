@@ -132,9 +132,12 @@ dependencies:
 
 Sensors are triggered only on these platforms.
 
-| Android |  iOS  |                                                     Web (HTTPS)                                                     | macOS | Linux | Windows |  
-| :-----: | :---: | :-----------------------------------------------------------------------------------------------------------------: | :---: | :---: | :-----: |  
-|   ✅   |   ✅  | [Browser compatibility](https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope/Gyroscope#browser_compatibility) |   ❌  |  ❌  |    ❌   |  
+| Android |  iOS  |                        Web (HTTPS)                       | macOS | Linux | Windows |  
+| :-----: | :---: | :------------------------------------------------------: | :---: | :---: | :-----: |  
+|   ✅   |   ✅  | [Browser compatibility][Gyroscope Browser compatibility] |  ❌  |   ❌  |   ❌   |  
+
+* Currently Web uses the [Sensor API - Gyroscope], but it is not compatible with some of the major browsers, such as Safari, Firefox.  
+  After that maybe replace it with [DeviceMotionEvent][].
 
 
 ## Gesture priority 📱
@@ -316,3 +319,6 @@ Open sourced under the MIT license.
 [TiltConfig]: #tiltconfig-
 [LightConfig]: #lightconfig-
 [ShadowConfig]: #shadowconfig-
+[Gyroscope Browser compatibility]: https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope/Gyroscope#browser_compatibility
+[Sensor API - Gyroscope]: https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope
+[DeviceMotionEvent]: https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent
