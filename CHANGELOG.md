@@ -2,35 +2,22 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
-## 2.0.0-dev.3
-
-### Improvements
-
-- Gesture optimization.
-
-## 2.0.0-dev.2
-
-### Improvements
-
-- Update the platform description of pub.dev
-
-## 2.0.0-dev.1
-
-### Improvements
-
-- Update lints
-
-## 2.0.0-dev.0
+## 2.0.0
 
 ### Breaking changes
 
-- Minimum flutter version 3.3.0
+- Bumping Flutter SDK minimum version to `3.3.0`.
 - Changed `enableMouseHover` in `TiltConfig` to `enableGestureHover`.
+- To keep the tilt, you need to configure `TiltConfig(enableRevert: false, enableSensorRevert: false,)`.
 
 ### New features
 
 - Add sensor gesture (configuration: `enableGestureSensors`, `sensorFactor`, `enableSensorRevert`, `sensorRevertFactor`, `sensorMoveDuration`), default configuration is `TiltConfig(enableGestureSensors = true)`.
 - Add touch gesture configuration, default is `TiltConfig(enableGestureTouch = true)`.
+
+### Improvements
+
+- Gesture optimization.
 
 ## 1.0.4
 
