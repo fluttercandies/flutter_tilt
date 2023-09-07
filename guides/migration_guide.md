@@ -11,7 +11,7 @@ This document gathered all breaking changes and migrations requirement between m
 
 ### Summary
 
-- Minimum flutter version 3.3.0
+- Bumping Flutter SDK minimum version to `3.3.0`.
 - Changed `enableMouseHover` in `TiltConfig` to `enableGestureHover`.
 - To keep the tilt, you need to configure `TiltConfig(enableRevert: false, enableSensorRevert: false,)`.
 
@@ -29,7 +29,7 @@ Tilt(
 )
 ```
 
-#### To keep the tilt
+#### To keep the tilt.
 
 ```diff
 Tilt(
