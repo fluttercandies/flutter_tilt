@@ -80,3 +80,6 @@ coverage/
 
 # FVM
 .fvm/
+
+# Github
+.github/
