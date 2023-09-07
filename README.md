@@ -61,8 +61,6 @@ Check out the [Live Demo][].
 
 - [Sensors compatibility](#sensors-compatibility-)
 
-  - [Platform Support](#platform-support-)
-
 - [Gesture priority](#gesture-priority-)
 
 - [Simple usage](#simple-usage-)
@@ -98,7 +96,7 @@ Check out the [Live Demo][].
 - 🔦 Light effect
 - 💡 Shadow effect
 - 👀 Parallax effect
-- 📱 Gyroscope sensor support ([more](#sensors-compatibility-))
+- 📱 Gyroscope sensor support ([Sensors compatibility](#sensors-compatibility-))
 - 🧱 Multiple layouts
 - 👇 Supports hover, touch and sensors events
 - 🖼️ Smooth animation
@@ -108,10 +106,10 @@ Check out the [Live Demo][].
 ## Install 🎯
 ### Versions compatibility 🐦  
 
-|       Flutter       | 3.0.0+ | 3.3.0+ |  
-|      ---------      |:------:|:------:|  
-| flutter_tilt 2.0.0+ |  ❌  |  ✅  |  
-| flutter_tilt 1.0.0+ |  ✅  |  ❌  |  
+|       Flutter       |  3.0.0+  |  3.3.0+  |  
+|      ---------      | :------: | :------: |  
+| flutter_tilt 2.0.0+ |    ❌   |    ✅    |  
+| flutter_tilt 1.0.0+ |    ✅   |    ❌    |  
 
 
 ### Add package 📦  
@@ -131,13 +129,12 @@ dependencies:
 
 
 ## Sensors compatibility 📱
-### Platform support 🎈
 
 Sensors are triggered only on these platforms.
 
-| Android |  iOS  |  Web (HTTPS)  | macOS | Linux | Windows |  
-| :-----: | :---: | :-----------: | :---: | :---: | :-----: |  
-|   ✅   |   ✅  |      ✅      |   ❌  |  ❌  |    ❌   |  
+| Android |  iOS  |                                                     Web (HTTPS)                                                     | macOS | Linux | Windows |  
+| :-----: | :---: | :-----------------------------------------------------------------------------------------------------------------: | :---: | :---: | :-----: |  
+|   ✅   |   ✅  | [Browser compatibility](https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope/Gyroscope#browser_compatibility) |   ❌  |  ❌  |    ❌   |  
 
 
 ## Gesture priority 📱
