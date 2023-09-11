@@ -6,7 +6,7 @@ See the [Migration Guide](guides/migration_guide.md) for the details of breaking
 
 ### Fixes
 
-- Fix initial has no effect
+- Fix initial has no effect.
 
 ## 2.0.0
 
