@@ -154,7 +154,9 @@ class _TiltState extends State<Tilt> {
 
     if (!isInit) {
       isInit = true;
-      currentPosition = progressPosition(width, height, _initAreaProgress);
+      setState(() {
+        currentPosition = progressPosition(width, height, _initAreaProgress);
+      });
     }
   }
 

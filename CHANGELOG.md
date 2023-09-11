@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.0.1
+
+### Fixes
+
+- Fix initial has no effect
+
 ## 2.0.0
 
 ### Breaking changes
