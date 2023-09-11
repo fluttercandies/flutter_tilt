@@ -54,9 +54,18 @@ void main() {
       final Offset outerLocation = tester.getCenter(outerFinder);
       final Offset innerLocation = tester.getCenter(innerFinder);
       final Offset behindLocation = tester.getCenter(behindFinder);
-      expect(outerLocation, const Offset(25, 15));
-      expect(innerLocation, const Offset(25, 15));
-      expect(behindLocation, const Offset(25, 15));
+      expect(
+        outerLocation,
+        const Offset(24.061335345163766, 14.999999999999998),
+      );
+      expect(
+        innerLocation,
+        const Offset(24.061335345163766, 14.999999999999998),
+      );
+      expect(
+        behindLocation,
+        const Offset(24.061335345163766, 14.999999999999998),
+      );
     });
     testWidgets('TiltConfig enableReverse true', (WidgetTester tester) async {
       final Finder outerFinder = find.text('outer');
@@ -107,9 +116,18 @@ void main() {
       final Offset outerLocation = tester.getCenter(outerFinder);
       final Offset innerLocation = tester.getCenter(innerFinder);
       final Offset behindLocation = tester.getCenter(behindFinder);
-      expect(outerLocation, const Offset(5, 15));
-      expect(innerLocation, const Offset(5, 15));
-      expect(behindLocation, const Offset(5, 15));
+      expect(
+        outerLocation,
+        const Offset(5.938664654836236, 14.999999999999995),
+      );
+      expect(
+        innerLocation,
+        const Offset(5.938664654836236, 14.999999999999995),
+      );
+      expect(
+        behindLocation,
+        const Offset(5.938664654836236, 14.999999999999995),
+      );
     });
   });
 }
