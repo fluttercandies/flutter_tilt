@@ -63,4 +63,51 @@ class LightConfig {
   /// * 阴影反向 [ShadowConfig.enableReverse]
   /// {@endtemplate}
   final bool? enableReverse;
+
+  LightConfig copyWith({
+    bool? disable,
+    Color? color,
+    double? minIntensity,
+    double? maxIntensity,
+    LightDirection? direction,
+    bool? enableReverse,
+  }) {
+    return LightConfig(
+      disable: disable ?? this.disable,
+      color: color ?? this.color,
+      minIntensity: minIntensity ?? this.minIntensity,
+      maxIntensity: maxIntensity ?? this.maxIntensity,
+      direction: direction ?? this.direction,
+      enableReverse: enableReverse ?? this.enableReverse,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is LightConfig &&
+        other.disable == disable &&
+        other.color == color &&
+        other.minIntensity == minIntensity &&
+        other.maxIntensity == maxIntensity &&
+        other.direction == direction &&
+        other.enableReverse == enableReverse;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      disable,
+      color,
+      minIntensity,
+      maxIntensity,
+      direction,
+      enableReverse,
+    );
+  }
 }

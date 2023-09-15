@@ -2,8 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/model/tilt_model.dart';
-import 'package:flutter_tilt/src/type/tilt_light_type.dart';
-import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
 
 /// 倾斜回调
 typedef TiltCallback = void Function(
@@ -159,6 +157,107 @@ class TiltConfig {
   ///
   /// `仅对手势 Touch Hover 有效`
   final Curve leaveCurve;
+
+  TiltConfig copyWith({
+    bool? disable,
+    Offset? initial,
+    double? angle,
+    List<TiltDirection>? direction,
+    bool? enableReverse,
+    FilterQuality? filterQuality,
+    bool? enableGestureSensors,
+    double? sensorFactor,
+    bool? enableSensorRevert,
+    double? sensorRevertFactor,
+    Duration? sensorMoveDuration,
+    bool? enableGestureHover,
+    bool? enableGestureTouch,
+    bool? enableRevert,
+    bool? enableOutsideAreaMove,
+    Duration? moveDuration,
+    Duration? leaveDuration,
+    Curve? moveCurve,
+    Curve? leaveCurve,
+  }) {
+    return TiltConfig(
+      disable: disable ?? this.disable,
+      initial: initial ?? this.initial,
+      angle: angle ?? this.angle,
+      direction: direction ?? this.direction,
+      enableReverse: enableReverse ?? this.enableReverse,
+      filterQuality: filterQuality ?? this.filterQuality,
+      enableGestureSensors: enableGestureSensors ?? this.enableGestureSensors,
+      sensorFactor: sensorFactor ?? this.sensorFactor,
+      enableSensorRevert: enableSensorRevert ?? this.enableSensorRevert,
+      sensorRevertFactor: sensorRevertFactor ?? this.sensorRevertFactor,
+      sensorMoveDuration: sensorMoveDuration ?? this.sensorMoveDuration,
+      enableGestureHover: enableGestureHover ?? this.enableGestureHover,
+      enableGestureTouch: enableGestureTouch ?? this.enableGestureTouch,
+      enableRevert: enableRevert ?? this.enableRevert,
+      enableOutsideAreaMove:
+          enableOutsideAreaMove ?? this.enableOutsideAreaMove,
+      moveDuration: moveDuration ?? this.moveDuration,
+      leaveDuration: leaveDuration ?? this.leaveDuration,
+      moveCurve: moveCurve ?? this.moveCurve,
+      leaveCurve: leaveCurve ?? this.leaveCurve,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is TiltConfig &&
+        other.disable == disable &&
+        other.initial == initial &&
+        other.angle == angle &&
+        Object.hashAll(other.direction ?? []) ==
+            Object.hashAll(direction ?? []) &&
+        other.enableReverse == enableReverse &&
+        other.filterQuality == filterQuality &&
+        other.enableGestureSensors == enableGestureSensors &&
+        other.sensorFactor == sensorFactor &&
+        other.enableSensorRevert == enableSensorRevert &&
+        other.sensorRevertFactor == sensorRevertFactor &&
+        other.sensorMoveDuration == sensorMoveDuration &&
+        other.enableGestureHover == enableGestureHover &&
+        other.enableGestureTouch == enableGestureTouch &&
+        other.enableRevert == enableRevert &&
+        other.enableOutsideAreaMove == enableOutsideAreaMove &&
+        other.moveDuration == moveDuration &&
+        other.leaveDuration == leaveDuration &&
+        other.moveCurve == moveCurve &&
+        other.leaveCurve == leaveCurve;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      disable,
+      initial,
+      angle,
+      Object.hashAll(direction ?? []),
+      enableReverse,
+      filterQuality,
+      enableGestureSensors,
+      sensorFactor,
+      enableSensorRevert,
+      sensorRevertFactor,
+      sensorMoveDuration,
+      enableGestureHover,
+      enableGestureTouch,
+      enableRevert,
+      enableOutsideAreaMove,
+      moveDuration,
+      leaveDuration,
+      moveCurve,
+      leaveCurve,
+    );
+  }
 }
 
 /// child 其他布局
@@ -297,6 +396,20 @@ class TiltDirection {
 
   TiltDirection operator ~/(double operand) =>
       TiltDirection((dx ~/ operand).toDouble(), (dy ~/ operand).toDouble());
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is TiltDirection && other.dx == dx && other.dy == dy;
+  }
+
+  @override
+  int get hashCode => Object.hash(dx, dy);
 
   @override
   String toString() =>

@@ -1,12 +1,65 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/src/type/tilt_type.dart';
 
 void main() {
+  group('TiltConfig', () {
+    test('copyWith', () {
+      const TiltConfig tiltConfig = TiltConfig();
+      final TiltConfig tiltConfigExpect = TiltConfig(
+        disable: true,
+        initial: const Offset(1.0, 1.0),
+        angle: 1.0,
+        direction: [TiltDirection.top, TiltDirection.bottom],
+        enableReverse: true,
+        filterQuality: FilterQuality.high,
+        enableGestureSensors: false,
+        sensorFactor: 2.0,
+        enableSensorRevert: false,
+        sensorRevertFactor: 1.0,
+        sensorMoveDuration: Duration.zero,
+        enableGestureHover: false,
+        enableGestureTouch: false,
+        enableRevert: false,
+        enableOutsideAreaMove: false,
+        moveDuration: Duration.zero,
+        leaveDuration: Duration.zero,
+        moveCurve: Curves.bounceIn,
+        leaveCurve: Curves.bounceIn,
+      );
+      final TiltConfig tiltConfigCopyWith = tiltConfig.copyWith(
+        disable: true,
+        initial: const Offset(1.0, 1.0),
+        angle: 1.0,
+        direction: [TiltDirection.top, TiltDirection.bottom],
+        enableReverse: true,
+        filterQuality: FilterQuality.high,
+        enableGestureSensors: false,
+        sensorFactor: 2.0,
+        enableSensorRevert: false,
+        sensorRevertFactor: 1.0,
+        sensorMoveDuration: Duration.zero,
+        enableGestureHover: false,
+        enableGestureTouch: false,
+        enableRevert: false,
+        enableOutsideAreaMove: false,
+        moveDuration: Duration.zero,
+        leaveDuration: Duration.zero,
+        moveCurve: Curves.bounceIn,
+        leaveCurve: Curves.bounceIn,
+      );
+      expect(tiltConfig, tiltConfig.copyWith());
+      expect(tiltConfigCopyWith, tiltConfigExpect);
+      expect(tiltConfigCopyWith.hashCode, tiltConfigExpect.hashCode);
+    });
+  });
   group('TiltDirection', () {
     test('value', () {
       final TiltDirection tiltDirection = -const TiltDirection(1.0, 1.0);
       expect(tiltDirection.dx, -1.0);
       expect(tiltDirection.dy, -1.0);
+      expect(tiltDirection, const TiltDirection(-1.0, -1.0));
+      expect(tiltDirection.hashCode, const TiltDirection(-1.0, -1.0).hashCode);
       expect(
         tiltDirection.toString(),
         'TiltDirection(${tiltDirection.dx}, ${tiltDirection.dy})',

@@ -109,4 +109,75 @@ class ShadowConfig {
   /// * 失效：光源反向 [LightConfig.enableReverse]
   /// {@endtemplate}
   final bool? enableReverse;
+
+  ShadowConfig copyWith({
+    bool? disable,
+    Color? color,
+    double? minIntensity,
+    double? maxIntensity,
+    Offset? offsetInitial,
+    double? offsetFactor,
+    double? spreadInitial,
+    double? spreadFactor,
+    double? minBlurRadius,
+    double? maxBlurRadius,
+    ShadowDirection? direction,
+    bool? enableReverse,
+  }) {
+    return ShadowConfig(
+      disable: disable ?? this.disable,
+      color: color ?? this.color,
+      minIntensity: minIntensity ?? this.minIntensity,
+      maxIntensity: maxIntensity ?? this.maxIntensity,
+      offsetInitial: offsetInitial ?? this.offsetInitial,
+      offsetFactor: offsetFactor ?? this.offsetFactor,
+      spreadInitial: spreadInitial ?? this.spreadInitial,
+      spreadFactor: spreadFactor ?? this.spreadFactor,
+      minBlurRadius: minBlurRadius ?? this.minBlurRadius,
+      maxBlurRadius: maxBlurRadius ?? this.maxBlurRadius,
+      direction: direction ?? this.direction,
+      enableReverse: enableReverse ?? this.enableReverse,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is ShadowConfig &&
+        other.disable == disable &&
+        other.color == color &&
+        other.minIntensity == minIntensity &&
+        other.maxIntensity == maxIntensity &&
+        other.offsetInitial == offsetInitial &&
+        other.offsetFactor == offsetFactor &&
+        other.spreadInitial == spreadInitial &&
+        other.spreadFactor == spreadFactor &&
+        other.minBlurRadius == minBlurRadius &&
+        other.maxBlurRadius == maxBlurRadius &&
+        other.direction == direction &&
+        other.enableReverse == enableReverse;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      disable,
+      color,
+      minIntensity,
+      maxIntensity,
+      offsetInitial,
+      offsetFactor,
+      spreadInitial,
+      spreadFactor,
+      minBlurRadius,
+      maxBlurRadius,
+      direction,
+      enableReverse,
+    );
+  }
 }
