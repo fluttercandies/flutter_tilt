@@ -70,6 +70,8 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   late TiltStream latestTiltStream =
       TiltStream(position: position, gesturesType: GesturesType.none);
 
+  late Orientation mediaOrientation;
+
   /// 手势协调器
   async.Timer? _gesturesHarmonizerTimer;
 
@@ -106,6 +108,12 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     _gesturesHarmonizerTimer?.cancel();
     tiltStreamController.close();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    mediaOrientation = MediaQuery.of(context).orientation;
   }
 
   @override
@@ -150,7 +158,22 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
         if (canSensorsPlatformSupport &&
             enableSensors &&
             _gesturesHarmonizerTimer == null) {
-          return latestTiltStream = tiltStream;
+          final sensorsX = tiltStream.position.dx;
+          final sensorsY = tiltStream.position.dy;
+          switch (mediaOrientation) {
+            case Orientation.portrait:
+              latestTiltStream = TiltStream(
+                position: Offset(sensorsX, sensorsY),
+                gesturesType: tiltStream.gesturesType,
+              );
+              break;
+            case Orientation.landscape:
+              latestTiltStream = TiltStream(
+                position: Offset(sensorsY, -sensorsX),
+                gesturesType: tiltStream.gesturesType,
+              );
+              break;
+          }
         }
         break;
     }
