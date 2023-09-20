@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## Unreleased
+
+### Fixes
+
+- Fix tapping on content causes tilt when `enableRevert` or `enableSensorRevert` is false.
+
 ## 2.0.3
 
 ### Fixes

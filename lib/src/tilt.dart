@@ -223,7 +223,7 @@ class _TiltState extends State<Tilt> {
     /// 是否还原的取值
     final Offset position = _tiltConfig.enableRevert
         ? progressPosition(width, height, _initAreaProgress)
-        : offset;
+        : currentPosition;
     currentPosition = position;
     areaProgress = p2cAreaProgress(
       width,

@@ -55,7 +55,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   bool get enableStream => !disable;
 
   /// 传感器平台支持
-  final bool canSensorsPlatformSupport = sensorsPlatformSupport();
+  bool canSensorsPlatformSupport = sensorsPlatformSupport();
 
   /// Touch, Hover 的 Stream
   late Stream<TiltStream> currentTiltStream;
@@ -84,7 +84,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
       gyroscopeEvents
           .listen(
             null,
-            onError: (_) => enableSensors = false,
+            onError: (_) => canSensorsPlatformSupport = false,
             cancelOnError: true,
           )
           .cancel();
@@ -121,7 +121,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     return StreamBuilder<TiltStream>(
       stream: enableStream
           ? currentTiltStream.mergeAll([
-              if (canSensorsPlatformSupport && enableSensors)
+              if (canSensorsPlatformSupport && tiltConfig.enableGestureSensors)
                 currentGyroscopeStream,
             ]).map(filterTiltStream)
           : null,
