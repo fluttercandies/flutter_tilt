@@ -2,7 +2,7 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
-## Unreleased
+## 2.0.4
 
 ### Fixes
 
