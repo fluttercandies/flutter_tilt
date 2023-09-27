@@ -2,9 +2,9 @@ import 'dart:async' as async;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/model/tilt_model.dart';
-import 'package:flutter_tilt/src/type/tilt_type.dart';
+import 'enums.dart';
+import 'data/tilt_data.dart';
+import 'config/tilt_config.dart';
 
 /// 手势监听
 class GesturesListener extends StatefulWidget {

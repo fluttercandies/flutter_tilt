@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/type/tilt_type.dart';
+import '../enums.dart';
+import '../config/tilt_config.dart';
 
 /// Tilt State
 class TiltState extends InheritedWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_tilt/src/model/tilt_model.dart';
+import 'package:flutter_tilt/src/data/tilt_data.dart';
 
 void main() {
   group('TiltDataModel', () {

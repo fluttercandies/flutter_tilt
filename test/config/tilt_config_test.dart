@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_tilt/src/type/tilt_type.dart';
+import 'package:flutter_tilt/src/config/tilt_config.dart';
 
 void main() {
   group('TiltConfig', () {

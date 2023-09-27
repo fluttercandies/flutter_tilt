@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/type/tilt_type.dart';
+import 'enums.dart';
+import 'config/tilt_config.dart';
 
 /// 传感器平台支持
 bool sensorsPlatformSupport() {

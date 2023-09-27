@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/state/tilt_state.dart';
-import 'package:flutter_tilt/src/type/tilt_type.dart';
-import 'package:flutter_tilt/src/utils.dart';
+import 'utils.dart';
+import 'enums.dart';
+import 'state/tilt_state.dart';
+import 'config/tilt_config.dart';
 
 /// 倾斜视差
 @immutable

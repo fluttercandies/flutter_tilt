@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/model/tilt_model.dart';
+import '../enums.dart';
+import '../data/tilt_data.dart';
 
 /// 倾斜回调
 typedef TiltCallback = void Function(

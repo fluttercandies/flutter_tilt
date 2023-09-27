@@ -4,10 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:stream_transform/stream_transform.dart';
 
-import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/utils.dart';
-import 'package:flutter_tilt/src/type/tilt_type.dart';
-import 'package:flutter_tilt/src/model/tilt_model.dart';
+import 'utils.dart';
+import 'enums.dart';
+import 'data/tilt_data.dart';
+import 'config/tilt_config.dart';
 
 /// Tilt StreamBuilder
 class TiltStreamBuilder extends StatefulWidget {

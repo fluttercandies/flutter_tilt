@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.0.5
+
+### Improvements
+
+- Improve code structure.
+
 ## 2.0.4
 
 ### Fixes

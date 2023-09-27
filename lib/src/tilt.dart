@@ -1,18 +1,17 @@
 import 'dart:async' as async;
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter_tilt/src/data/tilt_data.dart';
-import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/gestures_listener.dart';
-import 'package:flutter_tilt/src/tilt_stream_builder.dart';
-import 'package:flutter_tilt/src/state/tilt_state.dart';
-import 'package:flutter_tilt/src/tilt_container.dart';
-import 'package:flutter_tilt/src/tilt_parallax_container.dart';
-import 'package:flutter_tilt/src/type/tilt_light_type.dart';
-import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
-import 'package:flutter_tilt/src/type/tilt_type.dart';
-import 'package:flutter_tilt/src/utils.dart';
-import 'package:flutter_tilt/src/model/tilt_model.dart';
+import 'utils.dart';
+import 'enums.dart';
+import 'gestures_listener.dart';
+import 'tilt_stream_builder.dart';
+import 'tilt_container.dart';
+import 'tilt_parallax_container.dart';
+import 'data/tilt_data.dart';
+import 'state/tilt_state.dart';
+import 'config/tilt_light_config.dart';
+import 'config/tilt_shadow_config.dart';
+import 'config/tilt_config.dart';
 
 /// 倾斜
 class Tilt extends TiltContainer {

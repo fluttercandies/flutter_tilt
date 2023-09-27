@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/type/tilt_light_type.dart';
-import 'package:flutter_tilt/src/utils.dart';
+import 'utils.dart';
+import 'enums.dart';
+import 'config/tilt_light_config.dart';
 
 /// 光源
 class TiltLight extends StatelessWidget {

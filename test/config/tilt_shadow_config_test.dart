@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/src/enums.dart';
-import 'package:flutter_tilt/src/type/tilt_shadow_type.dart';
+import 'package:flutter_tilt/src/config/tilt_shadow_config.dart';
 
 void main() {
   group('ShadowConfig', () {
