@@ -147,6 +147,9 @@ class _TiltContainerState extends State<TiltContainer> {
                       child: child,
                     ),
 
+                    /// inner child
+                    ..._childLayout.inner,
+
                     /// light
                     TiltLight(
                       width: width,
@@ -171,9 +174,6 @@ class _TiltContainerState extends State<TiltContainer> {
                         },
                       ),
                     ),
-
-                    /// inner child
-                    ..._childLayout.inner,
                   ],
                 ),
               ),
