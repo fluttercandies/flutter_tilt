@@ -8,6 +8,10 @@ See the [Migration Guide](guides/migration_guide.md) for the details of breaking
 
 - Improve light above `childLayout.inner`.
 
+### Fixes
+
+- Fix incorrect initialization sizes in some cases (e.g. image with unspecified sizes).
+
 ## 2.0.5
 
 ### Improvements

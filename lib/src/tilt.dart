@@ -75,7 +75,7 @@ class _TiltState extends State<Tilt> {
   bool isInit = false;
 
   /// 尺寸
-  double width = 0.1, height = 0.1;
+  double width = 0.0, height = 0.0;
 
   /// 当前坐标的区域进度
   late Offset areaProgress = _initAreaProgress;
@@ -148,11 +148,11 @@ class _TiltState extends State<Tilt> {
 
   /// 调整尺寸及初始参数
   void onResize(Size size) {
-    width = size.width;
-    height = size.height;
-
-    if (!isInit) {
+    final Size oldSize = Size(width, height);
+    if (oldSize != size) {
       isInit = true;
+      width = size.width;
+      height = size.height;
       setState(() {
         currentPosition = progressPosition(width, height, _initAreaProgress);
       });
