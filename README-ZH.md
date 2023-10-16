@@ -1,3 +1,6 @@
+[![GitHub stars](https://img.shields.io/github/stars/amoshuke/flutter_tilt?style=social&logo=github&logoColor=1F2328&label=stars)](https://github.com/AmosHuKe/flutter_tilt)
+[![Pub.dev likes](https://img.shields.io/pub/likes/flutter_tilt?style=social&logo=flutter&logoColor=168AFD&label=likes)](https://pub.dev/packages/flutter_tilt)
+
 📓 语言：[English](README.md) | 中文  
 🎁 查看：[在线示例][]  
 💡 查看：[迁移指南][] 了解如何从破坏性改动中迁移为可用代码  

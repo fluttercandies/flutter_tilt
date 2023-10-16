@@ -1,3 +1,6 @@
+[![GitHub stars](https://img.shields.io/github/stars/amoshuke/flutter_tilt?style=social&logo=github&logoColor=1F2328&label=stars)](https://github.com/AmosHuKe/flutter_tilt)
+[![Pub.dev likes](https://img.shields.io/pub/likes/flutter_tilt?style=social&logo=flutter&logoColor=168AFD&label=likes)](https://pub.dev/packages/flutter_tilt)
+
 📓 Language: English | [中文](README-ZH.md)  
 🎁 Check out the [Live Demo][].  
 💡 See the [Migration Guide][] to learn how to migrate between breaking changes.  
