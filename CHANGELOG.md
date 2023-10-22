@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.0.7
+
+### Improvements
+
+- Upgrade `sensors_plus` to version 3.1.0
+
 ## 2.0.6
 
 ### Improvements
