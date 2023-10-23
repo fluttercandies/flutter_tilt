@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.0.8
+
+### Improvements
+
+- Improve README docs
+
 ## 2.0.7
 
 ### Improvements

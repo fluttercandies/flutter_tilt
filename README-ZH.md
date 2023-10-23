@@ -1,4 +1,4 @@
-[![GitHub stars](https://img.shields.io/github/stars/amoshuke/flutter_tilt?style=social&logo=github&logoColor=1F2328&label=stars)](https://github.com/AmosHuKe/flutter_tilt)
+[![GitHub stars](https://img.shields.io/github/stars/fluttercandies/flutter_tilt?style=social&logo=github&logoColor=1F2328&label=stars)](https://github.com/fluttercandies/flutter_tilt)
 [![Pub.dev likes](https://img.shields.io/pub/likes/flutter_tilt?style=social&logo=flutter&logoColor=168AFD&label=likes)](https://pub.dev/packages/flutter_tilt)
 
 📓 语言：[English](README.md) | 中文  
@@ -13,9 +13,9 @@
   <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/pub/v/flutter_tilt?color=3e4663&label=%E7%A8%B3%E5%AE%9A%E7%89%88&logo=flutter" alt="stable package" /></a>
   <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/pub/v/flutter_tilt?color=3e4663&label=%E5%BC%80%E5%8F%91%E7%89%88&logo=flutter&include_prereleases" alt="dev package" /></a>
   <a href="https://pub.dev/packages/flutter_tilt/score"><img src="https://img.shields.io/pub/points/flutter_tilt?color=2E8B57&label=%E5%88%86%E6%95%B0&logo=flutter" alt="pub points" /></a>
-  <a href="https://www.codefactor.io/repository/github/amoshuke/flutter_tilt"><img src="https://img.shields.io/codefactor/grade/github/amoshuke/flutter_tilt?color=0CAB6B&label=%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F&logo=codefactor" alt="CodeFactor" /></a>
+  <a href="https://www.codefactor.io/repository/github/fluttercandies/flutter_tilt"><img src="https://img.shields.io/codefactor/grade/github/fluttercandies/flutter_tilt?color=0CAB6B&label=%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F&logo=codefactor" alt="CodeFactor" /></a>
   <a href="https://codecov.io/gh/AmosHuKe/flutter_tilt"><img src="https://img.shields.io/codecov/c/github/amoshuke/flutter_tilt?label=%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96&logo=codecov" alt="codecov" /></a>
-  <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/github/languages/top/amoshuke/flutter_tilt?color=00B4AB" alt="top language" /></a>
+  <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/github/languages/top/fluttercandies/flutter_tilt?color=00B4AB" alt="top language" /></a>
 </p>
 
 <p align="center">
@@ -28,15 +28,15 @@
   <table width="640" align="center" border="0">
     <tr>
       <td align="center" rowspan="2">
-        <img width="320px" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview.gif" alt="示例预览 GIF" />
+        <img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview.gif" alt="示例预览 GIF" />
       </td>
       <td align="center">
-        <img width="320" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview2.gif" alt="示例预览 GIF - 图片视差" />
+        <img width="320" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview2.gif" alt="示例预览 GIF - 图片视差" />
       </td>
     </tr>	
     <tr>
       <td align="center">
-        <img width="320" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview3-small.gif" alt="示例预览 GIF - 布局" />
+        <img width="320" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview3-small.gif" alt="示例预览 GIF - 布局" />
       </td>
     </tr>
     <tr>
@@ -308,14 +308,14 @@ Tilt(
 
 ## 许可证 📄  
 
-[![MIT License](https://img.shields.io/badge/license-MIT-green)](https://github.com/AmosHuKe/flutter_tilt/blob/main/LICENSE)  
+[![MIT License](https://img.shields.io/badge/license-MIT-green)](https://github.com/fluttercandies/flutter_tilt/blob/main/LICENSE)  
 根据 MIT 许可证开源。
 
 © AmosHuKe
 
 [在线示例]: https://amoshuke.github.io/flutter_tilt_book
-[迁移指南]: https://github.com/AmosHuKe/flutter_tilt/blob/main/guides/migration_guide.md
-[flutter_tilt/example]: https://github.com/AmosHuKe/flutter_tilt/tree/main/example
+[迁移指南]: https://github.com/fluttercandies/flutter_tilt/blob/main/guides/migration_guide.md
+[flutter_tilt/example]: https://github.com/fluttercandies/flutter_tilt/tree/main/example
 [Tilt widget 参数]: #tilt-widget-参数-
 [TiltParallax widget 参数]: #tiltparallax-widget-参数-
 [ChildLayout]: #childlayout-

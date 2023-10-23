@@ -1,4 +1,4 @@
-[![GitHub stars](https://img.shields.io/github/stars/amoshuke/flutter_tilt?style=social&logo=github&logoColor=1F2328&label=stars)](https://github.com/AmosHuKe/flutter_tilt)
+[![GitHub stars](https://img.shields.io/github/stars/fluttercandies/flutter_tilt?style=social&logo=github&logoColor=1F2328&label=stars)](https://github.com/fluttercandies/flutter_tilt)
 [![Pub.dev likes](https://img.shields.io/pub/likes/flutter_tilt?style=social&logo=flutter&logoColor=168AFD&label=likes)](https://pub.dev/packages/flutter_tilt)
 
 📓 Language: English | [中文](README-ZH.md)  
@@ -13,9 +13,9 @@
   <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/pub/v/flutter_tilt?color=3e4663&label=stable&logo=flutter" alt="stable package" /></a>
   <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/pub/v/flutter_tilt?color=3e4663&label=dev&logo=flutter&include_prereleases" alt="dev package" /></a>
   <a href="https://pub.dev/packages/flutter_tilt/score"><img src="https://img.shields.io/pub/points/flutter_tilt?color=2E8B57&logo=flutter" alt="pub points" /></a>
-  <a href="https://www.codefactor.io/repository/github/amoshuke/flutter_tilt"><img src="https://img.shields.io/codefactor/grade/github/amoshuke/flutter_tilt?color=0CAB6B&logo=codefactor" alt="CodeFactor" /></a>
-  <a href="https://codecov.io/gh/AmosHuKe/flutter_tilt"><img src="https://img.shields.io/codecov/c/github/amoshuke/flutter_tilt?label=coverage&logo=codecov" alt="codecov" /></a>
-  <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/github/languages/top/amoshuke/flutter_tilt?color=00B4AB" alt="top language" /></a>
+  <a href="https://www.codefactor.io/repository/github/fluttercandies/flutter_tilt"><img src="https://img.shields.io/codefactor/grade/github/fluttercandies/flutter_tilt?color=0CAB6B&logo=codefactor" alt="CodeFactor" /></a>
+  <a href="https://codecov.io/gh/amoshuke/flutter_tilt"><img src="https://img.shields.io/codecov/c/github/amoshuke/flutter_tilt?label=coverage&logo=codecov" alt="codecov" /></a>
+  <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/github/languages/top/fluttercandies/flutter_tilt?color=00B4AB" alt="top language" /></a>
 </p>
 
 <p align="center">
@@ -28,15 +28,15 @@
   <table width="640" align="center" border="0">
     <tr>
       <td align="center" rowspan="2">
-        <img width="320px" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview.gif" alt="Example Preview GIF" />
+        <img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview.gif" alt="Example Preview GIF" />
       </td>
       <td align="center">
-        <img width="320" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview2.gif" alt="Example Preview GIF - Parallax image" />
+        <img width="320" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview2.gif" alt="Example Preview GIF - Parallax image" />
       </td>
     </tr>	
     <tr>
       <td align="center">
-        <img width="320" src="https://raw.githubusercontent.com/AmosHuKe/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
+        <img width="320" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
       </td>
     </tr>
     <tr>
@@ -308,14 +308,14 @@ Tilt(
 
 ## License 📄  
 
-[![MIT License](https://img.shields.io/badge/license-MIT-green)](https://github.com/AmosHuKe/flutter_tilt/blob/main/LICENSE)  
+[![MIT License](https://img.shields.io/badge/license-MIT-green)](https://github.com/fluttercandies/flutter_tilt/blob/main/LICENSE)  
 Open sourced under the MIT license.  
 
 © AmosHuKe
 
 [Live Demo]: https://amoshuke.github.io/flutter_tilt_book
-[Migration Guide]: https://github.com/AmosHuKe/flutter_tilt/blob/main/guides/migration_guide.md
-[flutter_tilt/example]: https://github.com/AmosHuKe/flutter_tilt/tree/main/example
+[Migration Guide]: https://github.com/fluttercandies/flutter_tilt/blob/main/guides/migration_guide.md
+[flutter_tilt/example]: https://github.com/fluttercandies/flutter_tilt/tree/main/example
 [Tilt widget parameters]: #tilt-widget-parameters-
 [TiltParallax widget parameters]: #tiltparallax-widget-parameters-
 [ChildLayout]: #childlayout-
