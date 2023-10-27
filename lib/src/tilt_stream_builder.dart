@@ -1,4 +1,5 @@
 import 'dart:async' as async;
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:sensors_plus/sensors_plus.dart';
@@ -70,7 +71,8 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   late TiltStream latestTiltStream =
       TiltStream(position: position, gesturesType: GesturesType.none);
 
-  late Orientation mediaOrientation;
+  /// 设备方向
+  DeviceOrientation deviceOrientation = DeviceOrientation.portraitUp;
 
   /// 手势协调器
   async.Timer? _gesturesHarmonizerTimer;
@@ -79,7 +81,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   void initState() {
     super.initState();
 
-    /// 避免没有陀螺仪的设备使用
+    /// 避免无主要传感器的设备使用
     if (canSensorsPlatformSupport && enableStream && enableSensors) {
       gyroscopeEvents
           .listen(
@@ -88,7 +90,11 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
             cancelOnError: true,
           )
           .cancel();
+
+      /// 加速度计事件处理（如：设备方向）
+      accelerometerEvents.listen(handleAccelerometerEvents);
     }
+
     currentTiltStream = tiltStreamController.stream;
     currentGyroscopeStream = gyroscopeEvents
         .map<TiltStream>(
@@ -108,12 +114,6 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     _gesturesHarmonizerTimer?.cancel();
     tiltStreamController.close();
     super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    mediaOrientation = MediaQuery.of(context).orientation;
   }
 
   @override
@@ -160,16 +160,28 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
             _gesturesHarmonizerTimer == null) {
           final sensorsX = tiltStream.position.dx;
           final sensorsY = tiltStream.position.dy;
-          switch (mediaOrientation) {
-            case Orientation.portrait:
+          switch (deviceOrientation) {
+            case DeviceOrientation.portraitUp:
               latestTiltStream = TiltStream(
                 position: Offset(sensorsX, sensorsY),
                 gesturesType: tiltStream.gesturesType,
               );
               break;
-            case Orientation.landscape:
+            case DeviceOrientation.portraitDown:
+              latestTiltStream = TiltStream(
+                position: Offset(-sensorsX, -sensorsY),
+                gesturesType: tiltStream.gesturesType,
+              );
+              break;
+            case DeviceOrientation.landscapeLeft:
               latestTiltStream = TiltStream(
                 position: Offset(sensorsY, -sensorsX),
+                gesturesType: tiltStream.gesturesType,
+              );
+              break;
+            case DeviceOrientation.landscapeRight:
+              latestTiltStream = TiltStream(
+                position: Offset(-sensorsY, sensorsX),
                 gesturesType: tiltStream.gesturesType,
               );
               break;
@@ -178,6 +190,32 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
         break;
     }
     return latestTiltStream;
+  }
+
+  /// 加速度计事件处理（如：设备方向）
+  void handleAccelerometerEvents(AccelerometerEvent event) {
+    final x = event.x, y = event.y, z = event.z;
+    final mediaOrientation = MediaQuery.of(context).orientation;
+    switch (mediaOrientation) {
+      case Orientation.landscape:
+        if (x.abs() > y.abs() && x.abs() > z.abs()) {
+          if (x > 0) {
+            deviceOrientation = DeviceOrientation.landscapeLeft;
+          } else {
+            deviceOrientation = DeviceOrientation.landscapeRight;
+          }
+        }
+        break;
+      case Orientation.portrait:
+        if (y.abs() > x.abs() && y.abs() > z.abs()) {
+          if (y > 0) {
+            deviceOrientation = DeviceOrientation.portraitUp;
+          } else {
+            deviceOrientation = DeviceOrientation.portraitDown;
+          }
+        }
+        break;
+    }
   }
 
   /// 手势协调器
