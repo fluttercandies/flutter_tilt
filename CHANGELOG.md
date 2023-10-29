@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.0.9
+
+### Fixes
+
+- Fix device orientation does not match sensor orientation.
+
 ## 2.0.8
 
 ### Improvements
