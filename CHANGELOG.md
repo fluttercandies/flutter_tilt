@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.0.10
+
+### Fixes
+
+- Fix undetermined mounted.
+
 ## 2.0.9
 
 ### Fixes

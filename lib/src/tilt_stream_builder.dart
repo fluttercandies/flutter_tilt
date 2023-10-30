@@ -188,6 +188,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   /// 加速度计事件处理（如：设备方向）
   void handleAccelerometerEvents(AccelerometerEvent event) {
     final x = event.x, y = event.y, z = event.z;
+    if (!mounted) return;
     final mediaOrientation = MediaQuery.of(context).orientation;
     switch (mediaOrientation) {
       case Orientation.landscape:
