@@ -317,7 +317,7 @@ Tilt(
         <a href="https://github.com/AmosHuKe">
             <img src="https://avatars.githubusercontent.com/u/32262985?v=4" width="100;" alt="AmosHuKe"/>
             <br />
-            <sub><b>Amos</b></sub>
+            <sub><b>AmosHuKe</b></sub>
         </a>
     </td></tr>
 </table>
