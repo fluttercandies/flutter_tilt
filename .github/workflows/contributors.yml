@@ -19,6 +19,7 @@ jobs:
         with:
           image_size: 100
           readme_path: README.md
+          use_username: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: README-ZH.md - Contribute List
@@ -26,5 +27,6 @@ jobs:
         with:
           image_size: 100
           readme_path: README-ZH.md
+          use_username: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
