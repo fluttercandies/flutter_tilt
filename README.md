@@ -86,6 +86,8 @@ Check out the [Live Demo][].
 
   - [ShadowConfig][]
 
+- [Contributors](#contributors-)
+
 - [License](#license-)
 
 </sub>
@@ -304,6 +306,12 @@ Tilt(
 | maxBlurRadius | `double` | `20.0` | Maximum blur radius for tilt progresses. |  
 | direction | `ShadowDirection?` | `null` | Shadow direction. |  
 | enableReverse | `bool?` | `null` | Reverse shadow direction. |  
+
+
+## Contributors ✨  
+
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
 
 
 ## License 📄  

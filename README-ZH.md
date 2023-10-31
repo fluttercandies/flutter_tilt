@@ -86,6 +86,8 @@
 
   - [ShadowConfig][]
 
+- [贡献者](#贡献者-)
+
 - [许可证](#许可证-)
 
 </sub>
@@ -304,6 +306,12 @@ Tilt(
 | maxBlurRadius | `double` | `20.0` | 最大阴影模糊半径，跟随倾斜最大进度。 |  
 | direction | `ShadowDirection?` | `null` | 阴影方向。 |  
 | enableReverse | `bool?` | `null` | 反转阴影方向。 |  
+
+
+## 贡献者 ✨  
+
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
 
 
 ## 许可证 📄  
