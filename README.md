@@ -286,6 +286,7 @@ Tilt(
 | color | `Color` | `Color(0xFFFFFFFF)` | Light color. |  
 | minIntensity | `double` | `0.0` | Color minimum opacity, also initial opacity. |  
 | maxIntensity | `double` | `0.5` | Color maximum opacity for tilt progresses. |  
+| spreadFactor | `double` | `4.0` | Light spread factor, relative to current widget size. |  
 | direction | `LightDirection` | `LightDirection.around` | Light direction. <br/> Affects: <br/> `[ShadowConfig.direction]` (not affected after configuration). |  
 | enableReverse | `bool` | `false` | Reverse light direction. <br/> Affects: <br/> `[ShadowConfig.direction]` (not affected after configuration). <br/> `[ShadowConfig.enableReverse]` (not affected after configuration). |  
 

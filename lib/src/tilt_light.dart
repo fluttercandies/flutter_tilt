@@ -35,7 +35,7 @@ class TiltLight extends StatelessWidget {
   Offset get position => progressPosition(width, height, areaProgress);
 
   /// 尺寸扩散的倍数
-  double get spread => 4.0;
+  double get spread => lightConfig.spreadFactor;
 
   /// 扩散的尺寸 width
   double get spreadW => width * spread;

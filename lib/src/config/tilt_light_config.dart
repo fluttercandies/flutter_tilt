@@ -17,13 +17,15 @@ class LightConfig {
     this.color = const Color(0xFFFFFFFF),
     this.minIntensity = 0.0,
     this.maxIntensity = 0.5,
+    this.spreadFactor = 4.0,
     this.direction = LightDirection.around,
     this.enableReverse,
-  }) : assert(
+  })  : assert(
           minIntensity <= maxIntensity &&
               minIntensity >= 0.0 &&
               maxIntensity <= 1.0,
-        );
+        ),
+        assert(spreadFactor >= 1.0);
 
   /// 禁用
   final bool disable;
@@ -42,6 +44,11 @@ class LightConfig {
   ///
   /// 为 0 时将没有光源
   final double maxIntensity;
+
+  /// 光源扩散系数
+  ///
+  /// 相对当前的尺寸固定扩散
+  final double spreadFactor;
 
   /// 光源方向
   ///
@@ -69,6 +76,7 @@ class LightConfig {
     Color? color,
     double? minIntensity,
     double? maxIntensity,
+    double? spreadFactor,
     LightDirection? direction,
     bool? enableReverse,
   }) {
@@ -77,6 +85,7 @@ class LightConfig {
       color: color ?? this.color,
       minIntensity: minIntensity ?? this.minIntensity,
       maxIntensity: maxIntensity ?? this.maxIntensity,
+      spreadFactor: spreadFactor ?? this.spreadFactor,
       direction: direction ?? this.direction,
       enableReverse: enableReverse ?? this.enableReverse,
     );
@@ -95,6 +104,7 @@ class LightConfig {
         other.color == color &&
         other.minIntensity == minIntensity &&
         other.maxIntensity == maxIntensity &&
+        other.spreadFactor == spreadFactor &&
         other.direction == direction &&
         other.enableReverse == enableReverse;
   }
@@ -106,6 +116,7 @@ class LightConfig {
       color,
       minIntensity,
       maxIntensity,
+      spreadFactor,
       direction,
       enableReverse,
     );

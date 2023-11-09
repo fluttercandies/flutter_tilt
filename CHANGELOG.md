@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.1.0
+
+### New features
+
+- Add spreadFactor to LightConfig
+
 ## 2.0.10
 
 ### Fixes

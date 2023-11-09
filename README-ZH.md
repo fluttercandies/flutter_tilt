@@ -286,6 +286,7 @@ Tilt(
 | color | `Color` | `Color(0xFFFFFFFF)` | 光照颜色。 |  
 | minIntensity | `double` | `0.0` | 颜色最小不透明度，也是初始不透明度。 |  
 | maxIntensity | `double` | `0.5` | 颜色最大不透明度，跟随倾斜最大进度。 |  
+| spreadFactor | `double` | `4.0` | 光源扩散系数，相对于当前 widget 尺寸。 |  
 | direction | `LightDirection` | `LightDirection.around` | 光照方向。 <br/> 影响：<br/> `[ShadowConfig.direction]`（配置后不受影响）。 |  
 | enableReverse | `bool` | `false` | 方向光照方向。 <br/> 影响：<br/> `[ShadowConfig.direction]`（配置后不受影响）。 <br/> `[ShadowConfig.enableReverse]`（配置后不受影响）。 |  
 
