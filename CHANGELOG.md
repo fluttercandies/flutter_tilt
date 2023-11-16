@@ -2,11 +2,17 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.1.1
+
+### Improvements
+
+- Update the example to Flutter 3.16.0 and use Material3.
+
 ## 2.1.0
 
 ### New features
 
-- Add spreadFactor to LightConfig
+- Add spreadFactor to LightConfig.
 
 ## 2.0.10
 
