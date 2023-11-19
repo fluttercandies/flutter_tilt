@@ -27,16 +27,13 @@
 <div align="center">
   <table width="640" align="center" border="0">
     <tr>
-      <td align="center" rowspan="2">
-        <img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview.gif" alt="Example Preview GIF" />
+      <td align="center">
+        <img width="250" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview2.gif" alt="Example Preview GIF - Parallax image" />
+        <img width="250px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview.gif" alt="Example Preview GIF" />
       </td>
       <td align="center">
-        <img width="320" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview2.gif" alt="Example Preview GIF - Parallax image" />
-      </td>
-    </tr>	
-    <tr>
-      <td align="center">
-        <img width="320" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
+        <img width="280" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview4.gif" alt="Example Preview GIF - Parallax card" />
+        <img width="280" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
       </td>
     </tr>
     <tr>
