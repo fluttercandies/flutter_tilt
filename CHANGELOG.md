@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.1.2
+
+### Improvements
+
+- Improve high energy impact.
+
 ## 2.1.1
 
 ### Improvements
