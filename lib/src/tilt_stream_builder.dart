@@ -19,6 +19,7 @@ class TiltStreamBuilder extends StatefulWidget {
     super.key,
     required this.tiltStreamController,
     required this.disable,
+    required this.fps,
     required this.tiltConfig,
     required this.position,
     required this.builder,
@@ -29,6 +30,8 @@ class TiltStreamBuilder extends StatefulWidget {
 
   /// 是否禁用
   final bool disable;
+
+  final int fps;
 
   /// TiltConfig
   final TiltConfig tiltConfig;
@@ -45,6 +48,7 @@ class TiltStreamBuilder extends StatefulWidget {
 
 class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   bool get disable => widget.disable;
+  int get fps => widget.fps;
   TiltConfig get tiltConfig => widget.tiltConfig;
   Offset get position => widget.position;
   async.StreamController<TiltStream> get tiltStreamController =>
@@ -104,8 +108,12 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
           ),
         )
         .combineLatest(
-          Stream<void>.periodic(Duration.zero),
+          Stream<void>.periodic(Duration(milliseconds: (1000 / fps) ~/ 1)),
           (p0, _) => p0,
+        )
+        .throttle(
+          Duration(milliseconds: (1000 / fps) ~/ 1),
+          trailing: true,
         );
   }
 

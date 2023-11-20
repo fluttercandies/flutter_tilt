@@ -118,6 +118,7 @@ class _TiltState extends State<Tilt> {
         tiltStreamController: tiltStreamController,
         position: currentPosition,
         disable: _disable,
+        fps: _fps,
         tiltConfig: _tiltConfig,
         builder: (context, snapshot) {
           onGesturesStream(snapshot.data);
@@ -257,7 +258,7 @@ class _TiltState extends State<Tilt> {
   bool fpsTimer() {
     if (_fpsTimer == null) {
       _fpsTimer = async.Timer(
-        Duration(milliseconds: (1 / _fps * 1000) ~/ 1),
+        Duration(milliseconds: (1000 / _fps) ~/ 1),
         () => _fpsTimer = null,
       );
       return true;
