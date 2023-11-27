@@ -87,7 +87,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
 
     /// 避免无主要传感器的设备使用
     if (canSensorsPlatformSupport && enableStream && enableSensors) {
-      gyroscopeEvents
+      gyroscopeEventStream()
           .listen(
             null,
             onError: (_) => canSensorsPlatformSupport = false,
@@ -96,11 +96,11 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
           .cancel();
 
       /// 加速度计事件处理（如：设备方向）
-      accelerometerEvents.listen(handleAccelerometerEvents);
+      accelerometerEventStream().listen(handleAccelerometerEvents);
     }
 
     currentTiltStream = tiltStreamController.stream;
-    currentGyroscopeStream = gyroscopeEvents
+    currentGyroscopeStream = gyroscopeEventStream()
         .map<TiltStream>(
           (gyroscopeEvent) => TiltStream(
             position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),

@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.1.3
+
+### Improvements
+
+- Upgrade sensors_plus to v4.x.x. (#6)
+
 ## 2.1.2
 
 ### Improvements
