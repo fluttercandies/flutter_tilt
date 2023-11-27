@@ -2,11 +2,16 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
-## 2.1.3
+## 2.2.0
+
+### Breaking changes
+
+- Migrate to Flutter 3.7 and drop support for previous Flutter versions.
+- Upgrade sensors_plus to v4.x.x. (#6)
 
 ### Improvements
 
-- Upgrade sensors_plus to v4.x.x. (#6)
+- Improve example (Flutter v3.16.0)
 
 ## 2.1.2
 
