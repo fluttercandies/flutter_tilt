@@ -62,18 +62,23 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   /// 传感器平台支持
   bool canSensorsPlatformSupport = sensorsPlatformSupport();
 
+  /// 初始 TiltStream
+  late TiltStream initialTiltStream = TiltStream(
+    position: position,
+    gesturesType: GesturesType.none,
+  );
+
   /// Touch, Hover 的 Stream
   late Stream<TiltStream> currentTiltStream;
 
   /// 陀螺仪 Stream
-  late Stream<TiltStream> currentGyroscopeStream;
+  Stream<TiltStream>? currentGyroscopeStream;
 
   /// 是否开启传感器
   late bool enableSensors = tiltConfig.enableGestureSensors;
 
   /// 最新 TiltStream（缓存）
-  late TiltStream latestTiltStream =
-      TiltStream(position: position, gesturesType: GesturesType.none);
+  late TiltStream latestTiltStream = initialTiltStream;
 
   /// 设备方向
   DeviceOrientation deviceOrientation = DeviceOrientation.portraitUp;
@@ -84,6 +89,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   @override
   void initState() {
     super.initState();
+    currentTiltStream = tiltStreamController.stream;
 
     /// 避免无主要传感器的设备使用
     if (canSensorsPlatformSupport && enableStream && enableSensors) {
@@ -94,27 +100,27 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
             cancelOnError: true,
           )
           .cancel();
+      if (canSensorsPlatformSupport) {
+        /// 加速度计事件处理（如：设备方向）
+        accelerometerEventStream().listen(handleAccelerometerEvents);
 
-      /// 加速度计事件处理（如：设备方向）
-      accelerometerEventStream().listen(handleAccelerometerEvents);
+        currentGyroscopeStream = gyroscopeEventStream()
+            .map<TiltStream>(
+              (gyroscopeEvent) => TiltStream(
+                position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
+                gesturesType: GesturesType.sensors,
+              ),
+            )
+            .combineLatest(
+              Stream<void>.periodic(Duration(milliseconds: (1000 / fps) ~/ 1)),
+              (p0, _) => p0,
+            )
+            .throttle(
+              Duration(milliseconds: (1000 / fps) ~/ 1),
+              trailing: true,
+            );
+      }
     }
-
-    currentTiltStream = tiltStreamController.stream;
-    currentGyroscopeStream = gyroscopeEventStream()
-        .map<TiltStream>(
-          (gyroscopeEvent) => TiltStream(
-            position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
-            gesturesType: GesturesType.sensors,
-          ),
-        )
-        .combineLatest(
-          Stream<void>.periodic(Duration(milliseconds: (1000 / fps) ~/ 1)),
-          (p0, _) => p0,
-        )
-        .throttle(
-          Duration(milliseconds: (1000 / fps) ~/ 1),
-          trailing: true,
-        );
   }
 
   @override
@@ -129,14 +135,10 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     return StreamBuilder<TiltStream>(
       stream: enableStream
           ? currentTiltStream.mergeAll([
-              if (canSensorsPlatformSupport && tiltConfig.enableGestureSensors)
-                currentGyroscopeStream,
+              currentGyroscopeStream ?? Stream.value(initialTiltStream)
             ]).map(filterTiltStream)
           : null,
-      initialData: TiltStream(
-        position: position,
-        gesturesType: GesturesType.none,
-      ),
+      initialData: initialTiltStream,
       builder: builder,
     );
   }
@@ -144,9 +146,6 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   /// 过滤 TiltStream
   TiltStream filterTiltStream(TiltStream tiltStream) {
     switch (tiltStream.gesturesType) {
-      case GesturesType.none:
-        latestTiltStream = tiltStream;
-        break;
       case GesturesType.touch:
         // 避免 touch 与 sensors 冲突
         if (canSensorsPlatformSupport &&
@@ -188,6 +187,8 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
             gesturesType: tiltStream.gesturesType,
           );
         }
+        break;
+      case GesturesType.none:
         break;
     }
     return latestTiltStream;
