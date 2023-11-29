@@ -40,27 +40,39 @@ class TiltData {
       );
 
   /// 当前坐标
-  Offset get position => progressPosition(width, height, areaProgress);
+  Offset get position => Utils.progressPosition(width, height, areaProgress);
 
   /// Transform
-  Matrix4 get transform => isInit && !disable
-      ? tiltTransform(
-          width,
-          height,
-          areaProgress,
-          tiltConfig.angle,
-          tiltConfig.enableReverse,
-        )
-      : Matrix4.identity();
+  Matrix4 get transform =>
+      isInit && !disable ? tiltTransform() : Matrix4.identity();
 
   /// 角度（区分区域）
   ///
   /// {@macro tilt.TiltDataModel.angle}
-  Offset get angle =>
-      rotateAxis(areaProgress * tiltConfig.angle, tiltConfig.enableReverse);
+  Offset get angle => Utils.rotateAxis(
+      areaProgress * tiltConfig.angle, tiltConfig.enableReverse);
 
   /// 禁用
   bool get disable => tiltConfig.disable;
+
+  /// 计算当前坐标进度的倾斜
+  Matrix4 tiltTransform() {
+    /// 旋转大小：区域进度 * 弧度
+    final Offset rotate = Utils.rotateAxis(
+      areaProgress * Utils.radian(tiltConfig.angle),
+      tiltConfig.enableReverse,
+    );
+    final double rotateX = rotate.dx, rotateY = rotate.dy;
+
+    return Matrix4.identity()
+
+      /// 近大远小效果（适配不同尺寸的组件）
+      ..setEntry(3, 2, 0.5 / (width > height ? width : height))
+
+      /// 旋转轴
+      ..rotateX(rotateX)
+      ..rotateY(rotateY);
+  }
 }
 
 /// 倾斜数据

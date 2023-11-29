@@ -93,8 +93,11 @@ class _TiltState extends State<Tilt> {
   late async.StreamController<TiltStream> tiltStreamController;
 
   /// 当前坐标
-  late Offset currentPosition =
-      progressPosition(width, height, _initAreaProgress);
+  late Offset currentPosition = Utils.progressPosition(
+    width,
+    height,
+    _initAreaProgress,
+  );
 
   @override
   void initState() {
@@ -155,7 +158,11 @@ class _TiltState extends State<Tilt> {
       width = size.width;
       height = size.height;
       setState(() {
-        currentPosition = progressPosition(width, height, _initAreaProgress);
+        currentPosition = Utils.progressPosition(
+          width,
+          height,
+          _initAreaProgress,
+        );
       });
     }
   }
@@ -184,7 +191,11 @@ class _TiltState extends State<Tilt> {
         // Sensors 只会触发 onGestureMove，不会触发 onGestureLeave
         currentPosition += tiltStream.position * _tiltConfig.sensorFactor;
         onGesturesSensorsRevert();
-        currentPosition = constraintsPosition(width, height, currentPosition);
+        currentPosition = Utils.constraintsPosition(
+          width,
+          height,
+          currentPosition,
+        );
         onGesturesMove(currentPosition, tiltStream.gesturesType);
         break;
       case GesturesType.none:
@@ -198,9 +209,10 @@ class _TiltState extends State<Tilt> {
   void onGesturesMove(Offset offset, GesturesType gesturesType) {
     if (!isInit || _disable) return;
     if (!fpsTimer()) return;
-    if (_tiltConfig.enableOutsideAreaMove || isInRange(width, height, offset)) {
+    if (_tiltConfig.enableOutsideAreaMove ||
+        Utils.isInRange(width, height, offset)) {
       currentPosition = offset;
-      areaProgress = p2cAreaProgress(
+      areaProgress = Utils.p2cAreaProgress(
         width,
         height,
         offset,
@@ -222,10 +234,10 @@ class _TiltState extends State<Tilt> {
 
     /// 是否还原的取值
     final Offset position = _tiltConfig.enableRevert
-        ? progressPosition(width, height, _initAreaProgress)
+        ? Utils.progressPosition(width, height, _initAreaProgress)
         : currentPosition;
     currentPosition = position;
-    areaProgress = p2cAreaProgress(
+    areaProgress = Utils.p2cAreaProgress(
       width,
       height,
       position,
@@ -243,8 +255,11 @@ class _TiltState extends State<Tilt> {
     if (!_tiltConfig.enableSensorRevert) return;
 
     /// 默认坐标
-    final Offset initPosition =
-        progressPosition(width, height, _initAreaProgress);
+    final Offset initPosition = Utils.progressPosition(
+      width,
+      height,
+      _initAreaProgress,
+    );
 
     /// 还原
     currentPosition -= Offset(

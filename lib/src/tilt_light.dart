@@ -3,9 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'utils.dart';
 import 'enums.dart';
 import 'config/tilt_light_config.dart';
+import 'internal/tilt_decoration_mixin.dart';
 
 /// 光源
-class TiltLight extends StatelessWidget {
+class TiltLight extends StatelessWidget with TiltDecoration {
   /// 光源
   ///
   /// 作用于其他组件上的光源效果，
@@ -32,7 +33,7 @@ class TiltLight extends StatelessWidget {
   final LightConfig lightConfig;
 
   /// 当前坐标
-  Offset get position => progressPosition(width, height, areaProgress);
+  Offset get position => Utils.progressPosition(width, height, areaProgress);
 
   /// 尺寸扩散的倍数
   double get spread => lightConfig.spreadFactor;
@@ -44,10 +45,10 @@ class TiltLight extends StatelessWidget {
   double get spreadH => height * spread;
 
   /// 当前坐标相对于中心坐标的区域坐标
-  Offset get p2cPosition => -p2cAreaPosition(
+  Offset get p2cPosition => -Utils.p2cAreaPosition(
         spreadW,
         spreadH,
-        constraintsPosition(width, height, position),
+        Utils.constraintsPosition(width, height, position),
       );
 
   /// 定位 x （从中心位置开始）
@@ -57,7 +58,7 @@ class TiltLight extends StatelessWidget {
   double get positionY => p2cPosition.dy;
 
   /// 光源方向进度
-  double get showProgress => directionProgress(
+  double get showProgress => tiltDecorationDirectionProgress(
         areaProgress,
         lightConfig.direction,
         min: lightConfig.minIntensity,

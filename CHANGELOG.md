@@ -2,6 +2,12 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## Unreleased
+
+### Improvements
+
+- Improve code structure.
+
 ## 2.2.0
 
 ### Breaking changes

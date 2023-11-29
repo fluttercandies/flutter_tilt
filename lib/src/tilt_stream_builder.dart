@@ -47,24 +47,24 @@ class TiltStreamBuilder extends StatefulWidget {
 }
 
 class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
-  bool get disable => widget.disable;
-  int get fps => widget.fps;
-  TiltConfig get tiltConfig => widget.tiltConfig;
-  Offset get position => widget.position;
-  async.StreamController<TiltStream> get tiltStreamController =>
+  bool get _disable => widget.disable;
+  int get _fps => widget.fps;
+  TiltConfig get _tiltConfig => widget.tiltConfig;
+  Offset get _position => widget.position;
+  async.StreamController<TiltStream> get _tiltStreamController =>
       widget.tiltStreamController;
-  Widget Function(BuildContext, AsyncSnapshot<TiltStream>) get builder =>
+  Widget Function(BuildContext, AsyncSnapshot<TiltStream>) get _builder =>
       widget.builder;
 
   /// 是否开启 Stream
-  bool get enableStream => !disable;
+  bool get enableStream => !_disable;
 
   /// 传感器平台支持
-  bool canSensorsPlatformSupport = sensorsPlatformSupport();
+  bool canSensorsPlatformSupport = Utils.sensorsPlatformSupport();
 
   /// 初始 TiltStream
   late TiltStream initialTiltStream = TiltStream(
-    position: position,
+    position: _position,
     gesturesType: GesturesType.none,
   );
 
@@ -75,7 +75,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   Stream<TiltStream>? currentGyroscopeStream;
 
   /// 是否开启传感器
-  late bool enableSensors = tiltConfig.enableGestureSensors;
+  late bool enableSensors = _tiltConfig.enableGestureSensors;
 
   /// 最新 TiltStream（缓存）
   late TiltStream latestTiltStream = initialTiltStream;
@@ -89,7 +89,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   @override
   void initState() {
     super.initState();
-    currentTiltStream = tiltStreamController.stream;
+    currentTiltStream = _tiltStreamController.stream;
 
     /// 避免无主要传感器的设备使用
     if (canSensorsPlatformSupport && enableStream && enableSensors) {
@@ -112,11 +112,11 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
               ),
             )
             .combineLatest(
-              Stream<void>.periodic(Duration(milliseconds: (1000 / fps) ~/ 1)),
+              Stream<void>.periodic(Duration(milliseconds: (1000 / _fps) ~/ 1)),
               (p0, _) => p0,
             )
             .throttle(
-              Duration(milliseconds: (1000 / fps) ~/ 1),
+              Duration(milliseconds: (1000 / _fps) ~/ 1),
               trailing: true,
             );
       }
@@ -126,7 +126,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   @override
   void dispose() {
     _gesturesHarmonizerTimer?.cancel();
-    tiltStreamController.close();
+    _tiltStreamController.close();
     super.dispose();
   }
 
@@ -139,7 +139,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
             ]).map(filterTiltStream)
           : null,
       initialData: initialTiltStream,
-      builder: builder,
+      builder: _builder,
     );
   }
 
@@ -149,7 +149,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
       case GesturesType.touch:
         // 避免 touch 与 sensors 冲突
         if (canSensorsPlatformSupport &&
-            tiltConfig.enableGestureSensors &&
+            _tiltConfig.enableGestureSensors &&
             (tiltStream.enableRevert ?? enableSensors)) {
           gesturesHarmonizerTimer();
           enableSensors = true;
@@ -229,7 +229,7 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   void gesturesHarmonizerTimer() {
     _gesturesHarmonizerTimer?.cancel();
     _gesturesHarmonizerTimer = async.Timer(
-      tiltConfig.leaveDuration,
+      _tiltConfig.leaveDuration,
       () => _gesturesHarmonizerTimer = null,
     );
   }

@@ -4,9 +4,10 @@ import 'utils.dart';
 import 'enums.dart';
 import 'config/tilt_light_config.dart';
 import 'config/tilt_shadow_config.dart';
+import 'internal/tilt_decoration_mixin.dart';
 
 /// 阴影
-class TiltShadow extends StatelessWidget {
+class TiltShadow extends StatelessWidget with TiltDecoration {
   /// 阴影
   ///
   /// 作用于其他组件上的阴影效果
@@ -52,7 +53,7 @@ class TiltShadow extends StatelessWidget {
   Offset get progress => -areaProgress;
 
   /// 距离中心的进度
-  double get centerProgress => p2pDistance(Offset.zero, progress);
+  double get centerProgress => Utils.p2pDistance(Offset.zero, progress);
 
   /// 距离中心的进度最大值
   double get centerMaxProgress => centerProgress > 1.0 ? 1.0 : centerProgress;
@@ -62,7 +63,7 @@ class TiltShadow extends StatelessWidget {
   /// 用于阴影颜色，限制最大进度表示强度（透明度）
   ///
   /// {@macro tilt.ShadowConfig.direction}
-  double get showShadow => directionProgress(
+  double get showShadow => tiltDecorationDirectionProgress(
         areaProgress,
         shadowConfig.direction ?? lightConfig.direction,
         min: shadowConfig.minIntensity,
@@ -74,9 +75,9 @@ class TiltShadow extends StatelessWidget {
   /// 阴影进度 * 阴影偏移系数的距离（相对当前尺寸的中心）
   Offset get baseOffset =>
       progress *
-      p2pDistance(
-        centerPosition(width, height),
-        centerPosition(width, height) * (shadowConfig.offsetFactor + 1.0),
+      Utils.p2pDistance(
+        Utils.centerPosition(width, height),
+        Utils.centerPosition(width, height) * (shadowConfig.offsetFactor + 1.0),
       );
 
   /// 阴影偏移
@@ -97,7 +98,7 @@ class TiltShadow extends StatelessWidget {
   /// 阴影扩散半径距离
   ///
   /// (距离中心的进度 * 阴影扩散系数)
-  double get spreadRadiusDistance => p2pDistance(
+  double get spreadRadiusDistance => Utils.p2pDistance(
         Offset(width, height),
         Offset(width, height) * (shadowConfig.spreadFactor + 1.0),
       );

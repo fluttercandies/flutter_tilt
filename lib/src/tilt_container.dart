@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-import 'utils.dart';
 import 'enums.dart';
 import 'tilt_light.dart';
 import 'tilt_shadow.dart';
@@ -9,6 +8,7 @@ import 'state/tilt_state.dart';
 import 'config/tilt_light_config.dart';
 import 'config/tilt_shadow_config.dart';
 import 'config/tilt_config.dart';
+import 'internal/tilt_tween_animation_mixin.dart';
 
 class TiltContainer extends StatefulWidget {
   const TiltContainer({
@@ -51,7 +51,7 @@ class TiltContainer extends StatefulWidget {
   State<TiltContainer> createState() => _TiltContainerState();
 }
 
-class _TiltContainerState extends State<TiltContainer> {
+class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
   Widget get _child => widget.child;
   ChildLayout get _childLayout => widget.childLayout;
   BoxBorder? get _border => widget.border;

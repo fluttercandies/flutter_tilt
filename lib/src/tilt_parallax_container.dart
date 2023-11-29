@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
 
-import 'utils.dart';
 import 'enums.dart';
 import 'state/tilt_state.dart';
 import 'config/tilt_config.dart';
+import 'internal/tilt_tween_animation_mixin.dart';
 
 /// 倾斜视差
 @immutable
-class TiltParallaxContainer extends StatelessWidget {
+class TiltParallaxContainer extends StatelessWidget with TiltTweenAnimation {
   /// 倾斜视差
   ///
   /// 用作视差的 Widget
