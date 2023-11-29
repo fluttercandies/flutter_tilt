@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
-import 'utils.dart';
-import 'enums.dart';
-import 'config/tilt_light_config.dart';
-import 'config/tilt_shadow_config.dart';
-import 'internal/tilt_decoration_mixin.dart';
+import '../utils.dart';
+import '../enums.dart';
+import '../config/tilt_light_config.dart';
+import '../config/tilt_shadow_config.dart';
+import '../internal/tilt_decoration_mixin.dart';
 
 /// 阴影
 class TiltShadow extends StatelessWidget with TiltDecoration {

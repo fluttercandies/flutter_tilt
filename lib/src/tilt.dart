@@ -3,15 +3,15 @@ import 'package:flutter/widgets.dart';
 
 import 'utils.dart';
 import 'enums.dart';
-import 'gestures_listener.dart';
-import 'tilt_stream_builder.dart';
-import 'tilt_container.dart';
-import 'tilt_parallax_container.dart';
 import 'data/tilt_data.dart';
 import 'state/tilt_state.dart';
 import 'config/tilt_light_config.dart';
 import 'config/tilt_shadow_config.dart';
 import 'config/tilt_config.dart';
+import 'widget/gestures_listener.dart';
+import 'widget/tilt_container.dart';
+import 'widget/tilt_parallax_container.dart';
+import 'widget/tilt_stream_builder.dart';
 
 /// 倾斜
 class Tilt extends TiltContainer {
