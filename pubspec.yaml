@@ -28,7 +28,7 @@ dependencies:
   flutter:
     sdk: flutter
   stream_transform: ^2.1.0
-  sensors_plus: ^4.0.1
+  sensors_plus: ^4.0.2
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,7 @@ See the [Migration Guide](guides/migration_guide.md) for the details of breaking
 
 ### Improvements
 
+- Upgrade `sensors_plus` to version 4.0.2
 - Improve code structure.
 
 ## 2.2.0
