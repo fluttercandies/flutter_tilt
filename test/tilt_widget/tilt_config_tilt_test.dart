@@ -520,7 +520,7 @@ void main() {
       await tester.fling(tiltWidgetFinder, const Offset(-6.0, -6.0), 0.1);
       expect(childFinder, findsOneWidget);
       expect(leaveGesturesTypeTest, GesturesType.touch);
-      expect(leaveCountTest > 1, true);
+      expect(leaveCountTest == 1, true);
       expect(leaveTiltDataTest, tiltDataExpect2);
     });
     testWidgets('enableGestureTouch false', (WidgetTester tester) async {

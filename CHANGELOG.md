@@ -6,8 +6,12 @@ See the [Migration Guide](guides/migration_guide.md) for the details of breaking
 
 ### Improvements
 
-- Upgrade `sensors_plus` to version 4.0.2
+- Upgrade `sensors_plus` to version 4.0.2.
 - Improve code structure.
+
+### Fixes
+
+- Fix `onGesturesRevert` being called repeatedly after a move has ended.
 
 ## 2.2.0
 

@@ -230,7 +230,7 @@ class _TiltState extends State<Tilt> {
   ///
   /// [offset] 当前坐标
   void onGesturesRevert(Offset offset, GesturesType gesturesType) {
-    if (!isInit || _disable) return;
+    if (!isInit || _disable || !isMove) return;
 
     /// 是否还原的取值
     final Offset position = _tiltConfig.enableRevert
