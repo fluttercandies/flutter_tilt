@@ -46,7 +46,7 @@ class TiltData {
   Matrix4 get transform =>
       isInit && !disable ? tiltTransform() : Matrix4.identity();
 
-  /// 角度（区分区域）
+  /// 实际旋转角度
   ///
   /// {@macro tilt.TiltDataModel.angle}
   Offset get angle => Utils.rotateAxis(
@@ -106,17 +106,17 @@ class TiltDataModel {
   /// Transform
   final Matrix4 transform;
 
-  /// 角度（区分区域）
+  /// 实际旋转角度
   ///
   /// {@template tilt.TiltDataModel.angle}
-  /// 正常范围 (x, y)：(angle, angle) 至 (-angle, -angle)
+  /// 正常范围 (x, y)：(angle, -angle) 至 (-angle, angle)
   ///
   /// 移动过程中的最大倾斜量按照 [TiltConfig.angle] 进行倾斜
   ///
   /// 例如：
   /// * (0, 0) 会保持平面
-  /// * (angle, angle) 倾斜左上角 [TiltConfig.angle] 最大角度
-  /// * (-angle, -angle) 倾斜右下角 [TiltConfig.angle] 最大角度
+  /// * (angle, -angle) 倾斜左上角 [TiltConfig.angle] 最大角度
+  /// * (-angle, angle) 倾斜右下角 [TiltConfig.angle] 最大角度
   /// {@endtemplate}
   final Offset angle;
 
