@@ -51,20 +51,20 @@ body:
     validations:
       required: true
   - type: textarea
-    id: log
-    attributes:
-      label: Logs
-      description: "Error log"
-      placeholder: e.g. flutter run --verbose
-      render: sh
-    validations:
-      required: false
-  - type: textarea
     id: example-code
     attributes:
       label: "Minimal example code (optional)"
       description: "If you can, please provide a minimal example to reproduce the problem."
       placeholder: "e.g. Tilt(tiltConfig: TiltConfig(enableGestureSensors: true))"
       render: Dart
+    validations:
+      required: false
+  - type: textarea
+    id: log
+    attributes:
+      label: Logs
+      description: "Error log"
+      placeholder: e.g. flutter run --verbose
+      render: sh
     validations:
       required: false
