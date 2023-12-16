@@ -136,8 +136,9 @@ dependencies:
 | :-----: | :---: | :------------------------------------------: | :---: | :---: | :-----: |  
 |   ✅   |   ✅  | [浏览器兼容][Gyroscope Browser compatibility] |  ❌  |   ❌  |   ❌   |  
 
-* 目前 Web 使用 [Sensor API - Gyroscope][]，但它不兼容部分主流浏览器，比如 Safari、Firefox。  
-  之后也许会替换为 [DeviceMotionEvent][]。
+> [!NOTE]  
+> 目前 Web 使用 [Sensor API - Gyroscope][]，但它不兼容部分主流浏览器，比如 Safari、Firefox。  
+> 之后也许会替换为 [DeviceMotionEvent][]。
 
 
 ## 手势优先级 📱

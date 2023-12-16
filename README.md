@@ -137,8 +137,9 @@ Sensors are triggered only on these platforms.
 | :-----: | :---: | :------------------------------------------------------: | :---: | :---: | :-----: |  
 |   ✅   |   ✅  | [Browser compatibility][Gyroscope Browser compatibility] |  ❌  |   ❌  |   ❌   |  
 
-* Currently Web uses the [Sensor API - Gyroscope], but it is not compatible with some of the major browsers, such as Safari, Firefox.  
-  After that maybe replace it with [DeviceMotionEvent][].
+> [!NOTE]  
+> Currently Web uses the [Sensor API - Gyroscope], but it is not compatible with some of the major browsers, such as Safari, Firefox.  
+> After that maybe replace it with [DeviceMotionEvent][].
 
 
 ## Gesture priority 📱
