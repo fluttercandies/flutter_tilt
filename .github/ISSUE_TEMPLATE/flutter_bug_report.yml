@@ -29,7 +29,7 @@ body:
     id: device-model
     attributes:
       label: Device Model
-      description: "Device Model (ex. iPhone 12(iOS 14), Galaxy S21(Android 11))"
+      description: "Device Model (e.g. iPhone 12(iOS 14), Galaxy S21(Android 11))"
       placeholder: e.g. iPhone 12 (iOS 14)
     validations:
       required: true
