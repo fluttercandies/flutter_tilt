@@ -1,0 +1,47 @@
+name: "Feature request"
+description: "Request a new feature"
+title: "[Feature request] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this feature request!
+        Before submitting, make sure you read the document and search the issue list.
+        If you are not sure, check out the [Live Demo](https://amoshuke.github.io/flutter_tilt_book).
+  - type: dropdown
+    id: platforms
+    attributes:
+      label: Platforms
+      description: Check all that apply
+      multiple: true
+      options:
+        - Android
+        - iOS
+        - macOS
+        - Windows
+        - Linux
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: "Describe the feature you want to be added"
+      placeholder: "e.g. I want to trigger the sensor."
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: "Why do you want this feature to be added? What's the use case?"
+      placeholder: ｜
+        e.g. I want to use the device to trigger the sensor.
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        Add as many or as many reasons as possible,
+        which will give priority to feature request

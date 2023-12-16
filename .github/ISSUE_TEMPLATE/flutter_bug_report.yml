@@ -1,0 +1,70 @@
+name: "Bug report"
+description: "Create a bug report"
+title: "[Bug report] "
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Version of the plugin
+      placeholder: e.g. 2.0.0
+    validations:
+      required: true
+  - type: dropdown
+    id: platforms
+    attributes:
+      label: Platforms
+      description: Check all that apply
+      multiple: true
+      options:
+        - Android
+        - iOS
+        - macOS
+        - Windows
+        - Linux
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: device-model
+    attributes:
+      label: Device Model
+      description: "Device Model (ex. iPhone 12(iOS 14), Galaxy S21(Android 11))"
+      placeholder: e.g. iPhone 12 (iOS 14)
+    validations:
+      required: true
+  - type: textarea
+    id: flutter-doctor
+    attributes:
+      label: flutter info
+      description: "flutter doctor -v in your terminal"
+      placeholder: e.g. flutter doctor -v
+      render: sh
+    validations:
+      required: true
+  - type: textarea
+    id: how-to-reproduce
+    attributes:
+      label: "How to reproduce?"
+      description: "How to reproduce the problem?"
+      placeholder: "e.g. I get xxx error after enabling TiltConfig.enableGestureSensors."
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Logs
+      description: "Error log"
+      placeholder: e.g. flutter run --verbose
+      render: sh
+    validations:
+      required: false
+  - type: textarea
+    id: example-code
+    attributes:
+      label: "Minimal example code (optional)"
+      description: "If you can, please provide a minimal example to reproduce the problem."
+      placeholder: "e.g. Tilt(tiltConfig: TiltConfig(enableGestureSensors: true))"
+      render: Dart
+    validations:
+      required: false
