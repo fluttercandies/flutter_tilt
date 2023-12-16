@@ -36,7 +36,7 @@ body:
     attributes:
       label: Why
       description: "Why do you want this feature to be added? What's the use case?"
-      placeholder: ｜
+      placeholder: |
         e.g. I want to use the device to trigger the sensor.
     validations:
       required: false
