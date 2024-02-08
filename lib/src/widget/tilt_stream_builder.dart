@@ -167,21 +167,12 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
             _gesturesHarmonizerTimer == null) {
           final sensorsX = tiltStream.position.dx;
           final sensorsY = tiltStream.position.dy;
-          late Offset tiltPosition;
-          switch (deviceOrientation) {
-            case DeviceOrientation.portraitUp:
-              tiltPosition = Offset(sensorsX, sensorsY);
-              break;
-            case DeviceOrientation.portraitDown:
-              tiltPosition = -Offset(sensorsX, sensorsY);
-              break;
-            case DeviceOrientation.landscapeLeft:
-              tiltPosition = Offset(sensorsY, -sensorsX);
-              break;
-            case DeviceOrientation.landscapeRight:
-              tiltPosition = Offset(-sensorsY, sensorsX);
-              break;
-          }
+          final Offset tiltPosition = switch (deviceOrientation) {
+            DeviceOrientation.portraitUp => Offset(sensorsX, sensorsY),
+            DeviceOrientation.portraitDown => -Offset(sensorsX, sensorsY),
+            DeviceOrientation.landscapeLeft => Offset(sensorsY, -sensorsX),
+            DeviceOrientation.landscapeRight => Offset(-sensorsY, sensorsX),
+          };
           latestTiltStream = TiltStream(
             position: tiltPosition,
             gesturesType: tiltStream.gesturesType,

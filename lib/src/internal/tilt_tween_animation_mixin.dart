@@ -9,6 +9,8 @@ mixin TiltTweenAnimation {
   /// - [isMove] 是否移动
   /// - [tiltConfig] TiltConfig
   /// - [areaProgress] 当前进度
+  ///
+  /// @return [Offset] 倾斜反向进度
   Offset tiltTweenAnimationEnd(
     bool isMove,
     TiltConfig tiltConfig,
@@ -23,6 +25,8 @@ mixin TiltTweenAnimation {
   /// - [isMove] 是否移动
   /// - [currentGesturesType] 当前手势类型
   /// - [tiltConfig] TiltConfig
+  ///
+  /// @return [Duration]
   Duration tiltTweenAnimationDuration(
     bool isMove,
     GesturesType currentGesturesType,
@@ -42,6 +46,8 @@ mixin TiltTweenAnimation {
   /// - [isMove] 是否移动
   /// - [currentGesturesType] 当前手势类型
   /// - [tiltConfig] TiltConfig
+  ///
+  /// @return [Curve]
   Curve tiltTweenAnimationCurve(
     bool isMove,
     GesturesType currentGesturesType,

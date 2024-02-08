@@ -339,14 +339,16 @@ class TiltDirection {
 
   /// 验证合法的方向并返回方向数据
   ///
-  /// * [tiltDirection] 需要验证的方向坐标
-  /// * [validator] 验证的方向范围
+  /// - [tiltDirection] 需要验证的方向坐标
+  /// - [validator] 验证的方向范围
+  ///
+  /// @return [TiltDirection]
   static TiltDirection validator(
     TiltDirection tiltDirection,
     List<TiltDirection> validator,
   ) {
     final double x = tiltDirection.dx, y = tiltDirection.dy;
-    late double dx = 0.0, dy = 0.0;
+    double dx = 0.0, dy = 0.0;
 
     for (final TiltDirection value in validator) {
       /// 默认最大设置的验证范围，避免方向值超出验证值的时候会返回 0

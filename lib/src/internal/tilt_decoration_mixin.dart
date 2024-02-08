@@ -8,17 +8,17 @@ mixin TiltDecoration {
   ///
   /// 范围：0-1
   ///
-  /// * [width], [height] 区域尺寸
-  /// * [areaProgress] 当前坐标的区域进度
-  /// * [direction] 方向计算方式
-  ///   * [LightDirection] 光线方向
-  ///   * [ShadowDirection] 阴影方向
+  /// - [areaProgress] 当前坐标的区域进度
+  /// - [direction] 方向计算方式
+  ///   - [LightDirection] 光线方向
+  ///   - [ShadowDirection] 阴影方向
   ///
   /// 可选项
-  /// * [min] 最小进度限制 0-1
-  /// * [max] 最大进度限制 0-1
-  /// * [enableReverse] 开启反向
+  /// - [min] 最小进度限制 0-1
+  /// - [max] 最大进度限制 0-1
+  /// - [enableReverse] 开启反向
   ///
+  /// @return [double] 方向进度 0-1
   double tiltDecorationDirectionProgress<T>(
     Offset areaProgress,
     T direction, {
@@ -32,121 +32,59 @@ mixin TiltDecoration {
     final Offset progress = -areaProgress;
     final double progressX = progress.dx, progressY = progress.dy;
 
-    /// 区域进度
-    late double dataX = progressX, dataY = progressY;
-
     /// 距离中心
     final double dataDistance = Utils.p2pDistance(
       Offset.zero,
-      Offset(dataX, dataY),
+      Offset(progressX, progressY),
     );
 
     /// 限制距离中心
     final double constraintsDistance = dataDistance > max ? max : dataDistance;
 
+    /// 区域进度
+    double dataX = progressX, dataY = progressY;
+
     /// 进度
-    late double progressData = min;
+    double progressData = min;
 
     /// 光源方向计算方式
     if (direction.runtimeType == LightDirection) {
-      switch (direction as LightDirection) {
-        case LightDirection.none:
-          break;
-        case LightDirection.around:
-          final double distance = constraintsDistance;
-          progressData = distance;
-          break;
-        case LightDirection.all:
-          progressData = max;
-          break;
-        case LightDirection.top:
-          progressData = progressY;
-          break;
-        case LightDirection.bottom:
-          progressData = -progressY;
-          break;
-        case LightDirection.left:
-          progressData = progressX;
-          break;
-        case LightDirection.right:
-          progressData = -progressX;
-          break;
-        case LightDirection.center:
-          final double distance = constraintsDistance;
-          progressData = max - distance;
-          break;
-        case LightDirection.topLeft:
-          progressData = progressX + progressY;
-          break;
-        case LightDirection.bottomRight:
-          progressData = -(progressX + progressY);
-          break;
-        case LightDirection.topRight:
-          progressData = -(progressX - progressY);
-          break;
-        case LightDirection.bottomLeft:
-          progressData = progressX - progressY;
-          break;
-        case LightDirection.xCenter:
-          if (progressY < 0.0) dataY = -progressY;
-          progressData = max - dataY;
-          break;
-        case LightDirection.yCenter:
-          if (progressX < 0.0) dataX = -progressX;
-          progressData = max - dataX;
-          break;
-      }
+      progressData = switch (direction as LightDirection) {
+        LightDirection.none => progressData,
+        LightDirection.around => constraintsDistance,
+        LightDirection.all => max,
+        LightDirection.top => progressY,
+        LightDirection.bottom => -progressY,
+        LightDirection.left => progressX,
+        LightDirection.right => -progressX,
+        LightDirection.center => max - constraintsDistance,
+        LightDirection.topLeft => progressX + progressY,
+        LightDirection.bottomRight => -(progressX + progressY),
+        LightDirection.topRight => -(progressX - progressY),
+        LightDirection.bottomLeft => progressX - progressY,
+        LightDirection.xCenter => max - (progressY < 0.0 ? -progressY : dataY),
+        LightDirection.yCenter => max - (progressX < 0.0 ? -progressX : dataX),
+      };
     }
 
     /// 阴影方向计算方式
     if (direction.runtimeType == ShadowDirection) {
-      switch (direction as ShadowDirection) {
-        case ShadowDirection.none:
-          break;
-        case ShadowDirection.around:
-          final double distance = constraintsDistance;
-          progressData = distance;
-          break;
-        case ShadowDirection.all:
-          progressData = max;
-          break;
-        case ShadowDirection.top:
-          progressData = -progressY;
-          break;
-        case ShadowDirection.bottom:
-          progressData = progressY;
-          break;
-        case ShadowDirection.left:
-          progressData = -progressX;
-          break;
-        case ShadowDirection.right:
-          progressData = progressX;
-          break;
-        case ShadowDirection.center:
-          final double distance = constraintsDistance;
-          progressData = max - distance;
-          break;
-        case ShadowDirection.topLeft:
-          progressData = -(progressX + progressY);
-          break;
-        case ShadowDirection.bottomRight:
-          progressData = progressX + progressY;
-          break;
-        case ShadowDirection.topRight:
-          progressData = progressX - progressY;
-          break;
-        case ShadowDirection.bottomLeft:
-          progressData = -(progressX - progressY);
-          break;
-        case ShadowDirection.xCenter:
-          if (progressY < 0.0) dataY = -progressY;
-          progressData = max - dataY;
-          break;
-        case ShadowDirection.yCenter:
-          if (progressX < 0.0) dataX = -progressX;
-          progressData = max - dataX;
-          break;
-      }
+      progressData = switch (direction as ShadowDirection) {
+        ShadowDirection.none => progressData,
+        ShadowDirection.around => constraintsDistance,
+        ShadowDirection.all => max,
+        ShadowDirection.top => -progressY,
+        ShadowDirection.bottom => progressY,
+        ShadowDirection.left => -progressX,
+        ShadowDirection.right => progressX,
+        ShadowDirection.center => max - constraintsDistance,
+        ShadowDirection.topLeft => -(progressX + progressY),
+        ShadowDirection.bottomRight => progressX + progressY,
+        ShadowDirection.topRight => progressX - progressY,
+        ShadowDirection.bottomLeft => -(progressX - progressY),
+        ShadowDirection.xCenter => max - (progressY < 0.0 ? -progressY : dataY),
+        ShadowDirection.yCenter => max - (progressX < 0.0 ? -progressX : dataX),
+      };
     }
 
     /// 强度
