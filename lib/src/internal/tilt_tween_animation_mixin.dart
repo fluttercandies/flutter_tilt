@@ -28,22 +28,13 @@ mixin TiltTweenAnimation {
     GesturesType currentGesturesType,
     TiltConfig tiltConfig,
   ) {
-    late Duration duration;
-    switch (currentGesturesType) {
-      case GesturesType.none:
-        duration = Duration.zero;
-        break;
-      case GesturesType.touch:
-        duration = isMove ? tiltConfig.moveDuration : tiltConfig.leaveDuration;
-        break;
-      case GesturesType.hover:
-        duration = isMove ? tiltConfig.moveDuration : tiltConfig.leaveDuration;
-        break;
-      case GesturesType.sensors:
-        duration = tiltConfig.sensorMoveDuration;
-        break;
-    }
-    return duration;
+    return switch (currentGesturesType) {
+      GesturesType.none => Duration.zero,
+      GesturesType.touch ||
+      GesturesType.hover =>
+        isMove ? tiltConfig.moveDuration : tiltConfig.leaveDuration,
+      GesturesType.sensors => tiltConfig.sensorMoveDuration,
+    };
   }
 
   /// Tilt TweenAnimation Curve
@@ -56,21 +47,12 @@ mixin TiltTweenAnimation {
     GesturesType currentGesturesType,
     TiltConfig tiltConfig,
   ) {
-    late Curve curve;
-    switch (currentGesturesType) {
-      case GesturesType.none:
-        curve = Curves.linear;
-        break;
-      case GesturesType.touch:
-        curve = isMove ? tiltConfig.moveCurve : tiltConfig.leaveCurve;
-        break;
-      case GesturesType.hover:
-        curve = isMove ? tiltConfig.moveCurve : tiltConfig.leaveCurve;
-        break;
-      case GesturesType.sensors:
-        curve = Curves.linear;
-        break;
-    }
-    return curve;
+    return switch (currentGesturesType) {
+      GesturesType.none => Curves.linear,
+      GesturesType.touch ||
+      GesturesType.hover =>
+        isMove ? tiltConfig.moveCurve : tiltConfig.leaveCurve,
+      GesturesType.sensors => Curves.linear,
+    };
   }
 }

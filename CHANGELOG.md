@@ -2,6 +2,17 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.3.0
+
+### Breaking changes
+
+- Bumping Flutter SDK minimum version to `3.10.0`.
+
+### Improvements
+
+- Update Versions Compatibility.
+  (Sensors are not supported on the web platform until Flutter version 3.10)
+
 ## 2.2.1
 
 ### Improvements

@@ -106,11 +106,10 @@ Check out the [Live Demo][].
 ## Install 🎯
 ### Versions compatibility 🐦  
 
-|       Flutter       |  3.0.0+  |  3.3.0+  |  3.7.0+  |  
-|      ---------      | :------: | :------: | :------: |  
-| flutter_tilt 2.2.0+ |    ❌   |    ❌    |    ✅    |  
-| flutter_tilt 2.0.0+ |    ❌   |    ✅    |    ✅    |  
-| flutter_tilt 1.0.0+ |    ✅   |    ❌    |    ❌    |  
+|       Flutter       |  3.0.0+  |  3.10.0+  |  
+|      ---------      | :------: | :-------: |  
+| flutter_tilt 2.0.0+ |    ❌    |    ✅    |  
+| flutter_tilt 1.0.0+ |    ✅    |    ❌    | 
 
 
 ### Add package 📦  
