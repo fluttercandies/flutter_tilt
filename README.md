@@ -221,7 +221,7 @@ Tilt(
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | Create a widget that its child widget can be tilted. |  
 | childLayout | [ChildLayout][] | `ChildLayout()` | Other child layouts. <br/> e.g. parallax inner, outer, behind. |  
-| tiltStreamController | [StreamController&lt;TiltStreamModel&gt;][]? | `null` | `StreamController<TiltStreamModel>.broadcast()` to control the tilt |  
+| tiltStreamController | [StreamController&lt;TiltStreamModel&gt;][]? | `null` | `StreamController<TiltStreamModel>.broadcast()` to control the tilt. |  
 | disable | `bool` | `false` | Disable all effects. |  
 | fps | `int` | `60` | Gesture triggered frames. |  
 | border | `BoxBorder?` | `null` | BoxDecoration border. |  
@@ -256,21 +256,16 @@ Tilt(
 
 ```dart
 ...
-
 final StreamController<TiltStreamModel> tiltStreamController =
       StreamController<TiltStreamModel>.broadcast();
-
 ...
-
 /// The current gesture is being used
 tiltStreamController.add(
   TiltStreamModel(
     position: Offset(xx, xx),
   ),
 );
-
 ...
-
 /// Stop using the current gesture
 tiltStreamController.add(
   TiltStreamModel(
@@ -278,13 +273,12 @@ tiltStreamController.add(
     gestureUse: false,
   ),
 );
-
 ...
 ```
 
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
-| position <sup>`required`</sup> | `Offset` | - | The current trigger position, <br/> It will have the tilt effect of the corresponding position <br/> e.g. <br/> There is a widget size, width: 10, height: 10, <br/> (0, 0) Maximum tilt top left. <br/> (10, 10) Maximum tilt bottom right. |  
+| position <sup>`required`</sup> | `Offset` | - | The current trigger position, <br/> It will have the tilt effect of the corresponding position. <br/> e.g. <br/> There is a widget size, width: 10, height: 10, <br/> (0, 0): Maximum tilt top left. <br/> (10, 10): Maximum tilt bottom right. |  
 | gesturesType | `GesturesType` | `GesturesType.controller` | Trigger gesture type. <br/> It is triggered according to the [gesture priority](#gesture-priority-). <br/> If you need to customize the control with animation or other means. <br/> `Recommended` use of `GesturesType.controller`. <br/> If other types are used for triggering, <br/> Then it will be affected by the configuration and effects associated with that type. <br/> e.g. <br/> When custom triggering `GesturesType.sensors`. <br/> If `TiltConfig.enableSensorRevert` is configured to be false, <br/> it will also not revert to the initial state. |  
 | gestureUse | `bool` | `true` | Whether the gesture is being used. <br/> It is used to determine if the gesture is being used and will be processed according to the gesture priority. <br/> e.g. <br/> If `GesturesType.touch` is never assigned false when triggered, gestures with a lower priority than `GesturesType.touch` will never be triggered. |  
 
@@ -374,7 +368,7 @@ Open sourced under the MIT license.
 [Tilt widget parameters]: #tilt-widget-parameters-
 [TiltParallax widget parameters]: #tiltparallax-widget-parameters-
 [ChildLayout]: #childlayout-
-[StreamController&lt;TiltStreamModel&gt;]: #StreamController&lt;TiltStreamModel&gt;-
+[StreamController&lt;TiltStreamModel&gt;]: #streamcontrollertiltstreammodel-
 [TiltConfig]: #tiltconfig-
 [LightConfig]: #lightconfig-
 [ShadowConfig]: #shadowconfig-
