@@ -75,6 +75,8 @@
 
   - [ChildLayout][]
 
+  - [StreamController&lt;TiltStream&gt;][]
+
   - [TiltConfig][]
 
   - [LightConfig][]
@@ -145,7 +147,7 @@ dependencies:
 
 启用多个手势时，会按照优先级触发手势：
 
-> Touch > Hover > Sensors
+> Touch > Hover > Controller > Sensors
 
 
 ## 简单用法 📖  
@@ -219,6 +221,7 @@ Tilt(
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | 创建一个 widget，使 child widget 有倾斜效果。 |  
 | childLayout | [ChildLayout][] | `ChildLayout()` | 其它 child 布局. <br/> 例如：位于 child 外部、内部、后面的视差布局. |  
+| tiltStreamController | [StreamController&lt;TiltStream&gt;][]? | `null` | 使用 `StreamController<TiltStream>.broadcast()` 来自定义控制倾斜 |  
 | disable | `bool` | `false` | 禁用所有效果。 |  
 | fps | `int` | `60` | 手势触发的帧数。 |  
 | border | `BoxBorder?` | `null` | BoxDecoration border。 |  
@@ -247,6 +250,43 @@ Tilt(
 | outer | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 `child 外部` 的 widget。 <br/> 例如：视差效果。 |  
 | inner | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 `child 内部` 的 widget。 <br/> 例如：视差效果。 |  
 | behind | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 `child 后面` 的 widget。 <br/> 例如：视差效果。 |  
+
+
+### StreamController&lt;TiltStream&gt; 📄
+
+```dart
+...
+
+final StreamController<TiltStream> tiltStreamController =
+      StreamController<TiltStream>.broadcast();
+
+...
+
+/// 正在使用当前手势
+tiltStreamController.add(
+  TiltStream(
+    position: Offset(xx, xx),
+  ),
+);
+
+...
+
+/// 停止使用当前手势
+tiltStreamController.add(
+  TiltStream(
+    position: Offset(xx, xx),
+    gestureUse: false,
+  ),
+);
+
+...
+```
+
+| Parameter | Type | Default | Description |  
+| --- | --- | --- | --- |
+| position <sup>`required`</sup> | `Offset` | - | 当前触发的坐标位置， <br/> 会触发对应位置的倾斜效果 <br/> 例如： <br/> 有一个组件尺寸为 width: 10, height: 10, <br/> (0, 0) 会触发最左上的倾斜。 <br/> (10, 10) 会触发最右下的倾斜。 |  
+| gesturesType | `GesturesType` | `GesturesType.controller` | 触发手势类型。 <br/> 会根据[手势优先级](#手势优先级-) 进行触发。 <br/> 如果需要使用动画或其他方式自行控制， <br/> `推荐` 使用 `GesturesType.controller`。 <br/> 如果使用其他的类型进行触发， <br/> 那么就会受到对应类型相关配置、效果的影响。 <br/> 例如： <br/> 自行触发 `GesturesType.sensors` 的时候。 <br/> 配置 `TiltConfig.enableSensorRevert` 为 false 的情况下， <br/> 将同样不会复原至初始状态。 |  
+| gestureUse | `bool` | `true` | 手势是否正在使用。 <br/> 用于确定手势是否正在使用，并根据手势优先级进行处理。 <br/> 例如： <br/> 如果在触发 `GesturesType.touch` 的时候永远不赋值为 false，那么优先级低于 `GesturesType.touch` 的手势将永远不会被触发。 |  
 
 
 ### TiltConfig 📄  
@@ -334,6 +374,7 @@ Tilt(
 [Tilt widget 参数]: #tilt-widget-参数-
 [TiltParallax widget 参数]: #tiltparallax-widget-参数-
 [ChildLayout]: #childlayout-
+[StreamController&lt;TiltStream&gt;]: #StreamController&lt;TiltStream&gt;-
 [TiltConfig]: #tiltconfig-
 [LightConfig]: #lightconfig-
 [ShadowConfig]: #shadowconfig-

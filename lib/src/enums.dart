@@ -96,4 +96,4 @@ enum ShadowDirection {
 }
 
 /// 手势类型
-enum GesturesType { none, touch, hover, sensors }
+enum GesturesType { none, touch, hover, controller, sensors }

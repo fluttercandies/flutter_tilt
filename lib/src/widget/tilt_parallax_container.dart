@@ -12,7 +12,7 @@ class TiltParallaxContainer extends StatelessWidget with TiltTweenAnimation {
   ///
   /// 用作视差的 Widget
   ///
-  /// 只能在 [Tilt.childInner] 中使用
+  /// 只能在 [Tilt.childLayout] 中使用
   const TiltParallaxContainer({
     super.key,
     required this.child,

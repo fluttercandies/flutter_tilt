@@ -33,7 +33,7 @@ mixin TiltTweenAnimation {
     TiltConfig tiltConfig,
   ) {
     return switch (currentGesturesType) {
-      GesturesType.none => Duration.zero,
+      GesturesType.none || GesturesType.controller => Duration.zero,
       GesturesType.touch ||
       GesturesType.hover =>
         isMove ? tiltConfig.moveDuration : tiltConfig.leaveDuration,
@@ -54,7 +54,7 @@ mixin TiltTweenAnimation {
     TiltConfig tiltConfig,
   ) {
     return switch (currentGesturesType) {
-      GesturesType.none => Curves.linear,
+      GesturesType.none || GesturesType.controller => Curves.linear,
       GesturesType.touch ||
       GesturesType.hover =>
         isMove ? tiltConfig.moveCurve : tiltConfig.leaveCurve,

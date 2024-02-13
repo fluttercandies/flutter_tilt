@@ -2,6 +2,17 @@
 
 See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## Unreleased
+
+### New features
+
+- Add `Tilt.tiltStreamController` to provide custom control of the tilt.
+
+### Improvements
+
+- Improve gesture priority logic.
+- dart doc.
+
 ## 2.3.0
 
 ### Breaking changes

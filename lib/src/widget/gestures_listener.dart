@@ -53,11 +53,11 @@ class _GesturesListenerState extends State<GesturesListener> {
         onPointerMove: _tiltConfig.enableGestureTouch
             ? (PointerMoveEvent e) {
                 isTouch = true;
-                _tiltStreamController.add(
+                _tiltStreamController.sink.add(
                   TiltStream(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
-                    enableRevert: false,
+                    gestureUse: true,
                   ),
                 );
               }
@@ -65,11 +65,11 @@ class _GesturesListenerState extends State<GesturesListener> {
         onPointerUp: _tiltConfig.enableGestureTouch
             ? (PointerUpEvent e) {
                 isTouch = false;
-                _tiltStreamController.add(
+                _tiltStreamController.sink.add(
                   TiltStream(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
-                    enableRevert: true,
+                    gestureUse: false,
                   ),
                 );
               }
@@ -77,11 +77,11 @@ class _GesturesListenerState extends State<GesturesListener> {
         onPointerCancel: _tiltConfig.enableGestureTouch
             ? (PointerCancelEvent e) {
                 isTouch = false;
-                _tiltStreamController.add(
+                _tiltStreamController.sink.add(
                   TiltStream(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
-                    enableRevert: true,
+                    gestureUse: false,
                   ),
                 );
               }
@@ -97,11 +97,11 @@ class _GesturesListenerState extends State<GesturesListener> {
               ? (PointerHoverEvent e) {
                   if (isHover) {
                     if (isTouch) return;
-                    _tiltStreamController.add(
+                    _tiltStreamController.sink.add(
                       TiltStream(
                         position: e.localPosition,
                         gesturesType: GesturesType.hover,
-                        enableRevert: false,
+                        gestureUse: true,
                       ),
                     );
                   }
@@ -111,11 +111,11 @@ class _GesturesListenerState extends State<GesturesListener> {
               ? (PointerExitEvent e) {
                   if (isTouch) return;
                   isHover = false;
-                  _tiltStreamController.add(
+                  _tiltStreamController.sink.add(
                     TiltStream(
                       position: e.localPosition,
                       gesturesType: GesturesType.hover,
-                      enableRevert: true,
+                      gestureUse: false,
                     ),
                   );
                 }

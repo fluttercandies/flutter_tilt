@@ -17,11 +17,12 @@ import 'widget/tilt_stream_builder.dart';
 class Tilt extends TiltContainer {
   /// 倾斜
   ///
-  /// 在 [childInner] 中使用 [TiltParallax] 可以达到视差的效果
+  /// 在 [childLayout] 中使用 [TiltParallax] 可以达到视差的效果
   const Tilt({
     super.key,
     required super.child,
     super.childLayout = const ChildLayout(),
+    this.tiltStreamController,
     this.disable = false,
     this.fps = 60,
     super.border,
@@ -33,6 +34,9 @@ class Tilt extends TiltContainer {
     this.onGestureMove,
     this.onGestureLeave,
   });
+
+  /// Tilt Stream Controller
+  final async.StreamController<TiltStream>? tiltStreamController;
 
   /// 全部禁用
   final bool disable;
@@ -57,6 +61,9 @@ class Tilt extends TiltContainer {
 class _TiltState extends State<Tilt> {
   Widget get _child => widget.child;
   ChildLayout get _childLayout => widget.childLayout;
+  async.StreamController<TiltStream> get _tiltStreamController =>
+      widget.tiltStreamController ??
+      async.StreamController<TiltStream>.broadcast();
   bool get _disable => widget.disable;
   int get _fps => widget.fps;
   BoxBorder? get _border => widget.border;
@@ -102,7 +109,7 @@ class _TiltState extends State<Tilt> {
   @override
   void initState() {
     super.initState();
-    tiltStreamController = async.StreamController<TiltStream>.broadcast();
+    tiltStreamController = _tiltStreamController;
   }
 
   @override
@@ -173,18 +180,13 @@ class _TiltState extends State<Tilt> {
     if (tiltStream.gesturesType == GesturesType.none) return;
     if (!isInit || _disable) return;
     switch (tiltStream.gesturesType) {
-      case GesturesType.touch:
-        if (tiltStream.enableRevert ?? true) {
-          onGesturesRevert(tiltStream.position, tiltStream.gesturesType);
-        } else {
-          onGesturesMove(tiltStream.position, tiltStream.gesturesType);
-        }
+      case GesturesType.none:
         break;
-      case GesturesType.hover:
-        if (tiltStream.enableRevert ?? true) {
-          onGesturesRevert(tiltStream.position, tiltStream.gesturesType);
-        } else {
+      case GesturesType.touch || GesturesType.hover || GesturesType.controller:
+        if (tiltStream.gestureUse) {
           onGesturesMove(tiltStream.position, tiltStream.gesturesType);
+        } else {
+          onGesturesRevert(tiltStream.position, tiltStream.gesturesType);
         }
         break;
       case GesturesType.sensors:
@@ -197,8 +199,6 @@ class _TiltState extends State<Tilt> {
           currentPosition,
         );
         onGesturesMove(currentPosition, tiltStream.gesturesType);
-        break;
-      case GesturesType.none:
         break;
     }
   }
@@ -333,7 +333,7 @@ class TiltParallax extends TiltParallaxContainer {
   ///
   /// 一般用作视差的 Widget
   ///
-  /// 只能在 [Tilt.childInner] 中使用
+  /// 只能在 [Tilt.childLayout] 中使用
   const TiltParallax({
     super.key,
     required super.child,

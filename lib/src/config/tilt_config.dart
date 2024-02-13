@@ -100,7 +100,7 @@ class TiltConfig {
 
   /// 开启传感器倾斜复原
   ///
-  /// * true  倾斜后会按照 [sensorRevertFactor] 复原至初始状态
+  /// * true  倾斜后会按照 [sensorRevertFactor] 复原至 [TiltConfig.initial] 初始状态
   /// * false 保留最后倾斜的状态
   final bool enableSensorRevert;
 
