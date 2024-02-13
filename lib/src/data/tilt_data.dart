@@ -146,8 +146,8 @@ class TiltDataModel {
 
 /// 倾斜 Stream 数据
 @immutable
-class TiltStream {
-  const TiltStream({
+class TiltStreamModel {
+  const TiltStreamModel({
     required this.position,
     this.gesturesType = GesturesType.controller,
     this.gestureUse = true,

@@ -21,7 +21,7 @@ class GesturesListener extends StatefulWidget {
   final Widget child;
 
   /// TiltStreamController
-  final async.StreamController<TiltStream> tiltStreamController;
+  final async.StreamController<TiltStreamModel> tiltStreamController;
 
   final TiltConfig tiltConfig;
 
@@ -31,7 +31,7 @@ class GesturesListener extends StatefulWidget {
 
 class _GesturesListenerState extends State<GesturesListener> {
   Widget get _child => widget.child;
-  async.StreamController<TiltStream> get _tiltStreamController =>
+  async.StreamController<TiltStreamModel> get _tiltStreamController =>
       widget.tiltStreamController;
   TiltConfig get _tiltConfig => widget.tiltConfig;
 
@@ -54,7 +54,7 @@ class _GesturesListenerState extends State<GesturesListener> {
             ? (PointerMoveEvent e) {
                 isTouch = true;
                 _tiltStreamController.sink.add(
-                  TiltStream(
+                  TiltStreamModel(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
                     gestureUse: true,
@@ -66,7 +66,7 @@ class _GesturesListenerState extends State<GesturesListener> {
             ? (PointerUpEvent e) {
                 isTouch = false;
                 _tiltStreamController.sink.add(
-                  TiltStream(
+                  TiltStreamModel(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
                     gestureUse: false,
@@ -78,7 +78,7 @@ class _GesturesListenerState extends State<GesturesListener> {
             ? (PointerCancelEvent e) {
                 isTouch = false;
                 _tiltStreamController.sink.add(
-                  TiltStream(
+                  TiltStreamModel(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
                     gestureUse: false,
@@ -98,7 +98,7 @@ class _GesturesListenerState extends State<GesturesListener> {
                   if (isHover) {
                     if (isTouch) return;
                     _tiltStreamController.sink.add(
-                      TiltStream(
+                      TiltStreamModel(
                         position: e.localPosition,
                         gesturesType: GesturesType.hover,
                         gestureUse: true,
@@ -112,7 +112,7 @@ class _GesturesListenerState extends State<GesturesListener> {
                   if (isTouch) return;
                   isHover = false;
                   _tiltStreamController.sink.add(
-                    TiltStream(
+                    TiltStreamModel(
                       position: e.localPosition,
                       gesturesType: GesturesType.hover,
                       gestureUse: false,

@@ -75,7 +75,7 @@
 
   - [ChildLayout][]
 
-  - [StreamController&lt;TiltStream&gt;][]
+  - [StreamController&lt;TiltStreamModel&gt;][]
 
   - [TiltConfig][]
 
@@ -221,7 +221,7 @@ Tilt(
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | 创建一个 widget，使 child widget 有倾斜效果。 |  
 | childLayout | [ChildLayout][] | `ChildLayout()` | 其它 child 布局. <br/> 例如：位于 child 外部、内部、后面的视差布局. |  
-| tiltStreamController | [StreamController&lt;TiltStream&gt;][]? | `null` | 使用 `StreamController<TiltStream>.broadcast()` 来自定义控制倾斜 |  
+| tiltStreamController | [StreamController&lt;TiltStreamModel&gt;][]? | `null` | 使用 `StreamController<TiltStreamModel>.broadcast()` 来自定义控制倾斜 |  
 | disable | `bool` | `false` | 禁用所有效果。 |  
 | fps | `int` | `60` | 手势触发的帧数。 |  
 | border | `BoxBorder?` | `null` | BoxDecoration border。 |  
@@ -252,19 +252,19 @@ Tilt(
 | behind | `List<Widget>` | `<Widget>[]` | 与 Stack 一样，你可以使用 Stack 布局来创建一些位于 `child 后面` 的 widget。 <br/> 例如：视差效果。 |  
 
 
-### StreamController&lt;TiltStream&gt; 📄
+### StreamController&lt;TiltStreamModel&gt; 📄
 
 ```dart
 ...
 
-final StreamController<TiltStream> tiltStreamController =
-      StreamController<TiltStream>.broadcast();
+final StreamController<TiltStreamModel> tiltStreamController =
+      StreamController<TiltStreamModel>.broadcast();
 
 ...
 
 /// 正在使用当前手势
 tiltStreamController.add(
-  TiltStream(
+  TiltStreamModel(
     position: Offset(xx, xx),
   ),
 );
@@ -273,7 +273,7 @@ tiltStreamController.add(
 
 /// 停止使用当前手势
 tiltStreamController.add(
-  TiltStream(
+  TiltStreamModel(
     position: Offset(xx, xx),
     gestureUse: false,
   ),
@@ -374,7 +374,7 @@ tiltStreamController.add(
 [Tilt widget 参数]: #tilt-widget-参数-
 [TiltParallax widget 参数]: #tiltparallax-widget-参数-
 [ChildLayout]: #childlayout-
-[StreamController&lt;TiltStream&gt;]: #StreamController&lt;TiltStream&gt;-
+[StreamController&lt;TiltStreamModel&gt;]: #StreamController&lt;TiltStreamModel&gt;-
 [TiltConfig]: #tiltconfig-
 [LightConfig]: #lightconfig-
 [ShadowConfig]: #shadowconfig-

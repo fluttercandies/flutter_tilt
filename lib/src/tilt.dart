@@ -36,7 +36,7 @@ class Tilt extends TiltContainer {
   });
 
   /// Tilt Stream Controller
-  final async.StreamController<TiltStream>? tiltStreamController;
+  final async.StreamController<TiltStreamModel>? tiltStreamController;
 
   /// 全部禁用
   final bool disable;
@@ -61,9 +61,9 @@ class Tilt extends TiltContainer {
 class _TiltState extends State<Tilt> {
   Widget get _child => widget.child;
   ChildLayout get _childLayout => widget.childLayout;
-  async.StreamController<TiltStream> get _tiltStreamController =>
+  async.StreamController<TiltStreamModel> get _tiltStreamController =>
       widget.tiltStreamController ??
-      async.StreamController<TiltStream>.broadcast();
+      async.StreamController<TiltStreamModel>.broadcast();
   bool get _disable => widget.disable;
   int get _fps => widget.fps;
   BoxBorder? get _border => widget.border;
@@ -96,8 +96,8 @@ class _TiltState extends State<Tilt> {
   /// FPS 计时器
   async.Timer? _fpsTimer;
 
-  /// Touch 和 Hover 的 TiltStreamController
-  late async.StreamController<TiltStream> tiltStreamController;
+  /// TiltStreamController
+  late async.StreamController<TiltStreamModel> tiltStreamController;
 
   /// 当前坐标
   late Offset currentPosition = Utils.progressPosition(
@@ -175,30 +175,36 @@ class _TiltState extends State<Tilt> {
   }
 
   /// 手势 Stream 触发
-  void onGesturesStream(TiltStream? tiltStream) {
-    if (tiltStream == null) return;
-    if (tiltStream.gesturesType == GesturesType.none) return;
+  void onGesturesStream(TiltStreamModel? tiltStreamModel) {
+    if (tiltStreamModel == null) return;
+    if (tiltStreamModel.gesturesType == GesturesType.none) return;
     if (!isInit || _disable) return;
-    switch (tiltStream.gesturesType) {
+    switch (tiltStreamModel.gesturesType) {
       case GesturesType.none:
         break;
       case GesturesType.touch || GesturesType.hover || GesturesType.controller:
-        if (tiltStream.gestureUse) {
-          onGesturesMove(tiltStream.position, tiltStream.gesturesType);
+        if (tiltStreamModel.gestureUse) {
+          onGesturesMove(
+            tiltStreamModel.position,
+            tiltStreamModel.gesturesType,
+          );
         } else {
-          onGesturesRevert(tiltStream.position, tiltStream.gesturesType);
+          onGesturesRevert(
+            tiltStreamModel.position,
+            tiltStreamModel.gesturesType,
+          );
         }
         break;
       case GesturesType.sensors:
         // Sensors 只会触发 onGestureMove，不会触发 onGestureLeave
-        currentPosition += tiltStream.position * _tiltConfig.sensorFactor;
+        currentPosition += tiltStreamModel.position * _tiltConfig.sensorFactor;
         onGesturesSensorsRevert();
         currentPosition = Utils.constraintsPosition(
           width,
           height,
           currentPosition,
         );
-        onGesturesMove(currentPosition, tiltStream.gesturesType);
+        onGesturesMove(currentPosition, tiltStreamModel.gesturesType);
         break;
     }
   }

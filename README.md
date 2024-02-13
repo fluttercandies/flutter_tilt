@@ -75,7 +75,7 @@ Check out the [Live Demo][].
 
   - [ChildLayout][]
 
-  - [StreamController&lt;TiltStream&gt;][]
+  - [StreamController&lt;TiltStreamModel&gt;][]
 
   - [TiltConfig][]
 
@@ -221,7 +221,7 @@ Tilt(
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | Create a widget that its child widget can be tilted. |  
 | childLayout | [ChildLayout][] | `ChildLayout()` | Other child layouts. <br/> e.g. parallax inner, outer, behind. |  
-| tiltStreamController | [StreamController&lt;TiltStream&gt;][]? | `null` | `StreamController<TiltStream>.broadcast()` to control the tilt |  
+| tiltStreamController | [StreamController&lt;TiltStreamModel&gt;][]? | `null` | `StreamController<TiltStreamModel>.broadcast()` to control the tilt |  
 | disable | `bool` | `false` | Disable all effects. |  
 | fps | `int` | `60` | Gesture triggered frames. |  
 | border | `BoxBorder?` | `null` | BoxDecoration border. |  
@@ -252,19 +252,19 @@ Tilt(
 | behind | `List<Widget>` | `<Widget>[]` | As with Stack, you can use the Stack layout to create widgets that are behind of the child. <br/> e.g. parallax effects. |  
 
 
-### StreamController&lt;TiltStream&gt; 📄
+### StreamController&lt;TiltStreamModel&gt; 📄
 
 ```dart
 ...
 
-final StreamController<TiltStream> tiltStreamController =
-      StreamController<TiltStream>.broadcast();
+final StreamController<TiltStreamModel> tiltStreamController =
+      StreamController<TiltStreamModel>.broadcast();
 
 ...
 
 /// The current gesture is being used
 tiltStreamController.add(
-  TiltStream(
+  TiltStreamModel(
     position: Offset(xx, xx),
   ),
 );
@@ -273,7 +273,7 @@ tiltStreamController.add(
 
 /// Stop using the current gesture
 tiltStreamController.add(
-  TiltStream(
+  TiltStreamModel(
     position: Offset(xx, xx),
     gestureUse: false,
   ),
@@ -374,7 +374,7 @@ Open sourced under the MIT license.
 [Tilt widget parameters]: #tilt-widget-parameters-
 [TiltParallax widget parameters]: #tiltparallax-widget-parameters-
 [ChildLayout]: #childlayout-
-[StreamController&lt;TiltStream&gt;]: #StreamController&lt;TiltStream&gt;-
+[StreamController&lt;TiltStreamModel&gt;]: #StreamController&lt;TiltStreamModel&gt;-
 [TiltConfig]: #tiltconfig-
 [LightConfig]: #lightconfig-
 [ShadowConfig]: #shadowconfig-

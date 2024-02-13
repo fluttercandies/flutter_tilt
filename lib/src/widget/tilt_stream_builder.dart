@@ -25,8 +25,8 @@ class TiltStreamBuilder extends StatefulWidget {
     required this.builder,
   });
 
-  /// Touch 和 Hover 的 TiltStreamController
-  final async.StreamController<TiltStream> tiltStreamController;
+  /// TiltStreamController
+  final async.StreamController<TiltStreamModel> tiltStreamController;
 
   /// 是否禁用
   final bool disable;
@@ -39,8 +39,8 @@ class TiltStreamBuilder extends StatefulWidget {
   /// 当前坐标
   final Offset position;
 
-  /// 传感器 builder
-  final Widget Function(BuildContext, AsyncSnapshot<TiltStream>) builder;
+  /// Stream builder
+  final Widget Function(BuildContext, AsyncSnapshot<TiltStreamModel>) builder;
 
   @override
   State<TiltStreamBuilder> createState() => _TiltStreamBuilderState();
@@ -51,9 +51,9 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   int get _fps => widget.fps;
   TiltConfig get _tiltConfig => widget.tiltConfig;
   Offset get _position => widget.position;
-  async.StreamController<TiltStream> get _tiltStreamController =>
+  async.StreamController<TiltStreamModel> get _tiltStreamController =>
       widget.tiltStreamController;
-  Widget Function(BuildContext, AsyncSnapshot<TiltStream>) get _builder =>
+  Widget Function(BuildContext, AsyncSnapshot<TiltStreamModel>) get _builder =>
       widget.builder;
 
   /// 是否开启 Stream
@@ -62,20 +62,20 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   /// 传感器平台支持
   bool canSensorsPlatformSupport = Utils.sensorsPlatformSupport();
 
-  /// 初始 TiltStream
-  late TiltStream initialTiltStream = TiltStream(
+  /// 初始 TiltStreamModel
+  late TiltStreamModel initialTiltStreamModel = TiltStreamModel(
     position: _position,
     gesturesType: GesturesType.none,
   );
 
   /// Tilt Stream
-  late Stream<TiltStream> currentTiltStream;
+  late Stream<TiltStreamModel> currentTiltStream;
 
   /// 是否开启传感器
   bool enableSensors = true;
 
-  /// 最新 TiltStream（缓存）
-  late TiltStream latestTiltStream = initialTiltStream;
+  /// 最新 TiltStreamModel（缓存）
+  late TiltStreamModel latestTiltStreamModel = initialTiltStreamModel;
 
   /// 设备方向
   DeviceOrientation deviceOrientation = DeviceOrientation.portraitUp;
@@ -107,8 +107,8 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
 
         /// 陀螺仪处理
         gyroscopeEventStream()
-            .map<TiltStream>(
-              (gyroscopeEvent) => TiltStream(
+            .map<TiltStreamModel>(
+              (gyroscopeEvent) => TiltStreamModel(
                 position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
                 gesturesType: GesturesType.sensors,
               ),
@@ -122,8 +122,8 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
               trailing: true,
             )
             .listen(
-          (TiltStream tiltStream) {
-            _tiltStreamController.sink.add(tiltStream);
+          (TiltStreamModel tiltStreamModel) {
+            _tiltStreamController.sink.add(tiltStreamModel);
           },
         );
       }
@@ -139,32 +139,36 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<TiltStream>(
+    return StreamBuilder<TiltStreamModel>(
       stream: enableStream ? currentTiltStream.map(filterTiltStream) : null,
-      initialData: initialTiltStream,
+      initialData: initialTiltStreamModel,
       builder: _builder,
     );
   }
 
   /// 过滤 TiltStream
-  TiltStream filterTiltStream(TiltStream tiltStream) {
+  TiltStreamModel filterTiltStream(TiltStreamModel tiltStreamModel) {
     /// 当前手势是否最高优先级
     final bool isHighPriority = gesturesTypePriority(
-            tiltStream.gesturesType, latestTiltStream.gesturesType) ==
-        tiltStream.gesturesType;
+          tiltStreamModel.gesturesType,
+          latestTiltStreamModel.gesturesType,
+        ) ==
+        tiltStreamModel.gesturesType;
 
-    switch (tiltStream.gesturesType) {
+    switch (tiltStreamModel.gesturesType) {
       case GesturesType.none:
         break;
       case GesturesType.touch || GesturesType.hover || GesturesType.controller:
         if (isHighPriority) {
-          latestTiltStream = tiltStream;
+          latestTiltStreamModel = tiltStreamModel;
         } else {
-          if (!latestTiltStream.gestureUse) latestTiltStream = tiltStream;
+          if (!latestTiltStreamModel.gestureUse) {
+            latestTiltStreamModel = tiltStreamModel;
+          }
         }
 
         /// 避免 sensors 与其他手势触发冲突
-        if (!tiltStream.gestureUse) {
+        if (!tiltStreamModel.gestureUse) {
           gesturesHarmonizerTimer();
           enableSensors = true;
         } else {
@@ -174,22 +178,22 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
       case GesturesType.sensors:
         // 避免 sensors 与其他手势触发冲突
         if (enableSensors && _gesturesHarmonizerTimer == null) {
-          final sensorsX = tiltStream.position.dx;
-          final sensorsY = tiltStream.position.dy;
+          final sensorsX = tiltStreamModel.position.dx;
+          final sensorsY = tiltStreamModel.position.dy;
           final Offset tiltPosition = switch (deviceOrientation) {
             DeviceOrientation.portraitUp => Offset(sensorsX, sensorsY),
             DeviceOrientation.portraitDown => -Offset(sensorsX, sensorsY),
             DeviceOrientation.landscapeLeft => Offset(sensorsY, -sensorsX),
             DeviceOrientation.landscapeRight => Offset(-sensorsY, sensorsX),
           };
-          latestTiltStream = TiltStream(
+          latestTiltStreamModel = TiltStreamModel(
             position: tiltPosition,
-            gesturesType: tiltStream.gesturesType,
+            gesturesType: tiltStreamModel.gesturesType,
           );
         }
         break;
     }
-    return latestTiltStream;
+    return latestTiltStreamModel;
   }
 
   /// 加速度计事件处理（如：设备方向）
