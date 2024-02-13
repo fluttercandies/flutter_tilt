@@ -168,7 +168,7 @@ class TiltStreamModel {
   /// 手势优先级：
   /// [GesturesType.touch] > [GesturesType.hover] > [GesturesType.controller] > [GesturesType.sensors]
   ///
-  /// 如果需要使用动画或其他方式自行控制，
+  /// 如果需要自定义动画或其他方式自行控制，
   ///
   /// *推荐* 使用 [GesturesType.controller]
   ///

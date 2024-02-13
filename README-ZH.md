@@ -279,7 +279,7 @@ tiltStreamController.add(
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
 | position <sup>`required`</sup> | `Offset` | - | 当前触发的坐标位置， <br/> 会触发对应位置的倾斜效果。 <br/> 例如： <br/> 有一个组件尺寸为 width: 10, height: 10, <br/> (0, 0)：会触发最左上的倾斜。 <br/> (10, 10)：会触发最右下的倾斜。 |  
-| gesturesType | `GesturesType` | `GesturesType.controller` | 触发手势类型。 <br/> 会根据 [手势优先级](#手势优先级-) 进行触发。 <br/> 如果需要使用动画或其他方式自行控制， <br/> `推荐` 使用 `GesturesType.controller`。 <br/> 如果使用其他的类型进行触发， <br/> 那么就会受到对应类型相关配置、效果的影响。 <br/> 例如： <br/> 自行触发 `GesturesType.sensors` 的时候。 <br/> 配置 `TiltConfig.enableSensorRevert` 为 false 的情况下， <br/> 将同样不会复原至初始状态。 |  
+| gesturesType | `GesturesType` | `GesturesType.controller` | 触发手势类型。 <br/> 会根据 [手势优先级](#手势优先级-) 进行触发。 <br/> 如果需要自定义动画或其他方式自行控制， <br/> `推荐` 使用 `GesturesType.controller`。 <br/> 如果使用其他的类型进行触发， <br/> 那么就会受到对应类型相关配置、效果的影响。 <br/> 例如： <br/> 自行触发 `GesturesType.sensors` 的时候。 <br/> 配置 `TiltConfig.enableSensorRevert` 为 false 的情况下， <br/> 将同样不会复原至初始状态。 |  
 | gestureUse | `bool` | `true` | 手势是否正在使用。 <br/> 用于确定手势是否正在使用，并根据手势优先级进行处理。 <br/> 例如： <br/> 如果在触发 `GesturesType.touch` 的时候永远不赋值为 false，那么优先级低于 `GesturesType.touch` 的手势将永远不会被触发。 |  
 
 
