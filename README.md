@@ -300,8 +300,8 @@ tiltStreamController.add(
 | sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | Animation duration during sensor move. |  
 | enableGestureHover | `bool` | `true` | Hover gesture triggered tilt. |  
 | enableGestureTouch | `bool` | `true` | Touch gesture triggered tilt. |  
-| enableRevert | `bool` | `true` | Enable tilt tevert, will revert to the initial state (touch, hover gestures only). |  
-| enableOutsideAreaMove | `bool` | `true` | Tilt can continue to be triggered outside the area. <br/> (`only when the pointer is pressed and moved`) |  
+| enableRevert | `bool` | `true` | Enable tilt tevert, will revert to the initial state (touch, hover, controller gestures only). |  
+| enableOutsideAreaMove | `bool` | `true` | Tilt can continue to be triggered outside the area. <br/> (touch, controller gestures only). |  
 | moveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during gesture move (touch, hover gestures only). |  
 | leaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after gesture leave (touch, hover gestures only). |  
 | moveCurve | `Curve` | `Curves.linear` | Animation curve during gesture move (touch, hover gestures only). |  

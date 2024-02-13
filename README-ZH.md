@@ -300,8 +300,8 @@ tiltStreamController.add(
 | sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | 传感器移动时的动画持续时间。 |  
 | enableGestureHover | `bool` | `true` | Hover 手势触发倾斜。 |  
 | enableGestureTouch | `bool` | `true` | Touch 手势触发倾斜。 |  
-| enableRevert | `bool` | `true` | 启用倾斜复原，会复原至初始状态（仅 touch, hover 手势）。 |  
-| enableOutsideAreaMove | `bool` | `true` | 可以继续在区域外触发倾斜。 <br/> (`仅在指针 touch 按下并移动时`) |  
+| enableRevert | `bool` | `true` | 启用倾斜复原，会复原至初始状态（仅 touch, hover, controller 手势）。 |  
+| enableOutsideAreaMove | `bool` | `true` | 可以继续在区域外触发倾斜。 <br/> (仅 touch, controller 手势)。 |  
 | moveDuration | `Duration` | `Duration(milliseconds: 100)` | 手势移动时的动画持续时间（仅 touch, hover 手势）。 |  
 | leaveDuration | `Duration` | `Duration(milliseconds: 300)` | 手势离开后的动画持续时间（仅 touch, hover 手势）。 |  
 | moveCurve | `Curve` | `Curves.linear` | 手势移动时的动画曲线（仅 touch, hover 手势）。 |  
