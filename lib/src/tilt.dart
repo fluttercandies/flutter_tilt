@@ -119,7 +119,6 @@ class _TiltState extends State<Tilt> {
   @override
   void dispose() {
     _fpsTimer?.cancel();
-    _tiltStreamController?.close();
     defaultTiltStreamController.close();
     super.dispose();
   }

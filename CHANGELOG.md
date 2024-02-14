@@ -8,6 +8,7 @@
 ### Fixes
 
 - Fix assignment usage logic in `Tilt.tiltStreamController`.
+- Fix `Tilt.tiltStreamController` closes prematurely.
 
 ## 2.4.0-beta.1
 

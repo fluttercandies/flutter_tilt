@@ -129,7 +129,6 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   @override
   void dispose() {
     _gesturesHarmonizerTimer?.cancel();
-    _tiltStreamController.close();
     super.dispose();
   }
 
