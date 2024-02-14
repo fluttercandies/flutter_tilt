@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.4.0-beta.2
+
+### Fixes
+
+- Fix assignment usage logic in `Tilt.tiltStreamController`.
+
 ## 2.4.0-beta.1
 
 ### New features

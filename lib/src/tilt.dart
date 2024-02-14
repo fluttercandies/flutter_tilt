@@ -63,9 +63,8 @@ class Tilt extends TiltContainer {
 class _TiltState extends State<Tilt> {
   Widget get _child => widget.child;
   ChildLayout get _childLayout => widget.childLayout;
-  async.StreamController<TiltStreamModel> get _tiltStreamController =>
-      widget.tiltStreamController ??
-      async.StreamController<TiltStreamModel>.broadcast();
+  async.StreamController<TiltStreamModel>? get _tiltStreamController =>
+      widget.tiltStreamController;
   bool get _disable => widget.disable;
   int get _fps => widget.fps;
   BoxBorder? get _border => widget.border;
@@ -98,8 +97,10 @@ class _TiltState extends State<Tilt> {
   /// FPS 计时器
   async.Timer? _fpsTimer;
 
-  /// TiltStreamController
-  late async.StreamController<TiltStreamModel> tiltStreamController;
+  /// 默认 TiltStreamController
+  ///
+  /// [widget.tiltStreamController] 为 null 时使用
+  late async.StreamController<TiltStreamModel> defaultTiltStreamController;
 
   /// 当前坐标
   late Offset currentPosition = Utils.progressPosition(
@@ -111,18 +112,23 @@ class _TiltState extends State<Tilt> {
   @override
   void initState() {
     super.initState();
-    tiltStreamController = _tiltStreamController;
+    defaultTiltStreamController =
+        async.StreamController<TiltStreamModel>.broadcast();
   }
 
   @override
   void dispose() {
     _fpsTimer?.cancel();
-    tiltStreamController.close();
+    _tiltStreamController?.close();
+    defaultTiltStreamController.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final async.StreamController<TiltStreamModel> tiltStreamController =
+        _tiltStreamController ?? defaultTiltStreamController;
+
     return GesturesListener(
       tiltStreamController: tiltStreamController,
       tiltConfig: _tiltConfig,

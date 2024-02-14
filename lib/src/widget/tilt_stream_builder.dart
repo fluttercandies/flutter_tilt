@@ -68,9 +68,6 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     gesturesType: GesturesType.none,
   );
 
-  /// Tilt Stream
-  late Stream<TiltStreamModel> currentTiltStream;
-
   /// 是否开启传感器
   bool enableSensors = true;
 
@@ -86,7 +83,6 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   @override
   void initState() {
     super.initState();
-    currentTiltStream = _tiltStreamController.stream;
 
     /// 传感器处理
     if (canSensorsPlatformSupport &&
@@ -140,7 +136,9 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<TiltStreamModel>(
-      stream: enableStream ? currentTiltStream.map(filterTiltStream) : null,
+      stream: enableStream
+          ? _tiltStreamController.stream.map(filterTiltStream)
+          : null,
       initialData: initialTiltStreamModel,
       builder: _builder,
     );
