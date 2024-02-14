@@ -7,6 +7,7 @@ See the [Migration Guide](guides/migration_guide.md) for the details of breaking
 ### New features
 
 - Add `Tilt.tiltStreamController` to provide custom control of the tilt.
+- Add `TiltConfig.controllerMoveDuration`, `TiltConfig.controllerLeaveDuration`.
 
 ### Improvements
 

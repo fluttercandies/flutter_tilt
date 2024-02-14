@@ -33,6 +33,8 @@ class TiltConfig {
     this.leaveDuration = const Duration(milliseconds: 300),
     this.moveCurve = Curves.linear,
     this.leaveCurve = Curves.linear,
+    this.controllerMoveDuration = const Duration(milliseconds: 100),
+    this.controllerLeaveDuration = const Duration(milliseconds: 300),
   }) : assert(sensorRevertFactor >= 0 && sensorRevertFactor <= 1);
 
   /// 禁用
@@ -48,10 +50,10 @@ class TiltConfig {
   /// 你可以超过这个范围，但是手势移动过程中的最大倾斜量始终按照 [angle] 进行倾斜
   ///
   /// 例如：
-  /// * (0, 0) 会保持平面
-  /// * (1.0, 1.0) 会倾斜左上角 [angle] 最大角度
-  /// * (-1.0, -1.0) 会倾斜右下角 [angle] 最大角度
-  /// * (2, 2) 会倾斜左上角 [angle] 最大角度*2
+  /// - (0, 0) 会保持平面
+  /// - (1.0, 1.0) 会倾斜左上角 [angle] 最大角度
+  /// - (-1.0, -1.0) 会倾斜右下角 [angle] 最大角度
+  /// - (2, 2) 会倾斜左上角 [angle] 最大角度*2
   /// {@endtemplate}
   final Offset? initial;
 
@@ -59,11 +61,11 @@ class TiltConfig {
   ///
   /// {@template tilt.TiltConfig.angle}
   /// 例如：
-  /// * 0 会停止不动
-  /// * 180 会翻转
+  /// - 0 会停止不动
+  /// - 180 会翻转
   ///
   /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的阴影关系
-  /// * [ShadowConfig]
+  /// - [ShadowConfig]
   /// {@endtemplate}
   final double angle;
 
@@ -82,8 +84,8 @@ class TiltConfig {
   /// 切换触摸区域向上或向下倾斜
   ///
   /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的关系效果
-  /// * [LightConfig.enableReverse]
-  /// * [ShadowConfig.enableReverse]
+  /// - [LightConfig.enableReverse]
+  /// - [ShadowConfig.enableReverse]
   /// {@endtemplate}
   final bool enableReverse;
 
@@ -92,71 +94,116 @@ class TiltConfig {
 
   /// 开启传感器触发倾斜
   ///
+  /// 仅对以下手势有效：
+  /// [GesturesType.sensors]
+  ///
   /// 设备陀螺仪传感器触发倾斜
   final bool enableGestureSensors;
 
   /// 传感器触发系数（灵敏度）
+  ///
+  /// 仅对以下手势有效：
+  /// [GesturesType.sensors]
   final double sensorFactor;
 
   /// 开启传感器倾斜复原
   ///
-  /// * true  倾斜后会按照 [sensorRevertFactor] 复原至 [TiltConfig.initial] 初始状态
-  /// * false 保留最后倾斜的状态
+  /// 仅对以下手势有效：
+  /// [GesturesType.sensors]
+  ///
+  /// - true  倾斜后会按照 [sensorRevertFactor] 复原至 [TiltConfig.initial] 初始状态
+  /// - false 保留最后倾斜的状态
   final bool enableSensorRevert;
 
   /// 传感器复原系数（阻尼）
+  ///
+  /// 仅对以下手势有效：
+  /// [GesturesType.sensors]
   ///
   /// 阻尼范围：0-1
   final double sensorRevertFactor;
 
   /// 传感器移动时的动画持续时间
+  ///
+  /// 仅对以下手势有效：
+  /// [GesturesType.sensors]
   final Duration sensorMoveDuration;
 
   /// 开启手势 Hover 触发倾斜
+  ///
+  /// 仅对以下手势有效：
+  /// [GesturesType.hover]
   final bool enableGestureHover;
 
   /// 开启手势 Touch 触发倾斜
+  ///
+  /// 仅对以下手势有效：
+  /// [GesturesType.touch]
   final bool enableGestureTouch;
 
   /// 开启倾斜复原
   ///
-  /// `仅对手势 Touch Hover 有效`
+  /// 仅对以下手势有效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  /// [GesturesType.controller]
   ///
-  /// * true  退出触发区域后会复原至初始状态
-  /// * false 保留最后倾斜的状态
+  /// - true  退出触发区域后会复原至初始状态
+  /// - false 保留最后倾斜的状态
   final bool enableRevert;
 
   /// 开启倾斜过程中区域外可以继续移动
   ///
-  /// `仅对手势 Touch 按下后的移动有效`
-  /// [GesturesListener] 触发的 [Listener.onPointerMove]
+  /// 仅对以下手势有效：
+  /// [GesturesType.touch]
+  /// [GesturesType.controller]
   ///
   /// 当触发手势移动的倾斜过程中，
   /// 手势移动到区域外是否可以继续移动。
   ///
-  /// * true: 手势触发过程中超出区域可以继续移动
-  /// * flase: 超出区域后回到初始状态
+  /// - true: 手势触发过程中超出区域可以继续移动
+  /// - flase: 超出区域后回到初始状态
   final bool enableOutsideAreaMove;
 
   /// 手势移动时的动画持续时间
   ///
-  /// `仅对手势 Touch Hover 有效`
+  /// 仅对以下手势有效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
   final Duration moveDuration;
 
   /// 手势离开后的动画持续时间
   ///
-  /// `仅对手势 Touch Hover 有效`
+  /// 仅对以下手势有效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
   final Duration leaveDuration;
 
   /// 手势移动时的动画曲线
   ///
-  /// `仅对手势 Touch Hover 有效`
+  /// 仅对以下手势有效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
   final Curve moveCurve;
 
   /// 手势离开后的动画曲线
   ///
-  /// `仅对手势 Touch Hover 有效`
+  /// 仅对以下手势有效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
   final Curve leaveCurve;
+
+  /// [GesturesType.controller] 移动时的动画持续时间
+  ///
+  /// 仅对以下手势有效：
+  /// [GesturesType.controller]
+  final Duration controllerMoveDuration;
+
+  /// [GesturesType.controller] 离开后的动画持续时间
+  ///
+  /// 仅对以下手势有效：
+  /// [GesturesType.controller]
+  final Duration controllerLeaveDuration;
 
   TiltConfig copyWith({
     bool? disable,
@@ -178,6 +225,8 @@ class TiltConfig {
     Duration? leaveDuration,
     Curve? moveCurve,
     Curve? leaveCurve,
+    Duration? controllerMoveDuration,
+    Duration? controllerLeaveDuration,
   }) {
     return TiltConfig(
       disable: disable ?? this.disable,
@@ -200,6 +249,10 @@ class TiltConfig {
       leaveDuration: leaveDuration ?? this.leaveDuration,
       moveCurve: moveCurve ?? this.moveCurve,
       leaveCurve: leaveCurve ?? this.leaveCurve,
+      controllerMoveDuration:
+          controllerMoveDuration ?? this.controllerMoveDuration,
+      controllerLeaveDuration:
+          controllerLeaveDuration ?? this.controllerLeaveDuration,
     );
   }
 
@@ -231,12 +284,14 @@ class TiltConfig {
         other.moveDuration == moveDuration &&
         other.leaveDuration == leaveDuration &&
         other.moveCurve == moveCurve &&
-        other.leaveCurve == leaveCurve;
+        other.leaveCurve == leaveCurve &&
+        other.controllerMoveDuration == controllerMoveDuration &&
+        other.controllerLeaveDuration == controllerLeaveDuration;
   }
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       disable,
       initial,
       angle,
@@ -256,7 +311,9 @@ class TiltConfig {
       leaveDuration,
       moveCurve,
       leaveCurve,
-    );
+      controllerMoveDuration,
+      controllerLeaveDuration,
+    ]);
   }
 }
 
@@ -309,14 +366,14 @@ class ChildLayout {
 class TiltDirection {
   /// 倾斜方向
   ///
-  /// * 范围 (x, y)：(1, 1) 至 (-1, -1)
-  /// * 中心 (x, y)：(0, 0)
+  /// - 范围 (x, y)：(1, 1) 至 (-1, -1)
+  /// - 中心 (x, y)：(0, 0)
   ///
   /// 例如：
-  /// * (0, 0)    中心不倾斜
-  /// * (1, 1)    最左上方
-  /// * (0, 1)    最上方
-  /// * (0, 0.9)  上方 0.9 比例的位置
+  /// - (0, 0)    中心不倾斜
+  /// - (1, 1)    最左上方
+  /// - (0, 1)    最上方
+  /// - (0, 0.9)  上方 0.9 比例的位置
   const TiltDirection(this._dx, this._dy)
       : assert(_dx <= 1.0 && _dx >= -1.0),
         assert(_dy <= 1.0 && _dy >= -1.0);

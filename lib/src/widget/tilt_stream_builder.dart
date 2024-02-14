@@ -169,7 +169,16 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
 
         /// 避免 sensors 与其他手势触发冲突
         if (!tiltStreamModel.gestureUse) {
-          gesturesHarmonizerTimer();
+          switch (tiltStreamModel.gesturesType) {
+            case GesturesType.touch || GesturesType.hover:
+              gesturesHarmonizerTimer(_tiltConfig.leaveDuration);
+              break;
+            case GesturesType.controller:
+              gesturesHarmonizerTimer(_tiltConfig.controllerLeaveDuration);
+              break;
+            default:
+              break;
+          }
           enableSensors = true;
         } else {
           enableSensors = false;
@@ -228,10 +237,10 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   /// 开启避免 sensors 与其他手势冲突的计时器
   ///
   /// 避免其他手势离开后的动画与 sensors 冲突（出现闪现）
-  void gesturesHarmonizerTimer() {
+  void gesturesHarmonizerTimer(Duration duration) {
     _gesturesHarmonizerTimer?.cancel();
     _gesturesHarmonizerTimer = async.Timer(
-      _tiltConfig.leaveDuration,
+      duration,
       () => _gesturesHarmonizerTimer = null,
     );
   }

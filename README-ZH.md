@@ -293,19 +293,21 @@ tiltStreamController.add(
 | direction | `List<TiltDirection>?` | `null` | 倾斜方向，多方向、自定义方向值。 |  
 | enableReverse | `bool` | `false` | 倾斜反向，可以向上或向下倾斜。 |  
 | filterQuality | `FilterQuality` | `null` | Flutter FilterQuality。 |  
-| enableGestureSensors | `bool` | `true` | 陀螺仪传感器触发倾斜。 |  
-| sensorFactor | `double` | `10.0` | 传感器触发系数（灵敏度）。 |  
-| enableSensorRevert | `bool` | `true` | 启用传感器倾斜复原，会复原至初始状态。 |  
-| sensorRevertFactor | `double` | `0.05` | 传感器复原系数（阻尼），数值范围：`0-1`。 |  
-| sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | 传感器移动时的动画持续时间。 |  
-| enableGestureHover | `bool` | `true` | Hover 手势触发倾斜。 |  
-| enableGestureTouch | `bool` | `true` | Touch 手势触发倾斜。 |  
-| enableRevert | `bool` | `true` | 启用倾斜复原，会复原至初始状态（仅 touch, hover, controller 手势）。 |  
-| enableOutsideAreaMove | `bool` | `true` | 可以继续在区域外触发倾斜。 <br/> (仅 touch, controller 手势)。 |  
-| moveDuration | `Duration` | `Duration(milliseconds: 100)` | 手势移动时的动画持续时间（仅 touch, hover 手势）。 |  
-| leaveDuration | `Duration` | `Duration(milliseconds: 300)` | 手势离开后的动画持续时间（仅 touch, hover 手势）。 |  
-| moveCurve | `Curve` | `Curves.linear` | 手势移动时的动画曲线（仅 touch, hover 手势）。 |  
-| leaveCurve | `Curve` | `Curves.linear` | 手势离开后的动画曲线（仅 touch, hover 手势）。 |  
+| enableGestureSensors | `bool` | `true` | 陀螺仪传感器触发倾斜。 <br/> 仅以下手势生效： <br/> `GesturesType.sensors` |  
+| sensorFactor | `double` | `10.0` | 传感器触发系数（灵敏度）。 <br/> 仅以下手势生效： <br/> `GesturesType.sensors` |  
+| enableSensorRevert | `bool` | `true` | 启用传感器倾斜复原，会复原至初始状态。 <br/> 仅以下手势生效： <br/> `GesturesType.sensors` |  
+| sensorRevertFactor | `double` | `0.05` | 传感器复原系数（阻尼），数值范围：`0-1`。 <br/> 仅以下手势生效： <br/> `GesturesType.sensors` |  
+| sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | 传感器移动时的动画持续时间。 <br/> 仅以下手势生效： <br/> `GesturesType.sensors` |  
+| enableGestureHover | `bool` | `true` | Hover 手势触发倾斜。 <br/> 仅以下手势生效： <br/> `GesturesType.hover` |  
+| enableGestureTouch | `bool` | `true` | Touch 手势触发倾斜。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` |  
+| enableRevert | `bool` | `true` | 启用倾斜复原，会复原至初始状态。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` <br/> `GesturesType.controller` |  
+| enableOutsideAreaMove | `bool` | `true` | 可以继续在区域外触发倾斜。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.controller` |  
+| moveDuration | `Duration` | `Duration(milliseconds: 100)` | 手势移动时的动画持续时间。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| leaveDuration | `Duration` | `Duration(milliseconds: 300)` | 手势离开后的动画持续时间。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| moveCurve | `Curve` | `Curves.linear` | 手势移动时的动画曲线。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| leaveCurve | `Curve` | `Curves.linear` | 手势离开后的动画曲线。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| controllerMoveDuration | `Duration` | `Duration(milliseconds: 100)` | controller 手势移动时的动画持续时间。 <br/> 仅以下手势生效： <br/> `GesturesType.controller` |  
+| controllerLeaveDuration | `Duration` | `Duration(milliseconds: 300)` | controller 手势离开后的动画持续时间。 <br/> 仅以下手势生效： <br/> `GesturesType.controller` |  
 
 
 ### LightConfig 📄  

@@ -33,10 +33,13 @@ mixin TiltTweenAnimation {
     TiltConfig tiltConfig,
   ) {
     return switch (currentGesturesType) {
-      GesturesType.none || GesturesType.controller => Duration.zero,
+      GesturesType.none => Duration.zero,
       GesturesType.touch ||
       GesturesType.hover =>
         isMove ? tiltConfig.moveDuration : tiltConfig.leaveDuration,
+      GesturesType.controller => isMove
+          ? tiltConfig.controllerMoveDuration
+          : tiltConfig.controllerLeaveDuration,
       GesturesType.sensors => tiltConfig.sensorMoveDuration,
     };
   }

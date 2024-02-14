@@ -293,19 +293,21 @@ tiltStreamController.add(
 | direction | `List<TiltDirection>?` | `null` | Tilt Direction, multiple directions, customized direction values. |  
 | enableReverse | `bool` | `false` | Tilt reverse, can be tilted up or down. |  
 | filterQuality | `FilterQuality` | `null` | Flutter FilterQuality. |  
-| enableGestureSensors | `bool` | `true` | Gyroscope sensor triggered tilt. |  
-| sensorFactor | `double` | `10.0` | Sensor trigger factor (sensitivity). |  
-| enableSensorRevert | `bool` | `true` | Enable sensor tilt revert, will revert to the initial state. |  
-| sensorRevertFactor | `double` | `0.05` | Sensor revert factor (damping), range of values: `0-1`. |  
-| sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | Animation duration during sensor move. |  
-| enableGestureHover | `bool` | `true` | Hover gesture triggered tilt. |  
-| enableGestureTouch | `bool` | `true` | Touch gesture triggered tilt. |  
-| enableRevert | `bool` | `true` | Enable tilt tevert, will revert to the initial state (touch, hover, controller gestures only). |  
-| enableOutsideAreaMove | `bool` | `true` | Tilt can continue to be triggered outside the area. <br/> (touch, controller gestures only). |  
-| moveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during gesture move (touch, hover gestures only). |  
-| leaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after gesture leave (touch, hover gestures only). |  
-| moveCurve | `Curve` | `Curves.linear` | Animation curve during gesture move (touch, hover gestures only). |  
-| leaveCurve | `Curve` | `Curves.linear` | Animation curve after gesture leave (touch, hover gestures only). |  
+| enableGestureSensors | `bool` | `true` | Gyroscope sensor triggered tilt. <br/> Only the following gestures: <br/> `GesturesType.sensors` |  
+| sensorFactor | `double` | `10.0` | Sensor trigger factor (sensitivity). <br/> Only the following gestures: <br/> `GesturesType.sensors` |  
+| enableSensorRevert | `bool` | `true` | Enable sensor tilt revert, will revert to the initial state. <br/> Only the following gestures: <br/> `GesturesType.sensors` |  
+| sensorRevertFactor | `double` | `0.05` | Sensor revert factor (damping), range of values: `0-1`. <br/> Only the following gestures: <br/> `GesturesType.sensors` |  
+| sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | Animation duration during sensor move. <br/> Only the following gestures: <br/> `GesturesType.sensors` |  
+| enableGestureHover | `bool` | `true` | Hover gesture triggered tilt. <br/> Only the following gestures: <br/> `GesturesType.hover` |  
+| enableGestureTouch | `bool` | `true` | Touch gesture triggered tilt. <br/> Only the following gestures: <br/> `GesturesType.touch` |  
+| enableRevert | `bool` | `true` | Enable tilt tevert, will revert to the initial state. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` <br/> `GesturesType.controller` |  
+| enableOutsideAreaMove | `bool` | `true` | Tilt can continue to be triggered outside the area. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.controller` |  
+| moveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during gesture move. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| leaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after gesture leave. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| moveCurve | `Curve` | `Curves.linear` | Animation curve during gesture move. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| leaveCurve | `Curve` | `Curves.linear` | Animation curve after gesture leave. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| controllerMoveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during controller gesture move. <br/> Only the following gestures: <br/> `GesturesType.controller` |  
+| controllerLeaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after controller gesture leave. <br/> Only the following gestures: <br/> `GesturesType.controller` |  
 
 
 ### LightConfig 📄  
