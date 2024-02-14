@@ -67,6 +67,14 @@ void main() {
         tiltConfig.moveDuration,
       );
       expect(
+        tiltTweenAnimationDuration(false, GesturesType.controller, tiltConfig),
+        tiltConfig.controllerLeaveDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(true, GesturesType.controller, tiltConfig),
+        tiltConfig.controllerMoveDuration,
+      );
+      expect(
         tiltTweenAnimationDuration(false, GesturesType.sensors, tiltConfig),
         tiltConfig.sensorMoveDuration,
       );
@@ -103,6 +111,14 @@ void main() {
       expect(
         tiltTweenAnimationCurve(true, GesturesType.hover, tiltConfig),
         tiltConfig.moveCurve,
+      );
+      expect(
+        tiltTweenAnimationCurve(false, GesturesType.controller, tiltConfig),
+        Curves.linear,
+      );
+      expect(
+        tiltTweenAnimationCurve(true, GesturesType.controller, tiltConfig),
+        Curves.linear,
       );
       expect(
         tiltTweenAnimationCurve(false, GesturesType.sensors, tiltConfig),
