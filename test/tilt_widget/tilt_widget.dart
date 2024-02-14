@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 
@@ -5,6 +7,7 @@ class TiltWidget extends StatelessWidget {
   const TiltWidget({
     super.key,
     this.childLayout = const ChildLayout(),
+    this.tiltStreamController,
     this.disable = false,
     this.fps = 60,
     this.border,
@@ -18,6 +21,7 @@ class TiltWidget extends StatelessWidget {
   });
 
   final ChildLayout childLayout;
+  final StreamController<TiltStreamModel>? tiltStreamController;
   final bool disable;
   final int fps;
   final BoxBorder? border;
@@ -37,6 +41,7 @@ class TiltWidget extends StatelessWidget {
         body: Tilt(
           key: const Key('tilt_widget'),
           childLayout: childLayout,
+          tiltStreamController: tiltStreamController,
           disable: disable,
           fps: fps,
           border: border,

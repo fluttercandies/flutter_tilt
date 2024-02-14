@@ -36,6 +36,8 @@ class Tilt extends TiltContainer {
   });
 
   /// Tilt Stream Controller
+  ///
+  /// StreamController<TiltStreamModel>.broadcast()
   final async.StreamController<TiltStreamModel>? tiltStreamController;
 
   /// 全部禁用
