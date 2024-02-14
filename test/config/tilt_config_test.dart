@@ -26,6 +26,8 @@ void main() {
         leaveDuration: Duration.zero,
         moveCurve: Curves.bounceIn,
         leaveCurve: Curves.bounceIn,
+        controllerMoveDuration: Duration.zero,
+        controllerLeaveDuration: Duration.zero,
       );
       final TiltConfig tiltConfigCopyWith = tiltConfig.copyWith(
         disable: true,
@@ -47,6 +49,8 @@ void main() {
         leaveDuration: Duration.zero,
         moveCurve: Curves.bounceIn,
         leaveCurve: Curves.bounceIn,
+        controllerMoveDuration: Duration.zero,
+        controllerLeaveDuration: Duration.zero,
       );
       expect(tiltConfig, tiltConfig.copyWith());
       expect(tiltConfigCopyWith, tiltConfigExpect);
