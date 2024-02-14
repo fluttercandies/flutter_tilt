@@ -193,4 +193,25 @@ class TiltStreamModel {
   /// - [true]  手势正在使用
   /// - [false] 手势离开或不再使用
   final bool gestureUse;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is TiltStreamModel &&
+        other.position == position &&
+        other.gesturesType == gesturesType &&
+        other.gestureUse == gestureUse;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        position.hashCode,
+        gesturesType.hashCode,
+        gestureUse.hashCode,
+      );
 }
