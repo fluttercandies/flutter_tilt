@@ -1,6 +1,7 @@
 # Changelog
 
-See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
+> [!IMPORTANT]  
+> See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
 ## 2.4.0-beta.1
 
