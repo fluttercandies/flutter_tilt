@@ -163,7 +163,6 @@ dependencies:
 /// 导入 flutter_tilt
 import 'package:flutter_tilt/flutter_tilt.dart';
 
-...
 Tilt(
   child: Container(
     width: 150.0,
@@ -171,7 +170,7 @@ Tilt(
     color: Colors.grey,
   ),
 ),
-... 
+
 ```
 
 
@@ -183,7 +182,6 @@ Tilt(
 /// 导入 flutter_tilt
 import 'package:flutter_tilt/flutter_tilt.dart';
 
-...
 Tilt(
   childLayout: const ChildLayout(
     outer: [
@@ -210,7 +208,7 @@ Tilt(
     color: Colors.brown,
   ),
 ),
-... 
+
 ```
 
 
@@ -255,17 +253,17 @@ Tilt(
 ### StreamController&lt;TiltStreamModel&gt; 📄
 
 ```dart
-...
+
 final StreamController<TiltStreamModel> tiltStreamController =
       StreamController<TiltStreamModel>.broadcast();
-...
+
 /// 正在使用当前手势
 tiltStreamController.add(
   TiltStreamModel(
     position: Offset(xx, xx),
   ),
 );
-...
+
 /// 停止使用当前手势
 tiltStreamController.add(
   TiltStreamModel(
@@ -273,7 +271,7 @@ tiltStreamController.add(
     gestureUse: false,
   ),
 );
-...
+
 ```
 
 | Parameter | Type | Default | Description |  
