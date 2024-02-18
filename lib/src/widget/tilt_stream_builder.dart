@@ -62,6 +62,9 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   /// 传感器平台支持
   bool canSensorsPlatformSupport = Utils.sensorsPlatformSupport();
 
+  async.StreamSubscription<AccelerometerEvent>? accelerometerStreamListen;
+  async.StreamSubscription<TiltStreamModel>? gyroscopeStreamListen;
+
   /// 初始 TiltStreamModel
   late TiltStreamModel initialTiltStreamModel = TiltStreamModel(
     position: _position,
@@ -99,10 +102,11 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
 
       if (canSensorsPlatformSupport) {
         /// 加速度计事件处理（如：设备方向）
-        accelerometerEventStream().listen(handleAccelerometerEvents);
+        accelerometerStreamListen =
+            accelerometerEventStream().listen(handleAccelerometerEvents);
 
         /// 陀螺仪处理
-        gyroscopeEventStream()
+        gyroscopeStreamListen = gyroscopeEventStream()
             .map<TiltStreamModel>(
               (gyroscopeEvent) => TiltStreamModel(
                 position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
@@ -119,7 +123,9 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
             )
             .listen(
           (TiltStreamModel tiltStreamModel) {
-            _tiltStreamController.sink.add(tiltStreamModel);
+            if (_tiltStreamController.hasListener) {
+              _tiltStreamController.sink.add(tiltStreamModel);
+            }
           },
         );
       }
@@ -128,6 +134,8 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
 
   @override
   void dispose() {
+    accelerometerStreamListen?.cancel();
+    gyroscopeStreamListen?.cancel();
     _gesturesHarmonizerTimer?.cancel();
     super.dispose();
   }
