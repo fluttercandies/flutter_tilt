@@ -3,20 +3,7 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
-## 2.4.0-beta.3
-
-### Fixes
-
-- Fix sensor listening not closed.
-
-## 2.4.0-beta.2
-
-### Fixes
-
-- Fix assignment usage logic in `Tilt.tiltStreamController`.
-- Fix `Tilt.tiltStreamController` closes prematurely.
-
-## 2.4.0-beta.1
+## 2.4.0
 
 ### New features
 
@@ -27,6 +14,12 @@
 
 - Improve gesture priority logic.
 - dart doc.
+
+### Fixes
+
+- Fix assignment usage logic in `Tilt.tiltStreamController`.
+- Fix `Tilt.tiltStreamController` closes prematurely.
+- Fix sensor listening not closed.
 
 ## 2.3.0
 
