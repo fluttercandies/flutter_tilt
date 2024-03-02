@@ -17,7 +17,27 @@ on:
       - "example/**"
 
 jobs:
+
+  code_analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Prepare dependencies
+        run: |
+          flutter --version
+          flutter pub get
+      - name: Check Dart code formatting
+        run: |
+          dart format . -o none --set-exit-if-changed
+      - name: Analyze Dart code
+        run: |
+          flutter analyze .
+
   test_minimum_version:
+    needs: [code_analysis]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +51,9 @@ jobs:
           flutter pub get
       - name: Test
         run: flutter test
+
   test_latest_version:
+    needs: [code_analysis]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
