@@ -35,6 +35,10 @@ jobs:
       - name: Analyze Dart code
         run: |
           flutter analyze .
+      - name: Generate dartdoc
+        run: |
+          dart pub global activate dartdoc
+          dart pub global run dartdoc .
 
   test_minimum_version:
     needs: [code_analysis]
