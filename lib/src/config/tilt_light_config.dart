@@ -3,10 +3,12 @@ import 'package:flutter/widgets.dart';
 import '../enums.dart';
 import '../config/tilt_shadow_config.dart';
 
-/// 光源配置
+/// Light effect config.
+/// 光照效果配置。
 @immutable
 class LightConfig {
-  /// 光源配置
+  /// Light effect config.
+  /// 光照效果配置。
   ///
   /// {@template tilt.LightConfig}
   /// 光源部分配置会影响阴影效果，
@@ -27,47 +29,76 @@ class LightConfig {
         ),
         assert(spreadFactor >= 1.0);
 
-  /// 禁用
+  /// Only disable the light effect.
+  ///
+  /// ------
+  ///
+  /// 仅禁用光照效果。
   final bool disable;
 
-  /// 光源颜色
+  /// Light color.
+  ///
+  /// ------
+  ///
+  /// 光照颜色。
   final Color color;
 
-  /// 最小光源强度（不透明度）
+  /// Color minimum opacity, also initial opacity.
   ///
-  /// 范围：0 - 1
+  /// ------
+  ///
+  /// 颜色最小不透明度，也是初始不透明度。
   final double minIntensity;
 
-  /// 最大光源强度（不透明度）
+  /// Color maximum opacity for tilt progresses.
   ///
-  /// 范围：0 - 1
+  /// ------
   ///
-  /// 为 0 时将没有光源
+  /// 颜色最大不透明度，跟随倾斜最大进度。
   final double maxIntensity;
 
-  /// 光源扩散系数
+  /// Light spread factor,
+  /// relative to current widget size.
   ///
-  /// 相对当前的尺寸固定扩散
+  /// ------
+  ///
+  /// 光源扩散系数，
+  /// 相对于当前 widget 尺寸。
   final double spreadFactor;
 
-  /// 光源方向
+  /// Light direction.
+  ///
+  /// Affects:
+  /// - [ShadowConfig.direction] (not affected after configuration).
+  ///
+  /// ------
+  ///
+  /// 光照方向。
   ///
   /// {@template tilt.LightConfig.direction}
   /// 光源方向会影响阴影以下效果，
   /// 如果需要改变阴影效果，请指定阴影配置 [ShadowConfig]
   ///
-  /// * 阴影方向 [ShadowConfig.direction]
+  /// - 阴影方向 [ShadowConfig.direction]
   /// {@endtemplate}
   final LightDirection direction;
 
-  /// 开启光源反向
+  /// Reverse light direction.
+  ///
+  /// Affects:
+  /// - [ShadowConfig.direction] (not affected after configuration).
+  /// - [ShadowConfig.enableReverse] (not affected after configuration).
+  ///
+  /// ------
+  ///
+  /// 开启反转光照方向。
   ///
   /// {@template tilt.LightConfig.enableReverse}
   /// 光源反向会影响以下阴影效果，
   /// 如果需要改变阴影效果，请指定阴影配置 [ShadowConfig]
   ///
-  /// * 阴影方向 [ShadowConfig.direction]
-  /// * 阴影反向 [ShadowConfig.enableReverse]
+  /// - 阴影方向 [ShadowConfig.direction]
+  /// - 阴影反向 [ShadowConfig.enableReverse]
   /// {@endtemplate}
   final bool? enableReverse;
 

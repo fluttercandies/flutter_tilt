@@ -218,7 +218,7 @@ Tilt(
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | 创建一个 widget，使 child widget 有倾斜效果。 |  
-| childLayout | [ChildLayout][] | `ChildLayout()` | 其它 child 布局. <br/> 例如：位于 child 外部、内部、后面的视差布局. |  
+| childLayout | [ChildLayout][] | `ChildLayout()` | 其它 child 布局。 <br/> 例如：位于 child 外部、内部、后面的视差布局。 |  
 | tiltStreamController | [StreamController&lt;TiltStreamModel&gt;][]? | `null` | 使用 `StreamController<TiltStreamModel>.broadcast()` 来自定义控制倾斜。 |  
 | disable | `bool` | `false` | 禁用所有效果。 |  
 | fps | `int` | `60` | 手势触发的帧数。 |  
@@ -237,7 +237,7 @@ Tilt(
 | 参数名 | 类型 | 默认值 | 描述 |  
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | 创建视差 widget。 |  
-| size | `Offset` | `Offset(10.0, 10.0)` | 视差大小（像素单位）。 |  
+| size | `Offset` | `Offset(10.0, 10.0)` | 视差大小。 |  
 | filterQuality | `FilterQuality` | `null` | Flutter FilterQuality。 |  
 
 
@@ -329,9 +329,9 @@ tiltStreamController.add(
 | color | `Color` | `Color(0xFF9E9E9E)` | 阴影颜色。 |  
 | minIntensity | `double` | `0.0` | 颜色最小不透明度，也是初始不透明度。 |  
 | maxIntensity | `double` | `0.5` | 颜色最大不透明度，跟随倾斜最大进度。 |  
-| offsetInitial | `Offset` | `Offset(0.0, 0.0)` | 阴影偏移初始值（像素单位）。 <br/> 例如：(0.0, 0.0) 中心 <br/> (40.0, 40.0) 向左上角偏移 40 像素。 |  
+| offsetInitial | `Offset` | `Offset(0.0, 0.0)` | 阴影偏移初始值。 <br/> 例如：(0.0, 0.0) 中心 <br/> (40.0, 40.0) 向左上角偏移 40。 |  
 | offsetFactor | `double` | `0.1` | 阴影偏移系数，相对于当前 widget 尺寸。 |  
-| spreadInitial | `double` | `0.0` | 阴影扩散半径初始值（像素单位）。 |  
+| spreadInitial | `double` | `0.0` | 阴影扩散半径初始值。 |  
 | spreadFactor | `double` | `0.0` | 阴影扩散半径系数，相对于当前 widget 尺寸。 |  
 | minBlurRadius | `double` | `10.0` | 最小阴影模糊半径，也是初始模糊半径。 |  
 | maxBlurRadius | `double` | `20.0` | 最大阴影模糊半径，跟随倾斜最大进度。 |  

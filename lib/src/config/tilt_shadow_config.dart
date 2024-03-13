@@ -3,19 +3,21 @@ import 'package:flutter/widgets.dart';
 import '../enums.dart';
 import '../config/tilt_light_config.dart';
 
-/// 阴影配置
+/// Shadow effect config.
+/// 阴影效果配置。
 @immutable
 class ShadowConfig {
-  /// 阴影配置
+  /// Shadow effect config.
+  /// 阴影效果配置。
   ///
   /// {@template tilt.ShadowConfig}
   /// 如果阴影配置以下参数将不会受到光源的影响
   ///
-  /// * 配置：阴影方向 [ShadowConfig.direction]
-  ///   * 失效：光源方向 [LightConfig.direction]
-  ///   * 失效：光源反向 [LightConfig.enableReverse]
-  /// * 配置：阴影反向 [ShadowConfig.enableReverse]
-  ///   * 失效：光源反向 [LightConfig.enableReverse]
+  /// - 配置：阴影方向 [ShadowConfig.direction]
+  ///   - 失效：光源方向 [LightConfig.direction]
+  ///   - 失效：光源反向 [LightConfig.enableReverse]
+  /// - 配置：阴影反向 [ShadowConfig.enableReverse]
+  ///   - 失效：光源反向 [LightConfig.enableReverse]
   /// {@endtemplate}
   const ShadowConfig({
     this.disable = false,
@@ -39,74 +41,109 @@ class ShadowConfig {
         assert(spreadFactor >= 0.0),
         assert(minBlurRadius <= maxBlurRadius && minBlurRadius >= 0.0);
 
-  /// 禁用
+  /// Only disable the shadow effect.
+  ///
+  /// ------
+  ///
+  /// 仅禁用阴影效果。
   final bool disable;
 
-  /// 阴影颜色
+  /// Shadow color.
+  ///
+  /// ------
+  ///
+  /// 阴影颜色。
   final Color color;
 
-  /// 最小阴影强度（不透明度）
+  /// Color minimum opacity, also initial opacity.
   ///
-  /// 范围：0 - 1
+  /// ------
+  ///
+  /// 颜色最小不透明度，也是初始不透明度。
   final double minIntensity;
 
-  /// 最大阴影强度（不透明度）
+  /// Color maximum opacity as tilt progresses.
   ///
-  /// 范围：0 - 1
+  /// ------
   ///
-  /// 为 0 时将没有光源
+  /// 颜色最大不透明度，跟随倾斜最大进度。
   final double maxIntensity;
 
-  /// 阴影起始偏移点
+  /// Initial value of shadow offset.
+  ///
+  /// e.g.
+  /// - (0.0, 0.0) center.
+  /// - (40.0, 40.0) Offset 40 to the top left.
+  ///
+  /// ------
+  ///
+  /// 阴影偏移初始值。
   ///
   /// {@template tilt.ShadowConfig.offsetInitial}
-  /// 指定起始值以像素单位进行方向 (x, y) 偏移，
-  /// 之后移动偏移将以该值作为起始点。
-  ///
   /// 例如：
-  /// * (0, 0) 中心
-  /// * (40, 40) 向左上角偏移 40 像素
-  /// * (-60, 0) 仅向右偏移 60 像素
+  /// - (0, 0) 中心
+  /// - (40, 40) 向左上角偏移 40
+  /// - (-60, 0) 仅向右偏移 60
   /// {@endtemplate}
   final Offset offsetInitial;
 
-  /// 阴影偏移系数
+  /// Shadow offset factor,
+  /// relative to current widget size.
   ///
-  /// 移动时相对当前的尺寸进行偏移
+  /// ------
+  ///
+  /// 阴影偏移系数，
+  /// 相对于当前 widget 尺寸。
   final double offsetFactor;
 
-  /// 阴影起始扩散半径
+  /// Initial value of shadow spread radius.
   ///
-  /// {@template tilt.ShadowConfig.spreadInitial}
-  /// 指定起始值以像素单位初始扩散半径
-  /// {@endtemplate}
+  /// ------
+  ///
+  /// 阴影扩散半径初始值。
   final double spreadInitial;
 
-  /// 阴影扩散系数
+  /// Shadow spread radius factor,
+  /// relative to current widget size.
+  ///
+  /// ------
+  ///
+  /// 阴影扩散半径系数，
+  /// 相对于当前 widget 尺寸。
   ///
   /// 移动时相对当前的尺寸进行扩散
   final double spreadFactor;
 
-  /// 最小阴影模糊半径
+  /// Minimum blur radius, also initial blur radius.
+  ///
+  /// ------
+  ///
+  /// 最小阴影模糊半径，也是初始模糊半径。
   final double minBlurRadius;
 
-  /// 最大阴影模糊半径
+  /// Maximum blur radius for tilt progresses.
+  ///
+  /// ------
+  ///
+  /// 最大阴影模糊半径，跟随倾斜最大进度。
   final double maxBlurRadius;
 
-  /// 阴影方向
+  /// Shadow direction.
+  /// 阴影方向。
   ///
   /// {@template tilt.ShadowConfig.direction}
   /// 指定后将不受以下影响
-  /// * 失效：光源方向 [LightConfig.direction]
-  /// * 失效：光源反向 [LightConfig.enableReverse]
+  /// - 失效：光源方向 [LightConfig.direction]
+  /// - 失效：光源反向 [LightConfig.enableReverse]
   /// {@endtemplate}
   final ShadowDirection? direction;
 
-  /// 开启阴影反向
+  /// Reverse shadow direction.
+  /// 开启反转阴影方向。
   ///
   /// {@template tilt.ShadowConfig.enableReverse}
   /// 指定后将不受以下影响
-  /// * 失效：光源反向 [LightConfig.enableReverse]
+  /// - 失效：光源反向 [LightConfig.enableReverse]
   /// {@endtemplate}
   final bool? enableReverse;
 

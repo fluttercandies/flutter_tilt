@@ -218,7 +218,7 @@ Tilt(
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | Create a widget that its child widget can be tilted. |  
-| childLayout | [ChildLayout][] | `ChildLayout()` | Other child layouts. <br/> e.g. parallax inner, outer, behind. |  
+| childLayout | [ChildLayout][] | `ChildLayout()` | Other child layouts. <br/> e.g. parallax outer, inner, behind. |  
 | tiltStreamController | [StreamController&lt;TiltStreamModel&gt;][]? | `null` | `StreamController<TiltStreamModel>.broadcast()` to control the tilt. |  
 | disable | `bool` | `false` | Disable all effects. |  
 | fps | `int` | `60` | Gesture triggered frames. |  
@@ -237,7 +237,7 @@ Tilt(
 | Parameter | Type | Default | Description |  
 | --- | --- | --- | --- |
 | child <sup>`required`</sup> | `Widget` | - | Create a widget with parallax. |  
-| size | `Offset` | `Offset(10.0, 10.0)` | Parallax size (pixel). |  
+| size | `Offset` | `Offset(10.0, 10.0)` | Parallax size. |  
 | filterQuality | `FilterQuality` | `null` | Flutter FilterQuality. |  
 
 
@@ -298,7 +298,7 @@ tiltStreamController.add(
 | sensorMoveDuration | `Duration` | `Duration(milliseconds: 50)` | Animation duration during sensor move. <br/> Only the following gestures: <br/> `GesturesType.sensors` |  
 | enableGestureHover | `bool` | `true` | Hover gesture triggered tilt. <br/> Only the following gestures: <br/> `GesturesType.hover` |  
 | enableGestureTouch | `bool` | `true` | Touch gesture triggered tilt. <br/> Only the following gestures: <br/> `GesturesType.touch` |  
-| enableRevert | `bool` | `true` | Enable tilt tevert, will revert to the initial state. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` <br/> `GesturesType.controller` |  
+| enableRevert | `bool` | `true` | Enable tilt revert, will revert to the initial state. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` <br/> `GesturesType.controller` |  
 | enableOutsideAreaMove | `bool` | `true` | Tilt can continue to be triggered outside the area. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.controller` |  
 | moveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during gesture move. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | leaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after gesture leave. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
@@ -329,9 +329,9 @@ tiltStreamController.add(
 | color | `Color` | `Color(0xFF9E9E9E)` | Shadow color. |  
 | minIntensity | `double` | `0.0` | Color minimum opacity, also initial opacity. |  
 | maxIntensity | `double` | `0.5` | Color maximum opacity as tilt progresses. |  
-| offsetInitial | `Offset` | `Offset(0.0, 0.0)` | Initial value of shadow offset (pixel). <br/> e.g. (0.0, 0.0) center. <br/> (40.0, 40.0) Offset 40 pixels to the top left. |  
+| offsetInitial | `Offset` | `Offset(0.0, 0.0)` | Initial value of shadow offset. <br/> e.g. (0.0, 0.0) center. <br/> (40.0, 40.0) Offset 40 to the top left. |  
 | offsetFactor | `double` | `0.1` | Shadow offset factor, relative to current widget size. |  
-| spreadInitial | `double` | `0.0` | Initial value of shadow spread radius (pixel). |  
+| spreadInitial | `double` | `0.0` | Initial value of shadow spread radius. |  
 | spreadFactor | `double` | `0.0` | Shadow spread radius factor, relative to current widget size. |  
 | minBlurRadius | `double` | `10.0` | Minimum blur radius, also initial blur radius. |  
 | maxBlurRadius | `double` | `20.0` | Maximum blur radius for tilt progresses. |  

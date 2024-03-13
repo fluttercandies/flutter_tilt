@@ -1,3 +1,4 @@
+/// Flutter Tilt
 library flutter_tilt;
 
 export 'src/tilt.dart';

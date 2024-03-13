@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 2.4.1
+
+### Improvements
+
+- dart doc.
+
 ## 2.4.0
 
 ### New features

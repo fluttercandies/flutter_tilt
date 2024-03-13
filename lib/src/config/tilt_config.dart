@@ -3,16 +3,19 @@ import 'package:flutter/widgets.dart';
 import '../enums.dart';
 import '../data/tilt_data.dart';
 
+/// TiltCallback
 /// 倾斜回调
 typedef TiltCallback = void Function(
   TiltDataModel tiltDataModel,
   GesturesType gesturesType,
 );
 
-/// 倾斜配置
+/// Tilt effect config.
+/// 倾斜效果配置。
 @immutable
 class TiltConfig {
-  /// 倾斜配置
+  /// Tilt effect config.
+  /// 倾斜效果配置。
   const TiltConfig({
     this.disable = false,
     this.initial,
@@ -37,38 +40,72 @@ class TiltConfig {
     this.controllerLeaveDuration = const Duration(milliseconds: 300),
   }) : assert(sensorRevertFactor >= 0 && sensorRevertFactor <= 1);
 
-  /// 禁用
+  /// Only disable the tilt effect.
+  ///
+  /// ------
+  ///
+  /// 仅禁用倾斜效果。
+  ///
   final bool disable;
 
-  /// 初始倾斜量
-  ///
   /// {@template tilt.TiltConfig.initial}
-  /// 最大倾斜角度依据 [angle]
   ///
-  /// 正常范围 (x, y)：(1, 1) 至 (-1, -1)
+  /// Initial tilt progress,
   ///
-  /// 你可以超过这个范围，但是手势移动过程中的最大倾斜量始终按照 [angle] 进行倾斜
+  /// range (x, y): (1, 1) to (-1, -1),
+  ///
+  /// you can exceed the range,
+  /// but the maximum tilt angle during gesture movement is always tilted according to [TiltConfig.angle].
+  ///
+  /// e.g.
+  /// - (0.0, 0.0) center.
+  /// - (1.0, 1.0) Maximum tilt top left [TiltConfig.angle].
+  ///
+  /// ------
+  ///
+  /// 倾斜进度的初始值，
+  ///
+  /// 范围 (x, y)：(1, 1) 至 (-1, -1)，
+  ///
+  /// 你可以超过这个范围，
+  /// 但是手势移动过程中的最大倾斜角度始终按照 [TiltConfig.angle] 进行倾斜。
   ///
   /// 例如：
-  /// - (0, 0) 会保持平面
-  /// - (1.0, 1.0) 会倾斜左上角 [angle] 最大角度
-  /// - (-1.0, -1.0) 会倾斜右下角 [angle] 最大角度
-  /// - (2, 2) 会倾斜左上角 [angle] 最大角度*2
+  /// - (0, 0) 中心，会保持平面。
+  /// - (1.0, 1.0) 会倾斜左上角 [TiltConfig.angle] 最大角度。
+  /// - (-1.0, -1.0) 会倾斜右下角 [TiltConfig.angle] 最大角度。
+  /// - (2, 2) 会倾斜左上角 [TiltConfig.angle] 最大角度*2。
+  ///
   /// {@endtemplate}
   final Offset? initial;
 
-  /// 可倾斜角度
-  ///
   /// {@template tilt.TiltConfig.angle}
-  /// 例如：
-  /// - 0 会停止不动
-  /// - 180 会翻转
   ///
-  /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的阴影关系
-  /// - [ShadowConfig]
+  /// Maximum tilt angle.
+  ///
+  /// e.g.
+  /// - 180 will flip.
+  ///
+  /// ------
+  ///
+  /// 最大倾斜角度。
+  ///
+  /// 例如：
+  /// - 0 会停止不动。
+  /// - 180 会翻转。
+  ///
   /// {@endtemplate}
+  ///
   final double angle;
 
+  /// Tilt Direction,
+  ///
+  /// multiple directions,
+  ///
+  /// customized direction values.
+  ///
+  /// ------
+  ///
   /// 倾斜方向
   ///
   /// 允许多个方向的值，默认所有方向
@@ -76,132 +113,255 @@ class TiltConfig {
   /// 内置一些常用的方向，例如：[TiltDirection.top]
   ///
   /// 如果还需要一些特殊的方向，可以像这样自定义 [TiltDirection(0.1, 0.1)]
+  ///
   final List<TiltDirection>? direction;
 
-  /// 开启倾斜反向
-  ///
   /// {@template tilt.TiltConfig.enableReverse}
-  /// 切换触摸区域向上或向下倾斜
   ///
-  /// 调整该值后，一般还需要调整以下值，以保持一种相对正确的关系效果
-  /// - [LightConfig.enableReverse]
-  /// - [ShadowConfig.enableReverse]
+  /// Tilt reverse, can be tilted up or down.
+  ///
+  /// ------
+  ///
+  /// 倾斜反向，可以向上或向下倾斜。
+  ///
   /// {@endtemplate}
+  ///
   final bool enableReverse;
 
   /// FilterQuality
   final FilterQuality? filterQuality;
 
-  /// 开启传感器触发倾斜
+  /// Gyroscope sensor triggered tilt.
   ///
-  /// 仅对以下手势有效：
+  /// Only the following gestures:
   /// [GesturesType.sensors]
   ///
-  /// 设备陀螺仪传感器触发倾斜
+  /// ------
+  ///
+  /// 陀螺仪传感器触发倾斜。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.sensors]
+  ///
   final bool enableGestureSensors;
 
-  /// 传感器触发系数（灵敏度）
+  /// Sensor trigger factor (sensitivity).
   ///
-  /// 仅对以下手势有效：
+  /// Only the following gestures:
   /// [GesturesType.sensors]
+  ///
+  /// ------
+  ///
+  /// 传感器触发系数（灵敏度）。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.sensors]
+  ///
   final double sensorFactor;
 
-  /// 开启传感器倾斜复原
+  /// Enable sensor tilt revert,
+  /// will revert to the initial state.
   ///
-  /// 仅对以下手势有效：
+  /// Only the following gestures:
   /// [GesturesType.sensors]
   ///
-  /// - true  倾斜后会按照 [sensorRevertFactor] 复原至 [TiltConfig.initial] 初始状态
-  /// - false 保留最后倾斜的状态
+  /// ------
+  ///
+  /// 启用传感器倾斜复原，
+  /// 会复原至初始状态。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.sensors]
+  ///
   final bool enableSensorRevert;
 
-  /// 传感器复原系数（阻尼）
+  /// Sensor revert factor (damping),
   ///
-  /// 仅对以下手势有效：
+  /// range of values: 0-1.
+  ///
+  /// Only the following gestures:
   /// [GesturesType.sensors]
   ///
-  /// 阻尼范围：0-1
+  /// ------
+  ///
+  /// 传感器复原系数（阻尼），
+  ///
+  /// 数值范围：0-1。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.sensors]
+  ///
   final double sensorRevertFactor;
 
-  /// 传感器移动时的动画持续时间
+  /// Animation duration during sensor move.
   ///
-  /// 仅对以下手势有效：
+  /// Only the following gestures:
   /// [GesturesType.sensors]
+  ///
+  /// ------
+  ///
+  /// 传感器移动时的动画持续时间。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.sensors]
+  ///
   final Duration sensorMoveDuration;
 
-  /// 开启手势 Hover 触发倾斜
+  /// Hover gesture triggered tilt.
   ///
-  /// 仅对以下手势有效：
+  /// Only the following gestures:
   /// [GesturesType.hover]
+  ///
+  /// ------
+  ///
+  /// 开启 Hover 手势触发倾斜。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.hover]
+  ///
   final bool enableGestureHover;
 
-  /// 开启手势 Touch 触发倾斜
+  /// Touch gesture triggered tilt.
   ///
-  /// 仅对以下手势有效：
+  /// Only the following gestures:
   /// [GesturesType.touch]
+  ///
+  /// ------
+  ///
+  /// 开启 Touch 手势触发倾斜。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.touch]
+  ///
   final bool enableGestureTouch;
 
-  /// 开启倾斜复原
+  /// Enable tilt revert,
+  /// will revert to the initial state.
   ///
-  /// 仅对以下手势有效：
+  /// Only the following gestures:
   /// [GesturesType.touch]
   /// [GesturesType.hover]
   /// [GesturesType.controller]
   ///
-  /// - true  退出触发区域后会复原至初始状态
-  /// - false 保留最后倾斜的状态
+  /// ------
+  ///
+  /// 启用倾斜复原，
+  /// 会复原至初始状态。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  /// [GesturesType.controller]
+  ///
   final bool enableRevert;
 
+  /// Tilt can continue to be triggered outside the area.
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.touch]
+  /// [GesturesType.controller]
+  ///
+  /// ------
+  ///
   /// 开启倾斜过程中区域外可以继续移动
   ///
-  /// 仅对以下手势有效：
+  /// 仅以下手势生效：
   /// [GesturesType.touch]
   /// [GesturesType.controller]
   ///
   /// 当触发手势移动的倾斜过程中，
   /// 手势移动到区域外是否可以继续移动。
   ///
-  /// - true: 手势触发过程中超出区域可以继续移动
-  /// - flase: 超出区域后回到初始状态
   final bool enableOutsideAreaMove;
 
+  /// Animation duration during gesture move.
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  ///
+  /// ------
+  ///
   /// 手势移动时的动画持续时间
   ///
-  /// 仅对以下手势有效：
+  /// 仅以下手势生效：
   /// [GesturesType.touch]
   /// [GesturesType.hover]
+  ///
   final Duration moveDuration;
 
+  /// Animation duration after gesture leave.
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  ///
+  /// ------
+  ///
   /// 手势离开后的动画持续时间
   ///
-  /// 仅对以下手势有效：
+  /// 仅以下手势生效：
   /// [GesturesType.touch]
   /// [GesturesType.hover]
+  ///
   final Duration leaveDuration;
 
+  /// Animation curve during gesture move.
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  ///
+  /// ------
+  ///
   /// 手势移动时的动画曲线
   ///
-  /// 仅对以下手势有效：
+  /// 仅以下手势生效：
   /// [GesturesType.touch]
   /// [GesturesType.hover]
+  ///
   final Curve moveCurve;
 
-  /// 手势离开后的动画曲线
+  /// Animation curve after gesture leave.
   ///
-  /// 仅对以下手势有效：
+  /// Only the following gestures:
   /// [GesturesType.touch]
   /// [GesturesType.hover]
+  ///
+  /// ------
+  ///
+  /// 手势离开后的动画曲线
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  ///
   final Curve leaveCurve;
 
+  /// Animation duration during controller gesture move.
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.controller]
+  ///
+  /// ------
+  ///
   /// [GesturesType.controller] 移动时的动画持续时间
   ///
-  /// 仅对以下手势有效：
+  /// 仅以下手势生效：
   /// [GesturesType.controller]
+  ///
   final Duration controllerMoveDuration;
 
+  /// Animation duration after controller gesture leave.
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.controller]
+  ///
+  /// ------
+  ///
   /// [GesturesType.controller] 离开后的动画持续时间
   ///
-  /// 仅对以下手势有效：
+  /// 仅以下手势生效：
   /// [GesturesType.controller]
   final Duration controllerLeaveDuration;
 
@@ -317,53 +477,97 @@ class TiltConfig {
   }
 }
 
-/// child 其他布局
+/// Other child layouts.
+///
+/// e.g. [TiltParallax] parallax inner, outer, behind.
+///
+/// ------
+///
+/// 其他 child 布局。
+///
+/// 例如：位于 child 内部、外部、后面的视差布局 [TiltParallax]。
+///
 @immutable
 class ChildLayout {
-  /// child 其他布局
+  /// Other child layouts.
+  ///
+  /// e.g. [TiltParallax] parallax inner, outer, behind.
+  ///
+  /// ------
+  ///
+  /// 其他 child 布局。
+  ///
+  /// 例如：位于 child 内部、外部、后面的视差布局 [TiltParallax]。
+  ///
   const ChildLayout({
     this.outer = const <Widget>[],
     this.inner = const <Widget>[],
     this.behind = const <Widget>[],
   });
 
+  /// outer
   /// 外部
   ///
   /// {@template tilt.ChildLayout.outer}
-  /// 位于 [child] 外部，布局会超出 [child] 显示。
   ///
-  /// 本身作为 [Stack]，可以搭配 [Stack] 相关布局，
+  /// As with Stack,
+  /// you can use the Stack layout to create widgets that are outer of the child.
+  /// e.g. parallax effects.
   ///
-  /// 一般用作视差的 Widget
+  /// ------
+  ///
+  /// 与 Stack 一样，
+  /// 你可以使用 Stack 布局来创建一些位于 `child 外部` 的 widget。
+  /// 例如：视差效果。
+  ///
   /// {@endtemplate}
+  ///
   final List<Widget> outer;
 
+  /// inner
   /// 内部
   ///
   /// {@template tilt.ChildLayout.inner}
-  /// 位于 [child] 内部，布局不会超出 [child] 显示。
   ///
-  /// 本身作为 [Stack]，可以搭配 [Stack] 相关布局，
+  /// As with Stack,
+  /// you can use the Stack layout to create widgets that are inner of the child.
+  /// e.g. parallax effects.
   ///
-  /// 一般用作视差的 Widget
+  /// ------
+  ///
+  /// 与 Stack 一样，
+  /// 你可以使用 Stack 布局来创建一些位于 `child 内部` 的 widget。
+  /// 例如：视差效果。
+  ///
   /// {@endtemplate}
+  ///
   final List<Widget> inner;
 
+  /// behind
   /// 后面
   ///
   /// {@template tilt.ChildLayout.behind}
-  /// 位于 [child] 后面，布局会超出 [child] 显示。
   ///
-  /// 本身作为 [Stack]，可以搭配 [Stack] 相关布局，
+  /// As with Stack,
+  /// you can use the Stack layout to create widgets that are behind of the child.
+  /// e.g. parallax effects.
   ///
-  /// 一般用作视差的 Widget
+  /// ------
+  ///
+  /// 与 Stack 一样，
+  /// 你可以使用 Stack 布局来创建一些位于 `child 后面` 的 widget。
+  /// 例如：视差效果。
+  ///
   /// {@endtemplate}
+  ///
   final List<Widget> behind;
 }
 
+/// Tilt Direction
 /// 倾斜方向
 @immutable
 class TiltDirection {
+  /// Tilt Direction
   /// 倾斜方向
   ///
   /// - 范围 (x, y)：(1, 1) 至 (-1, -1)

@@ -1,6 +1,7 @@
-/// 光源方向
+/// Light direction.
+/// 光照方向。
 ///
-/// 同时会影响阴影方向
+/// {@macro tilt.LightConfig.direction}
 enum LightDirection {
   /// 禁用光源
   none,
@@ -45,12 +46,10 @@ enum LightDirection {
   yCenter,
 }
 
-/// 阴影方向
+/// Shadow direction.
+/// 阴影方向。
 ///
-/// 指定后将不受以下影响
-/// * [LightConfig.direction] 光源方向
-/// * [LightConfig.enableReverse] 光源反向
-///
+/// {@macro tilt.ShadowConfig.direction}
 enum ShadowDirection {
   /// 禁用阴影
   none,
@@ -95,5 +94,13 @@ enum ShadowDirection {
   yCenter,
 }
 
+/// GesturesType
 /// 手势类型
+///
+/// Gesture Priority
+/// 手势优先级：
+///
+/// {@template tilt.GesturesType.gesturePriority}
+/// [GesturesType.touch] > [GesturesType.hover] > [GesturesType.controller] > [GesturesType.sensors]
+/// {@endtemplate}
 enum GesturesType { none, touch, hover, controller, sensors }

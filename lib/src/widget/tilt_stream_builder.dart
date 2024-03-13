@@ -252,6 +252,8 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
 
   /// 手势优先级比较
   ///
+  /// {@macro tilt.GesturesType.gesturePriority}
+  ///
   /// - [gesturesType1] 手势类型1
   /// - [gesturesType2] 手势类型2
   ///

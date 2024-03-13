@@ -13,11 +13,40 @@ import 'widget/tilt_container.dart';
 import 'widget/tilt_parallax_container.dart';
 import 'widget/tilt_stream_builder.dart';
 
+/// Tilt
 /// 倾斜
 class Tilt extends TiltContainer {
+  /// Tilt
   /// 倾斜
   ///
-  /// 在 [childLayout] 中使用 [TiltParallax] 可以达到视差的效果
+  /// - [childLayout] : Other child layouts. e.g. [TiltParallax] parallax inner, outer, behind.
+  /// - [tiltStreamController] : `StreamController<TiltStreamModel>.broadcast()` to control the tilt.
+  /// - [disable] : Disable all effects.
+  /// - [fps] : Gesture triggered frames.
+  /// - [border] : BoxDecoration border.
+  /// - [borderRadius] : BoxDecoration borderRadius.
+  /// - [clipBehavior] : Flutter clipBehavior.
+  /// - [tiltConfig] : Tilt effect config.
+  /// - [lightConfig] : Light effect config.
+  /// - [shadowConfig] : Shadow effect config.
+  /// - [onGestureMove] : Gesture move callback.
+  /// - [onGestureLeave] : Gesture leave callback.
+  ///
+  /// ------
+  ///
+  /// - [childLayout] : 其他 child 布局。例如：位于 child 内部、外部、后面的视差布局 [TiltParallax]。
+  /// - [tiltStreamController] : 通过 `StreamController<TiltStreamModel>.broadcast()` 来自定义控制倾斜。
+  /// - [disable] : 禁用所有效果。
+  /// - [fps] : 手势触发的帧数。
+  /// - [border] : BoxDecoration 边框样式。
+  /// - [borderRadius] : BoxDecoration 边框圆角半径。
+  /// - [clipBehavior] : Flutter clipBehavior。
+  /// - [tiltConfig] : 倾斜效果配置。
+  /// - [lightConfig] : 光照效果配置。
+  /// - [shadowConfig] : 阴影效果配置。
+  /// - [onGestureMove] : 手势移动的回调触发。
+  /// - [onGestureLeave] : 手势离开的回调触发。
+  ///
   const Tilt({
     super.key,
     required super.child,
@@ -37,23 +66,40 @@ class Tilt extends TiltContainer {
 
   /// Tilt Stream Controller
   ///
-  /// StreamController<TiltStreamModel>.broadcast()
+  /// `StreamController<TiltStreamModel>.broadcast()` to control the tilt.
+  ///
+  /// ------
+  ///
+  /// 通过 `StreamController<TiltStreamModel>.broadcast()` 来自定义控制倾斜。
+  ///
   final async.StreamController<TiltStreamModel>? tiltStreamController;
 
-  /// 全部禁用
+  /// Disable all effects.
+  ///
+  /// ------
+  ///
+  /// 禁用所有效果。
   final bool disable;
 
-  /// FPS
+  /// Gesture triggered frames.
   ///
-  /// 每秒手势触发帧数，帧数越高越平滑，但性能消耗越高。
+  /// ------
   ///
-  /// 推荐 60 FPS，如果遭遇性能问题，还可以使用人眼能够接受的 24 FPS
+  /// 手势触发的帧数。
   final int fps;
 
-  /// 手势移动触发
+  /// Gesture move callback.
+  ///
+  /// ------
+  ///
+  /// 手势移动的回调触发。
   final TiltCallback? onGestureMove;
 
-  /// 手势离开触发
+  /// Gesture leave callback.
+  ///
+  /// ------
+  ///
+  /// 手势离开的回调触发。
   final TiltCallback? onGestureLeave;
 
   @override
@@ -340,13 +386,24 @@ class _TiltState extends State<Tilt> {
   }
 }
 
+/// TiltParallax
 /// 倾斜视差
 class TiltParallax extends TiltParallaxContainer {
+  /// TiltParallax
   /// 倾斜视差
   ///
-  /// 一般用作视差的 Widget
+  /// Parallax that can only be used in [Tilt.childLayout].
   ///
-  /// 只能在 [Tilt.childLayout] 中使用
+  /// - [size] : Parallax size.
+  /// - [filterQuality] : Flutter FilterQuality.
+  ///
+  /// ------
+  ///
+  /// 只能在 [Tilt.childLayout] 中使用的视差效果。
+  ///
+  /// - [size] : 视差大小。
+  /// - [filterQuality] : Flutter FilterQuality。
+  ///
   const TiltParallax({
     super.key,
     required super.child,

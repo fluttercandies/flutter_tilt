@@ -23,28 +23,52 @@ class TiltContainer extends StatefulWidget {
     required this.shadowConfig,
   });
 
-  /// 主 child
   final Widget child;
 
-  /// child 其他布局
+  /// Other child layouts. e.g. [TiltParallax] parallax inner, outer, behind.
+  ///
+  /// ------
+  ///
+  /// 其他 child 布局。例如：位于 child 内部、外部、后面的视差布局 [TiltParallax]。
+  ///
   final ChildLayout childLayout;
 
-  /// Border
+  /// BoxDecoration border.
+  ///
+  /// ------
+  ///
+  /// BoxDecoration 边框样式。
   final BoxBorder? border;
 
-  /// BorderRadius
+  /// BoxDecoration borderRadius.
+  ///
+  /// ------
+  ///
+  /// BoxDecoration 边框圆角半径。
   final BorderRadiusGeometry? borderRadius;
 
   /// Clip
   final Clip clipBehavior;
 
-  /// 倾斜配置
+  /// Tilt effect config.
+  ///
+  /// ------
+  ///
+  /// 倾斜效果配置。
   final TiltConfig tiltConfig;
 
-  /// 光源配置
+  /// Light effect config.
+  ///
+  /// ------
+  ///
+  /// 光照效果配置。
   final LightConfig lightConfig;
 
-  /// 阴影配置
+  /// Shadow effect config.
+  ///
+  /// ------
+  ///
+  /// 阴影效果配置。
   final ShadowConfig shadowConfig;
 
   @override
