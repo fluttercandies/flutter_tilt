@@ -3,6 +3,16 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.0.0
+
+### Breaking changes
+
+- Bumping Flutter SDK minimum version to `3.19.0`.
+
+### Improvements
+
+- Upgrade `sensors_plus` package to `4.0.0`.
+
 ## 2.4.1
 
 ### Improvements
