@@ -110,6 +110,7 @@ Check out the [Live Demo][].
 
 |       Flutter       |  3.0.0+  |  3.10.0+  |  3.19.0+  |  
 |      ---------      | :------: | :-------: | :-------: |  
+| flutter_tilt 3.0.0+ |    ❌    |    ❌    |    ✅    |  
 | flutter_tilt 2.0.0+ |    ❌    |    ✅    |    ✅    |  
 | flutter_tilt 1.0.0+ |    ✅    |    ❌    |    ❌    |  
 
@@ -140,7 +141,7 @@ Sensors are triggered only on these platforms.
 
 > [!NOTE]  
 > Currently Web uses the [Sensor API - Gyroscope], but it is not compatible with some of the major browsers, such as Safari, Firefox.  
-> After that maybe replace it with [DeviceMotionEvent][].
+<!-- > After that maybe replace it with [DeviceMotionEvent][]. -->
 
 
 ## Gesture priority 📱
@@ -372,6 +373,6 @@ Open sourced under the MIT license.
 [TiltConfig]: #tiltconfig-
 [LightConfig]: #lightconfig-
 [ShadowConfig]: #shadowconfig-
-[Gyroscope Browser compatibility]: https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope/Gyroscope#browser_compatibility
+[Gyroscope Browser compatibility]: https://developer.mozilla.org/en-US/docs/Web/API/Sensor_APIs#api.gyroscope
 [Sensor API - Gyroscope]: https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope
-[DeviceMotionEvent]: https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent
+<!-- [DeviceMotionEvent]: https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent -->

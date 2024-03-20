@@ -110,6 +110,7 @@
 
 |       Flutter       |  3.0.0+  |  3.10.0+  |  3.19.0+  |  
 |      ---------      | :------: | :-------: | :-------: |  
+| flutter_tilt 3.0.0+ |    ❌    |    ❌    |    ✅    |  
 | flutter_tilt 2.0.0+ |    ❌    |    ✅    |    ✅    |  
 | flutter_tilt 1.0.0+ |    ✅    |    ❌    |    ❌    |  
 
@@ -140,7 +141,7 @@ dependencies:
 
 > [!NOTE]  
 > 目前 Web 使用 [Sensor API - Gyroscope][]，但它不兼容部分主流浏览器，比如 Safari、Firefox。  
-> 之后也许会替换为 [DeviceMotionEvent][]。
+<!-- > 之后也许会替换为 [DeviceMotionEvent][]。 -->
 
 
 ## 手势优先级 📱
@@ -372,6 +373,6 @@ tiltStreamController.add(
 [TiltConfig]: #tiltconfig-
 [LightConfig]: #lightconfig-
 [ShadowConfig]: #shadowconfig-
-[Gyroscope Browser compatibility]: https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope/Gyroscope#browser_compatibility
+[Gyroscope Browser compatibility]: https://developer.mozilla.org/en-US/docs/Web/API/Sensor_APIs#api.gyroscope
 [Sensor API - Gyroscope]: https://developer.mozilla.org/en-US/docs/Web/API/Gyroscope
-[DeviceMotionEvent]: https://developer.mozilla.org/zh-CN/docs/Web/API/DeviceMotionEvent
+<!-- [DeviceMotionEvent]: https://developer.mozilla.org/zh-CN/docs/Web/API/DeviceMotionEvent -->
