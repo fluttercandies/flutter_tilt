@@ -11,7 +11,7 @@
 
 ### Improvements
 
-- Upgrade `sensors_plus` package to `4.0.0`.
+- Upgrade `sensors_plus` package to `5.0.0`.
 
 ## 2.4.1
 
