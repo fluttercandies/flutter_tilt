@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.1.0
+
+### New features
+
+-  Add `Tilt.lightShadowMode` and configuration.
+
 ## 3.0.0
 
 ### Breaking changes

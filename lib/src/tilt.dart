@@ -27,6 +27,7 @@ class Tilt extends TiltContainer {
   /// - [borderRadius] : BoxDecoration borderRadius.
   /// - [clipBehavior] : Flutter clipBehavior.
   /// - [tiltConfig] : Tilt effect config.
+  /// - [lightShadowMode] : Light & Shadow Mode
   /// - [lightConfig] : Light effect config.
   /// - [shadowConfig] : Shadow effect config.
   /// - [onGestureMove] : Gesture move callback.
@@ -42,6 +43,7 @@ class Tilt extends TiltContainer {
   /// - [borderRadius] : BoxDecoration 边框圆角半径。
   /// - [clipBehavior] : Flutter clipBehavior。
   /// - [tiltConfig] : 倾斜效果配置。
+  /// - [lightShadowMode] : 光影 Mode
   /// - [lightConfig] : 光照效果配置。
   /// - [shadowConfig] : 阴影效果配置。
   /// - [onGestureMove] : 手势移动的回调触发。
@@ -58,6 +60,7 @@ class Tilt extends TiltContainer {
     super.borderRadius,
     super.clipBehavior = Clip.antiAlias,
     super.tiltConfig = const TiltConfig(),
+    super.lightShadowMode,
     super.lightConfig = const LightConfig(),
     super.shadowConfig = const ShadowConfig(),
     this.onGestureMove,
@@ -117,6 +120,7 @@ class _TiltState extends State<Tilt> {
   BorderRadiusGeometry? get _borderRadius => widget.borderRadius;
   Clip get _clipBehavior => widget.clipBehavior;
   TiltConfig get _tiltConfig => widget.tiltConfig;
+  LightShadowMode get _lightShadowMode => widget.lightShadowMode;
   LightConfig get _lightConfig => widget.lightConfig;
   ShadowConfig get _shadowConfig => widget.shadowConfig;
   TiltCallback? get _onGestureMove => widget.onGestureMove;
@@ -199,6 +203,7 @@ class _TiltState extends State<Tilt> {
               borderRadius: _borderRadius,
               clipBehavior: _clipBehavior,
               tiltConfig: _tiltConfig,
+              lightShadowMode: _lightShadowMode,
               lightConfig: _lightConfig,
               shadowConfig: _shadowConfig,
               childLayout: _childLayout,

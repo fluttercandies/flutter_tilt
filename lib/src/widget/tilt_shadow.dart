@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/widgets.dart';
 
 import '../utils.dart';
@@ -6,24 +7,13 @@ import '../config/tilt_light_config.dart';
 import '../config/tilt_shadow_config.dart';
 import '../internal/tilt_decoration_mixin.dart';
 
-/// 阴影
-class TiltShadow extends StatelessWidget with TiltDecoration {
-  /// 阴影
-  ///
-  /// 作用于其他组件上的阴影效果
-  ///
-  /// [width], [height] 一般和传入的组件尺寸一致
-  ///
-  /// {@macro tilt.ShadowConfig}
+abstract class TiltShadow extends StatelessWidget with TiltDecoration {
   const TiltShadow({
     super.key,
     required this.child,
     required this.width,
     required this.height,
     required this.areaProgress,
-    this.border,
-    this.borderRadius,
-    required this.clipBehavior,
     required this.lightConfig,
     required this.shadowConfig,
   });
@@ -34,29 +24,11 @@ class TiltShadow extends StatelessWidget with TiltDecoration {
   /// 当前坐标的区域进度
   final Offset areaProgress;
 
-  /// Border
-  final BoxBorder? border;
-
-  /// BorderRadius
-  final BorderRadiusGeometry? borderRadius;
-
-  /// Clip
-  final Clip clipBehavior;
-
   /// 光源配置
   final LightConfig lightConfig;
 
   /// 阴影配置
   final ShadowConfig shadowConfig;
-
-  /// 当前坐标的区域进度
-  Offset get progress => -areaProgress;
-
-  /// 距离中心的进度
-  double get centerProgress => Utils.p2pDistance(Offset.zero, progress);
-
-  /// 距离中心的进度最大值
-  double get centerMaxProgress => centerProgress > 1.0 ? 1.0 : centerProgress;
 
   /// 阴影显示（受光源影响）
   ///
@@ -69,6 +41,28 @@ class TiltShadow extends StatelessWidget with TiltDecoration {
         min: shadowConfig.minIntensity,
         max: shadowConfig.maxIntensity,
       );
+
+  /// 开启反向（受光源影响）
+  ///
+  /// {@macro tilt.ShadowConfig.enableReverse}
+  bool get enableReverse =>
+      shadowConfig.enableReverse ??
+      (shadowConfig.direction == null && (lightConfig.enableReverse == true));
+
+  /// 禁用阴影
+  bool get shadowDisable =>
+      shadowConfig.disable ||
+      shadowConfig.maxIntensity == 0.0 ||
+      shadowConfig.direction == ShadowDirection.none;
+
+  /// 当前坐标的区域进度
+  Offset get progress => -areaProgress;
+
+  /// 距离中心的进度
+  double get centerProgress => Utils.p2pDistance(Offset.zero, progress);
+
+  /// 距离中心的进度最大值
+  double get centerMaxProgress => centerProgress > 1.0 ? 1.0 : centerProgress;
 
   /// 阴影当前偏移距离
   ///
@@ -83,6 +77,39 @@ class TiltShadow extends StatelessWidget with TiltDecoration {
   /// 阴影偏移
   Offset get offset =>
       (enableReverse ? -baseOffset : baseOffset) - shadowConfig.offsetInitial;
+}
+
+/// 阴影 Base
+/// [LightShadowMode.base]
+class TiltShadowBase extends TiltShadow {
+  /// 阴影 Base
+  ///
+  /// 作用于其他组件上的阴影效果
+  ///
+  /// [width], [height] 一般和传入的组件尺寸一致
+  ///
+  /// {@macro tilt.ShadowConfig}
+  const TiltShadowBase({
+    super.key,
+    required super.child,
+    required super.width,
+    required super.height,
+    required super.areaProgress,
+    required super.lightConfig,
+    required super.shadowConfig,
+    this.border,
+    this.borderRadius,
+    required this.clipBehavior,
+  });
+
+  /// Border
+  final BoxBorder? border;
+
+  /// BorderRadius
+  final BorderRadiusGeometry? borderRadius;
+
+  /// Clip
+  final Clip clipBehavior;
 
   /// 阴影模糊半径进度
   ///
@@ -118,19 +145,6 @@ class TiltShadow extends StatelessWidget with TiltDecoration {
   double get spreadRadius =>
       spreadRadiusDistance - spreadRadiusRevert + shadowConfig.spreadInitial;
 
-  /// 开启反向（受光源影响）
-  ///
-  /// {@macro tilt.ShadowConfig.enableReverse}
-  bool get enableReverse =>
-      shadowConfig.enableReverse ??
-      (shadowConfig.direction == null && (lightConfig.enableReverse == true));
-
-  /// 禁用阴影
-  bool get shadowDisable =>
-      shadowConfig.disable ||
-      shadowConfig.maxIntensity == 0.0 ||
-      shadowConfig.direction == ShadowDirection.none;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -142,6 +156,7 @@ class TiltShadow extends StatelessWidget with TiltDecoration {
               offset: offset,
               blurRadius: blurRadius,
               spreadRadius: spreadRadius,
+              blurStyle: BlurStyle.normal,
             ),
         ],
         border: border,
@@ -149,6 +164,75 @@ class TiltShadow extends StatelessWidget with TiltDecoration {
       ),
       clipBehavior: clipBehavior,
       child: child,
+    );
+  }
+}
+
+/// 阴影 Projector
+/// [LightShadowMode.projector]
+class TiltShadowProjector extends TiltShadow {
+  /// 阴影 Projector
+  ///
+  /// 作用于其他组件上的阴影效果
+  ///
+  /// [width], [height] 一般和传入的组件尺寸一致
+  ///
+  /// {@macro tilt.ShadowConfig}
+  const TiltShadowProjector({
+    super.key,
+    required super.child,
+    required super.width,
+    required super.height,
+    required super.areaProgress,
+    required super.lightConfig,
+    required super.shadowConfig,
+  });
+
+  /// 阴影尺寸比例
+  double get scale => shadowConfig.projectorScaleTo >=
+          shadowConfig.projectorScaleFrom
+      ? shadowConfig.projectorScaleFrom +
+          centerMaxProgress *
+              (shadowConfig.projectorScaleTo - shadowConfig.projectorScaleFrom)
+      : shadowConfig.projectorScaleFrom -
+          centerMaxProgress *
+              (shadowConfig.projectorScaleFrom - shadowConfig.projectorScaleTo);
+
+  /// 阴影模糊 Sigma
+  double get blurSigma =>
+      shadowConfig.projectorBlurSigmaTo >= shadowConfig.projectorBlurSigmaFrom
+          ? shadowConfig.projectorBlurSigmaFrom +
+              centerMaxProgress *
+                  (shadowConfig.projectorBlurSigmaTo -
+                      shadowConfig.projectorBlurSigmaFrom)
+          : shadowConfig.projectorBlurSigmaFrom -
+              centerMaxProgress *
+                  (shadowConfig.projectorBlurSigmaFrom -
+                      shadowConfig.projectorBlurSigmaTo);
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: Transform.translate(
+        offset: offset,
+        child: ImageFiltered(
+          imageFilter: ImageFilter.blur(
+            sigmaX: blurSigma,
+            sigmaY: blurSigma,
+            tileMode: TileMode.decal,
+          ),
+          child: Opacity(
+            opacity: showShadow,
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                shadowConfig.color,
+                BlendMode.srcATop,
+              ),
+              child: Transform.scale(scale: scale, child: child),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

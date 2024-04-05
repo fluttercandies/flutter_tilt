@@ -19,6 +19,7 @@ class TiltContainer extends StatefulWidget {
     this.borderRadius,
     required this.clipBehavior,
     required this.tiltConfig,
+    this.lightShadowMode = LightShadowMode.base,
     required this.lightConfig,
     required this.shadowConfig,
   });
@@ -57,6 +58,13 @@ class TiltContainer extends StatefulWidget {
   /// 倾斜效果配置。
   final TiltConfig tiltConfig;
 
+  /// Light & Shadow Mode.
+  ///
+  /// ------
+  ///
+  /// 光影模式。
+  final LightShadowMode lightShadowMode;
+
   /// Light effect config.
   ///
   /// ------
@@ -82,6 +90,7 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
   BorderRadiusGeometry? get _borderRadius => widget.borderRadius;
   Clip get _clipBehavior => widget.clipBehavior;
   TiltConfig get _tiltConfig => widget.tiltConfig;
+  LightShadowMode get _lightShadowMode => widget.lightShadowMode;
   LightConfig get _lightConfig => widget.lightConfig;
   ShadowConfig get _shadowConfig => widget.shadowConfig;
 
@@ -140,75 +149,186 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
           child: Stack(
             alignment: AlignmentDirectional.center,
             clipBehavior: Clip.none,
-            children: <Widget>[
-              /// behind child
-              ..._childLayout.behind,
-
-              /// main child
-              TiltShadow(
-                width: width,
-                height: height,
-                areaProgress: value,
-                border: _border,
-                borderRadius: _borderRadius,
-                clipBehavior: _clipBehavior,
-                lightConfig: _lightConfig,
-                shadowConfig: _shadowConfig,
-                child: Stack(
-                  alignment: AlignmentDirectional.center,
-
-                  /// 避免暴露其他组件，[Clip.none] 时，默认赋值 [Clip.hardEdge]
-                  clipBehavior: _clipBehavior == Clip.none
-                      ? Clip.hardEdge
-                      : _clipBehavior,
-                  children: <Widget>[
-                    /// body
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: _borderRadius,
-                      ),
-                      clipBehavior: _clipBehavior,
-                      child: child,
-                    ),
-
-                    /// inner child
-                    ..._childLayout.inner,
-
-                    /// light
-                    TiltLight(
-                      width: width,
-                      height: height,
-                      areaProgress: value,
-                      lightConfig: _lightConfig,
-                    ),
-
-                    /// resize
-                    Positioned.fill(
-                      child: LayoutBuilder(
-                        builder: (
-                          BuildContext context,
-                          BoxConstraints constraints,
-                        ) {
-                          WidgetsBinding.instance.endOfFrame.then((_) {
-                            if (mounted) {
-                              tiltState.onResize(constraints.biggest);
-                            }
-                          });
-                          return const SizedBox();
-                        },
-                      ),
-                    ),
-                  ],
+            children: switch (_lightShadowMode) {
+              LightShadowMode.base => lightShadowModeBase(
+                  child: child,
+                  areaProgress: value,
                 ),
-              ),
-
-              /// outer child
-              ..._childLayout.outer,
-            ],
+              LightShadowMode.projector => lightShadowModeProjector(
+                  child: child,
+                  areaProgress: value,
+                ),
+            },
           ),
         );
       },
       child: _child,
     );
+  }
+
+  /// Widget Resize
+  Widget widgetResize() {
+    return Positioned.fill(
+      child: LayoutBuilder(
+        builder: (
+          BuildContext context,
+          BoxConstraints constraints,
+        ) {
+          WidgetsBinding.instance.endOfFrame.then((_) {
+            if (mounted) {
+              tiltState.onResize(constraints.biggest);
+            }
+          });
+          return const SizedBox();
+        },
+      ),
+    );
+  }
+
+  /// Stack Inner
+  Widget stackInner(List<Widget> children) {
+    return Stack(
+      alignment: AlignmentDirectional.center,
+
+      /// 避免暴露其他组件，[Clip.none] 时，默认赋值 [Clip.hardEdge]
+      clipBehavior: _clipBehavior == Clip.none ? Clip.hardEdge : _clipBehavior,
+      children: children,
+    );
+  }
+
+  /// LightShadowMode - Base
+  List<Widget> lightShadowModeBase({
+    required Widget? child,
+    required Offset areaProgress,
+  }) {
+    return [
+      /// behind child
+      ..._childLayout.behind,
+
+      /// main child
+      TiltShadowBase(
+        width: width,
+        height: height,
+        areaProgress: areaProgress,
+        border: _border,
+        borderRadius: _borderRadius,
+        clipBehavior: _clipBehavior,
+        lightConfig: _lightConfig,
+        shadowConfig: _shadowConfig,
+        child: stackInner(<Widget>[
+          /// body
+          child ?? const SizedBox(),
+
+          /// inner child
+          ..._childLayout.inner,
+
+          /// light
+          TiltLight(
+            width: width,
+            height: height,
+            areaProgress: areaProgress,
+            lightConfig: _lightConfig,
+          ),
+
+          /// resize
+          widgetResize(),
+        ]),
+      ),
+
+      /// outer child
+      ..._childLayout.outer,
+    ];
+  }
+
+  /// LightShadowMode - Projector
+  List<Widget> lightShadowModeProjector({
+    required Widget? child,
+    required Offset areaProgress,
+  }) {
+    return [
+      /// shadow
+      TiltShadowProjector(
+        width: width,
+        height: height,
+        areaProgress: areaProgress,
+        lightConfig: _lightConfig,
+        shadowConfig: _shadowConfig,
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          clipBehavior: Clip.none,
+          children: [
+            /// behind child
+            ..._childLayout.behind,
+
+            /// main child
+            Container(
+              decoration: BoxDecoration(
+                border: _border,
+                borderRadius: _borderRadius,
+              ),
+              clipBehavior: _clipBehavior,
+              child: stackInner(<Widget>[
+                /// body
+                child ?? const SizedBox(),
+
+                /// inner child
+                ..._childLayout.inner,
+              ]),
+            ),
+
+            /// outer child
+            ..._childLayout.outer,
+          ],
+        ),
+      ),
+
+      /// behind child
+      ..._childLayout.behind,
+
+      /// main child
+      Container(
+        decoration: BoxDecoration(
+          border: _border,
+          borderRadius: _borderRadius,
+        ),
+        clipBehavior: _clipBehavior,
+        child: stackInner(<Widget>[
+          /// body
+          child ?? const SizedBox(),
+
+          /// inner child
+          ..._childLayout.inner,
+
+          /// resize
+          widgetResize(),
+        ]),
+      ),
+
+      /// outer child
+      ..._childLayout.outer,
+
+      /// light
+      IgnorePointer(
+        child: Transform.scale(
+          scale: _lightConfig.projectorScale,
+          child: Container(
+            width: width,
+            height: height,
+            decoration: BoxDecoration(
+              borderRadius: _borderRadius,
+            ),
+            clipBehavior: _clipBehavior,
+            child: stackInner(<Widget>[
+              TiltLight(
+                width: width,
+                height: height,
+                areaProgress: areaProgress,
+                lightConfig: _lightConfig,
+              ),
+            ]),
+          ),
+        ),
+      ),
+    ];
   }
 }
