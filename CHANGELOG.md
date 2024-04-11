@@ -3,6 +3,13 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.0.1
+
+### Improvements
+
+- Upgrade `sensors_plus` package to `5.0.1`.
+- Update Doc.
+
 ## 3.0.0
 
 ### Breaking changes
