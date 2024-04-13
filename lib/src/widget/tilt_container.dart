@@ -217,7 +217,13 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
         shadowConfig: _shadowConfig,
         child: stackInner(<Widget>[
           /// body
-          child ?? const SizedBox(),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: _borderRadius,
+            ),
+            clipBehavior: _clipBehavior,
+            child: child,
+          ),
 
           /// inner child
           ..._childLayout.inner,
