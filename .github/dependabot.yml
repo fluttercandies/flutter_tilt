@@ -20,5 +20,4 @@ updates:
       interval: "daily"
     labels:
       - "auto.dependencies"
-      - "auto.github-action"
       - "auto.pub-package"
