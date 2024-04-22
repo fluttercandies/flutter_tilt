@@ -15,7 +15,7 @@ jobs:
     name: A job to automate contrib in readme
     steps:
       - name: README.md - Contribute List
-        uses: akhilmhdh/contributors-readme-action@v2.3.6
+        uses: akhilmhdh/contributors-readme-action@v2.3.8
         with:
           image_size: 100
           readme_path: README.md
@@ -23,7 +23,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: README-ZH.md - Contribute List
-        uses: akhilmhdh/contributors-readme-action@v2.3.6
+        uses: akhilmhdh/contributors-readme-action@v2.3.8
         with:
           image_size: 100
           readme_path: README-ZH.md
