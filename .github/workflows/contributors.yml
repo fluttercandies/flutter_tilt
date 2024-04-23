@@ -11,22 +11,17 @@ on:
 
 jobs:
   contrib-readme-job:
+    strategy:
+      matrix:
+        readme_path: [README.md, README-ZH.md]
     runs-on: ubuntu-latest
     name: A job to automate contrib in readme
     steps:
-      - name: README.md - Contribute List
+      - name: Contribute List - ${{ matrix.readme_path }}
         uses: akhilmhdh/contributors-readme-action@v2.3.8
         with:
           image_size: 100
-          readme_path: README.md
-          use_username: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: README-ZH.md - Contribute List
-        uses: akhilmhdh/contributors-readme-action@v2.3.8
-        with:
-          image_size: 100
-          readme_path: README-ZH.md
+          readme_path: ${{ matrix.readme_path }}
           use_username: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
