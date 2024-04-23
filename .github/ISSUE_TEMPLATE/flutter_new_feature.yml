@@ -15,11 +15,13 @@ body:
       description: Check all that apply
       multiple: true
       options:
+        - All
         - Android
         - iOS
         - macOS
         - Windows
         - Linux
+        - Web
         - Other
     validations:
       required: true

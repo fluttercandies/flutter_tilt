@@ -1,5 +1,5 @@
-name: "test coverage"
-run-name: "Test Coverage"
+name: 'test coverage'
+run-name: 'Test Coverage'
 
 on:
   workflow_dispatch:
@@ -7,18 +7,18 @@ on:
     branches:
       - main
     paths-ignore:
-      - "**.md"
-      - "example/**"
+      - '**.md'
+      - 'example/**'
   pull_request:
     branches:
       - main
     paths-ignore:
-      - "**.md"
-      - "example/**"
+      - '**.md'
+      - 'example/**'
 
 jobs:
 
-  code_analysis:
+  code-analysis:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,15 +40,18 @@ jobs:
           dart pub global activate dartdoc
           dart pub global run dartdoc .
 
-  test_minimum_version:
-    needs: [code_analysis]
+  test:
+    needs: [code-analysis]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        flutter-version: ['3.19.0', '']
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.19.0'
+          flutter-version: ${{ matrix.flutter-version }}
       - name: Prepare dependencies
         run: |
           flutter --version
@@ -56,8 +59,11 @@ jobs:
       - name: Test
         run: flutter test
 
-  test_latest_version:
-    needs: [code_analysis]
+  upload-test-coverage:
+    needs: [test]
+    if: |
+      github.event_name == 'push'
+      && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
