@@ -617,13 +617,12 @@ class TiltDirection {
       if (y > 0) dy = dy > value.dy ? dy : value.dy;
       if (x < 0) dx = dx < value.dx ? dx : value.dx;
       if (y < 0) dy = dy < value.dy ? dy : value.dy;
-     
+
       /// 符合项
       if (x > 0 && x <= value.dx) dx = x;
       if (y > 0 && y <= value.dy) dy = y;
       if (x < 0 && x >= value.dx) dx = x;
       if (y < 0 && y >= value.dy) dy = y;
-      
     }
     return TiltDirection(dx, dy);
   }

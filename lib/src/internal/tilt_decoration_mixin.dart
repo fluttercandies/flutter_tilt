@@ -47,18 +47,18 @@ mixin TiltDecoration {
     progressData = switch (direction) {
       /// 光源方向计算方式
       LightDirection _ => switch (direction) {
-        LightDirection.none => progressData,
-        LightDirection.around => constraintsDistance,
-        LightDirection.all => max,
-        LightDirection.top => progressY,
-        LightDirection.bottom => -progressY,
-        LightDirection.left => progressX,
-        LightDirection.right => -progressX,
-        LightDirection.center => max - constraintsDistance,
-        LightDirection.topLeft => progressX + progressY,
-        LightDirection.bottomRight => -(progressX + progressY),
-        LightDirection.topRight => -(progressX - progressY),
-        LightDirection.bottomLeft => progressX - progressY,
+          LightDirection.none => progressData,
+          LightDirection.around => constraintsDistance,
+          LightDirection.all => max,
+          LightDirection.top => progressY,
+          LightDirection.bottom => -progressY,
+          LightDirection.left => progressX,
+          LightDirection.right => -progressX,
+          LightDirection.center => max - constraintsDistance,
+          LightDirection.topLeft => progressX + progressY,
+          LightDirection.bottomRight => -(progressX + progressY),
+          LightDirection.topRight => -(progressX - progressY),
+          LightDirection.bottomLeft => progressX - progressY,
           LightDirection.xCenter =>
             max - (progressY < 0.0 ? -progressY : progressY),
           LightDirection.yCenter =>
