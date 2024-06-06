@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../enums.dart';
 import '../config/tilt_shadow_config.dart';
+import '../enums.dart';
 
 /// Light effect config.
 /// 光照效果配置。

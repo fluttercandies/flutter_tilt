@@ -1,8 +1,11 @@
+/// 方向
+sealed class Direction {}
+
 /// Light direction.
 /// 光照方向。
 ///
 /// {@macro tilt.LightConfig.direction}
-enum LightDirection {
+enum LightDirection implements Direction {
   /// 禁用光源
   none,
 
@@ -50,7 +53,7 @@ enum LightDirection {
 /// 阴影方向。
 ///
 /// {@macro tilt.ShadowConfig.direction}
-enum ShadowDirection {
+enum ShadowDirection implements Direction {
   /// 禁用阴影
   none,
 

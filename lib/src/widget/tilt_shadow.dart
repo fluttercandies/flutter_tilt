@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
-import '../utils.dart';
-import '../enums.dart';
 import '../config/tilt_light_config.dart';
 import '../config/tilt_shadow_config.dart';
+import '../enums.dart';
 import '../internal/tilt_decoration_mixin.dart';
+import '../utils.dart';
 
 /// 阴影
 class TiltShadow extends StatelessWidget with TiltDecoration {
@@ -65,7 +65,7 @@ class TiltShadow extends StatelessWidget with TiltDecoration {
   /// {@macro tilt.ShadowConfig.direction}
   double get showShadow => tiltDecorationDirectionProgress(
         areaProgress,
-        shadowConfig.direction ?? lightConfig.direction,
+        (shadowConfig.direction ?? lightConfig.direction) as Direction,
         min: shadowConfig.minIntensity,
         max: shadowConfig.maxIntensity,
       );

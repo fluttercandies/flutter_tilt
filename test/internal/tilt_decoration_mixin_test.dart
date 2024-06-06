@@ -10,7 +10,7 @@ void main() {
     test('tiltDecorationDirectionProgress', () {
       /// enableReverse = false
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, 1.0),
           LightDirection.bottom,
         ),
@@ -18,7 +18,7 @@ void main() {
         reason: '合法的 LightDirection',
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, -1.0),
           LightDirection.bottom,
         ),
@@ -26,7 +26,7 @@ void main() {
         reason: '不合法的 LightDirection',
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, -1.0),
           ShadowDirection.bottom,
         ),
@@ -34,7 +34,7 @@ void main() {
         reason: '合法的 ShadowDirection',
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, 1.0),
           ShadowDirection.bottom,
         ),
@@ -44,7 +44,7 @@ void main() {
 
       /// enableReverse = true
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, -1.0),
           LightDirection.bottom,
           enableReverse: true,
@@ -53,7 +53,7 @@ void main() {
         reason: '合法的 LightDirection',
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, 1.0),
           LightDirection.bottom,
           enableReverse: true,
@@ -62,7 +62,7 @@ void main() {
         reason: '不合法的 LightDirection',
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, 1.0),
           ShadowDirection.bottom,
           enableReverse: true,
@@ -71,7 +71,7 @@ void main() {
         reason: '合法的 ShadowDirection',
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, -1.0),
           ShadowDirection.bottom,
           enableReverse: true,
@@ -82,175 +82,175 @@ void main() {
     });
     test('tiltDecorationDirectionProgress LightDirection', () {
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           LightDirection.none,
         ),
         0.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           LightDirection.all,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           Offset.zero,
           LightDirection.all,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, -1.0),
           LightDirection.all,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           LightDirection.around,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           Offset.zero,
           LightDirection.around,
         ),
         0.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, -1.0),
           LightDirection.around,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, -1.0),
           LightDirection.top,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, 1.0),
           LightDirection.bottom,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, 0.0),
           LightDirection.left,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 0.0),
           LightDirection.right,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           Offset.zero,
           LightDirection.center,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           LightDirection.center,
         ),
         0.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, -1.0),
           LightDirection.topLeft,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, -1.0),
           LightDirection.topRight,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, 1.0),
           LightDirection.bottomLeft,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           LightDirection.bottomRight,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, 0.0),
           LightDirection.xCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           Offset.zero,
           LightDirection.xCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 0.0),
           LightDirection.xCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           LightDirection.xCenter,
         ),
         0.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, -1.0),
           LightDirection.yCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           Offset.zero,
           LightDirection.yCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, 1.0),
           LightDirection.yCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<LightDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           LightDirection.yCenter,
         ),
@@ -259,175 +259,175 @@ void main() {
     });
     test('tiltDecorationDirectionProgress ShadowDirection', () {
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           ShadowDirection.none,
         ),
         0.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           ShadowDirection.all,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           Offset.zero,
           ShadowDirection.all,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, -1.0),
           ShadowDirection.all,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           ShadowDirection.around,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           Offset.zero,
           ShadowDirection.around,
         ),
         0.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, -1.0),
           ShadowDirection.around,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, 1.0),
           ShadowDirection.top,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, -1.0),
           ShadowDirection.bottom,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 0.0),
           ShadowDirection.left,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, 0.0),
           ShadowDirection.right,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           Offset.zero,
           ShadowDirection.center,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           ShadowDirection.center,
         ),
         0.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           ShadowDirection.topLeft,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, 1.0),
           ShadowDirection.topRight,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, -1.0),
           ShadowDirection.bottomLeft,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, -1.0),
           ShadowDirection.bottomRight,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(-1.0, 0.0),
           ShadowDirection.xCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           Offset.zero,
           ShadowDirection.xCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 0.0),
           ShadowDirection.xCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           ShadowDirection.xCenter,
         ),
         0.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, -1.0),
           ShadowDirection.yCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           Offset.zero,
           ShadowDirection.yCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(0.0, 1.0),
           ShadowDirection.yCenter,
         ),
         1.0,
       );
       expect(
-        tiltDecorationDirectionProgress<ShadowDirection>(
+        tiltDecorationDirectionProgress(
           const Offset(1.0, 1.0),
           ShadowDirection.yCenter,
         ),

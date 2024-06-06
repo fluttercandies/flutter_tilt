@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/config/tilt_light_config.dart';
+import 'package:flutter_tilt/src/enums.dart';
 
 void main() {
   group('LightConfig', () {

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../enums.dart';
 import '../data/tilt_data.dart';
+import '../enums.dart';
 
 /// TiltCallback
 /// 倾斜回调
@@ -613,32 +613,17 @@ class TiltDirection {
 
     for (final TiltDirection value in validator) {
       /// 默认最大设置的验证范围，避免方向值超出验证值的时候会返回 0
-      if (x > 0) {
-        dx = dx > value.dx ? dx : value.dx;
-      }
-      if (y > 0) {
-        dy = dy > value.dy ? dy : value.dy;
-      }
-      if (x < 0) {
-        dx = dx < value.dx ? dx : value.dx;
-      }
-      if (y < 0) {
-        dy = dy < value.dy ? dy : value.dy;
-      }
-
+      if (x > 0) dx = dx > value.dx ? dx : value.dx;
+      if (y > 0) dy = dy > value.dy ? dy : value.dy;
+      if (x < 0) dx = dx < value.dx ? dx : value.dx;
+      if (y < 0) dy = dy < value.dy ? dy : value.dy;
+     
       /// 符合项
-      if (x > 0 && x <= value.dx) {
-        dx = x;
-      }
-      if (y > 0 && y <= value.dy) {
-        dy = y;
-      }
-      if (x < 0 && x >= value.dx) {
-        dx = x;
-      }
-      if (y < 0 && y >= value.dy) {
-        dy = y;
-      }
+      if (x > 0 && x <= value.dx) dx = x;
+      if (y > 0 && y <= value.dy) dy = y;
+      if (x < 0 && x >= value.dx) dx = x;
+      if (y < 0 && y >= value.dy) dy = y;
+      
     }
     return TiltDirection(dx, dy);
   }
