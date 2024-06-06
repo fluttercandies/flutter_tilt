@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.0.2
+
+### Improvements
+
+- Improve linter.
+
 ## 3.0.1
 
 ### Improvements
