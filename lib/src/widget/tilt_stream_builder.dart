@@ -1,14 +1,15 @@
 import 'dart:async' as async;
+
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:stream_transform/stream_transform.dart';
 
-import '../utils.dart';
-import '../enums.dart';
-import '../data/tilt_data.dart';
 import '../config/tilt_config.dart';
+import '../data/tilt_data.dart';
+import '../enums.dart';
+import '../utils.dart';
 
 /// Tilt StreamBuilder
 class TiltStreamBuilder extends StatefulWidget {
@@ -177,10 +178,8 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
           switch (tiltStreamModel.gesturesType) {
             case GesturesType.touch || GesturesType.hover:
               gesturesHarmonizerTimer(_tiltConfig.leaveDuration);
-              break;
             case GesturesType.controller:
               gesturesHarmonizerTimer(_tiltConfig.controllerLeaveDuration);
-              break;
             default:
               break;
           }
@@ -188,7 +187,6 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
         } else {
           enableSensors = false;
         }
-        break;
       case GesturesType.sensors:
         // 避免 sensors 与其他手势触发冲突
         if (enableSensors && _gesturesHarmonizerTimer == null) {
@@ -205,7 +203,6 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
             gesturesType: tiltStreamModel.gesturesType,
           );
         }
-        break;
     }
     return latestTiltStreamModel;
   }
@@ -224,7 +221,6 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
             deviceOrientation = DeviceOrientation.landscapeRight;
           }
         }
-        break;
       case Orientation.portrait:
         if (y.abs() > x.abs() && y.abs() > z.abs()) {
           if (y > 0) {
@@ -233,7 +229,6 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
             deviceOrientation = DeviceOrientation.portraitDown;
           }
         }
-        break;
     }
   }
 

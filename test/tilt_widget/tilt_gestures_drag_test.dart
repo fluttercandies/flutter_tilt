@@ -97,6 +97,7 @@ void main() {
         childFinder,
         const Offset(0.0, -100.0),
         const Duration(milliseconds: 1000),
+        warnIfMissed: false,
       );
       await tester.pumpAndSettle();
       expect(scrollController.offset, 0.0);
@@ -107,6 +108,7 @@ void main() {
         childFinder,
         const Offset(-100.0, 0.0),
         const Duration(milliseconds: 1000),
+        warnIfMissed: false,
       );
       await tester.pumpAndSettle();
       expect(scrollController.offset, 0.0);

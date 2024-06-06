@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
 
-import 'tilt_light.dart';
-import 'tilt_shadow.dart';
-import '../enums.dart';
-import '../data/tilt_data.dart';
-import '../state/tilt_state.dart';
+import '../config/tilt_config.dart';
 import '../config/tilt_light_config.dart';
 import '../config/tilt_shadow_config.dart';
-import '../config/tilt_config.dart';
+import '../data/tilt_data.dart';
+import '../enums.dart';
 import '../internal/tilt_tween_animation_mixin.dart';
+import '../state/tilt_state.dart';
+import 'tilt_light.dart';
+import 'tilt_shadow.dart';
 
 class TiltContainer extends StatefulWidget {
   const TiltContainer({

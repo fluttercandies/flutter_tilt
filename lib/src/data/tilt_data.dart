@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-import '../utils.dart';
-import '../enums.dart';
 import '../config/tilt_config.dart';
+import '../enums.dart';
+import '../utils.dart';
 
 /// 倾斜数据
 @immutable
@@ -50,7 +50,9 @@ class TiltData {
   ///
   /// {@macro tilt.TiltDataModel.angle}
   Offset get angle => Utils.rotateAxis(
-      areaProgress * tiltConfig.angle, tiltConfig.enableReverse);
+        areaProgress * tiltConfig.angle,
+        tiltConfig.enableReverse,
+      );
 
   /// 禁用
   bool get disable => tiltConfig.disable;

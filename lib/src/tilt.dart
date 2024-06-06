@@ -1,13 +1,14 @@
 import 'dart:async' as async;
+
 import 'package:flutter/widgets.dart';
 
-import 'utils.dart';
-import 'enums.dart';
-import 'data/tilt_data.dart';
-import 'state/tilt_state.dart';
+import 'config/tilt_config.dart';
 import 'config/tilt_light_config.dart';
 import 'config/tilt_shadow_config.dart';
-import 'config/tilt_config.dart';
+import 'data/tilt_data.dart';
+import 'enums.dart';
+import 'state/tilt_state.dart';
+import 'utils.dart';
 import 'widget/gestures_listener.dart';
 import 'widget/tilt_container.dart';
 import 'widget/tilt_parallax_container.dart';
@@ -252,7 +253,6 @@ class _TiltState extends State<Tilt> {
             tiltStreamModel.gesturesType,
           );
         }
-        break;
       case GesturesType.sensors:
         // Sensors 只会触发 onGestureMove，不会触发 onGestureLeave
         currentPosition += tiltStreamModel.position * _tiltConfig.sensorFactor;
@@ -263,7 +263,6 @@ class _TiltState extends State<Tilt> {
           currentPosition,
         );
         onGesturesMove(currentPosition, tiltStreamModel.gesturesType);
-        break;
     }
   }
 
