@@ -469,5 +469,63 @@ void main() {
       expect(gesturesTypeTest, GesturesType.touch);
       expect(tiltDataTest, tiltDataExpect, reason: '倾斜-超范围');
     });
+
+    testWidgets('LightShadowMode.projector gestures move leave',
+        (WidgetTester tester) async {
+      TiltDataModel? moveTiltDataTest;
+      TiltDataModel? leaveTiltDataTest;
+      GesturesType? moveGesturesTypeTest;
+      GesturesType? leaveGesturesTypeTest;
+      final TiltDataModel leaveTiltDataTestExpect = TiltDataModel(
+        angle: Offset.zero,
+        areaProgress: Offset.zero,
+        position: const Offset(5.0, 5.0),
+        transform: Matrix4(
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.05,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+        ),
+      );
+
+      /// 回调赋值
+      await tester.pumpWidget(
+        TiltWidget(
+          lightShadowMode: LightShadowMode.projector,
+          onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
+            moveTiltDataTest = tiltData;
+            moveGesturesTypeTest = gesturesType;
+          },
+          onGestureLeave: (TiltDataModel tiltData, GesturesType gesturesType) {
+            leaveTiltDataTest = tiltData;
+            leaveGesturesTypeTest = gesturesType;
+          },
+        ),
+      );
+
+      /// 倾斜 touch move
+      await tester.fling(tiltWidgetFinder, const Offset(0.0, 5.0), 0.1);
+      expect(childFinder, findsNWidgets(2));
+      expect(moveGesturesTypeTest, GesturesType.touch);
+      expect(moveTiltDataTest != null, true);
+
+      /// 倾斜 touch leave
+      await tester.fling(tiltScaffoldFinder, const Offset(0.0, -1.0), 0.1);
+      expect(childFinder, findsNWidgets(2));
+      expect(leaveGesturesTypeTest, GesturesType.touch);
+      expect(leaveTiltDataTest, leaveTiltDataTestExpect);
+    });
   });
 }

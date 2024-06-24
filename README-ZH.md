@@ -79,6 +79,8 @@
 
   - [TiltConfig][]
 
+  - [LightShadowMode][]
+
   - [LightConfig][]
 
   - [ShadowConfig][]
@@ -227,6 +229,7 @@ Tilt(
 | borderRadius | `BorderRadiusGeometry?` | `null` | BoxDecoration borderRadius。 |  
 | clipBehavior | `Clip` | `Clip.antiAlias` | Flutter 中的 clipBehavior。 |  
 | tiltConfig | [TiltConfig][] | `TiltConfig()` | 倾斜效果配置。 |  
+| lightShadowMode | [LightShadowMode][] | `LightShadowMode.base` | 光影 Mode。 |  
 | lightConfig | [LightConfig][] | `LightConfig()` | 光照效果配置。 |  
 | shadowConfig | [ShadowConfig][] | `ShadowConfig()` | 阴影效果配置。 |  
 | onGestureMove | `void Function(TiltDataModel, GesturesType)?` | `null` | 手势移动的回调触发。 |  
@@ -309,6 +312,14 @@ tiltStreamController.add(
 | controllerLeaveDuration | `Duration` | `Duration(milliseconds: 300)` | controller 手势离开后的动画持续时间。 <br/> 仅以下手势生效： <br/> `GesturesType.controller` |  
 
 
+### LightShadowMode 📄
+
+| 枚举值 | 描述 |  
+| --- | --- |
+| LightShadowMode.base | `[无性能风险]` <br/> 仅对 `Tilt.child` 使用普通阴影效果，无性能损耗。 |  
+| LightShadowMode.projector | `[有性能风险]` <br/> 对整个 `Tilt` widget 使用类似投影仪效果的阴影，<br/> 会显示与 widget 非透明部分完全一致的阴影。 <br/> 建议在以下场景使用：<br/> - 仅图片 <br/> - 无数据状态 <br/> - 无 Hero 标签 |  
+
+
 ### LightConfig 📄  
 
 | 参数名 | 类型 | 默认值 | 描述 |  
@@ -318,6 +329,7 @@ tiltStreamController.add(
 | minIntensity | `double` | `0.0` | 颜色最小不透明度，也是初始不透明度。 |  
 | maxIntensity | `double` | `0.5` | 颜色最大不透明度，跟随倾斜最大进度。 |  
 | spreadFactor | `double` | `4.0` | 光源扩散系数，相对于当前 widget 尺寸。 |  
+| projectorScale | `double` | `1.1` | 光照区域尺寸比例。 <br/> 仅以下模式生效：<br/> `[LightShadowMode.projector]` |  
 | direction | `LightDirection` | `LightDirection.around` | 光照方向。 <br/> 影响：<br/> `[ShadowConfig.direction]`（配置后不受影响）。 |  
 | enableReverse | `bool` | `false` | 反转光照方向。 <br/> 影响：<br/> `[ShadowConfig.direction]`（配置后不受影响）。 <br/> `[ShadowConfig.enableReverse]`（配置后不受影响）。 |  
 
@@ -332,10 +344,14 @@ tiltStreamController.add(
 | maxIntensity | `double` | `0.5` | 颜色最大不透明度，跟随倾斜最大进度。 |  
 | offsetInitial | `Offset` | `Offset(0.0, 0.0)` | 阴影偏移初始值。 <br/> 例如：(0.0, 0.0) 中心 <br/> (40.0, 40.0) 向左上角偏移 40。 |  
 | offsetFactor | `double` | `0.1` | 阴影偏移系数，相对于当前 widget 尺寸。 |  
-| spreadInitial | `double` | `0.0` | 阴影扩散半径初始值。 |  
-| spreadFactor | `double` | `0.0` | 阴影扩散半径系数，相对于当前 widget 尺寸。 |  
-| minBlurRadius | `double` | `10.0` | 最小阴影模糊半径，也是初始模糊半径。 |  
-| maxBlurRadius | `double` | `20.0` | 最大阴影模糊半径，跟随倾斜最大进度。 |  
+| spreadInitial | `double` | `0.0` | 阴影扩散半径初始值。<br/> 仅以下模式生效：<br/> `[LightShadowMode.base]` |  
+| spreadFactor | `double` | `0.0` | 阴影扩散半径系数，相对于当前 widget 尺寸。<br/> 仅以下模式生效：<br/> `[LightShadowMode.base]` |  
+| minBlurRadius | `double` | `10.0` | 最小阴影模糊半径，也是初始模糊半径。<br/> 仅以下模式生效：<br/> `[LightShadowMode.base]` |  
+| maxBlurRadius | `double` | `20.0` | 最大阴影模糊半径，跟随倾斜最大进度。<br/> 仅以下模式生效：<br/> `[LightShadowMode.base]` |  
+| projectorScaleFrom | `double` | `1.0` | 最小倾斜进度的阴影尺寸比例，也是初始尺寸比例。<br/> 仅以下模式生效：<br/> `[LightShadowMode.projector]` |  
+| projectorScaleTo | `double` | `1.0` | 最大倾斜进度的阴影尺寸比例。 <br/> 仅以下模式生效：<br/> `[LightShadowMode.projector]` |  
+| projectorBlurSigmaFrom | `double` | `5.0` | 最小倾斜进度的阴影模糊 Sigma，也是初始模糊 Sigma。<br/> 仅以下模式生效：<br/> `[LightShadowMode.projector]` |  
+| projectorBlurSigmaTo | `double` | `10.0` | 最大倾斜进度的阴影模糊 Sigma。<br/> 仅以下模式生效：<br/> `[LightShadowMode.projector]` |  
 | direction | `ShadowDirection?` | `null` | 阴影方向。 |  
 | enableReverse | `bool?` | `null` | 反转阴影方向。 |  
 
@@ -374,6 +390,7 @@ tiltStreamController.add(
 [ChildLayout]: #childlayout-
 [StreamController&lt;TiltStreamModel&gt;]: #streamcontrollertiltstreammodel-
 [TiltConfig]: #tiltconfig-
+[LightShadowMode]: #lightshadowmode-
 [LightConfig]: #lightconfig-
 [ShadowConfig]: #shadowconfig-
 [Gyroscope Browser compatibility]: https://developer.mozilla.org/en-US/docs/Web/API/Sensor_APIs#api.gyroscope
