@@ -9,6 +9,7 @@ on:
 jobs:
   contrib-readme-job:
     strategy:
+      max-parallel: 1
       matrix:
         readme_path: [README.md, README-ZH.md]
     runs-on: ubuntu-latest
