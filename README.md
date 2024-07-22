@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <strong >Easily Apply Tilt Parallax Hover Effects for Flutter!</strong>
+  <strong >Easily apply tilt parallax hover effects for Flutter!</strong>
 </p>
 
 <br/>
