@@ -9,6 +9,12 @@
 
 -  Add `Tilt.lightShadowMode` and configuration.
 
+## 3.0.3
+
+### Improvements
+
+- Bump `sensors_plus` package from `5.0.1` to `6.0.0`.
+
 ## 3.0.2
 
 ### Improvements
