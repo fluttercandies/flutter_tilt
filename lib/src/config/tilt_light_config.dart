@@ -20,6 +20,7 @@ class LightConfig {
     this.minIntensity = 0.0,
     this.maxIntensity = 0.5,
     this.spreadFactor = 4.0,
+    this.projectorScale = 1.1,
     this.direction = LightDirection.around,
     this.enableReverse,
   })  : assert(
@@ -27,7 +28,8 @@ class LightConfig {
               minIntensity >= 0.0 &&
               maxIntensity <= 1.0,
         ),
-        assert(spreadFactor >= 1.0);
+        assert(spreadFactor >= 1.0),
+        assert(projectorScale >= 0.0);
 
   /// Only disable the light effect.
   ///
@@ -65,6 +67,20 @@ class LightConfig {
   /// 光源扩散系数，
   /// 相对于当前 widget 尺寸。
   final double spreadFactor;
+
+  /// Light area size scale
+  ///
+  /// Only the following mode:
+  /// [LightShadowMode.projector]
+  ///
+  /// ------
+  ///
+  /// 光照区域尺寸比例
+  ///
+  /// 仅以下模式生效：
+  /// [LightShadowMode.projector]
+  ///
+  final double projectorScale;
 
   /// Light direction.
   ///
@@ -108,6 +124,7 @@ class LightConfig {
     double? minIntensity,
     double? maxIntensity,
     double? spreadFactor,
+    double? projectorScale,
     LightDirection? direction,
     bool? enableReverse,
   }) {
@@ -117,6 +134,7 @@ class LightConfig {
       minIntensity: minIntensity ?? this.minIntensity,
       maxIntensity: maxIntensity ?? this.maxIntensity,
       spreadFactor: spreadFactor ?? this.spreadFactor,
+      projectorScale: projectorScale ?? this.projectorScale,
       direction: direction ?? this.direction,
       enableReverse: enableReverse ?? this.enableReverse,
     );
@@ -136,6 +154,7 @@ class LightConfig {
         other.minIntensity == minIntensity &&
         other.maxIntensity == maxIntensity &&
         other.spreadFactor == spreadFactor &&
+        other.projectorScale == projectorScale &&
         other.direction == direction &&
         other.enableReverse == enableReverse;
   }
@@ -148,6 +167,7 @@ class LightConfig {
       minIntensity,
       maxIntensity,
       spreadFactor,
+      projectorScale,
       direction,
       enableReverse,
     );
