@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.0.4 (Unreleased)
+
+### Fixes
+
+- Fix `tiltConfig.enableGestureTouch` still prevents scrolling when disabled. ([#15](https://github.com/fluttercandies/flutter_tilt/pull/15))
+
 ## 3.0.3
 
 ### Improvements
