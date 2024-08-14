@@ -358,21 +358,47 @@ tiltStreamController.add(
 
 ## 贡献者 ✨  
 
-<!-- readme: contributors -start -->
+更多详情，请查看 [graphs/contributors](https://github.com/fluttercandies/flutter_tilt/graphs/contributors)。  
+欢迎任何形式的的贡献！ ([emoji key](https://allcontributors.org/docs/en/emoji-key))  
+
 <table>
-	<tbody>
-		<tr>
-            <td align="center">
-                <a href="https://github.com/AmosHuKe">
-                    <img src="https://avatars.githubusercontent.com/u/32262985?v=4" width="100;" alt="AmosHuKe"/>
-                    <br />
-                    <sub><b>AmosHuKe</b></sub>
-                </a>
-            </td>
-		</tr>
-	<tbody>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/AmosHuKe">
+          <img src="https://avatars.githubusercontent.com/u/32262985?v=4" width="100px" alt="AmosHuKe"/>
+          <br />
+          <sub><b>AmosHuKe</b></sub>
+          <br />
+          <a href="https://github.com/fluttercandies/flutter_tilt/commits?author=AmosHuKe" title="Code">💻</a>&nbsp;
+          <a href="https://github.com/fluttercandies/flutter_tilt/pulls?q=is:pr+reviewed-by:AmosHuKe" title="Reviewed Pull Requests">👀</a>&nbsp;
+          <a href="https://github.com/fluttercandies/flutter_tilt/commits?author=AmosHuKe" title="Documentation">📖</a>&nbsp;
+          <a href="https://github.com/AmosHuKe/flutter_tilt_book" title="Examples">💡</a>&nbsp;
+          <a href="https://github.com/fluttercandies/flutter_tilt/commits?author=AmosHuKe" title="Tests">⚠️</a>&nbsp;
+          <a href="#maintenance" title="Maintenance">🚧</a>&nbsp;
+          <a href="#design" title="Design">🎨</a>&nbsp;
+          <a href="#ideas" title="Ideas, Planning, & Feedback">🤔</a>&nbsp;
+          <a href="#question" title="Answering Questions">💬</a>&nbsp;
+          <br />
+          <p align="left">
+            <ul align="left">
+              <li><sub>Example: <a href="https://github.com/AmosHuKe/flutter_tilt_book" title="Examples">flutter_tilt_book</a></sub></li>
+            </ul>
+          </p>
+        </a>
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/LOCKEDFILE">
+          <img src="https://avatars.githubusercontent.com/u/41106126?v=4" width="100px" alt="LOCKEDFILE"/>
+          <br />
+          <sub><b>LOCKEDFILE</b></sub>
+          <br />
+          <a href="https://github.com/fluttercandies/flutter_tilt/pulls?q=author:LOCKEDFILE" title="Bug reports">🐛</a>
+        </a>
+      </td>
+    </tr>
+  <tbody>
 </table>
-<!-- readme: contributors -end -->
 
 
 ## 许可证 📄  

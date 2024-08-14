@@ -46,8 +46,8 @@ class _GesturesListenerState extends State<GesturesListener> {
   Widget build(BuildContext context) {
     /// 不受滑动影响
     return GestureDetector(
-      onVerticalDragUpdate: (_) {},
-      onHorizontalDragUpdate: (_) {},
+      onVerticalDragUpdate: _tiltConfig.enableGestureTouch ? (_) {} : null,
+      onHorizontalDragUpdate: _tiltConfig.enableGestureTouch ? (_) {} : null,
 
       /// 手势监听
       child: Listener(
