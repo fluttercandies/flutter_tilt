@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'tilt_widget.dart';
@@ -13,21 +13,52 @@ void main() {
       expect(childFinder, findsOneWidget);
     });
     testWidgets('disable true', (WidgetTester tester) async {
-      TiltDataModel? tiltData;
-      GesturesType? gesturesType;
+      final ScrollController scrollController = ScrollController();
+
+      TiltDataModel? tiltDataTest;
+      GesturesType? gesturesTypeTest;
+
       await tester.pumpWidget(
-        TiltWidget(
-          disable: true,
-          onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            tiltData = tiltData;
-            gesturesType = gesturesType;
-          },
+        MaterialApp(
+          home: Scaffold(
+            body: ListView(
+              controller: scrollController,
+              children: <Widget>[
+                Tilt(
+                  key: const Key('tilt_widget'),
+                  disable: true,
+                  child: const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Text('Tilt'),
+                  ),
+                  onGestureMove: (
+                    TiltDataModel tiltData,
+                    GesturesType gesturesType,
+                  ) {
+                    tiltDataTest = tiltData;
+                    gesturesTypeTest = gesturesType;
+                  },
+                ),
+                const SizedBox(key: Key('scroll'), height: 100, width: 100),
+                const SizedBox(height: 1000),
+              ],
+            ),
+          ),
         ),
       );
-      await tester.fling(tiltWidgetFinder, const Offset(0.0, -5.0), 0.1);
+
+      /// onVerticalDragUpdate
+      await tester.timedDrag(
+        childFinder,
+        const Offset(0.0, -50.0),
+        const Duration(milliseconds: 1000),
+      );
+      await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
-      expect(gesturesType, null);
-      expect(tiltData, null);
+      expect(scrollController.offset, 50.0);
+      expect(gesturesTypeTest, null);
+      expect(tiltDataTest, null);
     });
     testWidgets('fps', (WidgetTester tester) async {
       int count = 0;

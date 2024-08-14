@@ -176,6 +176,7 @@ class _TiltState extends State<Tilt> {
         _tiltStreamController ?? defaultTiltStreamController;
 
     return GesturesListener(
+      disable: _disable,
       tiltStreamController: tiltStreamController,
       tiltConfig: _tiltConfig,
       child: TiltStreamBuilder(

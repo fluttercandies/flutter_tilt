@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.0.5
+
+### Fixes
+
+- Fix `Tilt.disable: true` still prevents scrolling. ([#16](https://github.com/fluttercandies/flutter_tilt/pull/16))
+
 ## 3.0.4
 
 ### Fixes
