@@ -7,7 +7,7 @@
 
 ### Fixes
 
-- Fix `Tilt.disable: true` still prevents scrolling.
+- Fix `Tilt.disable: true` still prevents scrolling. ([#16](https://github.com/fluttercandies/flutter_tilt/pull/16))
 
 ## 3.0.4
 
