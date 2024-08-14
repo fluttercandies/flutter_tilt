@@ -15,11 +15,15 @@ class GesturesListener extends StatefulWidget {
   const GesturesListener({
     super.key,
     required this.child,
+    required this.disable,
     required this.tiltStreamController,
     required this.tiltConfig,
   });
 
   final Widget child;
+
+  /// 是否禁用
+  final bool disable;
 
   /// TiltStreamController
   final async.StreamController<TiltStreamModel> tiltStreamController;
@@ -32,6 +36,7 @@ class GesturesListener extends StatefulWidget {
 
 class _GesturesListenerState extends State<GesturesListener> {
   Widget get _child => widget.child;
+  bool get _disable => widget.disable;
   async.StreamController<TiltStreamModel> get _tiltStreamController =>
       widget.tiltStreamController;
   TiltConfig get _tiltConfig => widget.tiltConfig;
@@ -44,6 +49,8 @@ class _GesturesListenerState extends State<GesturesListener> {
 
   @override
   Widget build(BuildContext context) {
+    if (_disable) return _child;
+
     /// 不受滑动影响
     return GestureDetector(
       onVerticalDragUpdate: _tiltConfig.enableGestureTouch ? (_) {} : null,

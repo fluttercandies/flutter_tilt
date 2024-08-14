@@ -9,6 +9,12 @@
 
 -  Add `Tilt.lightShadowMode` and configuration.
 
+## 3.0.5
+
+### Fixes
+
+- Fix `Tilt.disable: true` still prevents scrolling. ([#16](https://github.com/fluttercandies/flutter_tilt/pull/16))
+
 ## 3.0.4
 
 ### Fixes
