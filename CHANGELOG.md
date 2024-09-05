@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.0.6 (Unreleased)
+
+### Improvements
+
+- Handling when the platform has no available sensors.
+
 ## 3.0.5
 
 ### Fixes
