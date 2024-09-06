@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.1.0 (Unreleased)
+
+### New features
+
+-  Add `Tilt.lightShadowMode` and configuration. ([#12](https://github.com/fluttercandies/flutter_tilt/pull/12))
+
 ## 3.0.6
 
 ### Improvements
