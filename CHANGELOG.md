@@ -3,6 +3,13 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.0.6
+
+### Improvements
+
+- Replace `Platform` (dart:io) with `TargetPlatform` (flutter/foundation.dart). ([#18](https://github.com/fluttercandies/flutter_tilt/pull/18))
+- Handling when the platform has no available sensors. ([#18](https://github.com/fluttercandies/flutter_tilt/pull/18))
+
 ## 3.0.5
 
 ### Fixes

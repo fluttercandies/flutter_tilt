@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -585,6 +586,7 @@ void main() {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
 
+      debugDefaultTargetPlatformOverride = TargetPlatform.windows;
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -614,6 +616,7 @@ void main() {
           ),
         ),
       );
+      debugDefaultTargetPlatformOverride = null;
 
       /// onVerticalDragUpdate
       await tester.timedDrag(

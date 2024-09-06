@@ -92,44 +92,38 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
     if (canSensorsPlatformSupport &&
         enableStream &&
         _tiltConfig.enableGestureSensors) {
-      /// 避免无主要传感器的设备使用
-      gyroscopeEventStream()
-          .listen(
-            null,
-            onError: (_) => canSensorsPlatformSupport = false,
-            cancelOnError: true,
+      /// 加速度计事件处理（如：设备方向）
+      accelerometerStreamListen = accelerometerEventStream().listen(
+        handleAccelerometerEvents,
+        onError: (_) => canSensorsPlatformSupport = false,
+        cancelOnError: true,
+      );
+
+      /// 陀螺仪处理
+      gyroscopeStreamListen = gyroscopeEventStream()
+          .map<TiltStreamModel>(
+            (gyroscopeEvent) => TiltStreamModel(
+              position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
+              gesturesType: GesturesType.sensors,
+            ),
           )
-          .cancel();
-
-      if (canSensorsPlatformSupport) {
-        /// 加速度计事件处理（如：设备方向）
-        accelerometerStreamListen =
-            accelerometerEventStream().listen(handleAccelerometerEvents);
-
-        /// 陀螺仪处理
-        gyroscopeStreamListen = gyroscopeEventStream()
-            .map<TiltStreamModel>(
-              (gyroscopeEvent) => TiltStreamModel(
-                position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
-                gesturesType: GesturesType.sensors,
-              ),
-            )
-            .combineLatest(
-              Stream<void>.periodic(Duration(milliseconds: (1000 / _fps) ~/ 1)),
-              (p0, _) => p0,
-            )
-            .throttle(
-              Duration(milliseconds: (1000 / _fps) ~/ 1),
-              trailing: true,
-            )
-            .listen(
-          (TiltStreamModel tiltStreamModel) {
-            if (_tiltStreamController.hasListener) {
-              _tiltStreamController.sink.add(tiltStreamModel);
-            }
-          },
-        );
-      }
+          .combineLatest(
+            Stream<void>.periodic(Duration(milliseconds: (1000 / _fps) ~/ 1)),
+            (p0, _) => p0,
+          )
+          .throttle(
+            Duration(milliseconds: (1000 / _fps) ~/ 1),
+            trailing: true,
+          )
+          .listen(
+        (TiltStreamModel tiltStreamModel) {
+          if (_tiltStreamController.hasListener) {
+            _tiltStreamController.sink.add(tiltStreamModel);
+          }
+        },
+        onError: (_) => canSensorsPlatformSupport = false,
+        cancelOnError: true,
+      );
     }
   }
 

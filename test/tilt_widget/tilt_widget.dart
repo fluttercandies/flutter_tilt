@@ -47,7 +47,7 @@ class TiltWidget extends StatelessWidget {
           border: border,
           borderRadius: borderRadius,
           clipBehavior: clipBehavior,
-          tiltConfig: tiltConfig,
+          tiltConfig: tiltConfig.copyWith(enableGestureSensors: false),
           lightConfig: lightConfig,
           shadowConfig: shadowConfig,
           onGestureMove: onGestureMove,
