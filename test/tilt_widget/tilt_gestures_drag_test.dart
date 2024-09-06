@@ -70,7 +70,7 @@ void main() {
       final Finder scrollFinder = find.byKey(const Key('scroll'));
       final ScrollController scrollController = ScrollController();
 
-      /// 回调赋值
+      debugDefaultTargetPlatformOverride = TargetPlatform.windows;
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -95,6 +95,7 @@ void main() {
           ),
         ),
       );
+      debugDefaultTargetPlatformOverride = null;
 
       /// onVerticalDragUpdate
       await tester.timedDrag(
