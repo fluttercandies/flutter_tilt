@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:flutter_tilt/src/utils.dart';
@@ -16,7 +17,18 @@ void main() {
     const constraintsPosition = Utils.constraintsPosition;
 
     test('sensorsPlatformSupport', () {
-      expect(sensorsPlatformSupport(), false);
+      for (final TargetPlatform testTargetPlatform in TargetPlatform.values) {
+        debugDefaultTargetPlatformOverride = testTargetPlatform;
+        switch (testTargetPlatform) {
+          case TargetPlatform.android:
+            expect(sensorsPlatformSupport(), true);
+          case TargetPlatform.iOS:
+            expect(sensorsPlatformSupport(), true);
+          case _:
+            expect(sensorsPlatformSupport(), false);
+        }
+        debugDefaultTargetPlatformOverride = null;
+      }
     });
 
     test('centerPosition', () {

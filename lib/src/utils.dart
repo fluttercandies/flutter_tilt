@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart'
+    show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/widgets.dart';
 
 import 'config/tilt_config.dart';
@@ -13,11 +13,12 @@ class Utils {
   ///
   /// @return [bool] true: 传感器支持 false: 传感器不支持
   static bool sensorsPlatformSupport() {
-    bool support = false;
-    if (kIsWeb) return support = true;
-    if (Platform.isAndroid) support = true;
-    if (Platform.isIOS) support = true;
-    return support;
+    if (kIsWeb) return true;
+    return switch (defaultTargetPlatform) {
+      TargetPlatform.android => true,
+      TargetPlatform.iOS => true,
+      _ => false
+    };
   }
 
   /// 区域中心定位
