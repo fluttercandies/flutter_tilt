@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
@@ -8,6 +9,8 @@ void main() {
       final Finder childFinder = find.text('Tilt');
       final Finder scrollFinder = find.byKey(const Key('scroll'));
       final ScrollController scrollController = ScrollController();
+
+      debugDefaultTargetPlatformOverride = TargetPlatform.windows;
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -27,6 +30,7 @@ void main() {
           ),
         ),
       );
+      debugDefaultTargetPlatformOverride = null;
 
       /// onVerticalDragUpdate
       await tester.timedDrag(
