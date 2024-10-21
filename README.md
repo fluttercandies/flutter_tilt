@@ -55,11 +55,13 @@ Check out the [Live Demo][].
 
   - [Versions compatibility](#versions-compatibility-)
 
+  - [Platforms compatibility](#platforms-compatibility-)
+
   - [Add package](#add-package-)
 
-- [Sensors compatibility](#sensors-compatibility-)
+- [Sensors compatibility][]
 
-- [Gesture priority](#gesture-priority-)
+- [Gestures priority](#gestures-priority-)
 
 - [Simple usage](#simple-usage-)
 
@@ -98,7 +100,7 @@ Check out the [Live Demo][].
 - 🔦 Light effect
 - 💡 Shadow effect
 - 👀 Parallax effect
-- 📱 Gyroscope sensor support ([Sensors compatibility](#sensors-compatibility-))
+- 📱 Gyroscope sensor support ([Sensors compatibility][])
 - 🧱 Multiple layouts
 - 👇 Supports hover, touch and sensors events
 - 🖼️ Smooth animation
@@ -113,6 +115,13 @@ Check out the [Live Demo][].
 | flutter_tilt 3.0.0+ |    ❌    |    ❌    |    ✅    |  
 | flutter_tilt 2.0.0+ |    ❌    |    ✅    |    ✅    |  
 | flutter_tilt 1.0.0+ |    ✅    |    ❌    |    ❌    |  
+
+
+### Platforms compatibility 📱  
+
+| Android |  iOS  |  Web  | macOS | Windows | Linux |  
+| :-----: | :---: | :---: | :---: | :-----: | :---: |  
+|   ✅   |   ✅  |  ✅   |  ✅  |   ✅   |  ✅   |  
 
 
 ### Add package 📦  
@@ -131,20 +140,21 @@ dependencies:
 ```
 
 
-## Sensors compatibility 📱
+## Sensors compatibility 📱  
 
-Sensors are triggered only on these platforms.
+Sensors will only trigger on these platforms.  
+Platforms without sensors support do not affect the normal use of other features.  
 
-| Android |  iOS  |                        Web (HTTPS)                       | macOS | Linux | Windows |  
-| :-----: | :---: | :------------------------------------------------------: | :---: | :---: | :-----: |  
-|   ✅   |   ✅  | [Browser compatibility][Gyroscope Browser compatibility] |  ❌  |   ❌  |   ❌   |  
+| Android |  iOS  |                        Web (HTTPS)                       | macOS | Windows | Linux |  
+| :-----: | :---: | :------------------------------------------------------: | :---: | :-----: | :---: |  
+|   ✅   |   ✅  | [Browser compatibility][Gyroscope Browser compatibility] |  ❌  |   ❌    |  ❌  |  
 
 > [!NOTE]  
 > Currently Web uses the [Sensor API - Gyroscope], but it is not compatible with some of the major browsers, such as Safari, Firefox.  
 <!-- > After that maybe replace it with [DeviceMotionEvent][]. -->
 
 
-## Gesture priority 📱
+## Gestures priority 📱
 
 When multiple gestures are enabled, they are triggered based on priority:
 
@@ -395,6 +405,7 @@ Open sourced under the MIT license.
 [Live Demo]: https://amoshuke.github.io/flutter_tilt_book
 [Migration Guide]: https://github.com/fluttercandies/flutter_tilt/blob/main/guides/migration_guide.md
 [flutter_tilt/example]: https://github.com/fluttercandies/flutter_tilt/tree/main/example
+[Sensors compatibility]: #sensors-compatibility-
 [Tilt widget parameters]: #tilt-widget-parameters-
 [TiltParallax widget parameters]: #tiltparallax-widget-parameters-
 [ChildLayout]: #childlayout-
