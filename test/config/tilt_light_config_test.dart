@@ -31,6 +31,10 @@ void main() {
         () => LightConfig(spreadFactor: 0.1),
         throwsAssertionError,
       );
+      expect(
+        () => LightConfig(projectorScale: -1),
+        throwsAssertionError,
+      );
     });
     test('copyWith', () {
       const LightConfig lightConfig = LightConfig();
@@ -40,6 +44,7 @@ void main() {
         minIntensity: 0.0,
         maxIntensity: 0.5,
         spreadFactor: 1.0,
+        projectorScale: 2.0,
         direction: LightDirection.around,
         enableReverse: true,
       );
@@ -49,6 +54,7 @@ void main() {
         minIntensity: 0.0,
         maxIntensity: 0.5,
         spreadFactor: 1.0,
+        projectorScale: 2.0,
         direction: LightDirection.around,
         enableReverse: true,
       );
