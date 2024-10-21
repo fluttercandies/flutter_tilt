@@ -55,9 +55,11 @@
 
   - [版本兼容](#版本兼容-)
 
+  - [平台兼容](#平台兼容-)
+
   - [添加 flutter_tilt](#添加-flutter_tilt-)
 
-- [传感器兼容](#传感器兼容-)
+- [传感器兼容][]
 
 - [手势优先级](#手势优先级-)
 
@@ -100,7 +102,7 @@
 - 🔦 光照效果
 - 💡 阴影效果
 - 👀 视差效果
-- 📱 陀螺仪传感器支持（[传感器兼容](#传感器兼容-)）
+- 📱 陀螺仪传感器支持（[传感器兼容][]）
 - 🧱 多种布局位置
 - 👇 支持鼠标、触摸和传感器事件
 - 🖼️ 流畅的动画
@@ -117,6 +119,13 @@
 | flutter_tilt 1.0.0+ |    ✅    |    ❌    |    ❌    |  
 
 
+### 平台兼容 📱  
+
+| Android |  iOS  |  Web  | macOS | Windows | Linux |  
+| :-----: | :---: | :---: | :---: | :-----: | :---: |  
+|   ✅   |   ✅  |  ✅   |  ✅  |   ✅   |  ✅   |  
+
+
 ### 添加 flutter_tilt 📦  
 
 使用 Flutter 运行以下指令，  
@@ -129,17 +138,18 @@ $ flutter pub add flutter_tilt
 
 ```yaml
 dependencies:
-  flutter_tilt: ^latest_version
+  flutter_tilt: ^最新版本
 ```
 
 
-## 传感器兼容 📱
+## 传感器兼容 📱  
 
-传感器仅在以下平台触发。
+传感器仅在以下平台触发。  
+不支持传感器的平台不会影响其他功能的正常使用。  
 
-| Android |  iOS  |                 Web (HTTPS)                  | macOS | Linux | Windows |  
-| :-----: | :---: | :------------------------------------------: | :---: | :---: | :-----: |  
-|   ✅   |   ✅  | [浏览器兼容][Gyroscope Browser compatibility] |  ❌  |   ❌  |   ❌   |  
+| Android |  iOS  |                 Web (HTTPS)                  | macOS | Windows | Linux |  
+| :-----: | :---: | :------------------------------------------: | :---: | :-----: | :---: |  
+|   ✅   |   ✅  | [浏览器兼容][Gyroscope Browser compatibility] |  ❌  |   ❌    |  ❌  |  
 
 > [!NOTE]  
 > 目前 Web 使用 [Sensor API - Gyroscope][]，但它不兼容部分主流浏览器，比如 Safari、Firefox。  
@@ -411,6 +421,7 @@ tiltStreamController.add(
 [在线示例]: https://amoshuke.github.io/flutter_tilt_book
 [迁移指南]: https://github.com/fluttercandies/flutter_tilt/blob/main/guides/migration_guide.md
 [flutter_tilt/example]: https://github.com/fluttercandies/flutter_tilt/tree/main/example
+[传感器兼容]: #传感器兼容-
 [Tilt widget 参数]: #tilt-widget-参数-
 [TiltParallax widget 参数]: #tiltparallax-widget-参数-
 [ChildLayout]: #childlayout-

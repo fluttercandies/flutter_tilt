@@ -9,6 +9,13 @@
 
 -  Add `Tilt.lightShadowMode` and configuration. ([#12](https://github.com/fluttercandies/flutter_tilt/pull/12))
 
+## 3.1.0
+
+### Improvements
+
+- Bump `sensors_plus` package from `6.0.0` to `6.1.0`. ([#20](https://github.com/fluttercandies/flutter_tilt/pull/20))
+- Migrate the example to Android Studio Ladybug (JDK 21). ([#19](https://github.com/fluttercandies/flutter_tilt/pull/19))
+
 ## 3.0.6
 
 ### Improvements

@@ -1,5 +1,7 @@
 /// Easily apply tilt parallax hover effects for Flutter,
 /// which supports tilt, light, shadow effects, gyroscope sensors and many custom parameters.
+
+// ignore: unnecessary_library_name
 library flutter_tilt;
 
 export 'src/config/tilt_config.dart';
