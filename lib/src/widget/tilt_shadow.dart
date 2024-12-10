@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/widgets.dart';
 
 import '../config/tilt_light_config.dart';
@@ -210,11 +211,19 @@ class TiltShadowProjector extends TiltShadow {
                   (shadowConfig.projectorBlurSigmaFrom -
                       shadowConfig.projectorBlurSigmaTo);
 
+  Matrix4 get transform => Matrix4.zero()
+    ..setIdentity()
+    ..translate(offset.dx, offset.dy)
+    ..scale(scale, scale);
+
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: Transform.translate(
-        offset: offset,
+    if (shadowDisable) return const SizedBox();
+
+    /// TODO: BUG - 在 Web 端，Widget 嵌套顺序不同会导致渲染错误的奇怪效果，暂时单独处理。
+    /// 目前测试下来是将 ImageFiltered 嵌套在 Transform 内引起的。
+    if (kIsWeb) {
+      return IgnorePointer(
         child: ImageFiltered(
           imageFilter: ImageFilter.blur(
             sigmaX: blurSigma,
@@ -228,7 +237,37 @@ class TiltShadowProjector extends TiltShadow {
                 shadowConfig.color,
                 BlendMode.srcATop,
               ),
-              child: Transform.scale(scale: scale, child: child),
+              child: Transform(
+                alignment: Alignment.center,
+                transform: transform,
+                child: child,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    /// TODO: BUG - 在其他端，Widget 嵌套顺序不同会导致渲染错误的奇怪效果。
+    /// 请暂时务必只保持以下嵌套顺序
+    return IgnorePointer(
+      child: Transform(
+        alignment: Alignment.center,
+        transform: transform,
+        child: ColorFiltered(
+          colorFilter: ColorFilter.mode(
+            shadowConfig.color,
+            BlendMode.srcATop,
+          ),
+          child: ImageFiltered(
+            imageFilter: ImageFilter.blur(
+              sigmaX: blurSigma,
+              sigmaY: blurSigma,
+              tileMode: TileMode.decal,
+            ),
+            child: Opacity(
+              opacity: showShadow,
+              child: child,
             ),
           ),
         ),

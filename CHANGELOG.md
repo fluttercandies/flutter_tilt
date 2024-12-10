@@ -3,7 +3,9 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
-## 3.1.0 (Unreleased)
+## 3.2.0 (Unreleased)
+
+## 3.2.0-rc.1
 
 ### New features
 
