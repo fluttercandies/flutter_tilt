@@ -406,6 +406,15 @@ Contributions of any kind are welcome! ([emoji key](https://allcontributors.org/
           <a href="https://github.com/fluttercandies/flutter_tilt/pulls?q=author:LOCKEDFILE" title="Bug reports">🐛</a>
         </a>
       </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/aytunch">
+          <img src="https://avatars.githubusercontent.com/u/6442915?v=4" width="100px" alt="aytunc"/>
+          <br />
+          <sub><b>aytunch</b></sub>
+          <br />
+          <a href="https://github.com/fluttercandies/flutter_tilt/issues?q=author:aytunch" title="Ideas">🤔</a>
+        </a>
+      </td>
     </tr>
   <tbody>
 </table>
