@@ -30,6 +30,10 @@ class ShadowConfig {
     this.spreadFactor = 0.0,
     this.minBlurRadius = 10.0,
     this.maxBlurRadius = 20.0,
+    this.projectorScaleFrom = 1.0,
+    this.projectorScaleTo = 1.0,
+    this.projectorBlurSigmaFrom = 2.0,
+    this.projectorBlurSigmaTo = 10.0,
     this.direction,
     this.enableReverse,
   })  : assert(
@@ -39,7 +43,9 @@ class ShadowConfig {
         ),
         assert(offsetFactor >= 0.0),
         assert(spreadFactor >= 0.0),
-        assert(minBlurRadius <= maxBlurRadius && minBlurRadius >= 0.0);
+        assert(minBlurRadius <= maxBlurRadius && minBlurRadius >= 0.0),
+        assert(projectorScaleFrom >= 0 && projectorScaleTo >= 0),
+        assert(projectorBlurSigmaFrom >= 0.0 && projectorBlurSigmaTo >= 0.0);
 
   /// Only disable the shadow effect.
   ///
@@ -98,13 +104,22 @@ class ShadowConfig {
 
   /// Initial value of shadow spread radius.
   ///
+  /// Only the following mode:
+  /// [LightShadowMode.base]
+  ///
   /// ------
   ///
   /// 阴影扩散半径初始值。
+  ///
+  /// 仅以下模式生效：
+  /// [LightShadowMode.base]
   final double spreadInitial;
 
   /// Shadow spread radius factor,
   /// relative to current widget size.
+  ///
+  /// Only the following mode:
+  /// [LightShadowMode.base]
   ///
   /// ------
   ///
@@ -112,21 +127,88 @@ class ShadowConfig {
   /// 相对于当前 widget 尺寸。
   ///
   /// 移动时相对当前的尺寸进行扩散
+  ///
+  /// 仅以下模式生效：
+  /// [LightShadowMode.base]
   final double spreadFactor;
 
   /// Minimum blur radius, also initial blur radius.
   ///
+  /// Only the following mode:
+  /// [LightShadowMode.base]
+  ///
   /// ------
   ///
   /// 最小阴影模糊半径，也是初始模糊半径。
+  ///
+  /// 仅以下模式生效：
+  /// [LightShadowMode.base]
   final double minBlurRadius;
 
   /// Maximum blur radius for tilt progresses.
   ///
+  /// Only the following mode:
+  /// [LightShadowMode.base]
+  ///
   /// ------
   ///
   /// 最大阴影模糊半径，跟随倾斜最大进度。
+  ///
+  /// 仅以下模式生效：
+  /// [LightShadowMode.base]
   final double maxBlurRadius;
+
+  /// Size scale for minimum progress, also initial size scale.
+  ///
+  /// Only the following mode:
+  /// [LightShadowMode.projector]
+  ///
+  /// ------
+  ///
+  /// 最小倾斜进度的阴影尺寸比例，也是初始尺寸比例。
+  ///
+  /// 仅以下模式生效：
+  /// [LightShadowMode.projector]
+  final double projectorScaleFrom;
+
+  /// Size scale for maximum progress.
+  ///
+  /// Only the following mode:
+  /// [LightShadowMode.projector]
+  ///
+  /// ------
+  ///
+  /// 最大倾斜进度的阴影尺寸比例。
+  ///
+  /// 仅以下模式生效：
+  /// [LightShadowMode.projector]
+  final double projectorScaleTo;
+
+  /// Blur sigma for minimum progress, also initial blur sigma.
+  ///
+  /// Only the following mode:
+  /// [LightShadowMode.projector]
+  ///
+  /// ------
+  ///
+  /// 最小倾斜进度的阴影模糊 Sigma，也是初始模糊 Sigma。
+  ///
+  /// 仅以下模式生效：
+  /// [LightShadowMode.projector]
+  final double projectorBlurSigmaFrom;
+
+  /// Blur sigma for maximum progress.
+  ///
+  /// Only the following mode:
+  /// [LightShadowMode.projector]
+  ///
+  /// ------
+  ///
+  /// 最大倾斜进度的阴影模糊 Sigma。
+  ///
+  /// 仅以下模式生效：
+  /// [LightShadowMode.projector]
+  final double projectorBlurSigmaTo;
 
   /// Shadow direction.
   /// 阴影方向。
@@ -158,6 +240,10 @@ class ShadowConfig {
     double? spreadFactor,
     double? minBlurRadius,
     double? maxBlurRadius,
+    double? projectorScaleFrom,
+    double? projectorScaleTo,
+    double? projectorBlurSigmaFrom,
+    double? projectorBlurSigmaTo,
     ShadowDirection? direction,
     bool? enableReverse,
   }) {
@@ -172,6 +258,11 @@ class ShadowConfig {
       spreadFactor: spreadFactor ?? this.spreadFactor,
       minBlurRadius: minBlurRadius ?? this.minBlurRadius,
       maxBlurRadius: maxBlurRadius ?? this.maxBlurRadius,
+      projectorScaleFrom: projectorScaleFrom ?? this.projectorScaleFrom,
+      projectorScaleTo: projectorScaleTo ?? this.projectorScaleTo,
+      projectorBlurSigmaFrom:
+          projectorBlurSigmaFrom ?? this.projectorBlurSigmaFrom,
+      projectorBlurSigmaTo: projectorBlurSigmaTo ?? this.projectorBlurSigmaTo,
       direction: direction ?? this.direction,
       enableReverse: enableReverse ?? this.enableReverse,
     );
@@ -196,6 +287,10 @@ class ShadowConfig {
         other.spreadFactor == spreadFactor &&
         other.minBlurRadius == minBlurRadius &&
         other.maxBlurRadius == maxBlurRadius &&
+        other.projectorScaleFrom == projectorScaleFrom &&
+        other.projectorScaleTo == projectorScaleTo &&
+        other.projectorBlurSigmaFrom == projectorBlurSigmaFrom &&
+        other.projectorBlurSigmaTo == projectorBlurSigmaTo &&
         other.direction == direction &&
         other.enableReverse == enableReverse;
   }
@@ -213,6 +308,10 @@ class ShadowConfig {
       spreadFactor,
       minBlurRadius,
       maxBlurRadius,
+      projectorScaleFrom,
+      projectorScaleTo,
+      projectorBlurSigmaFrom,
+      projectorBlurSigmaTo,
       direction,
       enableReverse,
     );

@@ -107,3 +107,41 @@ enum ShadowDirection implements Direction {
 /// [GesturesType.touch] > [GesturesType.hover] > [GesturesType.controller] > [GesturesType.sensors]
 /// {@endtemplate}
 enum GesturesType { none, touch, hover, controller, sensors }
+
+/// Light & Shadow Mode
+/// 光影 Mode
+enum LightShadowMode {
+  /// [No performance risk]
+  ///
+  /// Use normal shadow effects only for `Tilt.child` without performance degradation.
+  ///
+  /// ------
+  ///
+  /// [无性能风险]
+  ///
+  /// 仅对 `Tilt.child` 使用普通阴影效果，无性能损耗。
+  base,
+
+  /// [Performance risk exists]
+  ///
+  /// Apply a shadow to the entire `Tilt` widget, similar to a projector effect.
+  /// will display a shadow that exactly matches the non-transparent parts of the widget.
+  ///
+  /// Recommended for the following scenarios:
+  /// - Images only
+  /// - No data states
+  /// - No Hero tags
+  ///
+  /// ------
+  ///
+  /// [有性能风险]
+  ///
+  /// 对整个 `Tilt` widget 使用类似投影仪效果的阴影，
+  /// 会显示与 widget 非透明部分完全一致的阴影。
+  ///
+  /// 建议在以下场景使用：
+  /// - 仅图片
+  /// - 无数据状态
+  /// - 无 Hero 标签
+  projector,
+}

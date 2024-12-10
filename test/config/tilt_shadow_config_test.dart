@@ -34,6 +34,20 @@ void main() {
         () => ShadowConfig(minBlurRadius: -0.1, maxBlurRadius: 1.0),
         throwsAssertionError,
       );
+      expect(
+        () => ShadowConfig(
+          projectorScaleFrom: -0.1,
+          projectorScaleTo: -0.1,
+        ),
+        throwsAssertionError,
+      );
+      expect(
+        () => ShadowConfig(
+          projectorBlurSigmaFrom: -0.1,
+          projectorBlurSigmaTo: -0.1,
+        ),
+        throwsAssertionError,
+      );
     });
     test('copyWith', () {
       const ShadowConfig shadowConfig = ShadowConfig();
@@ -48,6 +62,10 @@ void main() {
         spreadFactor: 6.0,
         minBlurRadius: 7.0,
         maxBlurRadius: 8.0,
+        projectorScaleFrom: 2.0,
+        projectorScaleTo: 2.0,
+        projectorBlurSigmaFrom: 2.0,
+        projectorBlurSigmaTo: 2.0,
         direction: ShadowDirection.all,
         enableReverse: true,
       );
@@ -62,6 +80,10 @@ void main() {
         spreadFactor: 6.0,
         minBlurRadius: 7.0,
         maxBlurRadius: 8.0,
+        projectorScaleFrom: 2.0,
+        projectorScaleTo: 2.0,
+        projectorBlurSigmaFrom: 2.0,
+        projectorBlurSigmaTo: 2.0,
         direction: ShadowDirection.all,
         enableReverse: true,
       );

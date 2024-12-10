@@ -585,5 +585,46 @@ void main() {
 
       await tester.sendEventToBinding(testPointer.removePointer());
     });
+    testWidgets('LightShadowMode.projector gestures move leave',
+        (WidgetTester tester) async {
+      TiltDataModel? moveTiltDataTest;
+      TiltDataModel? leaveTiltDataTest;
+      GesturesType? moveGesturesTypeTest;
+      GesturesType? leaveGesturesTypeTest;
+
+      /// 回调赋值
+      await tester.pumpWidget(
+        TiltWidget(
+          lightShadowMode: LightShadowMode.projector,
+          onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
+            moveTiltDataTest = tiltData;
+            moveGesturesTypeTest = gesturesType;
+          },
+          onGestureLeave: (TiltDataModel tiltData, GesturesType gesturesType) {
+            leaveTiltDataTest = tiltData;
+            leaveGesturesTypeTest = gesturesType;
+          },
+        ),
+      );
+
+      /// mouse hover
+      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+
+      /// 倾斜 hover move
+      await tester.sendEventToBinding(testPointer.hover(hoverEventLocation));
+      await tester.pumpAndSettle();
+      expect(childFinder, findsNWidgets(2));
+      expect(moveGesturesTypeTest, GesturesType.hover);
+      expect(moveTiltDataTest != null, true);
+
+      /// 倾斜 hover leave
+      await tester.sendEventToBinding(testPointer.hover(const Offset(-1, -1)));
+      await tester.pumpAndSettle();
+      expect(childFinder, findsNWidgets(2));
+      expect(leaveGesturesTypeTest, GesturesType.hover);
+      expect(leaveTiltDataTest, leaveTiltDataExpect);
+
+      await tester.sendEventToBinding(testPointer.removePointer());
+    });
   });
 }
