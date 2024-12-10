@@ -18,8 +18,8 @@ on:
       - 'example/**'
 
 jobs:
-
   code-analysis:
+    name: "Code Analysis :: Flutter (latest)"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -43,6 +43,7 @@ jobs:
 
   test:
     needs: [code-analysis]
+    name: "Test :: Flutter (${{ matrix.flutter-version == '' && 'latest' || matrix.flutter-version }})"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -78,6 +79,6 @@ jobs:
       - name: Test Coverage
         run: flutter test --coverage
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
