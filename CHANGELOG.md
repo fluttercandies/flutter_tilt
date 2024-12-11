@@ -5,6 +5,12 @@
 
 ## 3.2.0 (Unreleased)
 
+## 3.2.0-rc.2
+
+### Improvements
+
+- Migrate from `withOpacity` to `withAlpha`.
+
 ## 3.2.0-rc.1
 
 ### New features

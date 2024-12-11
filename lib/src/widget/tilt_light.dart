@@ -93,8 +93,10 @@ class TiltLight extends StatelessWidget with TiltDecoration {
           decoration: BoxDecoration(
             gradient: RadialGradient(
               colors: <Color>[
-                lightConfig.color.withOpacity(showProgress),
-                lightConfig.color.withOpacity(0),
+                /// TODO: Flutter v3.27.0 之后需要迁移，在这之前暂时使用 withAlpha
+                /// https://docs.flutter.dev/release/breaking-changes/wide-gamut-framework
+                lightConfig.color.withAlpha((255.0 * showProgress).round()),
+                lightConfig.color.withAlpha(0),
               ],
               stops: const <double>[0.01, 0.99],
             ),
