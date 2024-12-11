@@ -1,11 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
-import 'tilt_widget.dart';
+import 'package:flutter_tilt/src/data/tilt_data.dart';
+import 'tilt_widget_base.dart';
 
 void main() {
-  group('tilt gestures touch', () {
+  group('LightShadowMode.base :: tilt gestures touch ::', () {
     const TiltConfig tiltConfig = TiltConfig();
+    TiltData tiltDataTestCalculate(Offset areaProgress) => TiltData(
+          isInit: true,
+          width: 10,
+          height: 10,
+          areaProgress: areaProgress,
+          tiltConfig: tiltConfig,
+        );
+
     final Finder tiltScaffoldFinder = find.byKey(const Key('tilt_scaffold'));
     final Finder tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
     final Finder childFinder = find.text('Tilt');
@@ -16,33 +25,12 @@ void main() {
       TiltDataModel? leaveTiltDataTest;
       GesturesType? moveGesturesTypeTest;
       GesturesType? leaveGesturesTypeTest;
-      final TiltDataModel leaveTiltDataTestExpect = TiltDataModel(
-        angle: Offset.zero,
-        areaProgress: Offset.zero,
-        position: const Offset(5.0, 5.0),
-        transform: Matrix4(
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.05,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
+      final TiltDataModel leaveTiltDataTestExpect =
+          tiltDataTestCalculate(Offset.zero).data;
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             moveTiltDataTest = tiltData;
             moveGesturesTypeTest = gesturesType;
@@ -67,7 +55,7 @@ void main() {
       expect(leaveTiltDataTest, leaveTiltDataTestExpect);
     });
     testWidgets('onPointerCancel', (WidgetTester tester) async {
-      await tester.pumpWidget(const TiltWidget());
+      await tester.pumpWidget(const TiltWidgetBase());
 
       final Offset location = tester.getCenter(tiltWidgetFinder);
       await tester.sendEventToBinding(testPointer.down(location));
@@ -80,33 +68,12 @@ void main() {
     testWidgets('move top', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect = TiltDataModel(
-        angle: Offset(tiltConfig.angle, 0.0),
-        areaProgress: const Offset(0.0, 1.0),
-        position: const Offset(5.0, 0.0),
-        transform: Matrix4(
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.984807753012208,
-          0.17364817766693033,
-          0.008682408883346517,
-          0.0,
-          -0.17364817766693033,
-          0.984807753012208,
-          0.0492403876506104,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
+      final TiltDataModel tiltDataExpect =
+          tiltDataTestCalculate(const Offset(0.0, 1.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -129,33 +96,12 @@ void main() {
     testWidgets('move bottom', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect = TiltDataModel(
-        angle: Offset(-tiltConfig.angle, 0.0),
-        areaProgress: const Offset(0.0, -1.0),
-        position: const Offset(5.0, 10.0),
-        transform: Matrix4(
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.984807753012208,
-          -0.17364817766693033,
-          -0.008682408883346517,
-          0.0,
-          0.17364817766693033,
-          0.984807753012208,
-          0.0492403876506104,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
+      final TiltDataModel tiltDataExpect =
+          tiltDataTestCalculate(const Offset(0.0, -1.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -178,33 +124,12 @@ void main() {
     testWidgets('move left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect = TiltDataModel(
-        angle: Offset(0.0, -tiltConfig.angle),
-        areaProgress: const Offset(1.0, 0.0),
-        position: const Offset(0.0, 5.0),
-        transform: Matrix4(
-          0.984807753012208,
-          0.0,
-          0.17364817766693033,
-          0.008682408883346517,
-          0.0,
-          1.0,
-          0.0,
-          0.0,
-          -0.17364817766693033,
-          0.0,
-          0.984807753012208,
-          0.0492403876506104,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
+      final TiltDataModel tiltDataExpect =
+          tiltDataTestCalculate(const Offset(1.0, 0.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -227,33 +152,12 @@ void main() {
     testWidgets('move right', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect = TiltDataModel(
-        angle: Offset(0.0, tiltConfig.angle),
-        areaProgress: const Offset(-1.0, 0.0),
-        position: Offset(tiltConfig.angle, 5.0),
-        transform: Matrix4(
-          0.984807753012208,
-          0.0,
-          -0.17364817766693033,
-          -0.008682408883346517,
-          0.0,
-          1.0,
-          0.0,
-          0.0,
-          0.17364817766693033,
-          0.0,
-          0.984807753012208,
-          0.0492403876506104,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
+      final TiltDataModel tiltDataExpect =
+          tiltDataTestCalculate(const Offset(-1.0, 0.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -276,33 +180,12 @@ void main() {
     testWidgets('move top left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect = TiltDataModel(
-        angle: Offset(tiltConfig.angle, -tiltConfig.angle),
-        areaProgress: const Offset(1.0, 1.0),
-        position: Offset.zero,
-        transform: Matrix4(
-          0.984807753012208,
-          -0.030153689607045803,
-          0.17101007166283433,
-          0.008550503583141718,
-          0.0,
-          0.984807753012208,
-          0.17364817766693033,
-          0.008682408883346517,
-          -0.17364817766693033,
-          -0.17101007166283433,
-          0.9698463103929541,
-          0.04849231551964771,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
+      final TiltDataModel tiltDataExpect =
+          tiltDataTestCalculate(const Offset(1.0, 1.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -325,33 +208,12 @@ void main() {
     testWidgets('move top right', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect = TiltDataModel(
-        angle: Offset(tiltConfig.angle, tiltConfig.angle),
-        areaProgress: const Offset(-1.0, 1.0),
-        position: Offset(tiltConfig.angle, 0.0),
-        transform: Matrix4(
-          0.984807753012208,
-          0.030153689607045803,
-          -0.17101007166283433,
-          -0.008550503583141718,
-          0.0,
-          0.984807753012208,
-          0.17364817766693033,
-          0.008682408883346517,
-          0.17364817766693033,
-          -0.17101007166283433,
-          0.9698463103929541,
-          0.04849231551964771,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
+      final TiltDataModel tiltDataExpect =
+          tiltDataTestCalculate(const Offset(-1.0, 1.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -374,33 +236,12 @@ void main() {
     testWidgets('move bottom left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect = TiltDataModel(
-        angle: Offset(-tiltConfig.angle, -tiltConfig.angle),
-        areaProgress: const Offset(1.0, -1.0),
-        position: Offset(0.0, tiltConfig.angle),
-        transform: Matrix4(
-          0.984807753012208,
-          0.030153689607045803,
-          0.17101007166283433,
-          0.008550503583141718,
-          0.0,
-          0.984807753012208,
-          -0.17364817766693033,
-          -0.008682408883346517,
-          -0.17364817766693033,
-          0.17101007166283433,
-          0.9698463103929541,
-          0.04849231551964771,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
+      final TiltDataModel tiltDataExpect =
+          tiltDataTestCalculate(const Offset(1.0, -1.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -423,33 +264,12 @@ void main() {
     testWidgets('move bottom right', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect = TiltDataModel(
-        angle: Offset(-tiltConfig.angle, tiltConfig.angle),
-        areaProgress: const Offset(-1.0, -1.0),
-        position: Offset(tiltConfig.angle, tiltConfig.angle),
-        transform: Matrix4(
-          0.984807753012208,
-          -0.030153689607045803,
-          -0.17101007166283433,
-          -0.008550503583141718,
-          0.0,
-          0.984807753012208,
-          -0.17364817766693033,
-          -0.008682408883346517,
-          0.17364817766693033,
-          0.17101007166283433,
-          0.9698463103929541,
-          0.04849231551964771,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
+      final TiltDataModel tiltDataExpect =
+          tiltDataTestCalculate(const Offset(-1.0, -1.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -470,98 +290,17 @@ void main() {
       expect(tiltDataTest, tiltDataExpect, reason: '倾斜-超范围');
     });
 
-    testWidgets('LightShadowMode.projector gestures move leave',
-        (WidgetTester tester) async {
+    testWidgets('ShadowConfig.disable = true', (WidgetTester tester) async {
       TiltDataModel? moveTiltDataTest;
       TiltDataModel? leaveTiltDataTest;
       GesturesType? moveGesturesTypeTest;
       GesturesType? leaveGesturesTypeTest;
-      final TiltDataModel leaveTiltDataTestExpect = TiltDataModel(
-        angle: Offset.zero,
-        areaProgress: Offset.zero,
-        position: const Offset(5.0, 5.0),
-        transform: Matrix4(
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.05,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
+      final TiltDataModel leaveTiltDataTestExpect =
+          tiltDataTestCalculate(Offset.zero).data;
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidget(
-          lightShadowMode: LightShadowMode.projector,
-          onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-            moveTiltDataTest = tiltData;
-            moveGesturesTypeTest = gesturesType;
-          },
-          onGestureLeave: (TiltDataModel tiltData, GesturesType gesturesType) {
-            leaveTiltDataTest = tiltData;
-            leaveGesturesTypeTest = gesturesType;
-          },
-        ),
-      );
-
-      /// 倾斜 touch move
-      await tester.fling(tiltWidgetFinder, const Offset(0.0, 5.0), 0.1);
-      expect(childFinder, findsNWidgets(2));
-      expect(moveGesturesTypeTest, GesturesType.touch);
-      expect(moveTiltDataTest != null, true);
-
-      /// 倾斜 touch leave
-      await tester.fling(tiltScaffoldFinder, const Offset(0.0, -1.0), 0.1);
-      expect(childFinder, findsNWidgets(2));
-      expect(leaveGesturesTypeTest, GesturesType.touch);
-      expect(leaveTiltDataTest, leaveTiltDataTestExpect);
-    });
-
-    testWidgets('LightShadowMode.projector ShadowConfig.disable = true',
-        (WidgetTester tester) async {
-      TiltDataModel? moveTiltDataTest;
-      TiltDataModel? leaveTiltDataTest;
-      GesturesType? moveGesturesTypeTest;
-      GesturesType? leaveGesturesTypeTest;
-      final TiltDataModel leaveTiltDataTestExpect = TiltDataModel(
-        angle: Offset.zero,
-        areaProgress: Offset.zero,
-        position: const Offset(5.0, 5.0),
-        transform: Matrix4(
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.05,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-        ),
-      );
-
-      /// 回调赋值
-      await tester.pumpWidget(
-        TiltWidget(
-          lightShadowMode: LightShadowMode.projector,
+        TiltWidgetBase(
           shadowConfig: const ShadowConfig(disable: true),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             moveTiltDataTest = tiltData;

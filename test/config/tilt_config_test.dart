@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/src/config/tilt_config.dart';
 
 void main() {
-  group('TiltConfig', () {
+  group('TiltConfig ::', () {
     test('copyWith', () {
       const TiltConfig tiltConfig = TiltConfig();
       final TiltConfig tiltConfigExpect = TiltConfig(
@@ -57,7 +57,7 @@ void main() {
       expect(tiltConfigCopyWith.hashCode, tiltConfigExpect.hashCode);
     });
   });
-  group('TiltDirection', () {
+  group('TiltDirection ::', () {
     test('value', () {
       final TiltDirection tiltDirection = -const TiltDirection(1.0, 1.0);
       expect(tiltDirection.dx, -1.0);

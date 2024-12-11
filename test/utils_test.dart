@@ -4,7 +4,7 @@ import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:flutter_tilt/src/utils.dart';
 
 void main() {
-  group('utils', () {
+  group('utils ::', () {
     const sensorsPlatformSupport = Utils.sensorsPlatformSupport;
     const centerPosition = Utils.centerPosition;
     const radian = Utils.radian;

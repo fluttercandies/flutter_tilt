@@ -4,7 +4,7 @@ import 'package:flutter_tilt/src/config/tilt_light_config.dart';
 import 'package:flutter_tilt/src/enums.dart';
 
 void main() {
-  group('LightConfig', () {
+  group('LightConfig ::', () {
     test('assert', () {
       expect(
         () => LightConfig(

@@ -5,7 +5,7 @@ import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/internal/tilt_tween_animation_mixin.dart';
 
 void main() {
-  group('TiltTweenAnimation', () {
+  group('TiltTweenAnimation ::', () {
     final tiltTweenAnimationTest = TiltTweenAnimationTest();
     test('tiltTweenAnimationEnd', () {
       final tiltTweenAnimationEnd =

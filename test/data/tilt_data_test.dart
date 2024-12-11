@@ -5,7 +5,7 @@ import 'package:flutter_tilt/src/data/tilt_data.dart';
 import 'package:flutter_tilt/src/enums.dart';
 
 void main() {
-  group('TiltData', () {
+  group('TiltData ::', () {
     test('tiltTransform', () {
       expect(
         const TiltData(
@@ -72,7 +72,7 @@ void main() {
     });
   });
 
-  group('TiltDataModel', () {
+  group('TiltDataModel ::', () {
     test('hashCode', () {
       final TiltDataModel tiltDataModel = TiltDataModel(
         position: const Offset(5, 5),
@@ -91,7 +91,7 @@ void main() {
     });
   });
 
-  group('TiltStreamModel', () {
+  group('TiltStreamModel ::', () {
     test('hashCode', () {
       const TiltStreamModel tiltStreamModel = TiltStreamModel(
         position: Offset(5, 5),

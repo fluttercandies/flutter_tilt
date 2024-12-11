@@ -4,7 +4,7 @@ import 'package:flutter_tilt/flutter_tilt.dart';
 import 'tilt_parallax_widget.dart';
 
 void main() {
-  group('tilt parallax', () {
+  group('tilt parallax ::', () {
     testWidgets('default', (WidgetTester tester) async {
       final Finder outerFinder = find.text('outer');
       final Finder innerFinder = find.text('inner');

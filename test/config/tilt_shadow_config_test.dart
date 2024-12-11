@@ -4,7 +4,7 @@ import 'package:flutter_tilt/src/config/tilt_shadow_config.dart';
 import 'package:flutter_tilt/src/enums.dart';
 
 void main() {
-  group('ShadowConfig', () {
+  group('ShadowConfig ::', () {
     test('assert', () {
       expect(
         () => ShadowConfig(minIntensity: 1.0, maxIntensity: 0.0),

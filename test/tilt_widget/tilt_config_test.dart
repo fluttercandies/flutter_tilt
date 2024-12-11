@@ -6,7 +6,7 @@ import 'tilt_widget.dart';
 void main() {
   final Finder tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
   final Finder childFinder = find.text('Tilt');
-  group('tilt config', () {
+  group('tilt config ::', () {
     testWidgets('default', (WidgetTester tester) async {
       await tester.pumpWidget(const TiltWidget());
       await tester.pumpAndSettle();

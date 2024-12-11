@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
-import 'tilt_widget.dart';
+import 'tilt_widget_base.dart';
 
 void main() {
   final Finder childFinder = find.text('Tilt');
-  group('tilt TiltStreamController', () {
+  group('LightShadowMode.base :: tilt TiltStreamController ::', () {
     testWidgets('stream listen', (WidgetTester tester) async {
       TiltStreamModel tiltStreamModelTest = const TiltStreamModel(
         position: Offset(1, 1),
@@ -23,7 +23,7 @@ void main() {
       final StreamController<TiltStreamModel> tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
-        TiltWidget(tiltStreamController: tiltStreamController),
+        TiltWidgetBase(tiltStreamController: tiltStreamController),
       );
       await tester.pumpAndSettle();
       expect(childFinder, findsOneWidget);
@@ -64,7 +64,7 @@ void main() {
       final StreamController<TiltStreamModel> tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           tiltStreamController: tiltStreamController,
           tiltConfig: const TiltConfig(
             enableGestureTouch: false,
@@ -256,7 +256,7 @@ void main() {
       final StreamController<TiltStreamModel> tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
-        TiltWidget(
+        TiltWidgetBase(
           tiltStreamController: tiltStreamController,
           onGestureMove: (
             TiltDataModel tiltDataModel,
