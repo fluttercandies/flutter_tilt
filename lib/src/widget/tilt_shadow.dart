@@ -153,7 +153,10 @@ class TiltShadowBase extends TiltShadow {
         boxShadow: <BoxShadow>[
           if (!shadowDisable)
             BoxShadow(
-              /// TODO: Flutter v3.27.0 之后需要迁移，在这之前暂时使用 withAlpha
+              /// TODO: Flutter v3.27.0 之后需要迁移，在这之前暂时使用 withAlpha，
+              /// （目前为了兼容更多低版本 Flutter 以及对于非主要 Tilt 效果的 P3 广色域优先级很低，未来再迁移为 withValues）
+              /// 以下 withAlpha 内的计算方式和 withOpacity 内部的计算方式一致，
+              /// 所以还不支持 P3 广色域，目前依旧是 sRGB。
               /// https://docs.flutter.dev/release/breaking-changes/wide-gamut-framework
               color: shadowConfig.color.withAlpha((255.0 * showShadow).round()),
               offset: offset,
