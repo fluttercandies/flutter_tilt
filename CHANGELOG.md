@@ -7,7 +7,7 @@
 
 ### Improvements
 
-- Refactor code structures.
+- Refactor code structures. ([#23](https://github.com/fluttercandies/flutter_tilt/pull/23))
 
 ## 3.2.0
 
