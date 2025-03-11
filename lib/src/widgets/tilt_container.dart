@@ -3,10 +3,10 @@ import 'package:flutter/widgets.dart';
 import '../config/tilt_config.dart';
 import '../config/tilt_light_config.dart';
 import '../config/tilt_shadow_config.dart';
-import '../data/tilt_data.dart';
 import '../enums.dart';
-import '../internal/tilt_tween_animation_mixin.dart';
-import '../state/tilt_state.dart';
+import '../internal/mixin/tilt_tween_animation_mixin.dart';
+import '../internal/tilt_data.dart';
+import '../internal/tilt_state.dart';
 import 'tilt_light.dart';
 import 'tilt_shadow.dart';
 
@@ -114,7 +114,7 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    tiltState = TiltState.of(context)!;
+    tiltState = TiltState.of(context);
 
     isInit = tiltState.isInit;
     width = tiltState.width;

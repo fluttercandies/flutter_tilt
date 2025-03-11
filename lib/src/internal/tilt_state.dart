@@ -43,11 +43,11 @@ class TiltState extends InheritedWidget {
   /// 调整尺寸
   final void Function(Size) onResize;
 
-  static TiltState? of(BuildContext context) {
+  static TiltState of(BuildContext context) {
     final TiltState? tilt =
         context.dependOnInheritedWidgetOfExactType<TiltState>();
     assert(tilt != null, 'No TiltState found in context');
-    return tilt;
+    return tilt!;
   }
 
   @override

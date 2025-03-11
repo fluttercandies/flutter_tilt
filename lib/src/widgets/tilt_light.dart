@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../config/tilt_light_config.dart';
 import '../enums.dart';
-import '../internal/tilt_decoration_mixin.dart';
+import '../internal/mixin/tilt_decoration_mixin.dart';
 import '../utils.dart';
 
 /// 光源

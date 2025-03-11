@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import '../config/tilt_config.dart';
 import '../enums.dart';
-import '../internal/tilt_tween_animation_mixin.dart';
-import '../state/tilt_state.dart';
+import '../internal/mixin/tilt_tween_animation_mixin.dart';
+import '../internal/tilt_state.dart';
 
 /// 倾斜视差
 @immutable
@@ -29,7 +29,7 @@ class TiltParallaxContainer extends StatelessWidget with TiltTweenAnimation {
 
   @override
   Widget build(BuildContext context) {
-    final TiltState tiltState = TiltState.of(context)!;
+    final TiltState tiltState = TiltState.of(context);
     final Offset areaProgress = tiltState.areaProgress;
     final bool isMove = tiltState.isMove;
     final GesturesType currentGesturesType = tiltState.currentGesturesType;
