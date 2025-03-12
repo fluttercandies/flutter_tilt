@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
-import 'package:flutter_tilt/src/data/tilt_data.dart';
+import 'package:flutter_tilt/src/internal/tilt_data.dart';
 import 'tilt_widget.dart';
 
 void main() {

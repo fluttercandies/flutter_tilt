@@ -60,7 +60,7 @@ void main() {
       expect(gesturesTypeTest, null);
       expect(tiltDataTest, null);
     });
-    testWidgets('fps', (WidgetTester tester) async {
+    testWidgets('fps default', (WidgetTester tester) async {
       int count = 0;
 
       /// default
@@ -79,9 +79,11 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(count, 60);
+    });
 
-      /// 30 fps
-      count = 0;
+    testWidgets('fps 30', (WidgetTester tester) async {
+      int count = 0;
+
       await tester.pumpWidget(
         TiltWidget(
           fps: 30,
@@ -98,9 +100,11 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(count, 30);
+    });
 
-      /// 10 fps
-      count = 0;
+    testWidgets('fps 10', (WidgetTester tester) async {
+      int count = 0;
+
       await tester.pumpWidget(
         TiltWidget(
           fps: 10,
@@ -109,6 +113,7 @@ void main() {
           },
         ),
       );
+
       await tester.timedDrag(
         tiltWidgetFinder,
         const Offset(0.0, 5.0),

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
-import 'package:flutter_tilt/src/data/tilt_data.dart';
+import 'package:flutter_tilt/src/internal/tilt_data.dart';
 import 'tilt_widget_base.dart';
 
 void main() {
@@ -60,7 +60,7 @@ void main() {
       final Offset location = tester.getCenter(tiltWidgetFinder);
       await tester.sendEventToBinding(testPointer.down(location));
       await tester.sendEventToBinding(testPointer.cancel());
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const TiltConfig().leaveDuration);
       expect(childFinder, findsOneWidget);
 
       await tester.sendEventToBinding(testPointer.removePointer());

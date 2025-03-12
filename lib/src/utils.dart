@@ -6,9 +6,7 @@ import 'package:flutter/widgets.dart';
 
 import 'config/tilt_config.dart';
 
-class Utils {
-  const Utils._();
-
+abstract final class Utils {
   /// 传感器平台支持
   ///
   /// @return [bool] true: 传感器支持 false: 传感器不支持
