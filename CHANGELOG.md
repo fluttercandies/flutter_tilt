@@ -7,7 +7,7 @@
 
 ### Improvements
 
-- Bump example to Flutter 3.29. 
+- Bump example to Flutter 3.29 ([#24](https://github.com/fluttercandies/flutter_tilt/pull/24))
 
 ## 3.2.0
 
