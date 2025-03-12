@@ -17,12 +17,21 @@ on:
       - '**.md'
       - 'example/**'
 
+env:
+  tilt_sparse_checkout: |
+    /*
+    !/example/
+
 jobs:
   code-analysis:
     name: "Code Analysis :: Flutter (latest)"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ env.tilt_sparse_checkout }}
+          sparse-checkout-cone-mode: false
+      - run: dir
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -50,6 +59,9 @@ jobs:
         flutter-version: ['3.19.0', '']
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ env.tilt_sparse_checkout }}
+          sparse-checkout-cone-mode: false
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -70,6 +82,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ env.tilt_sparse_checkout }}
+          sparse-checkout-cone-mode: false
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
