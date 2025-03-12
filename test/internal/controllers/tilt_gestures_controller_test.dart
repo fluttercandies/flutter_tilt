@@ -47,8 +47,8 @@ void main() {
     });
 
     test('Tilt stream updates (sensors)', () async {
-      final deviceOrientationList = DeviceOrientation.values;
-      final testModel = const TiltStreamModel(
+      const deviceOrientationList = DeviceOrientation.values;
+      const testModel = TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.sensors,
       );
