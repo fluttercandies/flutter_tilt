@@ -7,6 +7,7 @@
 
 ### Improvements
 
+- Bump example to Flutter 3.29 ([#24](https://github.com/fluttercandies/flutter_tilt/pull/24))
 - Refactor code structures. ([#23](https://github.com/fluttercandies/flutter_tilt/pull/23))
 
 ## 3.2.0
