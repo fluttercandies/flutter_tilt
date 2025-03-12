@@ -1,11 +1,9 @@
-import 'dart:async' as async;
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
-import '../config/tilt_config.dart';
-import '../data/tilt_data.dart';
 import '../enums.dart';
+import '../internal/controllers/tilt_gestures_controller.dart';
+import '../models/tilt_stream_model.dart';
 
 /// 手势监听
 class GesturesListener extends StatefulWidget {
@@ -15,20 +13,13 @@ class GesturesListener extends StatefulWidget {
   const GesturesListener({
     super.key,
     required this.child,
-    required this.disable,
-    required this.tiltStreamController,
-    required this.tiltConfig,
+    required this.tiltGesturesController,
   });
 
   final Widget child;
 
-  /// 是否禁用
-  final bool disable;
-
-  /// TiltStreamController
-  final async.StreamController<TiltStreamModel> tiltStreamController;
-
-  final TiltConfig tiltConfig;
+  /// 倾斜手势控制器
+  final TiltGesturesController tiltGesturesController;
 
   @override
   State<GesturesListener> createState() => _GesturesListenerState();
@@ -36,10 +27,8 @@ class GesturesListener extends StatefulWidget {
 
 class _GesturesListenerState extends State<GesturesListener> {
   Widget get _child => widget.child;
-  bool get _disable => widget.disable;
-  async.StreamController<TiltStreamModel> get _tiltStreamController =>
-      widget.tiltStreamController;
-  TiltConfig get _tiltConfig => widget.tiltConfig;
+  TiltGesturesController get _tiltGesturesController =>
+      widget.tiltGesturesController;
 
   /// 避免 touch 和 hover 同时触发，导致 hover 离开的时候会“闪现”
   bool isTouch = false;
@@ -49,19 +38,21 @@ class _GesturesListenerState extends State<GesturesListener> {
 
   @override
   Widget build(BuildContext context) {
-    if (_disable) return _child;
+    if (_tiltGesturesController.disable) return _child;
 
     /// 不受滑动影响
     return GestureDetector(
-      onVerticalDragUpdate: _tiltConfig.enableGestureTouch ? (_) {} : null,
-      onHorizontalDragUpdate: _tiltConfig.enableGestureTouch ? (_) {} : null,
+      onVerticalDragUpdate:
+          _tiltGesturesController.tiltConfig.enableGestureTouch ? (_) {} : null,
+      onHorizontalDragUpdate:
+          _tiltGesturesController.tiltConfig.enableGestureTouch ? (_) {} : null,
 
       /// 手势监听
       child: Listener(
-        onPointerMove: _tiltConfig.enableGestureTouch
+        onPointerMove: _tiltGesturesController.tiltConfig.enableGestureTouch
             ? (PointerMoveEvent e) {
                 isTouch = true;
-                _tiltStreamController.sink.add(
+                _tiltGesturesController.tiltStreamController.sink.add(
                   TiltStreamModel(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
@@ -70,10 +61,10 @@ class _GesturesListenerState extends State<GesturesListener> {
                 );
               }
             : null,
-        onPointerUp: _tiltConfig.enableGestureTouch
+        onPointerUp: _tiltGesturesController.tiltConfig.enableGestureTouch
             ? (PointerUpEvent e) {
                 isTouch = false;
-                _tiltStreamController.sink.add(
+                _tiltGesturesController.tiltStreamController.sink.add(
                   TiltStreamModel(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
@@ -82,10 +73,10 @@ class _GesturesListenerState extends State<GesturesListener> {
                 );
               }
             : null,
-        onPointerCancel: _tiltConfig.enableGestureTouch
+        onPointerCancel: _tiltGesturesController.tiltConfig.enableGestureTouch
             ? (PointerCancelEvent e) {
                 isTouch = false;
-                _tiltStreamController.sink.add(
+                _tiltGesturesController.tiltStreamController.sink.add(
                   TiltStreamModel(
                     position: e.localPosition,
                     gesturesType: GesturesType.touch,
@@ -95,17 +86,17 @@ class _GesturesListenerState extends State<GesturesListener> {
               }
             : null,
         child: MouseRegion(
-          onEnter: _tiltConfig.enableGestureHover
+          onEnter: _tiltGesturesController.tiltConfig.enableGestureHover
               ? (PointerEnterEvent e) {
                   if (isTouch) return;
                   isHover = true;
                 }
               : null,
-          onHover: _tiltConfig.enableGestureHover
+          onHover: _tiltGesturesController.tiltConfig.enableGestureHover
               ? (PointerHoverEvent e) {
                   if (isHover) {
                     if (isTouch) return;
-                    _tiltStreamController.sink.add(
+                    _tiltGesturesController.tiltStreamController.sink.add(
                       TiltStreamModel(
                         position: e.localPosition,
                         gesturesType: GesturesType.hover,
@@ -115,11 +106,11 @@ class _GesturesListenerState extends State<GesturesListener> {
                   }
                 }
               : null,
-          onExit: _tiltConfig.enableGestureHover
+          onExit: _tiltGesturesController.tiltConfig.enableGestureHover
               ? (PointerExitEvent e) {
                   if (isTouch) return;
                   isHover = false;
-                  _tiltStreamController.sink.add(
+                  _tiltGesturesController.tiltStreamController.sink.add(
                     TiltStreamModel(
                       position: e.localPosition,
                       gesturesType: GesturesType.hover,

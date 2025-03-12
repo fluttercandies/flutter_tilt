@@ -5,14 +5,17 @@ import 'package:flutter/widgets.dart';
 import 'config/tilt_config.dart';
 import 'config/tilt_light_config.dart';
 import 'config/tilt_shadow_config.dart';
-import 'data/tilt_data.dart';
 import 'enums.dart';
-import 'state/tilt_state.dart';
+import 'internal/controllers/fps_timer_controller.dart';
+import 'internal/controllers/tilt_gestures_controller.dart';
+import 'internal/tilt_data.dart';
+import 'internal/tilt_state.dart';
+import 'models/tilt_stream_model.dart';
 import 'utils.dart';
-import 'widget/gestures_listener.dart';
-import 'widget/tilt_container.dart';
-import 'widget/tilt_parallax_container.dart';
-import 'widget/tilt_stream_builder.dart';
+import 'widgets/gestures_listener.dart';
+import 'widgets/tilt_container.dart';
+import 'widgets/tilt_parallax_container.dart';
+import 'widgets/tilt_stream_builder.dart';
 
 /// Tilt
 /// 倾斜
@@ -145,13 +148,16 @@ class _TiltState extends State<Tilt> {
   /// 当前手势类型
   GesturesType currentGesturesType = GesturesType.none;
 
-  /// FPS 计时器
-  async.Timer? _fpsTimer;
+  /// 倾斜手势控制器
+  late TiltGesturesController _tiltGesturesController;
 
   /// 默认 TiltStreamController
   ///
   /// [widget.tiltStreamController] 为 null 时使用
-  late async.StreamController<TiltStreamModel> defaultTiltStreamController;
+  late final async.StreamController<TiltStreamModel>
+      _kDefaultTiltStreamController;
+
+  late final FpsTimerController _fpsTimerController;
 
   /// 当前坐标
   late Offset currentPosition = Utils.progressPosition(
@@ -163,32 +169,35 @@ class _TiltState extends State<Tilt> {
   @override
   void initState() {
     super.initState();
-    defaultTiltStreamController =
+    _kDefaultTiltStreamController =
         async.StreamController<TiltStreamModel>.broadcast();
+    _fpsTimerController = FpsTimerController(_fps);
   }
 
   @override
   void dispose() {
-    _fpsTimer?.cancel();
-    defaultTiltStreamController.close();
+    _kDefaultTiltStreamController.close();
+    _fpsTimerController.dispose();
+    _tiltGesturesController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final async.StreamController<TiltStreamModel> tiltStreamController =
-        _tiltStreamController ?? defaultTiltStreamController;
+        _tiltStreamController ?? _kDefaultTiltStreamController;
+    _tiltGesturesController = TiltGesturesController(
+      tiltStreamController: tiltStreamController,
+      disable: _disable,
+      fps: _fps,
+      tiltConfig: _tiltConfig,
+      position: currentPosition,
+    );
 
     return GesturesListener(
-      disable: _disable,
-      tiltStreamController: tiltStreamController,
-      tiltConfig: _tiltConfig,
+      tiltGesturesController: _tiltGesturesController,
       child: TiltStreamBuilder(
-        tiltStreamController: tiltStreamController,
-        position: currentPosition,
-        disable: _disable,
-        fps: _fps,
-        tiltConfig: _tiltConfig,
+        tiltGesturesController: _tiltGesturesController,
         builder: (context, snapshot) {
           onGesturesStream(snapshot.data);
           return TiltState(
@@ -272,7 +281,7 @@ class _TiltState extends State<Tilt> {
   /// [offset] 当前坐标
   void onGesturesMove(Offset offset, GesturesType gesturesType) {
     if (!isInit || _disable) return;
-    if (!fpsTimer()) return;
+    if (!_fpsTimerController.pass()) return;
     if (_tiltConfig.enableOutsideAreaMove ||
         Utils.isInRange(width, height, offset)) {
       currentPosition = offset;
@@ -331,19 +340,6 @@ class _TiltState extends State<Tilt> {
           currentPosition.dy - initPosition.dy,
         ) *
         _tiltConfig.sensorRevertFactor;
-  }
-
-  /// FPS
-  bool fpsTimer() {
-    if (_fpsTimer == null) {
-      _fpsTimer = async.Timer(
-        Duration(milliseconds: (1000 / _fps) ~/ 1),
-        () => _fpsTimer = null,
-      );
-      return true;
-    } else {
-      return false;
-    }
   }
 
   /// onGestureMove
