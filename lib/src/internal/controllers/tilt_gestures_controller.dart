@@ -36,7 +36,7 @@ class TiltGesturesController {
   /// 传感器平台支持
   bool _canSensorsPlatformSupport = Utils.sensorsPlatformSupport();
 
-  final List<async.StreamSubscription> _streamSubscriptions = [];
+  final List<async.StreamSubscription> streamSubscriptions = [];
 
   /// 设备方向
   DeviceOrientation deviceOrientation = DeviceOrientation.portraitUp;
@@ -60,20 +60,20 @@ class TiltGesturesController {
   bool get enableTiltStream => !disable;
 
   Stream<TiltStreamModel>? get tiltStream => enableTiltStream
-      ? tiltStreamController.stream.map(_filterTiltStream)
+      ? tiltStreamController.stream.map(filterTiltStream)
       : null;
 
   void dispose() {
     _gesturesHarmonizerTimer?.cancel();
-    for (final sub in _streamSubscriptions) {
+    for (final sub in streamSubscriptions) {
       sub.cancel();
     }
   }
 
   /// 过滤 TiltStream
-  TiltStreamModel _filterTiltStream(TiltStreamModel tiltStreamModel) {
+  TiltStreamModel filterTiltStream(TiltStreamModel tiltStreamModel) {
     /// 当前手势是否最高优先级
-    final bool isHighPriority = _gesturesTypePriority(
+    final bool isHighPriority = gesturesTypePriority(
           tiltStreamModel.gesturesType,
           latestTiltStreamModel.gesturesType,
         ) ==
@@ -146,7 +146,7 @@ class TiltGesturesController {
   /// - [gesturesType2] 手势类型2
   ///
   /// @return [GesturesType] 优先级最高的类型
-  GesturesType _gesturesTypePriority(
+  GesturesType gesturesTypePriority(
     GesturesType gesturesType1,
     GesturesType gesturesType2,
   ) {
@@ -175,11 +175,11 @@ class TiltGesturesController {
     }
 
     /// 加速度计事件处理（如：设备方向）
-    _streamSubscriptions.add(
+    streamSubscriptions.add(
       accelerometerEventStream().listen(
         (AccelerometerEvent event) {
           if (!context.mounted) return;
-          _handleAccelerometerEvents(context, event);
+          handleAccelerometerEvents(context, event);
         },
         onError: (_) => _canSensorsPlatformSupport = false,
         cancelOnError: true,
@@ -187,7 +187,7 @@ class TiltGesturesController {
     );
 
     /// 陀螺仪处理
-    _streamSubscriptions.add(
+    streamSubscriptions.add(
       gyroscopeEventStream()
           .map<TiltStreamModel>(
             (gyroscopeEvent) => TiltStreamModel(
@@ -216,7 +216,7 @@ class TiltGesturesController {
   }
 
   /// 加速度计事件处理（如：设备方向）
-  void _handleAccelerometerEvents(
+  void handleAccelerometerEvents(
     BuildContext context,
     AccelerometerEvent event,
   ) {
