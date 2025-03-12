@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.2.1 (Unreleased)
+
+### Improvements
+
+- Bump example to Flutter 3.29. 
+
 ## 3.2.0
 
 ### New features
