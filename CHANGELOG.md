@@ -3,7 +3,7 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
-## 3.2.1 (Unreleased)
+## 3.2.1
 
 ### Improvements
 
