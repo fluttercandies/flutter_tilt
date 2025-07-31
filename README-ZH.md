@@ -32,7 +32,7 @@
   <table width="620" align="center" border="0">
     <tr>
       <td align="right">
-        <img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview2-small.gif" alt="Example Preview GIF - Parallax image" /><br/><img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview-small.gif" alt="Example Preview GIF" />
+        <img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview2-small.gif" alt="Example Preview GIF - Parallax image" /><br/><img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview5-small.gif" alt="Example Preview GIF - Layout" />
       </td>
       <td align="left">
         <img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview4-small.gif" alt="Example Preview GIF - Parallax card" /><br/><img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />

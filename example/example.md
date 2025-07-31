@@ -1,5 +1,12 @@
-// More Live Demo: https://amoshuke.github.io/flutter_tilt_book
+# Flutter Tilt Example
 
+🎁 Check out the [Live Demo][].  
+
+## Example
+
+[example/lib/main.dart](https://github.com/fluttercandies/flutter_tilt/blob/main/example/lib/main.dart)
+
+```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 
@@ -112,3 +119,6 @@ class TiltExample extends StatelessWidget {
     );
   }
 }
+```
+
+[Live Demo]: https://amoshuke.github.io/flutter_tilt_book

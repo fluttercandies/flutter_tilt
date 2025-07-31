@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.2.2
+
+### Improvements
+
+- Update example and docs.
+
 ## 3.2.1
 
 ### Improvements
