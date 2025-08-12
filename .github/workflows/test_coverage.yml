@@ -27,7 +27,7 @@ jobs:
     name: "Code Analysis :: Flutter (latest)"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           sparse-checkout: ${{ env.tilt_sparse_checkout }}
           sparse-checkout-cone-mode: false
@@ -58,7 +58,7 @@ jobs:
       matrix:
         flutter-version: ['3.19.0', '']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           sparse-checkout: ${{ env.tilt_sparse_checkout }}
           sparse-checkout-cone-mode: false
@@ -81,7 +81,7 @@ jobs:
       && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           sparse-checkout: ${{ env.tilt_sparse_checkout }}
           sparse-checkout-cone-mode: false
