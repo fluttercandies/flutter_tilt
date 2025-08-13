@@ -29,7 +29,7 @@ void main() {
         disable: false,
         fps: 60,
         tiltConfig: tiltConfig,
-        position: initialPosition,
+        initialPosition: initialPosition,
       );
     });
 
@@ -94,8 +94,7 @@ void main() {
       );
     });
 
-    testWidgets('Accelerometer updates device orientation',
-        (WidgetTester tester) async {
+    testWidgets('Update device orientation', (WidgetTester tester) async {
       const landscapeMediaQueryData = MediaQueryData(size: Size(800.0, 600.0));
       const portraitMediaQueryData = MediaQueryData(size: Size(600.0, 800.0));
 
@@ -107,7 +106,10 @@ void main() {
           data: landscapeMediaQueryData,
           child: Builder(
             builder: (BuildContext context) {
-              controller.handleAccelerometerEvents(context, landscapeLeftEvent);
+              controller.handleDeviceOrientationEvent(
+                context,
+                landscapeLeftEvent,
+              );
               return const SizedBox();
             },
           ),
@@ -127,7 +129,7 @@ void main() {
           data: landscapeMediaQueryData,
           child: Builder(
             builder: (BuildContext context) {
-              controller.handleAccelerometerEvents(
+              controller.handleDeviceOrientationEvent(
                 context,
                 landscapeLRightEvent,
               );
@@ -149,7 +151,7 @@ void main() {
           data: portraitMediaQueryData,
           child: Builder(
             builder: (BuildContext context) {
-              controller.handleAccelerometerEvents(context, portraitUpEvent);
+              controller.handleDeviceOrientationEvent(context, portraitUpEvent);
               return const SizedBox();
             },
           ),
@@ -169,7 +171,10 @@ void main() {
           data: portraitMediaQueryData,
           child: Builder(
             builder: (BuildContext context) {
-              controller.handleAccelerometerEvents(context, portraitDownEvent);
+              controller.handleDeviceOrientationEvent(
+                context,
+                portraitDownEvent,
+              );
               return const SizedBox();
             },
           ),

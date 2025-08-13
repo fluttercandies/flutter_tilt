@@ -17,7 +17,7 @@ class TiltGesturesController {
     required this.disable,
     required this.fps,
     required this.tiltConfig,
-    required this.position,
+    required this.initialPosition,
   });
 
   /// TiltStreamController
@@ -30,8 +30,8 @@ class TiltGesturesController {
 
   final TiltConfig tiltConfig;
 
-  /// 当前坐标
-  final Offset position;
+  /// 初始坐标
+  final Offset initialPosition;
 
   /// 传感器平台支持
   bool _canSensorsPlatformSupport = Utils.sensorsPlatformSupport();
@@ -46,7 +46,7 @@ class TiltGesturesController {
 
   /// 初始 TiltStreamModel
   late TiltStreamModel initialTiltStreamModel = TiltStreamModel(
-    position: position,
+    position: initialPosition,
     gesturesType: GesturesType.none,
   );
 
@@ -65,14 +65,19 @@ class TiltGesturesController {
 
   void dispose() {
     _gesturesHarmonizerTimer?.cancel();
+    _cancelAllSubscriptions();
+  }
+
+  void _cancelAllSubscriptions() {
     for (final sub in streamSubscriptions) {
       sub.cancel();
     }
+    streamSubscriptions.clear();
   }
 
   /// 过滤 TiltStream
   TiltStreamModel filterTiltStream(TiltStreamModel tiltStreamModel) {
-    /// 当前手势是否最高优先级
+    /// 当前手势是否高优先级
     final bool isHighPriority = gesturesTypePriority(
           tiltStreamModel.gesturesType,
           latestTiltStreamModel.gesturesType,
@@ -83,24 +88,13 @@ class TiltGesturesController {
       case GesturesType.none:
         break;
       case GesturesType.touch || GesturesType.hover || GesturesType.controller:
-        if (isHighPriority) {
+        if (isHighPriority || !latestTiltStreamModel.gestureUse) {
           latestTiltStreamModel = tiltStreamModel;
-        } else {
-          if (!latestTiltStreamModel.gestureUse) {
-            latestTiltStreamModel = tiltStreamModel;
-          }
         }
 
         /// 避免 sensors 与其他手势触发冲突
         if (!tiltStreamModel.gestureUse) {
-          switch (tiltStreamModel.gesturesType) {
-            case GesturesType.touch || GesturesType.hover:
-              _gesturesHarmonizer(tiltConfig.leaveDuration);
-            case GesturesType.controller:
-              _gesturesHarmonizer(tiltConfig.controllerLeaveDuration);
-            default:
-              break;
-          }
+          _handleGestureConflict(tiltStreamModel.gesturesType);
           _enableSensors = true;
         } else {
           _enableSensors = false;
@@ -108,21 +102,39 @@ class TiltGesturesController {
       case GesturesType.sensors:
         // 避免 sensors 与其他手势触发冲突
         if (_enableSensors && _gesturesHarmonizerTimer == null) {
-          final sensorsX = tiltStreamModel.position.dx;
-          final sensorsY = tiltStreamModel.position.dy;
-          final Offset tiltPosition = switch (deviceOrientation) {
-            DeviceOrientation.portraitUp => Offset(sensorsX, sensorsY),
-            DeviceOrientation.portraitDown => -Offset(sensorsX, sensorsY),
-            DeviceOrientation.landscapeLeft => Offset(sensorsY, -sensorsX),
-            DeviceOrientation.landscapeRight => Offset(-sensorsY, sensorsX),
-          };
-          latestTiltStreamModel = TiltStreamModel(
-            position: tiltPosition,
-            gesturesType: tiltStreamModel.gesturesType,
-          );
+          _updateSensorTiltPosition(tiltStreamModel);
         }
     }
     return latestTiltStreamModel;
+  }
+
+  /// 更新 sensors 对应的倾斜位置
+  void _updateSensorTiltPosition(TiltStreamModel tiltStreamModel) {
+    final sensorsX = tiltStreamModel.position.dx;
+    final sensorsY = tiltStreamModel.position.dy;
+    final Offset tiltPosition = switch (deviceOrientation) {
+      DeviceOrientation.portraitUp => Offset(sensorsX, sensorsY),
+      DeviceOrientation.portraitDown => -Offset(sensorsX, sensorsY),
+      DeviceOrientation.landscapeLeft => Offset(sensorsY, -sensorsX),
+      DeviceOrientation.landscapeRight => Offset(-sensorsY, sensorsX),
+    };
+    latestTiltStreamModel = TiltStreamModel(
+      position: tiltPosition,
+      gesturesType: tiltStreamModel.gesturesType,
+      gestureUse: true,
+    );
+  }
+
+  /// 处理对应手势的冲突
+  void _handleGestureConflict(GesturesType gesturesType) {
+    final Duration? duration = switch (gesturesType) {
+      GesturesType.touch || GesturesType.hover => tiltConfig.leaveDuration,
+      GesturesType.controller => tiltConfig.controllerLeaveDuration,
+      _ => null
+    };
+    if (duration != null) {
+      _gesturesHarmonizer(duration);
+    }
   }
 
   /// 手势协调器
@@ -145,7 +157,7 @@ class TiltGesturesController {
   /// - [gesturesType1] 手势类型1
   /// - [gesturesType2] 手势类型2
   ///
-  /// @return [GesturesType] 优先级最高的类型
+  /// @return [GesturesType] 优先级最高的手势类型
   GesturesType gesturesTypePriority(
     GesturesType gesturesType1,
     GesturesType gesturesType2,
@@ -174,25 +186,22 @@ class TiltGesturesController {
       return;
     }
 
-    /// 加速度计事件处理（如：设备方向）
-    streamSubscriptions.add(
-      accelerometerEventStream().listen(
-        (AccelerometerEvent event) {
-          if (!context.mounted) return;
-          handleAccelerometerEvents(context, event);
-        },
-        onError: (_) => _canSensorsPlatformSupport = false,
-        cancelOnError: true,
-      ),
-    );
+    /// 订阅设备方向事件
+    _subscribeToDeviceOrientation(context);
 
-    /// 陀螺仪处理
+    /// 订阅陀螺仪倾斜事件
+    _subscribeToGyroscopeTilt();
+  }
+
+  /// 订阅陀螺仪倾斜事件
+  void _subscribeToGyroscopeTilt() {
     streamSubscriptions.add(
       gyroscopeEventStream()
           .map<TiltStreamModel>(
-            (gyroscopeEvent) => TiltStreamModel(
+            (GyroscopeEvent gyroscopeEvent) => TiltStreamModel(
               position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
               gesturesType: GesturesType.sensors,
+              gestureUse: true,
             ),
           )
           .combineLatest(
@@ -215,14 +224,30 @@ class TiltGesturesController {
     );
   }
 
-  /// 加速度计事件处理（如：设备方向）
-  void handleAccelerometerEvents(
+  /// 订阅设备方向事件
+  void _subscribeToDeviceOrientation(BuildContext context) {
+    streamSubscriptions.add(
+      accelerometerEventStream().listen(
+        (AccelerometerEvent event) {
+          if (!context.mounted) return;
+          handleDeviceOrientationEvent(context, event);
+        },
+        onError: (_) => _canSensorsPlatformSupport = false,
+        cancelOnError: true,
+      ),
+    );
+  }
+
+  /// 处理设备方向事件
+  void handleDeviceOrientationEvent(
     BuildContext context,
     AccelerometerEvent event,
   ) {
-    final x = event.x, y = event.y, z = event.z;
     if (!context.mounted) return;
+
+    final x = event.x, y = event.y, z = event.z;
     final mediaOrientation = MediaQuery.of(context).orientation;
+
     switch (mediaOrientation) {
       case Orientation.landscape:
         if (x.abs() > y.abs() && x.abs() > z.abs()) {

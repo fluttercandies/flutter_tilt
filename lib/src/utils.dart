@@ -43,9 +43,9 @@ abstract final class Utils {
   ///
   /// @return [double] 两点间的距离
   static double p2pDistance(Offset p1, Offset p2) {
-    final double x1 = p1.dx, y1 = p1.dy;
-    final double x2 = p2.dx, y2 = p2.dy;
-    return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    final double dx = p1.dx - p2.dx;
+    final double dy = p1.dy - p2.dy;
+    return sqrt(dx * dx + dy * dy);
   }
 
   /// 旋转轴
@@ -78,16 +78,14 @@ abstract final class Utils {
     final Offset center = centerPosition(width, height);
     final double centerWidth = width / 2.0;
     final double centerHeight = height / 2.0;
-    double x = center.dx - position.dx;
-    double y = center.dy - position.dy;
+    final double x = center.dx - position.dx;
+    final double y = center.dy - position.dy;
 
-    /// 限制最大值
-    if (x > centerWidth) x = centerWidth;
-    if (x < -centerWidth) x = -centerWidth;
-    if (y > centerHeight) y = centerHeight;
-    if (y < -centerHeight) y = -centerHeight;
-
-    return Offset(x, y);
+    /// 限制值
+    return Offset(
+      x.clamp(-centerWidth, centerWidth),
+      y.clamp(-centerHeight, centerHeight),
+    );
   }
 
   /// 计算当前坐标在中心坐标到区域边界的进度
@@ -121,11 +119,9 @@ abstract final class Utils {
     double x = (center.dx - position.dx) / width * 2.0;
     double y = (center.dy - position.dy) / height * 2.0;
 
-    /// 限制最大值
-    if (x > 1.0) x = 1.0;
-    if (x < -1.0) x = -1.0;
-    if (y > 1.0) y = 1.0;
-    if (y < -1.0) y = -1.0;
+    /// 限制值
+    x = x.clamp(-1.0, 1.0);
+    y = y.clamp(-1.0, 1.0);
 
     /// 限制倾斜方向
     if (tiltDirectionList.isNotEmpty) {
@@ -180,14 +176,8 @@ abstract final class Utils {
     double height,
     Offset position,
   ) {
-    double constraintWidth = position.dx;
-    double constraintHeight = position.dy;
-
-    if (constraintWidth > width) constraintWidth = width;
-    if (constraintWidth < 0) constraintWidth = 0;
-    if (constraintHeight > height) constraintHeight = height;
-    if (constraintHeight < 0) constraintHeight = 0;
-
-    return Offset(constraintWidth, constraintHeight);
+    final double x = position.dx.clamp(0.0, width);
+    final double y = position.dy.clamp(0.0, height);
+    return Offset(x, y);
   }
 }

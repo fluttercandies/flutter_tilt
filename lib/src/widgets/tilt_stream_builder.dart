@@ -25,28 +25,26 @@ class TiltStreamBuilder extends StatefulWidget {
 }
 
 class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
-  TiltGesturesController get _tiltGesturesController =>
-      widget.tiltGesturesController;
-  Widget Function(BuildContext, AsyncSnapshot<TiltStreamModel>) get _builder =>
-      widget.builder;
+  late final Widget Function(BuildContext, AsyncSnapshot<TiltStreamModel>)
+      _builder = widget.builder;
 
   @override
   void initState() {
     super.initState();
-    _tiltGesturesController.initSensors(context);
+    widget.tiltGesturesController.initSensors(context);
   }
 
   @override
   void dispose() {
-    _tiltGesturesController.dispose();
+    widget.tiltGesturesController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<TiltStreamModel>(
-      stream: _tiltGesturesController.tiltStream,
-      initialData: _tiltGesturesController.initialTiltStreamModel,
+      stream: widget.tiltGesturesController.tiltStream,
+      initialData: widget.tiltGesturesController.initialTiltStreamModel,
       builder: _builder,
     );
   }

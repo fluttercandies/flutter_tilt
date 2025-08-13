@@ -6,21 +6,27 @@ import '../../enums.dart';
 mixin TiltTweenAnimation {
   /// Tilt TweenAnimation End
   ///
+  /// 倾斜动画结束的目标位置
+  ///
   /// - [isMove] 是否移动
   /// - [tiltConfig] TiltConfig
   /// - [areaProgress] 当前进度
   ///
-  /// @return [Offset] 倾斜反向进度
+  /// @return [Offset] 倾斜结束的目标位置
   Offset tiltTweenAnimationEnd(
     bool isMove,
     TiltConfig tiltConfig,
     Offset areaProgress,
-  ) =>
-      isMove || !tiltConfig.enableRevert
-          ? areaProgress
-          : (tiltConfig.initial ?? Offset.zero);
+  ) {
+    if (isMove || !tiltConfig.enableRevert) {
+      return areaProgress;
+    }
+    return tiltConfig.initial ?? Offset.zero;
+  }
 
   /// Tilt TweenAnimation Duration
+  ///
+  /// 倾斜动画的持续时间
   ///
   /// - [isMove] 是否移动
   /// - [currentGesturesType] 当前手势类型
@@ -45,6 +51,8 @@ mixin TiltTweenAnimation {
   }
 
   /// Tilt TweenAnimation Curve
+  ///
+  /// 倾斜动画的 Curve
   ///
   /// - [isMove] 是否移动
   /// - [currentGesturesType] 当前手势类型

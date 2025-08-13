@@ -28,74 +28,139 @@ mixin TiltDecoration {
   }) {
     assert(min <= max && min >= 0.0 && max <= 1.0);
 
-    /// 区域进度
+    /// 区域进度（取反）
     final Offset progress = -areaProgress;
     final double progressX = progress.dx, progressY = progress.dy;
 
     /// 距离中心
-    final double dataDistance = Utils.p2pDistance(
+    final double distanceFromCenter = Utils.p2pDistance(
       Offset.zero,
       Offset(progressX, progressY),
     );
 
     /// 限制距离中心
-    final double constraintsDistance = dataDistance > max ? max : dataDistance;
+    final double constrainedDistance = distanceFromCenter.clamp(min, max);
 
-    /// 进度
-    double progressData = min;
+    /// 根据方向计算进度
+    double progressData = _calculateDirectionProgress(
+      direction,
+      progressX,
+      progressY,
+      constrainedDistance,
+      max,
+    );
 
-    progressData = switch (direction) {
-      /// 光源方向计算方式
-      LightDirection _ => switch (direction) {
-          LightDirection.none => progressData,
-          LightDirection.around => constraintsDistance,
-          LightDirection.all => max,
-          LightDirection.top => progressY,
-          LightDirection.bottom => -progressY,
-          LightDirection.left => progressX,
-          LightDirection.right => -progressX,
-          LightDirection.center => max - constraintsDistance,
-          LightDirection.topLeft => progressX + progressY,
-          LightDirection.bottomRight => -(progressX + progressY),
-          LightDirection.topRight => -(progressX - progressY),
-          LightDirection.bottomLeft => progressX - progressY,
-          LightDirection.xCenter =>
-            max - (progressY < 0.0 ? -progressY : progressY),
-          LightDirection.yCenter =>
-            max - (progressX < 0.0 ? -progressX : progressX),
-        },
+    /// 强度调整
+    progressData *= max;
 
-      /// 阴影方向计算方式
-      ShadowDirection _ => switch (direction) {
-          ShadowDirection.none => progressData,
-          ShadowDirection.around => constraintsDistance,
-          ShadowDirection.all => max,
-          ShadowDirection.top => -progressY,
-          ShadowDirection.bottom => progressY,
-          ShadowDirection.left => -progressX,
-          ShadowDirection.right => progressX,
-          ShadowDirection.center => max - constraintsDistance,
-          ShadowDirection.topLeft => -(progressX + progressY),
-          ShadowDirection.bottomRight => progressX + progressY,
-          ShadowDirection.topRight => progressX - progressY,
-          ShadowDirection.bottomLeft => -(progressX - progressY),
-          ShadowDirection.xCenter =>
-            max - (progressY < 0.0 ? -progressY : progressY),
-          ShadowDirection.yCenter =>
-            max - (progressX < 0.0 ? -progressX : progressX),
-        },
-    };
-
-    /// 强度
-    progressData = progressData * max;
-
-    /// 反向
+    /// 反向处理
     if (enableReverse) progressData = -progressData;
 
     /// 避免超出范围
-    if (progressData < min) progressData = min;
-    if (progressData > max) progressData = max;
+    progressData = progressData.clamp(min, max);
 
     return progressData;
+  }
+
+  /// 根据方向计算进度
+  ///
+  /// - [direction] 光照方向
+  /// - [progressX] 当前水平进度
+  /// - [progressY] 当前垂直进度
+  /// - [constrainedDistance] 限制后的距离（距离中心）
+  /// - [max] 最大进度限制 0-1
+  ///
+  /// @return 对应方向的进度
+  double _calculateDirectionProgress(
+    Direction direction,
+    double progressX,
+    double progressY,
+    double constrainedDistance,
+    double max,
+  ) {
+    return switch (direction) {
+      LightDirection _ => _calculateLightDirectionProgress(
+          direction,
+          progressX,
+          progressY,
+          constrainedDistance,
+          max,
+        ),
+      ShadowDirection _ => _calculateShadowDirectionProgress(
+          direction,
+          progressX,
+          progressY,
+          constrainedDistance,
+          max,
+        ),
+    };
+  }
+
+  /// 计算光照方向的进度
+  ///
+  /// - [direction] 光照方向
+  /// - [progressX] 当前水平进度
+  /// - [progressY] 当前垂直进度
+  /// - [constrainedDistance] 限制后的距离（距离中心）
+  /// - [max] 最大进度限制 0-1
+  ///
+  /// @return 对应方向的进度
+  double _calculateLightDirectionProgress(
+    LightDirection direction,
+    double progressX,
+    double progressY,
+    double constrainedDistance,
+    double max,
+  ) {
+    return switch (direction) {
+      LightDirection.none => 0.0,
+      LightDirection.around => constrainedDistance,
+      LightDirection.all => max,
+      LightDirection.top => progressY,
+      LightDirection.bottom => -progressY,
+      LightDirection.left => progressX,
+      LightDirection.right => -progressX,
+      LightDirection.center => max - constrainedDistance,
+      LightDirection.topLeft => progressX + progressY,
+      LightDirection.bottomRight => -(progressX + progressY),
+      LightDirection.topRight => -(progressX - progressY),
+      LightDirection.bottomLeft => progressX - progressY,
+      LightDirection.xCenter => max - progressY.abs(),
+      LightDirection.yCenter => max - progressX.abs(),
+    };
+  }
+
+  /// 计算阴影方向的进度
+  ///
+  /// - [direction] 阴影方向
+  /// - [progressX] 当前水平进度
+  /// - [progressY] 当前垂直进度
+  /// - [constrainedDistance] 限制后的距离（距离中心）
+  /// - [max] 最大进度限制 0-1
+  ///
+  /// @return 对应方向的进度
+  double _calculateShadowDirectionProgress(
+    ShadowDirection direction,
+    double progressX,
+    double progressY,
+    double constrainedDistance,
+    double max,
+  ) {
+    return switch (direction) {
+      ShadowDirection.none => 0.0,
+      ShadowDirection.around => constrainedDistance,
+      ShadowDirection.all => max,
+      ShadowDirection.top => -progressY,
+      ShadowDirection.bottom => progressY,
+      ShadowDirection.left => -progressX,
+      ShadowDirection.right => progressX,
+      ShadowDirection.center => max - constrainedDistance,
+      ShadowDirection.topLeft => -(progressX + progressY),
+      ShadowDirection.bottomRight => progressX + progressY,
+      ShadowDirection.topRight => progressX - progressY,
+      ShadowDirection.bottomLeft => -(progressX - progressY),
+      ShadowDirection.xCenter => max - progressY.abs(),
+      ShadowDirection.yCenter => max - progressX.abs(),
+    };
   }
 }

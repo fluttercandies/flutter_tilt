@@ -128,7 +128,7 @@ void main() {
     testWidgets('direction all', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltConfig tiltConfigTest = TiltConfig(
+      final TiltConfig tiltConfigTest = const TiltConfig(
         direction: <TiltDirection>[
           TiltDirection.none,
           TiltDirection.top,
@@ -176,7 +176,7 @@ void main() {
     testWidgets('direction part', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltConfig tiltConfigTest = TiltConfig(
+      final TiltConfig tiltConfigTest = const TiltConfig(
         direction: <TiltDirection>[TiltDirection.top, TiltDirection.left],
       );
       final TiltDataModel tiltDataExpect = tiltDataTestCalculate(

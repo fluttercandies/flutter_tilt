@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/widgets.dart';
@@ -36,12 +37,16 @@ abstract class TiltShadow extends StatelessWidget with TiltDecoration {
   /// 用于阴影颜色，限制最大进度表示强度（透明度）
   ///
   /// {@macro tilt.ShadowConfig.direction}
-  double get showShadow => tiltDecorationDirectionProgress(
-        areaProgress,
-        (shadowConfig.direction ?? lightConfig.direction) as Direction,
-        min: shadowConfig.minIntensity,
-        max: shadowConfig.maxIntensity,
-      );
+  double get showShadow {
+    final Direction direction =
+        (shadowConfig.direction ?? lightConfig.direction) as Direction;
+    return tiltDecorationDirectionProgress(
+      areaProgress,
+      direction,
+      min: shadowConfig.minIntensity,
+      max: shadowConfig.maxIntensity,
+    );
+  }
 
   /// 开启反向（受光源影响）
   ///
@@ -63,7 +68,7 @@ abstract class TiltShadow extends StatelessWidget with TiltDecoration {
   double get centerProgress => Utils.p2pDistance(Offset.zero, progress);
 
   /// 距离中心的进度最大值
-  double get centerMaxProgress => centerProgress > 1.0 ? 1.0 : centerProgress;
+  double get centerMaxProgress => math.max(1.0, centerProgress);
 
   /// 阴影当前偏移距离
   ///
@@ -119,9 +124,10 @@ class TiltShadowBase extends TiltShadow {
       centerMaxProgress * shadowConfig.maxBlurRadius;
 
   /// 阴影模糊半径
-  double get blurRadius => blurRadiusProgress < shadowConfig.minBlurRadius
-      ? shadowConfig.minBlurRadius
-      : blurRadiusProgress;
+  double get blurRadius => math.max(
+        blurRadiusProgress,
+        shadowConfig.minBlurRadius,
+      );
 
   /// 阴影扩散半径距离
   ///
@@ -137,7 +143,7 @@ class TiltShadowBase extends TiltShadow {
   ///
   /// (阴影扩散半径距离 + 初始固定扩散值，随进度还原至 0)
   double get spreadRadiusRevert =>
-      (spreadRadiusDistance + ((width < height ? width : height) / 10.0)) *
+      (spreadRadiusDistance + (math.min(width, height) / 10.0)) *
       (1 - centerMaxProgress);
 
   /// 阴影扩散半径
@@ -195,26 +201,18 @@ class TiltShadowProjector extends TiltShadow {
   });
 
   /// 阴影尺寸比例
-  double get scale => shadowConfig.projectorScaleTo >=
-          shadowConfig.projectorScaleFrom
-      ? shadowConfig.projectorScaleFrom +
-          centerMaxProgress *
-              (shadowConfig.projectorScaleTo - shadowConfig.projectorScaleFrom)
-      : shadowConfig.projectorScaleFrom -
-          centerMaxProgress *
-              (shadowConfig.projectorScaleFrom - shadowConfig.projectorScaleTo);
+  double get scale => _calculateLerp(
+        shadowConfig.projectorScaleFrom,
+        shadowConfig.projectorScaleTo,
+        centerMaxProgress,
+      );
 
   /// 阴影模糊 Sigma
-  double get blurSigma =>
-      shadowConfig.projectorBlurSigmaTo >= shadowConfig.projectorBlurSigmaFrom
-          ? shadowConfig.projectorBlurSigmaFrom +
-              centerMaxProgress *
-                  (shadowConfig.projectorBlurSigmaTo -
-                      shadowConfig.projectorBlurSigmaFrom)
-          : shadowConfig.projectorBlurSigmaFrom -
-              centerMaxProgress *
-                  (shadowConfig.projectorBlurSigmaFrom -
-                      shadowConfig.projectorBlurSigmaTo);
+  double get blurSigma => _calculateLerp(
+        shadowConfig.projectorBlurSigmaFrom,
+        shadowConfig.projectorBlurSigmaTo,
+        centerMaxProgress,
+      );
 
   Matrix4 get transform => Matrix4.zero()
     ..setIdentity()
@@ -278,5 +276,14 @@ class TiltShadowProjector extends TiltShadow {
         ),
       ),
     );
+  }
+
+  /// 计算插值
+  ///
+  /// - [from] 起始值
+  /// - [to] 目标值
+  /// - [progress] 当前进度 (0.0 ~ 1.0)
+  double _calculateLerp(double from, double to, double progress) {
+    return lerpDouble(from, to, progress) ?? 0.0;
   }
 }
