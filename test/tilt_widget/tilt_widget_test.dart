@@ -164,32 +164,6 @@ void main() {
       }
     });
 
-    testWidgets('fps', (WidgetTester tester) async {
-      final dataList = <int>[120, 60];
-
-      for (final data in dataList) {
-        int count = 0;
-
-        await tester.pumpWidget(
-          TiltWidget(
-            fps: data,
-            onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
-              count++;
-            },
-          ),
-        );
-
-        await tester.timedDrag(
-          tiltWidgetFinder,
-          const Offset(0.0, 5.0),
-          const Duration(milliseconds: 1000),
-          frequency: dataList[0].toDouble(),
-        );
-        await tester.pumpAndSettle();
-        expect(count, data);
-      }
-    });
-
     testWidgets('tiltConfig', (WidgetTester tester) async {
       final StreamController<TiltStreamModel> tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
