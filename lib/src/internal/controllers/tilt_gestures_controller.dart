@@ -64,11 +64,18 @@ class TiltGesturesController {
       : null;
 
   void dispose() {
-    _gesturesHarmonizerTimer?.cancel();
-    _cancelAllSubscriptions();
+    cancelGesturesHarmonizerTimer();
+    cancelAllSubscriptions();
   }
 
-  void _cancelAllSubscriptions() {
+  /// 取消手势协调器
+  void cancelGesturesHarmonizerTimer() {
+    _gesturesHarmonizerTimer?.cancel();
+    _gesturesHarmonizerTimer = null;
+  }
+
+  /// 取消所有订阅
+  void cancelAllSubscriptions() {
     for (final sub in streamSubscriptions) {
       sub.cancel();
     }
@@ -187,14 +194,14 @@ class TiltGesturesController {
     }
 
     /// 订阅设备方向事件
-    _subscribeToDeviceOrientation(context);
+    subscribeToDeviceOrientation(context);
 
     /// 订阅陀螺仪倾斜事件
-    _subscribeToGyroscopeTilt();
+    subscribeToGyroscopeTilt();
   }
 
   /// 订阅陀螺仪倾斜事件
-  void _subscribeToGyroscopeTilt() {
+  void subscribeToGyroscopeTilt() {
     streamSubscriptions.add(
       gyroscopeEventStream()
           .map<TiltStreamModel>(
@@ -208,10 +215,7 @@ class TiltGesturesController {
             Stream<void>.periodic(Duration(milliseconds: (1000 / fps) ~/ 1)),
             (p0, _) => p0,
           )
-          .throttle(
-            Duration(milliseconds: (1000 / fps) ~/ 1),
-            trailing: true,
-          )
+          .throttle(Duration(milliseconds: (1000 / fps) ~/ 1), trailing: true)
           .listen(
         (TiltStreamModel tiltStreamModel) {
           if (tiltStreamController.hasListener) {
@@ -225,7 +229,7 @@ class TiltGesturesController {
   }
 
   /// 订阅设备方向事件
-  void _subscribeToDeviceOrientation(BuildContext context) {
+  void subscribeToDeviceOrientation(BuildContext context) {
     streamSubscriptions.add(
       accelerometerEventStream().listen(
         (AccelerometerEvent event) {

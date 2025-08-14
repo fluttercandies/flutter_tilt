@@ -46,6 +46,20 @@ void main() {
       );
     });
 
+    testWidgets('streamSubscriptions', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        Builder(
+          builder: (BuildContext context) {
+            controller.subscribeToDeviceOrientation(context);
+            return const SizedBox();
+          },
+        ),
+      );
+      expect(controller.streamSubscriptions.length, 1);
+      controller.dispose();
+      expect(controller.streamSubscriptions.length, 0);
+    });
+
     test('Tilt stream updates (sensors)', () async {
       const deviceOrientationList = DeviceOrientation.values;
       const testModel = TiltStreamModel(

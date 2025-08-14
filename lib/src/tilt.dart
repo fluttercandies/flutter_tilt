@@ -168,7 +168,7 @@ class _TiltState extends State<Tilt> {
   void didUpdateWidget(Tilt oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (_shouldReinitControllers(oldWidget)) {
-      _initControllers();
+      _initControllers(oldWidget: oldWidget);
     }
   }
 
@@ -207,7 +207,15 @@ class _TiltState extends State<Tilt> {
   }
 
   /// 初始化控制器
-  void _initControllers() {
+  ///
+  /// - [oldWidget] 旧 Wdiget 一般用于 [didUpdateWidget]
+  void _initControllers({Tilt? oldWidget}) {
+    /// 是否需要取消 [TiltGesturesController] 中的手势协调器，避免泄露
+    if (oldWidget != null && oldWidget.tiltConfig != widget.tiltConfig) {
+      _tiltGesturesController.cancelGesturesHarmonizerTimer();
+    }
+
+    /// 初始化 TiltGesturesController
     final async.StreamController<TiltStreamModel> tiltStreamController =
         widget.tiltStreamController ?? _kDefaultTiltStreamController;
     _tiltGesturesController = TiltGesturesController(
@@ -217,6 +225,8 @@ class _TiltState extends State<Tilt> {
       tiltConfig: widget.tiltConfig,
       initialPosition: _currentPosition,
     );
+
+    /// 初始化 FpsTimerController
     _fpsTimerController = FpsTimerController(widget.fps);
   }
 
