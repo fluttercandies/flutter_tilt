@@ -6,9 +6,9 @@ void main() {
   group('TiltConfig ::', () {
     test('copyWith', () {
       const TiltConfig tiltConfig = TiltConfig();
-      final TiltConfig tiltConfigExpect = TiltConfig(
+      const TiltConfig tiltConfigExpect = TiltConfig(
         disable: true,
-        initial: const Offset(1.0, 1.0),
+        initial: Offset(1.0, 1.0),
         angle: 1.0,
         direction: [TiltDirection.top, TiltDirection.bottom],
         enableReverse: true,
@@ -72,7 +72,7 @@ void main() {
     test('validator', () {
       final TiltDirection tiltDirection = TiltDirection.validator(
         const TiltDirection(1.0, 1.0),
-        <TiltDirection>[
+        const <TiltDirection>[
           TiltDirection.none,
           TiltDirection.top,
           TiltDirection.bottom,
@@ -86,6 +86,13 @@ void main() {
       );
       expect(tiltDirection.dx, 1.0);
       expect(tiltDirection.dy, 1.0);
+
+      final TiltDirection tiltDirection2 = TiltDirection.validator(
+        const TiltDirection(1.0, 1.0),
+        const <TiltDirection>[TiltDirection.none, TiltDirection(0.7, 0.4)],
+      );
+      expect(tiltDirection2.dx, 0.7);
+      expect(tiltDirection2.dy, 0.4);
     });
     test('operator +', () {
       final TiltDirection tiltDirection =

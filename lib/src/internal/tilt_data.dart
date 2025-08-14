@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/widgets.dart';
 
 import '../config/tilt_config.dart';
@@ -59,19 +60,18 @@ class TiltData {
 
   /// 计算当前坐标进度的倾斜
   Matrix4 tiltTransform() {
-    /// 旋转大小：区域进度 * 弧度
     final Offset rotate = Utils.rotateAxis(
+      /// 旋转大小：区域进度 * 弧度
       areaProgress * Utils.radian(tiltConfig.angle),
       tiltConfig.enableReverse,
     );
     final double rotateX = rotate.dx, rotateY = rotate.dy;
+    final double maxSize = math.max(width, height);
 
     return Matrix4.identity()
-
-      /// 近大远小效果（适配不同尺寸的组件）
-      ..setEntry(3, 2, 0.5 / (width > height ? width : height))
-
-      /// 旋转轴
+      // 近大远小效果（适配不同尺寸的组件）
+      ..setEntry(3, 2, 0.5 / maxSize)
+      // 旋转轴
       ..rotateX(rotateX)
       ..rotateY(rotateY);
   }

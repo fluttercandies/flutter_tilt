@@ -16,7 +16,7 @@ class TiltLight extends StatelessWidget with TiltDecoration {
   /// [width], [height] 一般和传入的组件尺寸一致
   ///
   /// {@macro tilt.LightConfig}
-  const TiltLight({
+  TiltLight({
     super.key,
     required this.width,
     required this.height,
@@ -38,16 +38,10 @@ class TiltLight extends StatelessWidget with TiltDecoration {
   /// 尺寸扩散的倍数
   double get spread => lightConfig.spreadFactor;
 
-  /// 扩散的尺寸 width
-  double get spreadW => width * spread;
-
-  /// 扩散的尺寸 height
-  double get spreadH => height * spread;
-
   /// 当前坐标相对于中心坐标的区域坐标
   Offset get p2cPosition => -Utils.p2cAreaPosition(
-        spreadW,
-        spreadH,
+        _spreadW,
+        _spreadH,
         Utils.constraintsPosition(width, height, position),
       );
 
@@ -76,11 +70,18 @@ class TiltLight extends StatelessWidget with TiltDecoration {
       lightConfig.maxIntensity == 0.0 ||
       lightConfig.direction == LightDirection.none;
 
+  /// 扩散的尺寸 width
+  late final double _spreadW = width * spread;
+
+  /// 扩散的尺寸 height
+  late final double _spreadH = height * spread;
+
   @override
   Widget build(BuildContext context) {
     if (lightDisable) {
       return const SizedBox();
     }
+
     return Positioned(
       left: enableReverse ? positionX : null,
       top: enableReverse ? positionY : null,
@@ -88,10 +89,11 @@ class TiltLight extends StatelessWidget with TiltDecoration {
       bottom: !enableReverse ? positionY : null,
       child: IgnorePointer(
         child: Container(
-          width: spreadW,
-          height: spreadH,
+          width: _spreadW,
+          height: _spreadH,
           decoration: BoxDecoration(
             gradient: RadialGradient(
+              center: Alignment.center,
               colors: <Color>[
                 /// TODO: Flutter v3.27.0 之后需要迁移，在这之前暂时使用 withAlpha，
                 /// （目前为了兼容更多低版本 Flutter 以及对于非主要 Tilt 效果的 P3 广色域优先级很低，未来再迁移为 withValues）

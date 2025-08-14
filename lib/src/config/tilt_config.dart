@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/widgets.dart';
 
 import '../enums.dart';
@@ -578,53 +579,50 @@ class TiltDirection {
   /// - (1, 1)    最左上方
   /// - (0, 1)    最上方
   /// - (0, 0.9)  上方 0.9 比例的位置
-  const TiltDirection(this._dx, this._dy)
-      : assert(_dx <= 1.0 && _dx >= -1.0),
-        assert(_dy <= 1.0 && _dy >= -1.0);
+  const TiltDirection(this.dx, this.dy)
+      : assert(dx <= 1.0 && dx >= -1.0),
+        assert(dy <= 1.0 && dy >= -1.0);
 
-  final double _dx;
-  final double _dy;
+  final double dx;
+  final double dy;
 
-  double get dx => _dx;
-  double get dy => _dy;
-
-  static TiltDirection none = const TiltDirection(0.0, 0.0);
-  static TiltDirection top = const TiltDirection(0.0, 1.0);
-  static TiltDirection bottom = const TiltDirection(0.0, -1.0);
-  static TiltDirection left = const TiltDirection(1.0, 0.0);
-  static TiltDirection right = const TiltDirection(-1.0, 0.0);
-  static TiltDirection topLeft = top + left;
-  static TiltDirection topRight = top + right;
-  static TiltDirection bottomLeft = bottom + left;
-  static TiltDirection bottomRight = bottom + right;
+  static const TiltDirection none = TiltDirection(0.0, 0.0);
+  static const TiltDirection top = TiltDirection(0.0, 1.0);
+  static const TiltDirection bottom = TiltDirection(0.0, -1.0);
+  static const TiltDirection left = TiltDirection(1.0, 0.0);
+  static const TiltDirection right = TiltDirection(-1.0, 0.0);
+  static const TiltDirection topLeft = TiltDirection(1.0, 1.0);
+  static const TiltDirection topRight = TiltDirection(-1.0, 1.0);
+  static const TiltDirection bottomLeft = TiltDirection(1.0, -1.0);
+  static const TiltDirection bottomRight = TiltDirection(-1.0, -1.0);
 
   /// 验证合法的方向并返回方向数据
   ///
-  /// - [tiltDirection] 需要验证的方向坐标
-  /// - [validator] 验证的方向范围
+  /// - [direction] 需要验证的方向坐标
+  /// - [validDirections] 有效的方向范围
   ///
   /// @return [TiltDirection]
   static TiltDirection validator(
-    TiltDirection tiltDirection,
-    List<TiltDirection> validator,
+    TiltDirection direction,
+    List<TiltDirection> validDirections,
   ) {
-    final double x = tiltDirection.dx, y = tiltDirection.dy;
-    double dx = 0.0, dy = 0.0;
+    final double x = direction.dx, y = direction.dy;
+    double valueX = 0.0, valueY = 0.0;
 
-    for (final TiltDirection value in validator) {
+    for (final TiltDirection valid in validDirections) {
       /// 默认最大设置的验证范围，避免方向值超出验证值的时候会返回 0
-      if (x > 0) dx = dx > value.dx ? dx : value.dx;
-      if (y > 0) dy = dy > value.dy ? dy : value.dy;
-      if (x < 0) dx = dx < value.dx ? dx : value.dx;
-      if (y < 0) dy = dy < value.dy ? dy : value.dy;
+      if (x > 0) valueX = math.max(valueX, valid.dx);
+      if (y > 0) valueY = math.max(valueY, valid.dy);
+      if (x < 0) valueX = math.min(valueX, valid.dx);
+      if (y < 0) valueY = math.min(valueY, valid.dy);
 
       /// 符合项
-      if (x > 0 && x <= value.dx) dx = x;
-      if (y > 0 && y <= value.dy) dy = y;
-      if (x < 0 && x >= value.dx) dx = x;
-      if (y < 0 && y >= value.dy) dy = y;
+      if (x > 0 && x <= valid.dx) valueX = x;
+      if (y > 0 && y <= valid.dy) valueY = y;
+      if (x < 0 && x >= valid.dx) valueX = x;
+      if (y < 0 && y >= valid.dy) valueY = y;
     }
-    return TiltDirection(dx, dy);
+    return TiltDirection(valueX, valueY);
   }
 
   TiltDirection operator +(TiltDirection other) =>

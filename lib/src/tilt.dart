@@ -59,7 +59,7 @@ class Tilt extends TiltContainer {
     super.childLayout = const ChildLayout(),
     this.tiltStreamController,
     this.disable = false,
-    this.fps = 60,
+    this.fps = 120,
     super.border,
     super.borderRadius,
     super.clipBehavior = Clip.antiAlias,
@@ -114,39 +114,23 @@ class Tilt extends TiltContainer {
 }
 
 class _TiltState extends State<Tilt> {
-  Widget get _child => widget.child;
-  ChildLayout get _childLayout => widget.childLayout;
-  async.StreamController<TiltStreamModel>? get _tiltStreamController =>
-      widget.tiltStreamController;
-  bool get _disable => widget.disable;
-  int get _fps => widget.fps;
-  BoxBorder? get _border => widget.border;
-  BorderRadiusGeometry? get _borderRadius => widget.borderRadius;
-  Clip get _clipBehavior => widget.clipBehavior;
-  TiltConfig get _tiltConfig => widget.tiltConfig;
-  LightShadowMode get _lightShadowMode => widget.lightShadowMode;
-  LightConfig get _lightConfig => widget.lightConfig;
-  ShadowConfig get _shadowConfig => widget.shadowConfig;
-  TiltCallback? get _onGestureMove => widget.onGestureMove;
-  TiltCallback? get _onGestureLeave => widget.onGestureLeave;
-
   /// 初始坐标区域进度
-  Offset get _initAreaProgress => _tiltConfig.initial ?? Offset.zero;
+  Offset get _initAreaProgress => widget.tiltConfig.initial ?? Offset.zero;
 
   /// 是否初始化
-  bool isInit = false;
+  bool _isInit = false;
 
   /// 尺寸
-  double width = 0.0, height = 0.0;
+  double _width = 0.0, _height = 0.0;
 
   /// 当前坐标的区域进度
-  late Offset areaProgress = _initAreaProgress;
+  late Offset _areaProgress = _initAreaProgress;
 
   /// 是否正在移动
-  bool isMove = false;
+  bool _isMove = false;
 
   /// 当前手势类型
-  GesturesType currentGesturesType = GesturesType.none;
+  GesturesType _currentGesturesType = GesturesType.none;
 
   /// 倾斜手势控制器
   late TiltGesturesController _tiltGesturesController;
@@ -154,24 +138,22 @@ class _TiltState extends State<Tilt> {
   /// 默认 TiltStreamController
   ///
   /// [widget.tiltStreamController] 为 null 时使用
-  late final async.StreamController<TiltStreamModel>
-      _kDefaultTiltStreamController;
+  final async.StreamController<TiltStreamModel> _kDefaultTiltStreamController =
+      async.StreamController<TiltStreamModel>.broadcast();
 
-  late final FpsTimerController _fpsTimerController;
+  late FpsTimerController _fpsTimerController;
 
   /// 当前坐标
-  late Offset currentPosition = Utils.progressPosition(
-    width,
-    height,
+  late Offset _currentPosition = Utils.progressPosition(
+    _width,
+    _height,
     _initAreaProgress,
   );
 
   @override
   void initState() {
     super.initState();
-    _kDefaultTiltStreamController =
-        async.StreamController<TiltStreamModel>.broadcast();
-    _fpsTimerController = FpsTimerController(_fps);
+    _initControllers();
   }
 
   @override
@@ -183,42 +165,40 @@ class _TiltState extends State<Tilt> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final async.StreamController<TiltStreamModel> tiltStreamController =
-        _tiltStreamController ?? _kDefaultTiltStreamController;
-    _tiltGesturesController = TiltGesturesController(
-      tiltStreamController: tiltStreamController,
-      disable: _disable,
-      fps: _fps,
-      tiltConfig: _tiltConfig,
-      position: currentPosition,
-    );
+  void didUpdateWidget(Tilt oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_shouldReinitControllers(oldWidget)) {
+      _initControllers(oldWidget: oldWidget);
+    }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return GesturesListener(
       tiltGesturesController: _tiltGesturesController,
       child: TiltStreamBuilder(
         tiltGesturesController: _tiltGesturesController,
         builder: (context, snapshot) {
-          onGesturesStream(snapshot.data);
+          _handleGesturesStream(snapshot.data);
           return TiltState(
-            isInit: isInit,
-            width: width,
-            height: height,
-            areaProgress: areaProgress,
-            isMove: isMove,
-            currentGesturesType: currentGesturesType,
-            tiltConfig: _tiltConfig,
-            onResize: onResize,
+            isInit: _isInit,
+            width: _width,
+            height: _height,
+            areaProgress: _areaProgress,
+            isMove: _isMove,
+            currentGesturesType: _currentGesturesType,
+            tiltConfig: widget.tiltConfig,
+            onResize: _onResize,
             child: TiltContainer(
-              border: _border,
-              borderRadius: _borderRadius,
-              clipBehavior: _clipBehavior,
-              tiltConfig: _tiltConfig,
-              lightShadowMode: _lightShadowMode,
-              lightConfig: _lightConfig,
-              shadowConfig: _shadowConfig,
-              childLayout: _childLayout,
-              child: _child,
+              border: widget.border,
+              borderRadius: widget.borderRadius,
+              clipBehavior: widget.clipBehavior,
+              tiltConfig: widget.tiltConfig,
+              lightShadowMode: widget.lightShadowMode,
+              lightConfig: widget.lightConfig,
+              shadowConfig: widget.shadowConfig,
+              childLayout: widget.childLayout,
+              child: widget.child,
             ),
           );
         },
@@ -226,158 +206,197 @@ class _TiltState extends State<Tilt> {
     );
   }
 
+  /// 初始化控制器
+  ///
+  /// - [oldWidget] 旧 Wdiget 一般用于 [didUpdateWidget]
+  void _initControllers({Tilt? oldWidget}) {
+    /// 是否需要取消 [TiltGesturesController] 中的手势协调器，避免泄露
+    if (oldWidget != null && oldWidget.tiltConfig != widget.tiltConfig) {
+      _tiltGesturesController.cancelGesturesHarmonizerTimer();
+    }
+
+    /// 初始化 TiltGesturesController
+    final async.StreamController<TiltStreamModel> tiltStreamController =
+        widget.tiltStreamController ?? _kDefaultTiltStreamController;
+    _tiltGesturesController = TiltGesturesController(
+      tiltStreamController: tiltStreamController,
+      disable: widget.disable,
+      fps: widget.fps,
+      tiltConfig: widget.tiltConfig,
+      initialPosition: _currentPosition,
+    );
+
+    /// 初始化 FpsTimerController
+    _fpsTimerController = FpsTimerController(widget.fps);
+  }
+
+  /// 判断是否需要重新初始化控制器
+  bool _shouldReinitControllers(Tilt oldWidget) {
+    return oldWidget.tiltStreamController != widget.tiltStreamController ||
+        oldWidget.disable != widget.disable ||
+        oldWidget.fps != widget.fps ||
+        oldWidget.tiltConfig != widget.tiltConfig;
+  }
+
   /// 调整尺寸及初始参数
-  void onResize(Size size) {
-    final Size oldSize = Size(width, height);
+  void _onResize(Size size) {
+    final Size oldSize = Size(_width, _height);
     if (oldSize != size) {
-      isInit = true;
-      width = size.width;
-      height = size.height;
+      _isInit = true;
+      _width = size.width;
+      _height = size.height;
       setState(() {
-        currentPosition = Utils.progressPosition(
-          width,
-          height,
+        _currentPosition = Utils.progressPosition(
+          _width,
+          _height,
           _initAreaProgress,
         );
       });
     }
   }
 
-  /// 手势 Stream 触发
-  void onGesturesStream(TiltStreamModel? tiltStreamModel) {
+  /// 处理手势 Stream 触发
+  void _handleGesturesStream(TiltStreamModel? tiltStreamModel) {
     if (tiltStreamModel == null) return;
     if (tiltStreamModel.gesturesType == GesturesType.none) return;
-    if (!isInit || _disable) return;
+    if (!_isInit || widget.disable) return;
     switch (tiltStreamModel.gesturesType) {
       case GesturesType.none:
         break;
       case GesturesType.touch || GesturesType.hover || GesturesType.controller:
         if (tiltStreamModel.gestureUse) {
-          onGesturesMove(
+          _onGesturesMove(
             tiltStreamModel.position,
             tiltStreamModel.gesturesType,
           );
         } else {
-          onGesturesRevert(
+          _onGesturesRevert(
             tiltStreamModel.position,
             tiltStreamModel.gesturesType,
           );
         }
       case GesturesType.sensors:
         // Sensors 只会触发 onGestureMove，不会触发 onGestureLeave
-        currentPosition += tiltStreamModel.position * _tiltConfig.sensorFactor;
-        onGesturesSensorsRevert();
-        currentPosition = Utils.constraintsPosition(
-          width,
-          height,
-          currentPosition,
+        _currentPosition +=
+            tiltStreamModel.position * widget.tiltConfig.sensorFactor;
+        _onGesturesSensorsRevert();
+        _currentPosition = Utils.constraintsPosition(
+          _width,
+          _height,
+          _currentPosition,
         );
-        onGesturesMove(currentPosition, tiltStreamModel.gesturesType);
+        _onGesturesMove(_currentPosition, tiltStreamModel.gesturesType);
     }
   }
 
   /// 手势移动触发
   ///
   /// [offset] 当前坐标
-  void onGesturesMove(Offset offset, GesturesType gesturesType) {
-    if (!isInit || _disable) return;
-    if (!_fpsTimerController.pass()) return;
-    if (_tiltConfig.enableOutsideAreaMove ||
-        Utils.isInRange(width, height, offset)) {
-      currentPosition = offset;
-      areaProgress = Utils.p2cAreaProgress(
-        width,
-        height,
+  void _onGesturesMove(Offset offset, GesturesType gesturesType) {
+    if (!_isInit || widget.disable) return;
+    if (!_fpsTimerController.shouldTrigger()) return;
+    if (widget.tiltConfig.enableOutsideAreaMove ||
+        Utils.isInRange(_width, _height, offset)) {
+      _currentPosition = offset;
+      _areaProgress = Utils.p2cAreaProgress(
+        _width,
+        _height,
         offset,
-        _tiltConfig.direction,
+        widget.tiltConfig.direction,
       );
-      isMove = true;
-      currentGesturesType = gesturesType;
-      onGestureMove(areaProgress, gesturesType);
+      _isMove = true;
+      _currentGesturesType = gesturesType;
+      _onGestureMove(_areaProgress, gesturesType);
     } else {
-      onGesturesRevert(offset, gesturesType);
+      _onGesturesRevert(offset, gesturesType);
     }
   }
 
   /// 手势复原触发
   ///
   /// [offset] 当前坐标
-  void onGesturesRevert(Offset offset, GesturesType gesturesType) {
-    if (!isInit || _disable || !isMove) return;
+  void _onGesturesRevert(Offset offset, GesturesType gesturesType) {
+    if (!_isInit || widget.disable || !_isMove) return;
 
     /// 是否还原的取值
-    final Offset position = _tiltConfig.enableRevert
-        ? Utils.progressPosition(width, height, _initAreaProgress)
-        : currentPosition;
-    currentPosition = position;
-    areaProgress = Utils.p2cAreaProgress(
-      width,
-      height,
+    final Offset position = widget.tiltConfig.enableRevert
+        ? Utils.progressPosition(_width, _height, _initAreaProgress)
+        : _currentPosition;
+    _currentPosition = position;
+    _areaProgress = Utils.p2cAreaProgress(
+      _width,
+      _height,
       position,
-      _tiltConfig.direction,
+      widget.tiltConfig.direction,
     );
-    isMove = false;
-    currentGesturesType = gesturesType;
-    onGestureLeave(areaProgress, gesturesType);
+    _isMove = false;
+    _currentGesturesType = gesturesType;
+    _onGestureLeave(_areaProgress, gesturesType);
   }
 
   /// 手势传感器复原触发
   ///
   /// Sensors 只会触发 onGestureMove，不会触发 onGestureLeave
-  void onGesturesSensorsRevert() {
-    if (!_tiltConfig.enableSensorRevert) return;
+  void _onGesturesSensorsRevert() {
+    if (!widget.tiltConfig.enableSensorRevert) return;
 
     /// 默认坐标
     final Offset initPosition = Utils.progressPosition(
-      width,
-      height,
+      _width,
+      _height,
       _initAreaProgress,
     );
 
     /// 还原
-    currentPosition -= Offset(
-          currentPosition.dx - initPosition.dx,
-          currentPosition.dy - initPosition.dy,
+    _currentPosition -= Offset(
+          _currentPosition.dx - initPosition.dx,
+          _currentPosition.dy - initPosition.dy,
         ) *
-        _tiltConfig.sensorRevertFactor;
+        widget.tiltConfig.sensorRevertFactor;
   }
 
   /// onGestureMove
   ///
   /// - [areaProgress] 当前坐标的区域进度
-  void onGestureMove(Offset areaProgress, GesturesType gesturesType) {
-    if (_onGestureMove != null) {
-      WidgetsBinding.instance.endOfFrame.then((_) {
-        if (mounted) {
-          _onGestureMove!(
-            TiltData(
-              isInit: isInit,
-              width: width,
-              height: height,
-              areaProgress: areaProgress,
-              tiltConfig: _tiltConfig,
-            ).data,
-            gesturesType,
-          );
-        }
-      });
+  void _onGestureMove(Offset areaProgress, GesturesType gesturesType) {
+    if (widget.onGestureMove != null) {
+      _triggerGestureCallback(
+        widget.onGestureMove,
+        areaProgress,
+        gesturesType,
+      );
     }
   }
 
   /// onGestureLeave
   ///
   /// - [areaProgress] 当前坐标的区域进度
-  void onGestureLeave(Offset areaProgress, GesturesType gesturesType) {
-    if (_onGestureLeave != null) {
-      WidgetsBinding.instance.endOfFrame.then((_) {
+  void _onGestureLeave(Offset areaProgress, GesturesType gesturesType) {
+    if (widget.onGestureLeave != null) {
+      _triggerGestureCallback(
+        widget.onGestureLeave,
+        areaProgress,
+        gesturesType,
+      );
+    }
+  }
+
+  /// 触发手势回调
+  void _triggerGestureCallback(
+    TiltCallback? callback,
+    Offset areaProgress,
+    GesturesType gesturesType,
+  ) {
+    if (callback != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
-          _onGestureLeave!(
+          callback(
             TiltData(
-              isInit: isInit,
-              width: width,
-              height: height,
+              isInit: _isInit,
+              width: _width,
+              height: _height,
               areaProgress: areaProgress,
-              tiltConfig: _tiltConfig,
+              tiltConfig: widget.tiltConfig,
             ).data,
             gesturesType,
           );

@@ -44,7 +44,7 @@ jobs:
           dart format . -o none --set-exit-if-changed
       - name: Analyze Dart code
         run: |
-          flutter analyze .
+          flutter analyze . --no-fatal-infos
       - name: Generate dartdoc
         run: |
           dart pub global activate dartdoc

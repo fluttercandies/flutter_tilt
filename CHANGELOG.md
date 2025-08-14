@@ -3,6 +3,14 @@
 > [!IMPORTANT]  
 > See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
 
+## 3.2.3
+
+### Improvements
+
+- Improve performance (e.g. avoid unnecessary variable assignments, ...). ([#27](https://github.com/fluttercandies/flutter_tilt/pull/27))
+- Refactor code structures. ([#27](https://github.com/fluttercandies/flutter_tilt/pull/27))
+- The `Tilt.fps` default value has been changed from 60 to 120. ([#27](https://github.com/fluttercandies/flutter_tilt/pull/27))
+
 ## 3.2.2
 
 ### Improvements

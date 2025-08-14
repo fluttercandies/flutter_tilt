@@ -9,7 +9,7 @@ class TiltWidget extends StatelessWidget {
     this.childLayout = const ChildLayout(),
     this.tiltStreamController,
     this.disable = false,
-    this.fps = 60,
+    this.fps = 120,
     this.border,
     this.borderRadius,
     this.clipBehavior = Clip.antiAlias,
