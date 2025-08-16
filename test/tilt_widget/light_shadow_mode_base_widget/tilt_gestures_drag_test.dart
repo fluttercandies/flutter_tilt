@@ -6,9 +6,9 @@ import 'package:flutter_tilt/flutter_tilt.dart';
 void main() {
   group('LightShadowMode.base :: tilt gestures drag ::', () {
     testWidgets('scroll', (WidgetTester tester) async {
-      final Finder childFinder = find.text('Tilt');
-      final Finder scrollFinder = find.byKey(const Key('scroll'));
-      final ScrollController scrollController = ScrollController();
+      final childFinder = find.text('Tilt');
+      final scrollFinder = find.byKey(const Key('scroll'));
+      final scrollController = ScrollController();
 
       debugDefaultTargetPlatformOverride = TargetPlatform.windows;
 

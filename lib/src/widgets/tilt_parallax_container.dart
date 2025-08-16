@@ -1,7 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-import '../config/tilt_config.dart';
-import '../enums.dart';
 import '../internal/mixin/tilt_tween_animation_mixin.dart';
 import '../internal/tilt_state.dart';
 
@@ -29,39 +27,34 @@ class TiltParallaxContainer extends StatelessWidget with TiltTweenAnimation {
 
   @override
   Widget build(BuildContext context) {
-    final TiltState tiltState = TiltState.of(context);
-    final Offset areaProgress = tiltState.areaProgress;
-    final bool isMove = tiltState.isMove;
-    final GesturesType currentGesturesType = tiltState.currentGesturesType;
-    final TiltConfig tiltConfig = tiltState.tiltConfig;
-
-    final Offset animationEnd = tiltTweenAnimationEnd(
-      isMove,
-      tiltConfig,
-      areaProgress,
+    final tiltState = TiltState.of(context);
+    final animationEnd = tiltTweenAnimationEnd(
+      tiltState.isMove,
+      tiltState.tiltConfig,
+      tiltState.areaProgress,
     );
-    final Duration animationDuration = tiltTweenAnimationDuration(
-      isMove,
-      currentGesturesType,
-      tiltConfig,
+    final animationDuration = tiltTweenAnimationDuration(
+      tiltState.isMove,
+      tiltState.currentGesturesType,
+      tiltState.tiltConfig,
     );
-    final Curve animationCurve = tiltTweenAnimationCurve(
-      isMove,
-      currentGesturesType,
-      tiltConfig,
+    final animationCurve = tiltTweenAnimationCurve(
+      tiltState.isMove,
+      tiltState.currentGesturesType,
+      tiltState.tiltConfig,
     );
 
     return TweenAnimationBuilder<Offset>(
       tween: Tween<Offset>(end: animationEnd),
       duration: animationDuration,
       curve: animationCurve,
-      builder: (BuildContext context, Offset value, Widget? child) {
+      builder: (BuildContext context, Offset areaProgress, Widget? child) {
         return Transform(
           filterQuality: filterQuality,
           transform: tiltParallaxTransform(
-            value,
+            areaProgress,
             size,
-            tiltConfig.enableReverse,
+            tiltState.tiltConfig.enableReverse,
           ),
           child: child,
         );
@@ -80,9 +73,9 @@ class TiltParallaxContainer extends StatelessWidget with TiltTweenAnimation {
     Offset size,
     bool enableReverse,
   ) {
-    final double dx = size.dx * areaProgress.dx;
-    final double dy = size.dy * areaProgress.dy;
-    final Offset offset = enableReverse ? Offset(-dx, -dy) : Offset(dx, dy);
+    final dx = size.dx * areaProgress.dx;
+    final dy = size.dy * areaProgress.dy;
+    final offset = enableReverse ? Offset(-dx, -dy) : Offset(dx, dy);
     return Matrix4.identity()..translate(offset.dx, offset.dy);
   }
 }

@@ -85,7 +85,7 @@ class TiltGesturesController {
   /// 过滤 TiltStream
   TiltStreamModel filterTiltStream(TiltStreamModel tiltStreamModel) {
     /// 当前手势是否高优先级
-    final bool isHighPriority = gesturesTypePriority(
+    final isHighPriority = gesturesTypePriority(
           tiltStreamModel.gesturesType,
           latestTiltStreamModel.gesturesType,
         ) ==
@@ -119,7 +119,7 @@ class TiltGesturesController {
   void _updateSensorTiltPosition(TiltStreamModel tiltStreamModel) {
     final sensorsX = tiltStreamModel.position.dx;
     final sensorsY = tiltStreamModel.position.dy;
-    final Offset tiltPosition = switch (deviceOrientation) {
+    final tiltPosition = switch (deviceOrientation) {
       DeviceOrientation.portraitUp => Offset(sensorsX, sensorsY),
       DeviceOrientation.portraitDown => -Offset(sensorsX, sensorsY),
       DeviceOrientation.landscapeLeft => Offset(sensorsY, -sensorsX),
@@ -134,7 +134,7 @@ class TiltGesturesController {
 
   /// 处理对应手势的冲突
   void _handleGestureConflict(GesturesType gesturesType) {
-    final Duration? duration = switch (gesturesType) {
+    final duration = switch (gesturesType) {
       GesturesType.touch || GesturesType.hover => tiltConfig.leaveDuration,
       GesturesType.controller => tiltConfig.controllerLeaveDuration,
       _ => null
@@ -172,7 +172,7 @@ class TiltGesturesController {
     if (gesturesType1 == gesturesType2) return gesturesType1;
 
     /// 手势优先级（下标越小，优先级越高）
-    final List<GesturesType> gesturePriority = [
+    final gesturePriority = <GesturesType>[
       GesturesType.touch,
       GesturesType.hover,
       GesturesType.controller,

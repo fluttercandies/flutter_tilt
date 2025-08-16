@@ -50,8 +50,8 @@ void main() {
       );
     });
     test('copyWith', () {
-      const ShadowConfig shadowConfig = ShadowConfig();
-      const ShadowConfig shadowConfigExpect = ShadowConfig(
+      const shadowConfig = ShadowConfig();
+      const shadowConfigExpect = ShadowConfig(
         disable: true,
         color: Color(0xFF9E9E90),
         minIntensity: 1.0,
@@ -69,7 +69,7 @@ void main() {
         direction: ShadowDirection.all,
         enableReverse: true,
       );
-      final ShadowConfig shadowConfigCopyWith = shadowConfig.copyWith(
+      final shadowConfigCopyWith = shadowConfig.copyWith(
         disable: true,
         color: const Color(0xFF9E9E90),
         minIntensity: 1.0,

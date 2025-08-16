@@ -6,7 +6,7 @@ import 'tilt_widget_base.dart';
 
 void main() {
   group('LightShadowMode.base :: tilt gestures touch ::', () {
-    const TiltConfig tiltConfig = TiltConfig();
+    const tiltConfig = TiltConfig();
     TiltData tiltDataTestCalculate(Offset areaProgress) => TiltData(
           isInit: true,
           width: 10,
@@ -15,18 +15,17 @@ void main() {
           tiltConfig: tiltConfig,
         );
 
-    final Finder tiltScaffoldFinder = find.byKey(const Key('tilt_scaffold'));
-    final Finder tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
-    final Finder childFinder = find.text('Tilt');
-    final TestPointer testPointer = TestPointer();
+    final tiltScaffoldFinder = find.byKey(const Key('tilt_scaffold'));
+    final tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
+    final childFinder = find.text('Tilt');
+    final testPointer = TestPointer();
 
     testWidgets('gestures move leave', (WidgetTester tester) async {
       TiltDataModel? moveTiltDataTest;
       TiltDataModel? leaveTiltDataTest;
       GesturesType? moveGesturesTypeTest;
       GesturesType? leaveGesturesTypeTest;
-      final TiltDataModel leaveTiltDataTestExpect =
-          tiltDataTestCalculate(Offset.zero).data;
+      final leaveTiltDataTestExpect = tiltDataTestCalculate(Offset.zero).data;
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -57,7 +56,7 @@ void main() {
     testWidgets('onPointerCancel', (WidgetTester tester) async {
       await tester.pumpWidget(const TiltWidgetBase());
 
-      final Offset location = tester.getCenter(tiltWidgetFinder);
+      final location = tester.getCenter(tiltWidgetFinder);
       await tester.sendEventToBinding(testPointer.down(location));
       await tester.sendEventToBinding(testPointer.cancel());
       await tester.pumpAndSettle(const TiltConfig().leaveDuration);
@@ -68,8 +67,7 @@ void main() {
     testWidgets('move top', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
-          tiltDataTestCalculate(const Offset(0.0, 1.0)).data;
+      final tiltDataExpect = tiltDataTestCalculate(const Offset(0.0, 1.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -96,7 +94,7 @@ void main() {
     testWidgets('move bottom', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
+      final tiltDataExpect =
           tiltDataTestCalculate(const Offset(0.0, -1.0)).data;
 
       /// 回调赋值
@@ -124,8 +122,7 @@ void main() {
     testWidgets('move left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
-          tiltDataTestCalculate(const Offset(1.0, 0.0)).data;
+      final tiltDataExpect = tiltDataTestCalculate(const Offset(1.0, 0.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -152,7 +149,7 @@ void main() {
     testWidgets('move right', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
+      final tiltDataExpect =
           tiltDataTestCalculate(const Offset(-1.0, 0.0)).data;
 
       /// 回调赋值
@@ -180,8 +177,7 @@ void main() {
     testWidgets('move top left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
-          tiltDataTestCalculate(const Offset(1.0, 1.0)).data;
+      final tiltDataExpect = tiltDataTestCalculate(const Offset(1.0, 1.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -208,7 +204,7 @@ void main() {
     testWidgets('move top right', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
+      final tiltDataExpect =
           tiltDataTestCalculate(const Offset(-1.0, 1.0)).data;
 
       /// 回调赋值
@@ -236,7 +232,7 @@ void main() {
     testWidgets('move bottom left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
+      final tiltDataExpect =
           tiltDataTestCalculate(const Offset(1.0, -1.0)).data;
 
       /// 回调赋值
@@ -264,7 +260,7 @@ void main() {
     testWidgets('move bottom right', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
+      final tiltDataExpect =
           tiltDataTestCalculate(const Offset(-1.0, -1.0)).data;
 
       /// 回调赋值
@@ -295,8 +291,7 @@ void main() {
       TiltDataModel? leaveTiltDataTest;
       GesturesType? moveGesturesTypeTest;
       GesturesType? leaveGesturesTypeTest;
-      final TiltDataModel leaveTiltDataTestExpect =
-          tiltDataTestCalculate(Offset.zero).data;
+      final leaveTiltDataTestExpect = tiltDataTestCalculate(Offset.zero).data;
 
       /// 回调赋值
       await tester.pumpWidget(

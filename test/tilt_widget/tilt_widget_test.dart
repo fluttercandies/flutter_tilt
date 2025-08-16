@@ -6,8 +6,8 @@ import 'package:flutter_tilt/flutter_tilt.dart';
 import 'tilt_widget.dart';
 
 void main() {
-  final Finder tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
-  final Finder childFinder = find.text('Tilt');
+  final tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
+  final childFinder = find.text('Tilt');
 
   group('tilt config ::', () {
     testWidgets('default', (WidgetTester tester) async {
@@ -16,7 +16,7 @@ void main() {
       expect(childFinder, findsOneWidget);
     });
     testWidgets('disable true', (WidgetTester tester) async {
-      final ScrollController scrollController = ScrollController();
+      final scrollController = ScrollController();
 
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
@@ -68,7 +68,7 @@ void main() {
       const fpsList = <int>[120, 60, 30, 10];
 
       for (final fps in fpsList) {
-        int count = 0;
+        var count = 0;
 
         await tester.pumpWidget(
           TiltWidget(
@@ -93,9 +93,9 @@ void main() {
 
   group('didUpdateWidget ::', () {
     testWidgets('tiltStreamController', (WidgetTester tester) async {
-      final StreamController<TiltStreamModel> tiltStreamController1 =
+      final tiltStreamController1 =
           StreamController<TiltStreamModel>.broadcast();
-      final StreamController<TiltStreamModel> tiltStreamController2 =
+      final tiltStreamController2 =
           StreamController<TiltStreamModel>.broadcast();
       final dataList = <StreamController<TiltStreamModel>>[
         tiltStreamController1,
@@ -116,7 +116,7 @@ void main() {
       final dataList = <bool>[true, false];
 
       for (final data in dataList) {
-        int count = 0;
+        var count = 0;
 
         await tester.pumpWidget(
           TiltWidget(
@@ -142,7 +142,7 @@ void main() {
       final dataList = <int>[120, 60];
 
       for (final data in dataList) {
-        int count = 0;
+        var count = 0;
 
         await tester.pumpWidget(
           TiltWidget(
@@ -165,16 +165,16 @@ void main() {
     });
 
     testWidgets('tiltConfig', (WidgetTester tester) async {
-      final StreamController<TiltStreamModel> tiltStreamController =
+      final tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
-      const TiltConfig tiltConfig1 =
+      const tiltConfig1 =
           TiltConfig(leaveDuration: Duration(milliseconds: 4000));
-      const TiltConfig tiltConfig2 = TiltConfig(leaveDuration: Duration.zero);
+      const tiltConfig2 = TiltConfig(leaveDuration: Duration.zero);
       final dataList = <TiltConfig>[tiltConfig1, tiltConfig2];
 
       for (var i = 0; i < dataList.length; i++) {
         final data = dataList[i];
-        GesturesType currentGesturesType = GesturesType.none;
+        var currentGesturesType = GesturesType.none;
 
         await tester.pumpWidget(
           TiltWidget(

@@ -84,51 +84,22 @@ class TiltContainer extends StatefulWidget {
 }
 
 class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
-  late TiltState _tiltState;
-
-  /// 是否初始化
-  late bool _isInit;
-
-  /// 尺寸
-  late double _width, _height;
-
-  /// 当前坐标区域进度
-  late Offset _areaProgress;
-
-  /// 是否正在移动
-  late bool _isMove;
-
-  /// 当前手势类型
-  late GesturesType _currentGesturesType;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _tiltState = TiltState.of(context);
-
-    _isInit = _tiltState.isInit;
-    _width = _tiltState.width;
-    _height = _tiltState.height;
-    _areaProgress = _tiltState.areaProgress;
-    _isMove = _tiltState.isMove;
-    _currentGesturesType = _tiltState.currentGesturesType;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final Offset animationEnd = tiltTweenAnimationEnd(
-      _isMove,
+    final tiltState = TiltState.of(context);
+    final animationEnd = tiltTweenAnimationEnd(
+      tiltState.isMove,
       widget.tiltConfig,
-      _areaProgress,
+      tiltState.areaProgress,
     );
-    final Duration animationDuration = tiltTweenAnimationDuration(
-      _isMove,
-      _currentGesturesType,
+    final animationDuration = tiltTweenAnimationDuration(
+      tiltState.isMove,
+      tiltState.currentGesturesType,
       widget.tiltConfig,
     );
-    final Curve animationCurve = tiltTweenAnimationCurve(
-      _isMove,
-      _currentGesturesType,
+    final animationCurve = tiltTweenAnimationCurve(
+      tiltState.isMove,
+      tiltState.currentGesturesType,
       widget.tiltConfig,
     );
 
@@ -137,10 +108,10 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
       duration: animationDuration,
       curve: animationCurve,
       builder: (BuildContext context, Offset areaProgress, Widget? child) {
-        final TiltData tiltData = TiltData(
-          isInit: _isInit,
-          width: _width,
-          height: _height,
+        final tiltData = TiltData(
+          isInit: tiltState.isInit,
+          width: tiltState.width,
+          height: tiltState.height,
           areaProgress: areaProgress,
           tiltConfig: widget.tiltConfig,
         );
@@ -152,7 +123,13 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
           child: Stack(
             alignment: AlignmentDirectional.center,
             clipBehavior: Clip.none,
-            children: _buildLightShadowMode(areaProgress, child),
+            children: _buildLightShadowMode(
+              width: tiltState.width,
+              height: tiltState.height,
+              areaProgress: areaProgress,
+              onResize: tiltState.onResize,
+              child: child,
+            ),
           ),
         );
       },
@@ -160,23 +137,51 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
     );
   }
 
-  List<Widget> _buildLightShadowMode(Offset areaProgress, Widget? child) {
+  /// Build LightShadowMode widgets
+  ///
+  /// - [child]
+  /// - [width] 宽度
+  /// - [height] 高度
+  /// - [areaProgress] 区域进度
+  /// - [onResize] 调整尺寸回调
+  List<Widget> _buildLightShadowMode({
+    Widget? child,
+    required double width,
+    required double height,
+    required Offset areaProgress,
+    required void Function(Size) onResize,
+  }) {
     return switch (widget.lightShadowMode) {
       LightShadowMode.base => _buildLightShadowModeBase(
+          width: width,
+          height: height,
           areaProgress: areaProgress,
+          onResize: onResize,
           child: child,
         ),
       LightShadowMode.projector => _buildLightShadowModeProjector(
+          width: width,
+          height: height,
           areaProgress: areaProgress,
+          onResize: onResize,
           child: child,
         )
     };
   }
 
   /// LightShadowMode - Base
+  ///
+  /// - [child]
+  /// - [width] 宽度
+  /// - [height] 高度
+  /// - [areaProgress] 区域进度
+  /// - [onResize] 调整尺寸回调
   List<Widget> _buildLightShadowModeBase({
-    required Widget? child,
+    Widget? child,
+    required double width,
+    required double height,
     required Offset areaProgress,
+    required void Function(Size) onResize,
   }) {
     return [
       /// behind child
@@ -184,8 +189,8 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
 
       /// main child
       TiltShadowBase(
-        width: _width,
-        height: _height,
+        width: width,
+        height: height,
         areaProgress: areaProgress,
         border: widget.border,
         borderRadius: widget.borderRadius,
@@ -207,14 +212,14 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
 
           /// light
           TiltLight(
-            width: _width,
-            height: _height,
+            width: width,
+            height: height,
             areaProgress: areaProgress,
             lightConfig: widget.lightConfig,
           ),
 
           /// resize
-          _widgetResize(),
+          _widgetResize(onResize),
         ]),
       ),
 
@@ -224,15 +229,24 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
   }
 
   /// LightShadowMode - Projector
+  ///
+  /// - [child]
+  /// - [width] 宽度
+  /// - [height] 高度
+  /// - [areaProgress] 区域进度
+  /// - [onResize] 调整尺寸回调
   List<Widget> _buildLightShadowModeProjector({
-    required Widget? child,
+    Widget? child,
+    required double width,
+    required double height,
     required Offset areaProgress,
+    required void Function(Size) onResize,
   }) {
     return [
       /// shadow
       TiltShadowProjector(
-        width: _width,
-        height: _height,
+        width: width,
+        height: height,
         areaProgress: areaProgress,
         lightConfig: widget.lightConfig,
         shadowConfig: widget.shadowConfig,
@@ -283,7 +297,7 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
           ...widget.childLayout.inner,
 
           /// resize
-          _widgetResize(),
+          _widgetResize(onResize),
         ]),
       ),
 
@@ -295,16 +309,16 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
         child: Transform.scale(
           scale: widget.lightConfig.projectorScale,
           child: Container(
-            width: _width,
-            height: _height,
+            width: width,
+            height: height,
             decoration: BoxDecoration(
               borderRadius: widget.borderRadius,
             ),
             clipBehavior: widget.clipBehavior,
             child: _buildStackInner(<Widget>[
               TiltLight(
-                width: _width,
-                height: _height,
+                width: width,
+                height: height,
                 areaProgress: areaProgress,
                 lightConfig: widget.lightConfig,
               ),
@@ -329,7 +343,7 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
   }
 
   /// Widget Resize
-  Widget _widgetResize() {
+  Widget _widgetResize(void Function(Size) onResize) {
     return Positioned.fill(
       child: LayoutBuilder(
         builder: (
@@ -338,7 +352,7 @@ class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
         ) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted) {
-              _tiltState.onResize(constraints.biggest);
+              onResize(constraints.biggest);
             }
           });
           return const SizedBox();

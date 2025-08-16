@@ -17,7 +17,7 @@ void main() {
     const constraintsPosition = Utils.constraintsPosition;
 
     test('sensorsPlatformSupport', () {
-      for (final TargetPlatform testTargetPlatform in TargetPlatform.values) {
+      for (final testTargetPlatform in TargetPlatform.values) {
         debugDefaultTargetPlatformOverride = testTargetPlatform;
         switch (testTargetPlatform) {
           case TargetPlatform.android:

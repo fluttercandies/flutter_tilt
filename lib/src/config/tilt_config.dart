@@ -606,10 +606,10 @@ class TiltDirection {
     TiltDirection direction,
     List<TiltDirection> validDirections,
   ) {
-    final double x = direction.dx, y = direction.dy;
-    double valueX = 0.0, valueY = 0.0;
+    final x = direction.dx, y = direction.dy;
+    var valueX = 0.0, valueY = 0.0;
 
-    for (final TiltDirection valid in validDirections) {
+    for (final valid in validDirections) {
       /// 默认最大设置的验证范围，避免方向值超出验证值的时候会返回 0
       if (x > 0) valueX = math.max(valueX, valid.dx);
       if (y > 0) valueY = math.max(valueY, valid.dy);
