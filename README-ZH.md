@@ -238,7 +238,7 @@ Tilt(
 | childLayout | [ChildLayout][] | `ChildLayout()` | 其它 child 布局。 <br/> 例如：位于 child 外部、内部、后面的视差布局。 |  
 | tiltStreamController | [StreamController&lt;TiltStreamModel&gt;][]? | `null` | 使用 `StreamController<TiltStreamModel>.broadcast()` 来自定义控制倾斜。 |  
 | disable | `bool` | `false` | 禁用所有效果。 |  
-| fps | `int` | `60` | 手势触发的帧数。 |  
+| fps | `int` | `120` | 手势触发的帧数。 |  
 | border | `BoxBorder?` | `null` | BoxDecoration border。 |  
 | borderRadius | `BorderRadiusGeometry?` | `null` | BoxDecoration borderRadius。 |  
 | clipBehavior | `Clip` | `Clip.antiAlias` | Flutter 中的 clipBehavior。 |  

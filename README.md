@@ -238,7 +238,7 @@ Tilt(
 | childLayout | [ChildLayout][] | `ChildLayout()` | Other child layouts. <br/> e.g. parallax outer, inner, behind. |  
 | tiltStreamController | [StreamController&lt;TiltStreamModel&gt;][]? | `null` | `StreamController<TiltStreamModel>.broadcast()` to control the tilt. |  
 | disable | `bool` | `false` | Disable all effects. |  
-| fps | `int` | `60` | Gesture triggered frames. |  
+| fps | `int` | `120` | Gesture triggered frames. |  
 | border | `BoxBorder?` | `null` | BoxDecoration border. |  
 | borderRadius | `BorderRadiusGeometry?` | `null` | BoxDecoration borderRadius. |  
 | clipBehavior | `Clip` | `Clip.antiAlias` | Flutter clipBehavior. |  
