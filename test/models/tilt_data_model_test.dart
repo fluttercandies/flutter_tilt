@@ -5,13 +5,13 @@ import 'package:flutter_tilt/src/models/tilt_data_model.dart';
 void main() {
   group('TiltDataModel ::', () {
     test('hashCode', () {
-      final TiltDataModel tiltDataModel = TiltDataModel(
+      final tiltDataModel = TiltDataModel(
         position: const Offset(5, 5),
         areaProgress: Offset.zero,
         transform: Matrix4.identity(),
         angle: Offset.zero,
       );
-      final TiltDataModel tiltDataModel2 = TiltDataModel(
+      final tiltDataModel2 = TiltDataModel(
         position: const Offset(5, 5),
         areaProgress: Offset.zero,
         transform: Matrix4.identity(),

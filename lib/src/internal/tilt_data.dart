@@ -60,13 +60,13 @@ class TiltData {
 
   /// 计算当前坐标进度的倾斜
   Matrix4 tiltTransform() {
-    final Offset rotate = Utils.rotateAxis(
+    final rotate = Utils.rotateAxis(
       /// 旋转大小：区域进度 * 弧度
       areaProgress * Utils.radian(tiltConfig.angle),
       tiltConfig.enableReverse,
     );
-    final double rotateX = rotate.dx, rotateY = rotate.dy;
-    final double maxSize = math.max(width, height);
+    final rotateX = rotate.dx, rotateY = rotate.dy;
+    final maxSize = math.max<double>(width, height);
 
     return Matrix4.identity()
       // 近大远小效果（适配不同尺寸的组件）

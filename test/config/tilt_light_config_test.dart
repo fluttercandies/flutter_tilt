@@ -37,8 +37,8 @@ void main() {
       );
     });
     test('copyWith', () {
-      const LightConfig lightConfig = LightConfig();
-      const LightConfig lightConfigExpect = LightConfig(
+      const lightConfig = LightConfig();
+      const lightConfigExpect = LightConfig(
         disable: true,
         color: Color(0xFFFFFFF0),
         minIntensity: 0.0,
@@ -48,7 +48,7 @@ void main() {
         direction: LightDirection.around,
         enableReverse: true,
       );
-      final LightConfig lightConfigCopyWith = lightConfig.copyWith(
+      final lightConfigCopyWith = lightConfig.copyWith(
         disable: true,
         color: const Color(0xFFFFFFF0),
         minIntensity: 0.0,

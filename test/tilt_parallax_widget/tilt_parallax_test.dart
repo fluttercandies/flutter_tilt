@@ -6,9 +6,9 @@ import 'tilt_parallax_widget.dart';
 void main() {
   group('tilt parallax ::', () {
     testWidgets('default', (WidgetTester tester) async {
-      final Finder outerFinder = find.text('outer');
-      final Finder innerFinder = find.text('inner');
-      final Finder behindFinder = find.text('behind');
+      final outerFinder = find.text('outer');
+      final innerFinder = find.text('inner');
+      final behindFinder = find.text('behind');
 
       await tester.pumpWidget(
         const TiltParallaxWidget(
@@ -51,9 +51,9 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      final Offset outerLocation = tester.getCenter(outerFinder);
-      final Offset innerLocation = tester.getCenter(innerFinder);
-      final Offset behindLocation = tester.getCenter(behindFinder);
+      final outerLocation = tester.getCenter(outerFinder);
+      final innerLocation = tester.getCenter(innerFinder);
+      final behindLocation = tester.getCenter(behindFinder);
       expect(
         outerLocation,
         const Offset(24.061335345163766, 14.999999999999998),
@@ -68,9 +68,9 @@ void main() {
       );
     });
     testWidgets('TiltConfig enableReverse true', (WidgetTester tester) async {
-      final Finder outerFinder = find.text('outer');
-      final Finder innerFinder = find.text('inner');
-      final Finder behindFinder = find.text('behind');
+      final outerFinder = find.text('outer');
+      final innerFinder = find.text('inner');
+      final behindFinder = find.text('behind');
 
       await tester.pumpWidget(
         const TiltParallaxWidget(
@@ -114,9 +114,9 @@ void main() {
       );
 
       await tester.pumpAndSettle();
-      final Offset outerLocation = tester.getCenter(outerFinder);
-      final Offset innerLocation = tester.getCenter(innerFinder);
-      final Offset behindLocation = tester.getCenter(behindFinder);
+      final outerLocation = tester.getCenter(outerFinder);
+      final innerLocation = tester.getCenter(innerFinder);
+      final behindLocation = tester.getCenter(behindFinder);
       expect(
         outerLocation,
         const Offset(5.938664654836236, 14.999999999999995),

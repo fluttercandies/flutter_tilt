@@ -5,8 +5,8 @@ import 'package:flutter_tilt/src/config/tilt_config.dart';
 void main() {
   group('TiltConfig ::', () {
     test('copyWith', () {
-      const TiltConfig tiltConfig = TiltConfig();
-      const TiltConfig tiltConfigExpect = TiltConfig(
+      const tiltConfig = TiltConfig();
+      const tiltConfigExpect = TiltConfig(
         disable: true,
         initial: Offset(1.0, 1.0),
         angle: 1.0,
@@ -29,7 +29,7 @@ void main() {
         controllerMoveDuration: Duration.zero,
         controllerLeaveDuration: Duration.zero,
       );
-      final TiltConfig tiltConfigCopyWith = tiltConfig.copyWith(
+      final tiltConfigCopyWith = tiltConfig.copyWith(
         disable: true,
         initial: const Offset(1.0, 1.0),
         angle: 1.0,
@@ -59,7 +59,7 @@ void main() {
   });
   group('TiltDirection ::', () {
     test('value', () {
-      final TiltDirection tiltDirection = -const TiltDirection(1.0, 1.0);
+      final tiltDirection = -const TiltDirection(1.0, 1.0);
       expect(tiltDirection.dx, -1.0);
       expect(tiltDirection.dy, -1.0);
       expect(tiltDirection, const TiltDirection(-1.0, -1.0));
@@ -70,7 +70,7 @@ void main() {
       );
     });
     test('validator', () {
-      final TiltDirection tiltDirection = TiltDirection.validator(
+      final tiltDirection = TiltDirection.validator(
         const TiltDirection(1.0, 1.0),
         const <TiltDirection>[
           TiltDirection.none,
@@ -87,7 +87,7 @@ void main() {
       expect(tiltDirection.dx, 1.0);
       expect(tiltDirection.dy, 1.0);
 
-      final TiltDirection tiltDirection2 = TiltDirection.validator(
+      final tiltDirection2 = TiltDirection.validator(
         const TiltDirection(1.0, 1.0),
         const <TiltDirection>[TiltDirection.none, TiltDirection(0.7, 0.4)],
       );
@@ -95,29 +95,29 @@ void main() {
       expect(tiltDirection2.dy, 0.4);
     });
     test('operator +', () {
-      final TiltDirection tiltDirection =
+      final tiltDirection =
           const TiltDirection(0.5, 0.5) + const TiltDirection(0.5, 0.5);
       expect(tiltDirection.dx, 1.0);
       expect(tiltDirection.dy, 1.0);
     });
     test('operator -', () {
-      final TiltDirection tiltDirection =
+      final tiltDirection =
           const TiltDirection(0.5, 0.5) - const TiltDirection(0.5, 0.5);
       expect(tiltDirection.dx, 0.0);
       expect(tiltDirection.dy, 0.0);
     });
     test('operator *', () {
-      final TiltDirection tiltDirection = const TiltDirection(1.0, 1.0) * 0.0;
+      final tiltDirection = const TiltDirection(1.0, 1.0) * 0.0;
       expect(tiltDirection.dx, 0.0);
       expect(tiltDirection.dy, 0.0);
     });
     test('operator /', () {
-      final TiltDirection tiltDirection = const TiltDirection(1.0, 1.0) / 1.0;
+      final tiltDirection = const TiltDirection(1.0, 1.0) / 1.0;
       expect(tiltDirection.dx, 1.0);
       expect(tiltDirection.dy, 1.0);
     });
     test('operator ~/', () {
-      final TiltDirection tiltDirection = const TiltDirection(1.0, 1.0) ~/ 1.5;
+      final tiltDirection = const TiltDirection(1.0, 1.0) ~/ 1.5;
       expect(tiltDirection.dx, 0.0);
       expect(tiltDirection.dy, 0.0);
     });

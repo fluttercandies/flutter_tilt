@@ -7,7 +7,7 @@ import 'package:flutter_tilt/src/internal/tilt_data.dart';
 import 'tilt_widget.dart';
 
 void main() {
-  const TiltConfig tiltConfig = TiltConfig();
+  const tiltConfig = TiltConfig();
   TiltData tiltDataTestCalculate({
     required Offset areaProgress,
     TiltConfig tiltConfig = tiltConfig,
@@ -20,16 +20,16 @@ void main() {
         tiltConfig: tiltConfig,
       );
 
-  final Finder tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
-  final Finder childFinder = find.text('Tilt');
-  final TestPointer testPointer = TestPointer(1, PointerDeviceKind.mouse);
+  final tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
+  final childFinder = find.text('Tilt');
+  final testPointer = TestPointer(1, PointerDeviceKind.mouse);
 
   group('tilt TiltConfig ::', () {
     testWidgets('disable true', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      const TiltConfig tiltConfigTest = TiltConfig(disable: true);
-      final TiltDataModel tiltDataExpect = tiltDataTestCalculate(
+      const tiltConfigTest = TiltConfig(disable: true);
+      final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(0.0, 1.0),
         tiltConfig: tiltConfigTest,
       ).data;
@@ -52,12 +52,12 @@ void main() {
     testWidgets('initial', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      const TiltConfig tiltConfigTest = TiltConfig(initial: Offset(1.0, 1.0));
-      final TiltDataModel tiltDataInitialExpect = tiltDataTestCalculate(
+      const tiltConfigTest = TiltConfig(initial: Offset(1.0, 1.0));
+      final tiltDataInitialExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
       ).data;
-      final TiltDataModel tiltDataExpect = tiltDataTestCalculate(
+      final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(-0.8, -0.8),
         tiltConfig: tiltConfigTest,
       ).data;
@@ -77,7 +77,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜
       await tester.sendEventToBinding(
@@ -103,8 +103,8 @@ void main() {
     testWidgets('angle', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      const TiltConfig tiltConfigTest = TiltConfig(angle: 20);
-      final TiltDataModel tiltDataExpect = tiltDataTestCalculate(
+      const tiltConfigTest = TiltConfig(angle: 20);
+      final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
       ).data;
@@ -128,7 +128,7 @@ void main() {
     testWidgets('direction all', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltConfig tiltConfigTest = const TiltConfig(
+      final tiltConfigTest = const TiltConfig(
         direction: <TiltDirection>[
           TiltDirection.none,
           TiltDirection.top,
@@ -141,11 +141,11 @@ void main() {
           TiltDirection.bottomRight,
         ],
       );
-      final TiltDataModel tiltDataExpect = tiltDataTestCalculate(
+      final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
       ).data;
-      final TiltDataModel tiltDataExpect2 = tiltDataTestCalculate(
+      final tiltDataExpect2 = tiltDataTestCalculate(
         areaProgress: const Offset(-1.0, -1.0),
         tiltConfig: tiltConfigTest,
       ).data;
@@ -176,14 +176,14 @@ void main() {
     testWidgets('direction part', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltConfig tiltConfigTest = const TiltConfig(
+      final tiltConfigTest = const TiltConfig(
         direction: <TiltDirection>[TiltDirection.top, TiltDirection.left],
       );
-      final TiltDataModel tiltDataExpect = tiltDataTestCalculate(
+      final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
       ).data;
-      final TiltDataModel tiltDataExpect2 = tiltDataTestCalculate(
+      final tiltDataExpect2 = tiltDataTestCalculate(
         areaProgress: Offset.zero,
         tiltConfig: tiltConfigTest,
       ).data;
@@ -214,8 +214,8 @@ void main() {
     testWidgets('enableRevert false', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      const TiltConfig tiltConfigTest = TiltConfig(enableRevert: false);
-      final TiltDataModel tiltDataExpect = tiltDataTestCalculate(
+      const tiltConfigTest = TiltConfig(enableRevert: false);
+      final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
       ).data;
@@ -235,7 +235,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜
       await tester.sendEventToBinding(
@@ -261,8 +261,8 @@ void main() {
     testWidgets('enableReverse true', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      const TiltConfig tiltConfigTest = TiltConfig(enableReverse: true);
-      final TiltDataModel tiltDataExpect = tiltDataTestCalculate(
+      const tiltConfigTest = TiltConfig(enableReverse: true);
+      final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
       ).data;
@@ -288,15 +288,13 @@ void main() {
       TiltDataModel? leaveTiltDataTest;
       GesturesType? moveGesturesTypeTest;
       GesturesType? leaveGesturesTypeTest;
-      int leaveCountTest = 0;
-      const TiltConfig tiltConfigTest = TiltConfig(
-        enableOutsideAreaMove: false,
-      );
-      final TiltDataModel tiltDataExpect = tiltDataTestCalculate(
+      var leaveCountTest = 0;
+      const tiltConfigTest = TiltConfig(enableOutsideAreaMove: false);
+      final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
       ).data;
-      final TiltDataModel tiltDataExpect2 = tiltDataTestCalculate(
+      final tiltDataExpect2 = tiltDataTestCalculate(
         areaProgress: Offset.zero,
         tiltConfig: tiltConfigTest,
       ).data;
@@ -333,8 +331,8 @@ void main() {
     testWidgets('enableGestureTouch false', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      const TiltConfig tiltConfigTest = TiltConfig(enableGestureTouch: false);
-      final TiltDataModel tiltDataExpect = tiltDataTestCalculate(
+      const tiltConfigTest = TiltConfig(enableGestureTouch: false);
+      final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(-0.8, -0.8),
         tiltConfig: tiltConfigTest,
       ).data;
@@ -356,7 +354,7 @@ void main() {
       expect(tiltDataTest, null);
 
       /// hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
       await tester.sendEventToBinding(
         testPointer.hover(hoverEventLocation + const Offset(4.0, 4.0)),
       );
@@ -370,7 +368,7 @@ void main() {
 
     testWidgets('enableGestureTouch false - scrolling',
         (WidgetTester tester) async {
-      final ScrollController scrollController = ScrollController();
+      final scrollController = ScrollController();
 
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
@@ -423,8 +421,8 @@ void main() {
     testWidgets('enableGestureHover false', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      const TiltConfig tiltConfigTest = TiltConfig(enableGestureHover: false);
-      final TiltDataModel tiltDataExpect = tiltDataTestCalculate(
+      const tiltConfigTest = TiltConfig(enableGestureHover: false);
+      final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(-1.0, -1.0),
         tiltConfig: tiltConfigTest,
       ).data;
@@ -440,7 +438,7 @@ void main() {
       );
 
       /// hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
       await tester.sendEventToBinding(
         testPointer.hover(hoverEventLocation + const Offset(4.0, 4.0)),
       );

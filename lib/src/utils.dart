@@ -43,8 +43,8 @@ abstract final class Utils {
   ///
   /// @return [double] 两点间的距离
   static double p2pDistance(Offset p1, Offset p2) {
-    final double dx = p1.dx - p2.dx;
-    final double dy = p1.dy - p2.dy;
+    final dx = p1.dx - p2.dx;
+    final dy = p1.dy - p2.dy;
     return sqrt(dx * dx + dy * dy);
   }
 
@@ -75,11 +75,11 @@ abstract final class Utils {
   ///
   /// @return [Offset] 当前坐标相对于中心坐标的区域坐标
   static Offset p2cAreaPosition(double width, double height, Offset position) {
-    final Offset center = centerPosition(width, height);
-    final double centerWidth = width / 2.0;
-    final double centerHeight = height / 2.0;
-    final double x = center.dx - position.dx;
-    final double y = center.dy - position.dy;
+    final center = centerPosition(width, height);
+    final centerWidth = width / 2.0;
+    final centerHeight = height / 2.0;
+    final x = center.dx - position.dx;
+    final y = center.dy - position.dy;
 
     /// 限制值
     return Offset(
@@ -112,12 +112,12 @@ abstract final class Utils {
     List<TiltDirection>? tiltDirection,
   ) {
     if (width == 0.0 || height == 0.0) return Offset.zero;
-    final Offset center = centerPosition(width, height);
-    final List<TiltDirection> tiltDirectionList = <TiltDirection>[
+    final center = centerPosition(width, height);
+    final tiltDirectionList = <TiltDirection>[
       ...?tiltDirection,
     ];
-    double x = (center.dx - position.dx) / width * 2.0;
-    double y = (center.dy - position.dy) / height * 2.0;
+    var x = (center.dx - position.dx) / width * 2.0;
+    var y = (center.dy - position.dy) / height * 2.0;
 
     /// 限制值
     x = x.clamp(-1.0, 1.0);
@@ -125,7 +125,7 @@ abstract final class Utils {
 
     /// 限制倾斜方向
     if (tiltDirectionList.isNotEmpty) {
-      final TiltDirection direction = TiltDirection.validator(
+      final direction = TiltDirection.validator(
         TiltDirection(x, y),
         tiltDirectionList,
       );
@@ -161,7 +161,7 @@ abstract final class Utils {
   ///
   /// @return [bool] true: 在区域内 false: 不在区域内
   static bool isInRange(double width, double height, Offset position) {
-    final double x = position.dx, y = position.dy;
+    final x = position.dx, y = position.dy;
     return x <= width && x >= 0.0 && y <= height && y >= 0.0;
   }
 
@@ -176,8 +176,8 @@ abstract final class Utils {
     double height,
     Offset position,
   ) {
-    final double x = position.dx.clamp(0.0, width);
-    final double y = position.dy.clamp(0.0, height);
+    final x = position.dx.clamp(0.0, width);
+    final y = position.dy.clamp(0.0, height);
     return Offset(x, y);
   }
 }

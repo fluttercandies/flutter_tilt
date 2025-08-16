@@ -7,7 +7,7 @@ import 'tilt_widget_base.dart';
 
 void main() {
   group('LightShadowMode.base :: tilt gestures hover ::', () {
-    const TiltConfig tiltConfig = TiltConfig();
+    const tiltConfig = TiltConfig();
     TiltData tiltDataTestCalculate(Offset areaProgress) => TiltData(
           isInit: true,
           width: 10,
@@ -16,11 +16,10 @@ void main() {
           tiltConfig: tiltConfig,
         );
 
-    final Finder tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
-    final Finder childFinder = find.text('Tilt');
-    final TestPointer testPointer = TestPointer(1, PointerDeviceKind.mouse);
-    final TiltDataModel leaveTiltDataExpect =
-        tiltDataTestCalculate(Offset.zero).data;
+    final tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
+    final childFinder = find.text('Tilt');
+    final testPointer = TestPointer(1, PointerDeviceKind.mouse);
+    final leaveTiltDataExpect = tiltDataTestCalculate(Offset.zero).data;
 
     testWidgets('gestures move leave', (WidgetTester tester) async {
       TiltDataModel? moveTiltDataTest;
@@ -43,7 +42,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜 hover move
       await tester.sendEventToBinding(testPointer.hover(hoverEventLocation));
@@ -64,8 +63,7 @@ void main() {
     testWidgets('move top', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
-          tiltDataTestCalculate(const Offset(0.0, 1.0)).data;
+      final tiltDataExpect = tiltDataTestCalculate(const Offset(0.0, 1.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -82,7 +80,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜-不超范围
       await tester.sendEventToBinding(
@@ -107,7 +105,7 @@ void main() {
     testWidgets('move bottom', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
+      final tiltDataExpect =
           tiltDataTestCalculate(const Offset(0.0, -0.8)).data;
 
       /// 回调赋值
@@ -125,7 +123,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜-不超范围
       await tester.sendEventToBinding(
@@ -150,8 +148,7 @@ void main() {
     testWidgets('move left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
-          tiltDataTestCalculate(const Offset(1.0, 0.0)).data;
+      final tiltDataExpect = tiltDataTestCalculate(const Offset(1.0, 0.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -168,7 +165,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜-不超范围
       await tester.sendEventToBinding(
@@ -193,7 +190,7 @@ void main() {
     testWidgets('move right', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
+      final tiltDataExpect =
           tiltDataTestCalculate(const Offset(-0.8, 0.0)).data;
 
       /// 回调赋值
@@ -211,7 +208,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜-不超范围
       await tester.sendEventToBinding(
@@ -236,8 +233,7 @@ void main() {
     testWidgets('move top left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
-          tiltDataTestCalculate(const Offset(1.0, 1.0)).data;
+      final tiltDataExpect = tiltDataTestCalculate(const Offset(1.0, 1.0)).data;
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -254,7 +250,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜-不超范围
       await tester.sendEventToBinding(
@@ -279,7 +275,7 @@ void main() {
     testWidgets('move top right', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
+      final tiltDataExpect =
           tiltDataTestCalculate(const Offset(-0.8, 1.0)).data;
 
       /// 回调赋值
@@ -297,7 +293,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜-不超范围
       await tester.sendEventToBinding(
@@ -322,7 +318,7 @@ void main() {
     testWidgets('move bottom left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
+      final tiltDataExpect =
           tiltDataTestCalculate(const Offset(1.0, -0.8)).data;
 
       /// 回调赋值
@@ -340,7 +336,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜-不超范围
       await tester.sendEventToBinding(
@@ -365,7 +361,7 @@ void main() {
     testWidgets('move bottom right', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final TiltDataModel tiltDataExpect =
+      final tiltDataExpect =
           tiltDataTestCalculate(const Offset(-0.8, -0.8)).data;
 
       /// 回调赋值
@@ -383,7 +379,7 @@ void main() {
       );
 
       /// mouse hover
-      final Offset hoverEventLocation = tester.getCenter(tiltWidgetFinder);
+      final hoverEventLocation = tester.getCenter(tiltWidgetFinder);
 
       /// 倾斜-不超范围
       await tester.sendEventToBinding(

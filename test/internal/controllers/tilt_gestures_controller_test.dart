@@ -53,8 +53,8 @@ void main() {
     });
 
     testWidgets('Sensors stream subscriptions', (WidgetTester tester) async {
-      GesturesType currentGesturesType = GesturesType.none;
-      Offset currentPosition = Offset.zero;
+      var currentGesturesType = GesturesType.none;
+      var currentPosition = Offset.zero;
 
       debugDefaultTargetPlatformOverride = TargetPlatform.android;
 
@@ -64,10 +64,10 @@ void main() {
         SensorsMock.gyroscopeMethodName,
       ]);
       final date = DateTime.now();
-      final List<List<double>> accelerometerSensorData = [
+      final accelerometerSensorData = <List<double>>[
         [1.0, 2.0, 3.0, date.microsecondsSinceEpoch.toDouble()],
       ];
-      final List<List<double>> gyroscopeSensorData = [
+      final gyroscopeSensorData = <List<double>>[
         [3.0, 4.0, 5.0, date.microsecondsSinceEpoch.toDouble()],
       ];
       SensorsMock.initMockSensorChannelData(

@@ -216,7 +216,7 @@ class _TiltState extends State<Tilt> {
     }
 
     /// 初始化 TiltGesturesController
-    final async.StreamController<TiltStreamModel> tiltStreamController =
+    final tiltStreamController =
         widget.tiltStreamController ?? _kDefaultTiltStreamController;
     _tiltGesturesController = TiltGesturesController(
       tiltStreamController: tiltStreamController,
@@ -240,7 +240,7 @@ class _TiltState extends State<Tilt> {
 
   /// 调整尺寸及初始参数
   void _onResize(Size size) {
-    final Size oldSize = Size(_width, _height);
+    final oldSize = Size(_width, _height);
     if (oldSize != size) {
       _isInit = true;
       _width = size.width;
@@ -319,7 +319,7 @@ class _TiltState extends State<Tilt> {
     if (!_isInit || widget.disable || !_isMove) return;
 
     /// 是否还原的取值
-    final Offset position = widget.tiltConfig.enableRevert
+    final position = widget.tiltConfig.enableRevert
         ? Utils.progressPosition(_width, _height, _initAreaProgress)
         : _currentPosition;
     _currentPosition = position;
@@ -341,7 +341,7 @@ class _TiltState extends State<Tilt> {
     if (!widget.tiltConfig.enableSensorRevert) return;
 
     /// 默认坐标
-    final Offset initPosition = Utils.progressPosition(
+    final initPosition = Utils.progressPosition(
       _width,
       _height,
       _initAreaProgress,

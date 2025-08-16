@@ -23,6 +23,7 @@ linter:
     curly_braces_in_flow_control_structures: true
     directives_ordering: true
     library_annotations: false
+    omit_local_variable_types: true
     prefer_const_constructors: true
     prefer_const_constructors_in_immutables: false
     prefer_final_fields: true

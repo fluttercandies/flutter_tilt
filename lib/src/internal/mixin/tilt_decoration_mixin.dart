@@ -29,20 +29,20 @@ mixin TiltDecoration {
     assert(min <= max && min >= 0.0 && max <= 1.0);
 
     /// 区域进度（取反）
-    final Offset progress = -areaProgress;
-    final double progressX = progress.dx, progressY = progress.dy;
+    final progress = -areaProgress;
+    final progressX = progress.dx, progressY = progress.dy;
 
     /// 距离中心
-    final double distanceFromCenter = Utils.p2pDistance(
+    final distanceFromCenter = Utils.p2pDistance(
       Offset.zero,
       Offset(progressX, progressY),
     );
 
     /// 限制距离中心
-    final double constrainedDistance = distanceFromCenter.clamp(min, max);
+    final constrainedDistance = distanceFromCenter.clamp(min, max);
 
     /// 根据方向计算进度
-    double progressData = _calculateDirectionProgress(
+    var progressData = _calculateDirectionProgress(
       direction,
       progressX,
       progressY,

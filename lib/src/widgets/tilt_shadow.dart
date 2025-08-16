@@ -38,7 +38,7 @@ abstract class TiltShadow extends StatelessWidget with TiltDecoration {
   ///
   /// {@macro tilt.ShadowConfig.direction}
   double get showShadow {
-    final Direction direction =
+    final direction =
         (shadowConfig.direction ?? lightConfig.direction) as Direction;
     return tiltDecorationDirectionProgress(
       areaProgress,

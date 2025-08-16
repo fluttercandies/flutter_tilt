@@ -5,12 +5,12 @@ import 'package:flutter_tilt/src/models/tilt_stream_model.dart';
 void main() {
   group('TiltStreamModel ::', () {
     test('hashCode', () {
-      const TiltStreamModel tiltStreamModel = TiltStreamModel(
+      const tiltStreamModel = TiltStreamModel(
         position: Offset(5, 5),
         gesturesType: GesturesType.controller,
         gestureUse: true,
       );
-      const TiltStreamModel tiltStreamModel2 = TiltStreamModel(
+      const tiltStreamModel2 = TiltStreamModel(
         position: Offset(5, 5),
         gesturesType: GesturesType.controller,
         gestureUse: true,

@@ -5,22 +5,22 @@ import 'package:flutter_tilt/flutter_tilt.dart';
 import 'tilt_widget_projector.dart';
 
 void main() {
-  final Finder childFinder = find.text('Tilt');
+  final childFinder = find.text('Tilt');
   group('LightShadowMode.projector :: tilt TiltStreamController ::', () {
     testWidgets('stream listen', (WidgetTester tester) async {
-      TiltStreamModel tiltStreamModelTest = const TiltStreamModel(
+      var tiltStreamModelTest = const TiltStreamModel(
         position: Offset(1, 1),
         gesturesType: GesturesType.touch,
         gestureUse: false,
       );
-      const TiltStreamModel tiltStreamModelExpect = TiltStreamModel(
+      const tiltStreamModelExpect = TiltStreamModel(
         position: Offset.zero,
         gesturesType: GesturesType.controller,
         gestureUse: true,
       );
 
       /// 基础
-      final StreamController<TiltStreamModel> tiltStreamController =
+      final tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
         TiltWidgetProjector(tiltStreamController: tiltStreamController),
@@ -47,12 +47,12 @@ void main() {
     testWidgets('disable all gestures and use controller triggers', (
       WidgetTester tester,
     ) async {
-      TiltStreamModel tiltStreamModelTest = const TiltStreamModel(
+      var tiltStreamModelTest = const TiltStreamModel(
         position: Offset(1, 1),
         gesturesType: GesturesType.controller,
         gestureUse: true,
       );
-      TiltStreamModel tiltStreamModelExpect = const TiltStreamModel(
+      var tiltStreamModelExpect = const TiltStreamModel(
         position: Offset.zero,
         gesturesType: GesturesType.controller,
         gestureUse: false,
@@ -61,7 +61,7 @@ void main() {
       TiltStreamModel? gestureLeaveExpect;
 
       /// 基础 回调赋值
-      final StreamController<TiltStreamModel> tiltStreamController =
+      final tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
         TiltWidgetProjector(
@@ -239,12 +239,12 @@ void main() {
     testWidgets('gesture priority', (
       WidgetTester tester,
     ) async {
-      TiltStreamModel tiltStreamModelTest = const TiltStreamModel(
+      var tiltStreamModelTest = const TiltStreamModel(
         position: Offset(1, 1),
         gesturesType: GesturesType.controller,
         gestureUse: true,
       );
-      TiltStreamModel tiltStreamModelExpect = const TiltStreamModel(
+      var tiltStreamModelExpect = const TiltStreamModel(
         position: Offset.zero,
         gesturesType: GesturesType.controller,
         gestureUse: false,
@@ -253,7 +253,7 @@ void main() {
       TiltStreamModel? gestureLeaveExpect;
 
       /// 基础 回调赋值
-      final StreamController<TiltStreamModel> tiltStreamController =
+      final tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
         TiltWidgetProjector(
@@ -338,7 +338,7 @@ void main() {
       expect(tiltStreamModelTest, gestureMoveExpect);
 
       /// 低优先级判断
-      const TiltStreamModel lowPriorityData = TiltStreamModel(
+      const lowPriorityData = TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.touch,
         gestureUse: true,

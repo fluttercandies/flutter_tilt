@@ -44,10 +44,9 @@ class TiltState extends InheritedWidget {
   final void Function(Size) onResize;
 
   static TiltState of(BuildContext context) {
-    final TiltState? tilt =
-        context.dependOnInheritedWidgetOfExactType<TiltState>();
-    assert(tilt != null, 'No TiltState found in context');
-    return tilt!;
+    final tiltState = context.dependOnInheritedWidgetOfExactType<TiltState>();
+    assert(tiltState != null, 'No TiltState found in context');
+    return tiltState!;
   }
 
   @override

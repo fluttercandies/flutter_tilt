@@ -6,13 +6,13 @@ import '../../enums.dart';
 mixin TiltTweenAnimation {
   /// Tilt TweenAnimation End
   ///
-  /// 倾斜动画结束的目标位置
+  /// 倾斜动画目标位置
   ///
   /// - [isMove] 是否移动
   /// - [tiltConfig] TiltConfig
   /// - [areaProgress] 当前进度
   ///
-  /// @return [Offset] 倾斜结束的目标位置
+  /// @return [Offset] 倾斜目标位置
   Offset tiltTweenAnimationEnd(
     bool isMove,
     TiltConfig tiltConfig,

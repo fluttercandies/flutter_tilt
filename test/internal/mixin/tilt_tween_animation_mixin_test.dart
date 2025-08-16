@@ -11,7 +11,7 @@ void main() {
       final tiltTweenAnimationEnd =
           tiltTweenAnimationTest.tiltTweenAnimationEnd;
       const tiltConfig = TiltConfig();
-      const Offset areaProgress = Offset(1.0, 1.0);
+      const areaProgress = Offset(1.0, 1.0);
       expect(
         tiltTweenAnimationEnd(
           false,
