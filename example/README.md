@@ -1,4 +1,4 @@
-# example
+# flutter_tilt_example
 
 A new Flutter project.
 

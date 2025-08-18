@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Tilt Example',
       theme: ThemeData(
-        useMaterial3: true,
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.brown),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.brown,
