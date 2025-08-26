@@ -4,8 +4,7 @@ import '../internal/mixin/tilt_tween_animation_mixin.dart';
 import '../internal/tilt_state.dart';
 
 /// 倾斜视差
-@immutable
-class TiltParallaxContainer extends StatelessWidget with TiltTweenAnimation {
+class TiltParallaxContainer extends StatefulWidget {
   /// 倾斜视差
   ///
   /// 用作视差的 Widget
@@ -26,40 +25,31 @@ class TiltParallaxContainer extends StatelessWidget with TiltTweenAnimation {
   final FilterQuality? filterQuality;
 
   @override
+  State<TiltParallaxContainer> createState() => _TiltParallaxContainerState();
+}
+
+class _TiltParallaxContainerState extends State<TiltParallaxContainer>
+    with TickerProviderStateMixin, TiltTweenAnimationMixin {
+  @override
   Widget build(BuildContext context) {
     final tiltState = TiltState.of(context);
-    final animationEnd = tiltTweenAnimationEnd(
-      tiltState.isMove,
-      tiltState.tiltConfig,
-      tiltState.areaProgress,
-    );
-    final animationDuration = tiltTweenAnimationDuration(
-      tiltState.isMove,
-      tiltState.currentGesturesType,
-      tiltState.tiltConfig,
-    );
-    final animationCurve = tiltTweenAnimationCurve(
-      tiltState.isMove,
-      tiltState.currentGesturesType,
-      tiltState.tiltConfig,
-    );
 
-    return TweenAnimationBuilder<Offset>(
-      tween: Tween<Offset>(end: animationEnd),
-      duration: animationDuration,
-      curve: animationCurve,
-      builder: (BuildContext context, Offset areaProgress, Widget? child) {
+    return AnimatedBuilder(
+      animation: tiltTweenAnimation,
+      builder: (BuildContext context, Widget? child) {
+        final areaProgress = tiltTweenAnimation.value;
+
         return Transform(
-          filterQuality: filterQuality,
+          filterQuality: widget.filterQuality,
           transform: tiltParallaxTransform(
             areaProgress,
-            size,
+            widget.size,
             tiltState.tiltConfig.enableReverse,
           ),
           child: child,
         );
       },
-      child: child,
+      child: widget.child,
     );
   }
 

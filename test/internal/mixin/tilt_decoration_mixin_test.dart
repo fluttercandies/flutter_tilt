@@ -3,7 +3,7 @@ import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/internal/mixin/tilt_decoration_mixin.dart';
 
 void main() {
-  group('TiltDecoration ::', () {
+  group('TiltDecorationMixin ::', () {
     final tiltDecorationTest = TiltDecorationTest();
     final tiltDecorationDirectionProgress =
         tiltDecorationTest.tiltDecorationDirectionProgress;
@@ -437,4 +437,4 @@ void main() {
   });
 }
 
-class TiltDecorationTest with TiltDecoration {}
+class TiltDecorationTest with TiltDecorationMixin {}

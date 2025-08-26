@@ -6,7 +6,7 @@ import '../internal/mixin/tilt_decoration_mixin.dart';
 import '../utils.dart';
 
 /// 光源
-class TiltLight extends StatelessWidget with TiltDecoration {
+class TiltLight extends StatelessWidget with TiltDecorationMixin {
   /// 光源
   ///
   /// 作用于其他组件上的光源效果，

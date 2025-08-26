@@ -9,7 +9,7 @@ import '../enums.dart';
 import '../internal/mixin/tilt_decoration_mixin.dart';
 import '../utils.dart';
 
-abstract class TiltShadow extends StatelessWidget with TiltDecoration {
+abstract class TiltShadow extends StatelessWidget with TiltDecorationMixin {
   const TiltShadow({
     super.key,
     required this.child,
