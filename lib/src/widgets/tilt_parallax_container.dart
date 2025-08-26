@@ -66,6 +66,8 @@ class _TiltParallaxContainerState extends State<TiltParallaxContainer>
     final dx = size.dx * areaProgress.dx;
     final dy = size.dy * areaProgress.dy;
     final offset = enableReverse ? Offset(-dx, -dy) : Offset(dx, dy);
+    // TODO: 兼容低版本开发者，未来完全弃用时再替换为新的方法（Flutter 3.35 开始标记为弃用）
+    // ignore: deprecated_member_use
     return Matrix4.identity()..translate(offset.dx, offset.dy);
   }
 }
