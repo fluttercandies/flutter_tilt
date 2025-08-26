@@ -65,7 +65,7 @@ Check out the [Live Demo][].
 
 - [Sensors compatibility][]
 
-- [Gestures priority](#gestures-priority-)
+- [Gesture priority](#gesture-priority-)
 
 - [Simple usage](#simple-usage-)
 
@@ -160,7 +160,7 @@ Platforms without sensors support do not affect the normal use of other features
 <!-- > After that maybe replace it with [DeviceMotionEvent][]. -->
 
 
-## Gestures priority 📱
+## Gesture priority 📱
 
 When multiple gestures are enabled, they are triggered based on priority:
 
