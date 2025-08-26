@@ -9,7 +9,7 @@ import '../enums.dart';
 import '../internal/mixin/tilt_decoration_mixin.dart';
 import '../utils.dart';
 
-abstract class TiltShadow extends StatelessWidget with TiltDecoration {
+abstract class TiltShadow extends StatelessWidget with TiltDecorationMixin {
   const TiltShadow({
     super.key,
     required this.child,
@@ -216,7 +216,11 @@ class TiltShadowProjector extends TiltShadow {
 
   Matrix4 get transform => Matrix4.zero()
     ..setIdentity()
+    // TODO: 兼容低版本开发者，未来完全弃用时再替换为新的方法（Flutter 3.35 开始标记为弃用）
+    // ignore: deprecated_member_use
     ..translate(offset.dx, offset.dy)
+    // TODO: 兼容低版本开发者，未来完全弃用时再替换为新的方法（Flutter 3.35 开始标记为弃用）
+    // ignore: deprecated_member_use
     ..scale(scale, scale);
 
   @override

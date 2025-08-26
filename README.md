@@ -19,7 +19,7 @@
   <a href="https://pub.dev/packages/flutter_tilt/score"><img src="https://img.shields.io/pub/points/flutter_tilt?color=2E8B57&logo=flutter" alt="pub points" /></a>
   <a href="https://www.codefactor.io/repository/github/fluttercandies/flutter_tilt"><img src="https://img.shields.io/codefactor/grade/github/fluttercandies/flutter_tilt?color=0CAB6B&logo=codefactor" alt="CodeFactor" /></a>
   <a href="https://codecov.io/gh/fluttercandies/flutter_tilt"><img src="https://img.shields.io/codecov/c/github/fluttercandies/flutter_tilt?label=coverage&logo=codecov" alt="codecov" /></a>
-  <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/github/languages/top/fluttercandies/flutter_tilt?color=00B4AB" alt="top language" /></a>
+  <a href="https://pub.dev/packages/flutter_tilt/license"><img src="https://img.shields.io/github/license/fluttercandies/flutter_tilt?color=8EBC06" alt="license" /></a>
 </p>
 
 <p align="center">
@@ -65,7 +65,7 @@ Check out the [Live Demo][].
 
 - [Sensors compatibility][]
 
-- [Gestures priority](#gestures-priority-)
+- [Gesture priority](#gesture-priority-)
 
 - [Simple usage](#simple-usage-)
 
@@ -160,7 +160,7 @@ Platforms without sensors support do not affect the normal use of other features
 <!-- > After that maybe replace it with [DeviceMotionEvent][]. -->
 
 
-## Gestures priority 📱
+## Gesture priority 📱
 
 When multiple gestures are enabled, they are triggered based on priority:
 
@@ -318,9 +318,12 @@ tiltStreamController.add(
 | enableGestureTouch | `bool` | `true` | Touch gesture triggered tilt. <br/> Only the following gestures: <br/> `GesturesType.touch` |  
 | enableRevert | `bool` | `true` | Enable tilt revert, will revert to the initial state. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` <br/> `GesturesType.controller` |  
 | enableOutsideAreaMove | `bool` | `true` | Tilt can continue to be triggered outside the area. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.controller` |  
+| enterDuration | `Duration` | `Duration(milliseconds: 1000)` | Animation duration during gesture enter, must be used with `[moveDuration]` and `[enterToMoveDuration]`. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | moveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during gesture move. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| enterToMoveDuration | `Duration` | `Duration(milliseconds: 600)` | The duration of the transition from enter to move, must be used with `[enterDuration]` and `[moveDuration]`. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | leaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after gesture leave. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | moveCurve | `Curve` | `Curves.linear` | Animation curve during gesture move. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| enterToMoveCurve | `Curve` | `Curves.easeOutCubic` | The curve of the transition from enter to move, must be used with `[enterToMoveDuration]`. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | leaveCurve | `Curve` | `Curves.linear` | Animation curve after gesture leave. <br/> Only the following gestures: <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | controllerMoveDuration | `Duration` | `Duration(milliseconds: 100)` | Animation duration during controller gesture move. <br/> Only the following gestures: <br/> `GesturesType.controller` |  
 | controllerLeaveDuration | `Duration` | `Duration(milliseconds: 300)` | Animation duration after controller gesture leave. <br/> Only the following gestures: <br/> `GesturesType.controller` |  

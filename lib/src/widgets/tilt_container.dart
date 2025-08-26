@@ -83,31 +83,17 @@ class TiltContainer extends StatefulWidget {
   State<TiltContainer> createState() => _TiltContainerState();
 }
 
-class _TiltContainerState extends State<TiltContainer> with TiltTweenAnimation {
+class _TiltContainerState extends State<TiltContainer>
+    with TickerProviderStateMixin, TiltTweenAnimationMixin {
   @override
   Widget build(BuildContext context) {
     final tiltState = TiltState.of(context);
-    final animationEnd = tiltTweenAnimationEnd(
-      tiltState.isMove,
-      widget.tiltConfig,
-      tiltState.areaProgress,
-    );
-    final animationDuration = tiltTweenAnimationDuration(
-      tiltState.isMove,
-      tiltState.currentGesturesType,
-      widget.tiltConfig,
-    );
-    final animationCurve = tiltTweenAnimationCurve(
-      tiltState.isMove,
-      tiltState.currentGesturesType,
-      widget.tiltConfig,
-    );
 
-    return TweenAnimationBuilder<Offset>(
-      tween: Tween<Offset>(end: animationEnd),
-      duration: animationDuration,
-      curve: animationCurve,
-      builder: (BuildContext context, Offset areaProgress, Widget? child) {
+    return AnimatedBuilder(
+      animation: tiltTweenAnimation,
+      builder: (BuildContext context, Widget? child) {
+        final areaProgress = tiltTweenAnimation.value;
+
         final tiltData = TiltData(
           isInit: tiltState.isInit,
           width: tiltState.width,

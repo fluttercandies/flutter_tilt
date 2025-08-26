@@ -3,11 +3,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/src/config/tilt_config.dart';
 import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/internal/mixin/tilt_tween_animation_mixin.dart';
+import 'package:flutter_tilt/src/internal/tilt_state.dart';
 
 void main() {
-  group('TiltTweenAnimation ::', () {
-    final tiltTweenAnimationTest = TiltTweenAnimationTest();
-    test('tiltTweenAnimationEnd', () {
+  group('TiltTweenAnimationMixin ::', () {
+    testWidgets('tiltTweenAnimationEnd', (WidgetTester tester) async {
+      await tester.pumpWidget(const TiltTweenAnimationMixinTestWidget());
+      final tiltTweenAnimationTest =
+          tester.state<TiltTweenAnimationMixinTestState>(
+        find.byType(TiltTweenAnimationMixinTest),
+      );
       final tiltTweenAnimationEnd =
           tiltTweenAnimationTest.tiltTweenAnimationEnd;
       const tiltConfig = TiltConfig();
@@ -38,7 +43,12 @@ void main() {
       );
     });
 
-    test('tiltTweenAnimationDuration', () {
+    testWidgets('tiltTweenAnimationDuration', (WidgetTester tester) async {
+      await tester.pumpWidget(const TiltTweenAnimationMixinTestWidget());
+      final tiltTweenAnimationTest =
+          tester.state<TiltTweenAnimationMixinTestState>(
+        find.byType(TiltTweenAnimationMixinTest),
+      );
       final tiltTweenAnimationDuration =
           tiltTweenAnimationTest.tiltTweenAnimationDuration;
       const tiltConfig = TiltConfig();
@@ -56,7 +66,39 @@ void main() {
       );
       expect(
         tiltTweenAnimationDuration(true, GesturesType.touch, tiltConfig),
+        tiltConfig.enterDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(
+          true,
+          GesturesType.touch,
+          tiltConfig.copyWith(enterToMoveDuration: Duration.zero),
+        ),
         tiltConfig.moveDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(
+          true,
+          GesturesType.touch,
+          tiltConfig.copyWith(
+            enterDuration: const Duration(milliseconds: 2),
+            moveDuration: const Duration(milliseconds: 1),
+            enterToMoveDuration: const Duration(milliseconds: 1),
+          ),
+        ),
+        const Duration(milliseconds: 2),
+      );
+      expect(
+        tiltTweenAnimationDuration(
+          true,
+          GesturesType.touch,
+          tiltConfig.copyWith(
+            enterDuration: const Duration(milliseconds: 1),
+            moveDuration: const Duration(milliseconds: 2),
+            enterToMoveDuration: const Duration(milliseconds: 1),
+          ),
+        ),
+        const Duration(milliseconds: 1),
       );
       expect(
         tiltTweenAnimationDuration(false, GesturesType.hover, tiltConfig),
@@ -64,7 +106,39 @@ void main() {
       );
       expect(
         tiltTweenAnimationDuration(true, GesturesType.hover, tiltConfig),
+        tiltConfig.enterDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(
+          true,
+          GesturesType.hover,
+          tiltConfig.copyWith(enterToMoveDuration: Duration.zero),
+        ),
         tiltConfig.moveDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(
+          true,
+          GesturesType.hover,
+          tiltConfig.copyWith(
+            enterDuration: const Duration(milliseconds: 2),
+            moveDuration: const Duration(milliseconds: 1),
+            enterToMoveDuration: const Duration(milliseconds: 1),
+          ),
+        ),
+        const Duration(milliseconds: 2),
+      );
+      expect(
+        tiltTweenAnimationDuration(
+          true,
+          GesturesType.hover,
+          tiltConfig.copyWith(
+            enterDuration: const Duration(milliseconds: 1),
+            moveDuration: const Duration(milliseconds: 2),
+            enterToMoveDuration: const Duration(milliseconds: 1),
+          ),
+        ),
+        const Duration(milliseconds: 1),
       );
       expect(
         tiltTweenAnimationDuration(false, GesturesType.controller, tiltConfig),
@@ -84,7 +158,12 @@ void main() {
       );
     });
 
-    test('tiltTweenAnimationCurve', () {
+    testWidgets('tiltTweenAnimationCurve', (WidgetTester tester) async {
+      await tester.pumpWidget(const TiltTweenAnimationMixinTestWidget());
+      final tiltTweenAnimationTest =
+          tester.state<TiltTweenAnimationMixinTestState>(
+        find.byType(TiltTweenAnimationMixinTest),
+      );
       final tiltTweenAnimationCurve =
           tiltTweenAnimationTest.tiltTweenAnimationCurve;
       const tiltConfig = TiltConfig();
@@ -132,4 +211,39 @@ void main() {
   });
 }
 
-class TiltTweenAnimationTest with TiltTweenAnimation {}
+/// TiltTweenAnimationMixin Test Widget
+class TiltTweenAnimationMixinTestWidget extends StatelessWidget {
+  const TiltTweenAnimationMixinTestWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TiltState(
+      tiltConfig: const TiltConfig(),
+      isInit: true,
+      width: 10.0,
+      height: 10.0,
+      areaProgress: Offset.zero,
+      isMove: true,
+      currentGesturesType: GesturesType.touch,
+      onResize: (_) {},
+      child: const TiltTweenAnimationMixinTest(),
+    );
+  }
+}
+
+class TiltTweenAnimationMixinTest extends StatefulWidget {
+  const TiltTweenAnimationMixinTest({super.key});
+
+  @override
+  State<TiltTweenAnimationMixinTest> createState() =>
+      TiltTweenAnimationMixinTestState();
+}
+
+class TiltTweenAnimationMixinTestState
+    extends State<TiltTweenAnimationMixinTest>
+    with TickerProviderStateMixin, TiltTweenAnimationMixin {
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox();
+  }
+}

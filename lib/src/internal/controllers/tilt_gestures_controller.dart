@@ -84,32 +84,40 @@ class TiltGesturesController {
 
   /// 过滤 TiltStream
   TiltStreamModel filterTiltStream(TiltStreamModel tiltStreamModel) {
-    /// 当前手势是否高优先级
-    final isHighPriority = gesturesTypePriority(
-          tiltStreamModel.gesturesType,
-          latestTiltStreamModel.gesturesType,
-        ) ==
-        tiltStreamModel.gesturesType;
-
     switch (tiltStreamModel.gesturesType) {
       case GesturesType.none:
         break;
       case GesturesType.touch || GesturesType.hover || GesturesType.controller:
-        if (isHighPriority || !latestTiltStreamModel.gestureUse) {
-          latestTiltStreamModel = tiltStreamModel;
-        }
+        {
+          if (latestTiltStreamModel == tiltStreamModel) {
+            return tiltStreamModel;
+          }
 
-        /// 避免 sensors 与其他手势触发冲突
-        if (!tiltStreamModel.gestureUse) {
-          _handleGestureConflict(tiltStreamModel.gesturesType);
-          _enableSensors = true;
-        } else {
-          _enableSensors = false;
+          /// 当前手势是否高优先级
+          final isHighPriority = gesturesTypePriority(
+                tiltStreamModel.gesturesType,
+                latestTiltStreamModel.gesturesType,
+              ) ==
+              tiltStreamModel.gesturesType;
+
+          if (isHighPriority || !latestTiltStreamModel.gestureUse) {
+            latestTiltStreamModel = tiltStreamModel;
+          }
+
+          /// 避免 sensors 与其他手势触发冲突
+          if (!tiltStreamModel.gestureUse) {
+            _handleGestureConflict(tiltStreamModel.gesturesType);
+            _enableSensors = true;
+          } else {
+            _enableSensors = false;
+          }
         }
       case GesturesType.sensors:
-        // 避免 sensors 与其他手势触发冲突
-        if (_enableSensors && _gesturesHarmonizerTimer == null) {
-          _updateSensorTiltPosition(tiltStreamModel);
+        {
+          /// 避免 sensors 与其他手势触发冲突
+          if (_enableSensors && _gesturesHarmonizerTimer == null) {
+            _updateSensorTiltPosition(tiltStreamModel);
+          }
         }
     }
     return latestTiltStreamModel;
@@ -150,6 +158,7 @@ class TiltGesturesController {
   ///
   /// 避免其他手势离开后的动画与 sensors 冲突（出现闪现）
   void _gesturesHarmonizer(Duration duration) {
+    if (_gesturesHarmonizerTimer != null) return;
     _gesturesHarmonizerTimer?.cancel();
     _gesturesHarmonizerTimer = async.Timer(
       duration,

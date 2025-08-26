@@ -33,9 +33,12 @@ class TiltConfig {
     this.enableGestureTouch = true,
     this.enableRevert = true,
     this.enableOutsideAreaMove = true,
+    this.enterDuration = const Duration(milliseconds: 1000),
     this.moveDuration = const Duration(milliseconds: 100),
+    this.enterToMoveDuration = const Duration(milliseconds: 600),
     this.leaveDuration = const Duration(milliseconds: 300),
     this.moveCurve = Curves.linear,
+    this.enterToMoveCurve = Curves.easeOutCubic,
     this.leaveCurve = Curves.linear,
     this.controllerMoveDuration = const Duration(milliseconds: 100),
     this.controllerLeaveDuration = const Duration(milliseconds: 300),
@@ -275,6 +278,26 @@ class TiltConfig {
   ///
   final bool enableOutsideAreaMove;
 
+  /// Animation duration during gesture enter,
+  ///
+  /// must be used with [moveDuration] and [enterToMoveDuration].
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  ///
+  /// ------
+  ///
+  /// 手势刚进入时的动画持续时间，
+  ///
+  /// 需要搭配 [moveDuration] 和 [enterToMoveDuration] 使用。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  ///
+  final Duration enterDuration;
+
   /// Animation duration during gesture move.
   ///
   /// Only the following gestures:
@@ -290,6 +313,26 @@ class TiltConfig {
   /// [GesturesType.hover]
   ///
   final Duration moveDuration;
+
+  /// The duration of the transition from enter to move,
+  ///
+  /// must be used with [enterDuration] and [moveDuration].
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  ///
+  /// ------
+  ///
+  /// 手势从 Enter 过渡至 Move 的持续时间，
+  ///
+  /// 需要搭配 [enterDuration] 和 [moveDuration] 使用。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  ///
+  final Duration enterToMoveDuration;
 
   /// Animation duration after gesture leave.
   ///
@@ -322,6 +365,26 @@ class TiltConfig {
   /// [GesturesType.hover]
   ///
   final Curve moveCurve;
+
+  /// The curve of the transition from enter to move,
+  ///
+  /// must be used with [enterToMoveDuration].
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  ///
+  /// ------
+  ///
+  /// 手势从 Enter 过渡至 Move 的曲线，
+  ///
+  /// 需要搭配 [enterToMoveDuration] 使用。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  ///
+  final Curve enterToMoveCurve;
 
   /// Animation curve after gesture leave.
   ///
@@ -382,9 +445,12 @@ class TiltConfig {
     bool? enableGestureTouch,
     bool? enableRevert,
     bool? enableOutsideAreaMove,
+    Duration? enterDuration,
     Duration? moveDuration,
+    Duration? enterToMoveDuration,
     Duration? leaveDuration,
     Curve? moveCurve,
+    Curve? enterToMoveCurve,
     Curve? leaveCurve,
     Duration? controllerMoveDuration,
     Duration? controllerLeaveDuration,
@@ -406,9 +472,12 @@ class TiltConfig {
       enableRevert: enableRevert ?? this.enableRevert,
       enableOutsideAreaMove:
           enableOutsideAreaMove ?? this.enableOutsideAreaMove,
+      enterDuration: enterDuration ?? this.enterDuration,
       moveDuration: moveDuration ?? this.moveDuration,
+      enterToMoveDuration: enterToMoveDuration ?? this.enterToMoveDuration,
       leaveDuration: leaveDuration ?? this.leaveDuration,
       moveCurve: moveCurve ?? this.moveCurve,
+      enterToMoveCurve: enterToMoveCurve ?? this.enterToMoveCurve,
       leaveCurve: leaveCurve ?? this.leaveCurve,
       controllerMoveDuration:
           controllerMoveDuration ?? this.controllerMoveDuration,
@@ -442,9 +511,12 @@ class TiltConfig {
         other.enableGestureTouch == enableGestureTouch &&
         other.enableRevert == enableRevert &&
         other.enableOutsideAreaMove == enableOutsideAreaMove &&
+        other.enterDuration == enterDuration &&
         other.moveDuration == moveDuration &&
+        other.enterToMoveDuration == enterToMoveDuration &&
         other.leaveDuration == leaveDuration &&
         other.moveCurve == moveCurve &&
+        other.enterToMoveCurve == enterToMoveCurve &&
         other.leaveCurve == leaveCurve &&
         other.controllerMoveDuration == controllerMoveDuration &&
         other.controllerLeaveDuration == controllerLeaveDuration;
@@ -468,9 +540,12 @@ class TiltConfig {
       enableGestureTouch,
       enableRevert,
       enableOutsideAreaMove,
+      enterDuration,
       moveDuration,
+      enterToMoveDuration,
       leaveDuration,
       moveCurve,
+      enterToMoveCurve,
       leaveCurve,
       controllerMoveDuration,
       controllerLeaveDuration,

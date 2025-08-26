@@ -19,7 +19,7 @@
   <a href="https://pub.dev/packages/flutter_tilt/score"><img src="https://img.shields.io/pub/points/flutter_tilt?color=2E8B57&label=%E5%88%86%E6%95%B0&logo=flutter" alt="pub points" /></a>
   <a href="https://www.codefactor.io/repository/github/fluttercandies/flutter_tilt"><img src="https://img.shields.io/codefactor/grade/github/fluttercandies/flutter_tilt?color=0CAB6B&label=%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F&logo=codefactor" alt="CodeFactor" /></a>
   <a href="https://codecov.io/gh/fluttercandies/flutter_tilt"><img src="https://img.shields.io/codecov/c/github/fluttercandies/flutter_tilt?label=%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96&logo=codecov" alt="codecov" /></a>
-  <a href="https://pub.dev/packages/flutter_tilt"><img src="https://img.shields.io/github/languages/top/fluttercandies/flutter_tilt?color=00B4AB" alt="top language" /></a>
+  <a href="https://pub.dev/packages/flutter_tilt/license"><img src="https://img.shields.io/github/license/fluttercandies/flutter_tilt?label=%E8%AE%B8%E5%8F%AF%E8%AF%81&color=8EBC06" alt="license" /></a>
 </p>
 
 <p align="center">
@@ -318,9 +318,12 @@ tiltStreamController.add(
 | enableGestureTouch | `bool` | `true` | Touch 手势触发倾斜。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` |  
 | enableRevert | `bool` | `true` | 启用倾斜复原，会复原至初始状态。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` <br/> `GesturesType.controller` |  
 | enableOutsideAreaMove | `bool` | `true` | 可以继续在区域外触发倾斜。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.controller` |  
+| enterDuration | `Duration` | `Duration(milliseconds: 1000)` | 手势刚进入时的动画持续时间，需要搭配 `[moveDuration]` 和 `[enterToMoveDuration]` 使用。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | moveDuration | `Duration` | `Duration(milliseconds: 100)` | 手势移动时的动画持续时间。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| enterToMoveDuration | `Duration` | `Duration(milliseconds: 600)` | 手势从 Enter 过渡至 Move 的持续时间，需要搭配 `[enterDuration]` 和 `[moveDuration]` 使用。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | leaveDuration | `Duration` | `Duration(milliseconds: 300)` | 手势离开后的动画持续时间。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | moveCurve | `Curve` | `Curves.linear` | 手势移动时的动画曲线。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
+| enterToMoveCurve | `Curve` | `Curves.easeOutCubic` | 手势从 Enter 过渡至 Move 的曲线，需要搭配 `[enterToMoveDuration]` 使用。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | leaveCurve | `Curve` | `Curves.linear` | 手势离开后的动画曲线。 <br/> 仅以下手势生效： <br/> `GesturesType.touch` <br/> `GesturesType.hover` |  
 | controllerMoveDuration | `Duration` | `Duration(milliseconds: 100)` | controller 手势移动时的动画持续时间。 <br/> 仅以下手势生效： <br/> `GesturesType.controller` |  
 | controllerLeaveDuration | `Duration` | `Duration(milliseconds: 300)` | controller 手势离开后的动画持续时间。 <br/> 仅以下手势生效： <br/> `GesturesType.controller` |  
