@@ -7,7 +7,7 @@
 
 ### New features
 
-- By default, add a smooth transition effect when gestures (hover and touch) enter.
+- By default, add a smooth transition effect when gestures (hover and touch) enter. ([#29](https://github.com/fluttercandies/flutter_tilt/pull/29))
   - Configurable via:
     - `TiltConfig.enterDuration`
     - `TiltConfig.moveDuration`
