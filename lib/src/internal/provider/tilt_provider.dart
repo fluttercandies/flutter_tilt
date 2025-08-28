@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 
-import '../config/tilt_config.dart';
-import '../enums.dart';
+import '../../config/tilt_config.dart';
+import '../../enums.dart';
 
-/// Tilt State
-class TiltState extends InheritedWidget {
-  /// Tilt State
-  const TiltState({
+/// Tilt Base Provider
+class TiltProvider extends InheritedWidget {
+  /// Tilt Base Provider
+  const TiltProvider({
     super.key,
     required super.child,
     required this.isInit,
@@ -43,14 +43,15 @@ class TiltState extends InheritedWidget {
   /// 调整尺寸
   final void Function(Size) onResize;
 
-  static TiltState of(BuildContext context) {
-    final tiltState = context.dependOnInheritedWidgetOfExactType<TiltState>();
-    assert(tiltState != null, 'No TiltState found in context');
-    return tiltState!;
+  static TiltProvider of(BuildContext context) {
+    final tiltProvider =
+        context.dependOnInheritedWidgetOfExactType<TiltProvider>();
+    assert(tiltProvider != null, 'No TiltProvider found in context');
+    return tiltProvider!;
   }
 
   @override
-  bool updateShouldNotify(TiltState oldWidget) =>
+  bool updateShouldNotify(TiltProvider oldWidget) =>
       isInit != oldWidget.isInit ||
       width != oldWidget.width ||
       height != oldWidget.height ||

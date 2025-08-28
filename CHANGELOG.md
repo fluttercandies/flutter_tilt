@@ -1,7 +1,13 @@
 # Changelog
 
 > [!IMPORTANT]  
-> See the [Migration Guide](guides/migration_guide.md) for the details of breaking changes between versions.
+> See the [Migration Guide](https://github.com/fluttercandies/flutter_tilt/blob/main/guides/migration_guide.md) for the details of breaking changes between versions.
+
+## 3.3.1
+
+### Improvements
+
+- Reduce unnecessary animation controllers (multiple `TiltParallax` widgets share the same controller). ([#30](https://github.com/fluttercandies/flutter_tilt/pull/30))
 
 ## 3.3.0
 
@@ -16,7 +22,7 @@
 
   If you prefer to disable this effect:
 
-  ```diff
+  ```dart
   Tilt(
     tiltConfig: TiltConfig(
       enterToMoveDuration: Duration.zero,
