@@ -5,8 +5,9 @@ import '../config/tilt_light_config.dart';
 import '../config/tilt_shadow_config.dart';
 import '../enums.dart';
 import '../internal/mixin/tilt_tween_animation_mixin.dart';
+import '../internal/provider/tilt_animation_provider.dart';
+import '../internal/provider/tilt_provider.dart';
 import '../internal/tilt_data.dart';
-import '../internal/tilt_state.dart';
 import 'tilt_light.dart';
 import 'tilt_shadow.dart';
 
@@ -87,39 +88,42 @@ class _TiltContainerState extends State<TiltContainer>
     with TickerProviderStateMixin, TiltTweenAnimationMixin {
   @override
   Widget build(BuildContext context) {
-    final tiltState = TiltState.of(context);
+    final tiltProvider = TiltProvider.of(context);
 
-    return AnimatedBuilder(
-      animation: tiltTweenAnimation,
-      builder: (BuildContext context, Widget? child) {
-        final areaProgress = tiltTweenAnimation.value;
+    return TiltAnimationProvider(
+      tiltTweenAnimation: tiltTweenAnimation,
+      child: AnimatedBuilder(
+        animation: tiltTweenAnimation,
+        builder: (BuildContext context, Widget? child) {
+          final areaProgress = tiltTweenAnimation.value;
 
-        final tiltData = TiltData(
-          isInit: tiltState.isInit,
-          width: tiltState.width,
-          height: tiltState.height,
-          areaProgress: areaProgress,
-          tiltConfig: widget.tiltConfig,
-        );
+          final tiltData = TiltData(
+            isInit: tiltProvider.isInit,
+            width: tiltProvider.width,
+            height: tiltProvider.height,
+            areaProgress: areaProgress,
+            tiltConfig: widget.tiltConfig,
+          );
 
-        return Transform(
-          alignment: AlignmentDirectional.center,
-          filterQuality: widget.tiltConfig.filterQuality,
-          transform: tiltData.transform,
-          child: Stack(
+          return Transform(
             alignment: AlignmentDirectional.center,
-            clipBehavior: Clip.none,
-            children: _buildLightShadowMode(
-              width: tiltState.width,
-              height: tiltState.height,
-              areaProgress: areaProgress,
-              onResize: tiltState.onResize,
-              child: child,
+            filterQuality: widget.tiltConfig.filterQuality,
+            transform: tiltData.transform,
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              clipBehavior: Clip.none,
+              children: _buildLightShadowMode(
+                width: tiltProvider.width,
+                height: tiltProvider.height,
+                areaProgress: areaProgress,
+                onResize: tiltProvider.onResize,
+                child: child,
+              ),
             ),
-          ),
-        );
-      },
-      child: widget.child,
+          );
+        },
+        child: widget.child,
+      ),
     );
   }
 

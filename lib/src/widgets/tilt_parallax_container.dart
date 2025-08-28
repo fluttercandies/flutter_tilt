@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
-import '../internal/mixin/tilt_tween_animation_mixin.dart';
-import '../internal/tilt_state.dart';
+import '../internal/provider/tilt_animation_provider.dart';
+import '../internal/provider/tilt_provider.dart';
 
 /// 倾斜视差
-class TiltParallaxContainer extends StatefulWidget {
+class TiltParallaxContainer extends StatelessWidget {
   /// 倾斜视差
   ///
   /// 用作视差的 Widget
@@ -25,31 +25,27 @@ class TiltParallaxContainer extends StatefulWidget {
   final FilterQuality? filterQuality;
 
   @override
-  State<TiltParallaxContainer> createState() => _TiltParallaxContainerState();
-}
-
-class _TiltParallaxContainerState extends State<TiltParallaxContainer>
-    with TickerProviderStateMixin, TiltTweenAnimationMixin {
-  @override
   Widget build(BuildContext context) {
-    final tiltState = TiltState.of(context);
+    final tiltAnimationProvider = TiltAnimationProvider.of(context);
+    final tiltTweenAnimationProvider = tiltAnimationProvider.tiltTweenAnimation;
+    final tiltProvider = TiltProvider.of(context);
 
     return AnimatedBuilder(
-      animation: tiltTweenAnimation,
+      animation: tiltTweenAnimationProvider,
       builder: (BuildContext context, Widget? child) {
-        final areaProgress = tiltTweenAnimation.value;
+        final areaProgress = tiltTweenAnimationProvider.value;
 
         return Transform(
-          filterQuality: widget.filterQuality,
+          filterQuality: filterQuality,
           transform: tiltParallaxTransform(
             areaProgress,
-            widget.size,
-            tiltState.tiltConfig.enableReverse,
+            size,
+            tiltProvider.tiltConfig.enableReverse,
           ),
           child: child,
         );
       },
-      child: widget.child,
+      child: child,
     );
   }
 

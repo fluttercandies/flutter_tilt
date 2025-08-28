@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/src/config/tilt_config.dart';
 import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/internal/mixin/tilt_tween_animation_mixin.dart';
-import 'package:flutter_tilt/src/internal/tilt_state.dart';
+import 'package:flutter_tilt/src/internal/provider/tilt_provider.dart';
 
 void main() {
   group('TiltTweenAnimationMixin ::', () {
@@ -217,7 +217,7 @@ class TiltTweenAnimationMixinTestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TiltState(
+    return TiltProvider(
       tiltConfig: const TiltConfig(),
       isInit: true,
       width: 10.0,

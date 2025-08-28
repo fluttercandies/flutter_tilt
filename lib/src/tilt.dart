@@ -1,5 +1,4 @@
 import 'dart:async' as async;
-
 import 'package:flutter/widgets.dart';
 
 import 'config/tilt_config.dart';
@@ -8,8 +7,8 @@ import 'config/tilt_shadow_config.dart';
 import 'enums.dart';
 import 'internal/controllers/fps_timer_controller.dart';
 import 'internal/controllers/tilt_gestures_controller.dart';
+import 'internal/provider/tilt_provider.dart';
 import 'internal/tilt_data.dart';
-import 'internal/tilt_state.dart';
 import 'models/tilt_stream_model.dart';
 import 'utils.dart';
 import 'widgets/gestures_listener.dart';
@@ -180,7 +179,7 @@ class _TiltState extends State<Tilt> {
         tiltGesturesController: _tiltGesturesController,
         builder: (context, snapshot) {
           _handleGesturesStream(snapshot.data);
-          return TiltState(
+          return TiltProvider(
             isInit: _isInit,
             width: _width,
             height: _height,
