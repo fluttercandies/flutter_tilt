@@ -73,7 +73,7 @@
 ## Contributors ✨  
 
 See [graphs/contributors](https://github.com/fluttercandies/flutter_tilt/graphs/contributors) for more details.  
-Contributions of any kind are welcome! ([emoji key](https://allcontributors.org/docs/en/emoji-key))  
+Contributions of any kind are welcome! ([emoji key](https://allcontributors.org/emoji-key))  
 
 <table>
   <tbody>
