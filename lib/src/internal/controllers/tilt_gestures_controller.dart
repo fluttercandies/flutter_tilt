@@ -3,7 +3,6 @@ import 'package:flutter/services.dart' show DeviceOrientation;
 import 'package:flutter/widgets.dart';
 
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:stream_transform/stream_transform.dart';
 
 import '../../config/tilt_config.dart';
 import '../../enums.dart';
@@ -36,7 +35,15 @@ class TiltGesturesController {
   /// 传感器平台支持
   bool _canSensorsPlatformSupport = Utils.sensorsPlatformSupport();
 
-  final List<async.StreamSubscription> streamSubscriptions = [];
+  async.StreamSubscription<GyroscopeEvent>? _gyroscopeSubscription;
+
+  async.StreamSubscription<GyroscopeEvent>? get gyroscopeSubscription =>
+      _gyroscopeSubscription;
+
+  async.StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
+
+  async.StreamSubscription<AccelerometerEvent>? get accelerometerSubscription =>
+      _accelerometerSubscription;
 
   /// 设备方向
   DeviceOrientation deviceOrientation = DeviceOrientation.portraitUp;
@@ -56,6 +63,15 @@ class TiltGesturesController {
   /// 手势协调器
   async.Timer? _gesturesHarmonizerTimer;
 
+  /// 陀螺仪采样定时器
+  async.Timer? _gyroscopeSamplingTimer;
+
+  /// 是否已完成传感器订阅初始化
+  bool _sensorsInitialized = false;
+
+  /// 最近一帧可用于补帧/限流的陀螺仪数据
+  TiltStreamModel? _pendingGyroscopeTiltStreamModel;
+
   /// 是否开启 TiltStream
   bool get enableTiltStream => !disable;
 
@@ -64,8 +80,27 @@ class TiltGesturesController {
       : null;
 
   void dispose() {
+    disposeSensors();
     cancelGesturesHarmonizerTimer();
-    cancelAllSubscriptions();
+  }
+
+  void disposeSensors() {
+    cancelAccelerometerSubscription();
+    cancelGyroscopeSubscription();
+    cancelGyroscopeSamplingTimer();
+    _sensorsInitialized = false;
+  }
+
+  /// 取消陀螺仪订阅
+  void cancelGyroscopeSubscription() {
+    _gyroscopeSubscription?.cancel();
+    _gyroscopeSubscription = null;
+  }
+
+  /// 取消加速度计订阅
+  void cancelAccelerometerSubscription() {
+    _accelerometerSubscription?.cancel();
+    _accelerometerSubscription = null;
   }
 
   /// 取消手势协调器
@@ -74,12 +109,11 @@ class TiltGesturesController {
     _gesturesHarmonizerTimer = null;
   }
 
-  /// 取消所有订阅
-  void cancelAllSubscriptions() {
-    for (final sub in streamSubscriptions) {
-      sub.cancel();
-    }
-    streamSubscriptions.clear();
+  /// 取消陀螺仪采样定时器（补帧/限流）
+  void cancelGyroscopeSamplingTimer() {
+    _gyroscopeSamplingTimer?.cancel();
+    _gyroscopeSamplingTimer = null;
+    _pendingGyroscopeTiltStreamModel = null;
   }
 
   /// 过滤 TiltStream
@@ -197,10 +231,13 @@ class TiltGesturesController {
   /// 初始化传感器
   void initSensors(BuildContext context) {
     if (!_canSensorsPlatformSupport ||
+        _sensorsInitialized ||
         !enableTiltStream ||
         !tiltConfig.enableGestureSensors) {
       return;
     }
+
+    _sensorsInitialized = true;
 
     /// 订阅设备方向事件
     subscribeToDeviceOrientation(context);
@@ -211,43 +248,55 @@ class TiltGesturesController {
 
   /// 订阅陀螺仪倾斜事件
   void subscribeToGyroscopeTilt() {
-    streamSubscriptions.add(
-      gyroscopeEventStream()
-          .map<TiltStreamModel>(
-            (GyroscopeEvent gyroscopeEvent) => TiltStreamModel(
-              position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
-              gesturesType: GesturesType.sensors,
-              gestureUse: true,
-            ),
-          )
-          .combineLatest(
-            Stream<void>.periodic(Duration(milliseconds: (1000 / fps) ~/ 1)),
-            (p0, _) => p0,
-          )
-          .throttle(Duration(milliseconds: (1000 / fps) ~/ 1), trailing: true)
-          .listen(
-        (TiltStreamModel tiltStreamModel) {
-          if (tiltStreamController.hasListener) {
-            tiltStreamController.sink.add(tiltStreamModel);
-          }
-        },
-        onError: (_) => _canSensorsPlatformSupport = false,
-        cancelOnError: true,
-      ),
+    final frameDuration = Duration(milliseconds: (1000 / fps) ~/ 1);
+
+    _gyroscopeSubscription = gyroscopeEventStream().listen(
+      (GyroscopeEvent gyroscopeEvent) {
+        if (_gyroscopeSubscription == null) return;
+
+        _pendingGyroscopeTiltStreamModel = TiltStreamModel(
+          position: Offset(gyroscopeEvent.y, gyroscopeEvent.x),
+          gesturesType: GesturesType.sensors,
+          gestureUse: true,
+        );
+
+        /// 如果陀螺仪存在数据，则开启陀螺仪采样定时器（补帧/限流）
+        _gyroscopeSamplingTimer ??= async.Timer.periodic(
+          frameDuration,
+          (_) => _pushLatestGyroscopeTiltStreamModel(),
+        );
+      },
+      onError: (_) {
+        _canSensorsPlatformSupport = false;
+        disposeSensors();
+      },
+      cancelOnError: true,
     );
+  }
+
+  /// 按帧推送当前缓存的最新陀螺仪值，用于补帧和限流
+  void _pushLatestGyroscopeTiltStreamModel() {
+    final tiltStreamModel = _pendingGyroscopeTiltStreamModel;
+
+    if (tiltStreamModel != null) {
+      tiltStreamController.sink.add(tiltStreamModel);
+    }
   }
 
   /// 订阅设备方向事件
   void subscribeToDeviceOrientation(BuildContext context) {
-    streamSubscriptions.add(
-      accelerometerEventStream().listen(
-        (AccelerometerEvent event) {
-          if (!context.mounted) return;
-          handleDeviceOrientationEvent(context, event);
-        },
-        onError: (_) => _canSensorsPlatformSupport = false,
-        cancelOnError: true,
-      ),
+    _accelerometerSubscription = accelerometerEventStream().listen(
+      (AccelerometerEvent event) {
+        if (!context.mounted) return;
+        if (_accelerometerSubscription == null) return;
+
+        handleDeviceOrientationEvent(context, event);
+      },
+      onError: (_) {
+        _canSensorsPlatformSupport = false;
+        disposeSensors();
+      },
+      cancelOnError: true,
     );
   }
 

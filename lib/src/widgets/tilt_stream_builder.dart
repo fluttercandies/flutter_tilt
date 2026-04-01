@@ -41,6 +41,18 @@ class _TiltStreamBuilderState extends State<TiltStreamBuilder> {
   }
 
   @override
+  void didUpdateWidget(TiltStreamBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(
+      oldWidget.tiltGesturesController,
+      widget.tiltGesturesController,
+    )) {
+      oldWidget.tiltGesturesController.disposeSensors();
+      widget.tiltGesturesController.initSensors(context);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder<TiltStreamModel>(
       stream: widget.tiltGesturesController.tiltStream,
