@@ -21,6 +21,7 @@ void main() {
     late TiltGesturesController controller;
     late TiltConfig tiltConfig;
     late Offset initialPosition;
+    late int frameDurationMs;
 
     setUp(() {
       tiltStreamController = StreamController<TiltStreamModel>.broadcast();
@@ -37,6 +38,7 @@ void main() {
         tiltConfig: tiltConfig,
         initialPosition: initialPosition,
       );
+      frameDurationMs = (1000 / controller.fps) ~/ 1;
     });
 
     tearDown(() {
@@ -55,6 +57,9 @@ void main() {
     testWidgets('Sensors stream subscriptions', (WidgetTester tester) async {
       var currentGesturesType = GesturesType.none;
       var currentPosition = Offset.zero;
+      var sensorFrameCount = 0;
+      var replayedFrameCount = 0;
+      late StreamSubscription<TiltStreamModel> firstSubscription;
 
       debugDefaultTargetPlatformOverride = TargetPlatform.android;
 
@@ -84,14 +89,6 @@ void main() {
           await tester.pumpWidget(
             Builder(
               builder: (BuildContext context) {
-                /// 监听数据
-                tiltStreamController.stream.listen(
-                  (TiltStreamModel tiltStreamModel) {
-                    currentPosition = tiltStreamModel.position;
-                    currentGesturesType = tiltStreamModel.gesturesType;
-                  },
-                );
-
                 /// 初始化传感器
                 controller.initSensors(context);
                 return const SizedBox();
@@ -99,10 +96,40 @@ void main() {
             ),
           );
 
-          /// 延迟 1 帧，等待数据
-          await Future.delayed(
-            Duration(milliseconds: (1000 / controller.fps) ~/ 1),
+          firstSubscription = tiltStreamController.stream.listen(
+            (TiltStreamModel tiltStreamModel) {
+              currentPosition = tiltStreamModel.position;
+              currentGesturesType = tiltStreamModel.gesturesType;
+              if (tiltStreamModel.gesturesType == GesturesType.sensors) {
+                sensorFrameCount++;
+              }
+            },
           );
+
+          /// 延迟 3 帧，等待数据 sensorFrameCount 累加到 3
+          await Future.delayed(
+            Duration(milliseconds: frameDurationMs * 3),
+          );
+
+          /// 取消订阅后，等待 2 帧
+          await firstSubscription.cancel();
+          await Future.delayed(
+            Duration(milliseconds: frameDurationMs * 2),
+          );
+
+          final replaySubscription = tiltStreamController.stream.listen(
+            (TiltStreamModel tiltStreamModel) {
+              if (tiltStreamModel.gesturesType == GesturesType.sensors) {
+                replayedFrameCount++;
+              }
+            },
+          );
+
+          /// 延迟 3 帧，等待数据 replayedFrameCount 累加到 3
+          await Future.delayed(
+            Duration(milliseconds: frameDurationMs * 3),
+          );
+          await replaySubscription.cancel();
         },
       );
 
@@ -111,12 +138,59 @@ void main() {
         currentPosition,
         Offset(gyroscopeSensorData.last[1], gyroscopeSensorData.last[0]),
       );
-      expect(controller.streamSubscriptions.length, 2);
+      expect(sensorFrameCount, 3);
+      expect(replayedFrameCount, 3);
 
-      /// 取消订阅
-      controller.dispose();
-      expect(controller.streamSubscriptions.length, 0);
+      expect(controller.gyroscopeSubscription, isNotNull);
+      expect(controller.accelerometerSubscription, isNotNull);
 
+      await tester.runAsync(() async {
+        /// 取消传感器订阅
+        controller.disposeSensors();
+      });
+      expect(controller.gyroscopeSubscription, isNull);
+      expect(controller.accelerometerSubscription, isNull);
+
+      debugDefaultTargetPlatformOverride = null;
+    });
+
+    testWidgets('initSensors only subscribes once',
+        (WidgetTester tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+
+      SensorsMock.initMockSensorsMethodChannel([
+        SensorsMock.accelerometerMethodName,
+        SensorsMock.gyroscopeMethodName,
+      ]);
+      final date = DateTime.now();
+      SensorsMock.initMockSensorChannelData(
+        SensorsMock.accelerometerChannelName,
+        <List<double>>[
+          [1.0, 2.0, 3.0, date.microsecondsSinceEpoch.toDouble()],
+        ],
+      );
+      SensorsMock.initMockSensorChannelData(
+        SensorsMock.gyroscopeChannelName,
+        <List<double>>[
+          [3.0, 4.0, 5.0, date.microsecondsSinceEpoch.toDouble()],
+        ],
+      );
+      await tester.runAsync(
+        () async {
+          await tester.pumpWidget(
+            Builder(
+              builder: (BuildContext context) {
+                controller.initSensors(context);
+                controller.initSensors(context);
+                return const SizedBox();
+              },
+            ),
+          );
+        },
+      );
+
+      expect(controller.gyroscopeSubscription, isNotNull);
+      expect(controller.accelerometerSubscription, isNotNull);
       debugDefaultTargetPlatformOverride = null;
     });
 
