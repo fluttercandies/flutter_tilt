@@ -8,6 +8,7 @@
 **Improvements**
 
 - Simulated light reflection is more natural.
+- Avoid redundant calculations and optimize performance.
 
 ## 3.3.3
 

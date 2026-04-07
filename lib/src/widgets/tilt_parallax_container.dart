@@ -34,14 +34,15 @@ class TiltParallaxContainer extends StatelessWidget {
       animation: tiltTweenAnimationProvider,
       builder: (BuildContext context, Widget? child) {
         final areaProgress = tiltTweenAnimationProvider.value;
+        final tiltParallaxTransform = this.tiltParallaxTransform(
+          areaProgress,
+          size,
+          tiltProvider.tiltConfig.enableReverse,
+        );
 
         return Transform(
           filterQuality: filterQuality,
-          transform: tiltParallaxTransform(
-            areaProgress,
-            size,
-            tiltProvider.tiltConfig.enableReverse,
-          ),
+          transform: tiltParallaxTransform,
           child: child,
         );
       },

@@ -73,7 +73,7 @@ abstract class TiltShadow extends StatelessWidget with TiltDecorationMixin {
   /// 阴影当前偏移距离
   ///
   /// 阴影进度 * 阴影偏移系数的距离（相对当前尺寸的中心）
-  Offset get baseOffset =>
+  Offset get shadowOffsetBase =>
       progress *
       Utils.p2pDistance(
         Utils.centerPosition(width, height),
@@ -81,8 +81,9 @@ abstract class TiltShadow extends StatelessWidget with TiltDecorationMixin {
       );
 
   /// 阴影偏移
-  Offset get offset =>
-      (enableReverse ? -baseOffset : baseOffset) - shadowConfig.offsetInitial;
+  Offset get shadowOffset =>
+      (enableReverse ? -shadowOffsetBase : shadowOffsetBase) -
+      shadowConfig.offsetInitial;
 }
 
 /// 阴影 Base
@@ -117,60 +118,67 @@ class TiltShadowBase extends TiltShadow {
   /// Clip
   final Clip clipBehavior;
 
-  /// 阴影模糊半径进度
-  ///
-  /// 距离中心的进度 * 最大模糊半径
-  double get blurRadiusProgress =>
-      centerMaxProgress * shadowConfig.maxBlurRadius;
+  @override
+  Widget build(BuildContext context) {
+    List<BoxShadow>? boxShadow;
 
-  /// 阴影模糊半径
-  double get blurRadius => math.max(
+    if (!shadowDisable) {
+      final shadowOffset = this.shadowOffset;
+
+      /// 阴影模糊半径进度
+      ///
+      /// 距离中心的进度 * 最大模糊半径
+      final blurRadiusProgress = centerMaxProgress * shadowConfig.maxBlurRadius;
+
+      /// 阴影模糊半径
+      final blurRadius = math.max(
         blurRadiusProgress,
         shadowConfig.minBlurRadius,
       );
 
-  /// 阴影扩散半径距离
-  ///
-  /// (距离中心的进度 * 阴影扩散系数)
-  double get spreadRadiusDistance => Utils.p2pDistance(
+      /// 阴影扩散半径距离
+      ///
+      /// (距离中心的进度 * 阴影扩散系数)
+      final spreadRadiusDistance = Utils.p2pDistance(
         Offset(width, height),
         Offset(width, height) * (shadowConfig.spreadFactor + 1.0),
       );
 
-  /// 阴影扩散半径距离还原
-  ///
-  /// 避免初始状态的扩散
-  ///
-  /// (阴影扩散半径距离 + 初始固定扩散值，随进度还原至 0)
-  double get spreadRadiusRevert =>
-      (spreadRadiusDistance + (math.min(width, height) / 10.0)) *
-      (1 - centerMaxProgress);
+      /// 阴影扩散半径距离还原
+      ///
+      /// 避免初始状态的扩散
+      ///
+      /// (阴影扩散半径距离 + 初始固定扩散值，随进度还原至 0)
+      final spreadRadiusRevert =
+          (spreadRadiusDistance + (math.min(width, height) / 10.0)) *
+              (1 - centerMaxProgress);
 
-  /// 阴影扩散半径
-  ///
-  /// 阴影扩散半径距离 - 阴影扩散半径距离还原 + 起始扩散半径
-  double get spreadRadius =>
-      spreadRadiusDistance - spreadRadiusRevert + shadowConfig.spreadInitial;
+      /// 阴影扩散半径
+      ///
+      /// 阴影扩散半径距离 - 阴影扩散半径距离还原 + 起始扩散半径
+      final spreadRadius = spreadRadiusDistance -
+          spreadRadiusRevert +
+          shadowConfig.spreadInitial;
 
-  @override
-  Widget build(BuildContext context) {
+      boxShadow = [
+        BoxShadow(
+          /// TODO: Flutter v3.27.0 之后需要迁移，在这之前暂时使用 withAlpha，
+          /// （目前为了兼容更多低版本 Flutter 以及对于非主要 Tilt 效果的 P3 广色域优先级很低，未来再迁移为 withValues）
+          /// 以下 withAlpha 内的计算方式和 withOpacity 内部的计算方式一致，
+          /// 所以还不支持 P3 广色域，目前依旧是 sRGB。
+          /// https://docs.flutter.dev/release/breaking-changes/wide-gamut-framework
+          color: shadowConfig.color.withAlpha((255.0 * showShadow).round()),
+          offset: shadowOffset,
+          blurRadius: blurRadius,
+          spreadRadius: spreadRadius,
+          blurStyle: BlurStyle.normal,
+        ),
+      ];
+    }
+
     return Container(
       decoration: BoxDecoration(
-        boxShadow: <BoxShadow>[
-          if (!shadowDisable)
-            BoxShadow(
-              /// TODO: Flutter v3.27.0 之后需要迁移，在这之前暂时使用 withAlpha，
-              /// （目前为了兼容更多低版本 Flutter 以及对于非主要 Tilt 效果的 P3 广色域优先级很低，未来再迁移为 withValues）
-              /// 以下 withAlpha 内的计算方式和 withOpacity 内部的计算方式一致，
-              /// 所以还不支持 P3 广色域，目前依旧是 sRGB。
-              /// https://docs.flutter.dev/release/breaking-changes/wide-gamut-framework
-              color: shadowConfig.color.withAlpha((255.0 * showShadow).round()),
-              offset: offset,
-              blurRadius: blurRadius,
-              spreadRadius: spreadRadius,
-              blurStyle: BlurStyle.normal,
-            ),
-        ],
+        boxShadow: boxShadow,
         border: border,
         borderRadius: borderRadius,
       ),
@@ -200,32 +208,34 @@ class TiltShadowProjector extends TiltShadow {
     required super.shadowConfig,
   });
 
-  /// 阴影尺寸比例
-  double get scale => _calculateLerp(
-        shadowConfig.projectorScaleFrom,
-        shadowConfig.projectorScaleTo,
-        centerMaxProgress,
-      );
-
-  /// 阴影模糊 Sigma
-  double get blurSigma => _calculateLerp(
-        shadowConfig.projectorBlurSigmaFrom,
-        shadowConfig.projectorBlurSigmaTo,
-        centerMaxProgress,
-      );
-
-  Matrix4 get transform => Matrix4.zero()
-    ..setIdentity()
-    // TODO: 兼容低版本开发者，未来完全弃用时再替换为新的方法（Flutter 3.35 开始标记为弃用）
-    // ignore: deprecated_member_use
-    ..translate(offset.dx, offset.dy)
-    // TODO: 兼容低版本开发者，未来完全弃用时再替换为新的方法（Flutter 3.35 开始标记为弃用）
-    // ignore: deprecated_member_use
-    ..scale(scale, scale);
-
   @override
   Widget build(BuildContext context) {
     if (shadowDisable) return const SizedBox();
+
+    final shadowOffset = this.shadowOffset;
+
+    /// 阴影尺寸比例
+    final scale = _calculateLerp(
+      shadowConfig.projectorScaleFrom,
+      shadowConfig.projectorScaleTo,
+      centerMaxProgress,
+    );
+
+    /// 阴影模糊 Sigma
+    final blurSigma = _calculateLerp(
+      shadowConfig.projectorBlurSigmaFrom,
+      shadowConfig.projectorBlurSigmaTo,
+      centerMaxProgress,
+    );
+
+    final shadowProjectorTransform = Matrix4.zero()
+      ..setIdentity()
+      // TODO: 兼容低版本开发者，未来完全弃用时再替换为新的方法（Flutter 3.35 开始标记为弃用）
+      // ignore: deprecated_member_use
+      ..translate(shadowOffset.dx, shadowOffset.dy)
+      // TODO: 兼容低版本开发者，未来完全弃用时再替换为新的方法（Flutter 3.35 开始标记为弃用）
+      // ignore: deprecated_member_use
+      ..scale(scale, scale);
 
     /// TODO: BUG - 在 Web 端，Widget 嵌套顺序不同会导致渲染错误的奇怪效果，暂时单独处理。
     /// 目前测试下来是将 ImageFiltered 嵌套在 Transform 内引起的。
@@ -246,7 +256,7 @@ class TiltShadowProjector extends TiltShadow {
               ),
               child: Transform(
                 alignment: Alignment.center,
-                transform: transform,
+                transform: shadowProjectorTransform,
                 child: child,
               ),
             ),
@@ -260,7 +270,7 @@ class TiltShadowProjector extends TiltShadow {
     return IgnorePointer(
       child: Transform(
         alignment: Alignment.center,
-        transform: transform,
+        transform: shadowProjectorTransform,
         child: ColorFiltered(
           colorFilter: ColorFilter.mode(
             shadowConfig.color,

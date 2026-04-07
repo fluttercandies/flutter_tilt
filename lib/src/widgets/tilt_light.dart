@@ -32,57 +32,53 @@ class TiltLight extends StatelessWidget with TiltDecorationMixin {
   /// 光源配置
   final LightConfig lightConfig;
 
-  /// 当前坐标
-  Offset get position => Utils.progressPosition(width, height, areaProgress);
-
-  /// 尺寸扩散的倍数
-  double get spread => lightConfig.spreadFactor;
-
-  /// 当前坐标相对于中心坐标的区域坐标
-  Offset get p2cPosition => -Utils.p2cAreaPosition(
-        _spreadW,
-        _spreadH,
-        Utils.constraintsPosition(width, height, position),
-      );
-
-  /// 定位 x （从中心位置开始）
-  double get positionX => p2cPosition.dx;
-
-  /// 定位 y （从中心位置开始）
-  double get positionY => p2cPosition.dy;
-
-  /// 光源方向进度
-  double get showProgress => tiltDecorationDirectionProgress(
-        areaProgress,
-        lightConfig.direction,
-        min: lightConfig.minIntensity,
-        max: lightConfig.maxIntensity,
-      );
-
-  /// 开启反向
-  ///
-  /// {@macro tilt.LightConfig.enableReverse}
-  bool get enableReverse => lightConfig.enableReverse ?? false;
-
-  /// 禁用光源
-  bool get lightDisable =>
-      lightConfig.disable ||
-      lightConfig.maxIntensity == 0.0 ||
-      lightConfig.direction == LightDirection.none;
-
-  /// 扩散的尺寸 width
-  late final double _spreadW = width * spread;
-
-  /// 扩散的尺寸 height
-  late final double _spreadH = height * spread;
-
   @override
   Widget build(BuildContext context) {
-    if (lightDisable) {
-      return const SizedBox();
-    }
+    /// 禁用光源
+    final lightDisable = lightConfig.disable ||
+        lightConfig.maxIntensity == 0.0 ||
+        lightConfig.direction == LightDirection.none;
 
-    final lightColorBase = 255.0 * showProgress;
+    if (lightDisable) return const SizedBox();
+
+    /// 开启反向
+    final enableReverse = lightConfig.enableReverse ?? false;
+
+    /// 当前坐标
+    final position = Utils.progressPosition(width, height, areaProgress);
+
+    /// 尺寸扩散的倍数
+    final spread = lightConfig.spreadFactor;
+
+    /// 扩散的尺寸 width
+    final spreadWidth = width * spread;
+
+    /// 扩散的尺寸 height
+    final spreadHeight = height * spread;
+
+    /// 当前坐标相对于中心坐标的区域坐标
+    final p2cPosition = -Utils.p2cAreaPosition(
+      spreadWidth,
+      spreadHeight,
+      Utils.constraintsPosition(width, height, position),
+    );
+
+    /// 定位 x （从中心位置开始）
+    final positionX = p2cPosition.dx;
+
+    /// 定位 y （从中心位置开始）
+    final positionY = p2cPosition.dy;
+
+    /// 光源方向进度
+    final showProgress = tiltDecorationDirectionProgress(
+      areaProgress,
+      lightConfig.direction,
+      min: lightConfig.minIntensity,
+      max: lightConfig.maxIntensity,
+    );
+
+    /// 光源颜色的 Alpha 进度
+    final alphaProgress = 255.0 * showProgress;
 
     return Positioned(
       left: enableReverse ? positionX : null,
@@ -91,8 +87,8 @@ class TiltLight extends StatelessWidget with TiltDecorationMixin {
       bottom: !enableReverse ? positionY : null,
       child: IgnorePointer(
         child: Container(
-          width: _spreadW,
-          height: _spreadH,
+          width: spreadWidth,
+          height: spreadHeight,
           decoration: BoxDecoration(
             gradient: RadialGradient(
               center: Alignment.center,
@@ -102,9 +98,9 @@ class TiltLight extends StatelessWidget with TiltDecorationMixin {
                 /// 以下 withAlpha 内的计算方式和 withOpacity 内部的计算方式一致，
                 /// 所以还不支持 P3 广色域，目前依旧是 sRGB。
                 /// https://docs.flutter.dev/release/breaking-changes/wide-gamut-framework
-                lightConfig.color.withAlpha((lightColorBase * 0.95).round()),
-                lightConfig.color.withAlpha((lightColorBase * 0.85).round()),
-                lightConfig.color.withAlpha((lightColorBase * 0.5).round()),
+                lightConfig.color.withAlpha((alphaProgress * 0.95).round()),
+                lightConfig.color.withAlpha((alphaProgress * 0.85).round()),
+                lightConfig.color.withAlpha((alphaProgress * 0.5).round()),
                 lightConfig.color.withAlpha(0),
               ],
               stops: const <double>[0.01, 0.4, 0.75, 0.99],
