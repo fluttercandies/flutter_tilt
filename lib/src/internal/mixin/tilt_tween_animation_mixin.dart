@@ -270,7 +270,7 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
   Duration _enterToMoveDuration(TiltConfig tiltConfig) {
     var progress = enterToMoveAnimationController.value;
 
-    if (progress >= 1) tiltConfig.moveDuration;
+    if (progress >= 1) return tiltConfig.moveDuration;
 
     progress = tiltConfig.enterToMoveCurve.transform(progress);
     final tween = Tween<Duration>(

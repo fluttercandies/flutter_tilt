@@ -10,6 +10,10 @@
 - Simulated light reflection is more natural.
 - Avoid redundant calculations and optimize performance.
 
+**Fixes**
+
+- Return `moveDuration` when enterToMove animation progress >= 1
+
 ## 3.3.3
 
 **Improvements**

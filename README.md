@@ -50,10 +50,8 @@
 
 ## Features ✨  
 
-- 📦 Tilt effect
-- 🔦 Light effect
-- 💡 Shadow effect
-- 👀 Parallax effect
+- 👀 Tilt & parallax effects
+- 🎨 Simulated light & shadow effects
 - 📱 Gyroscope sensor support ([Sensors compatibility][])
 - 🧱 Multiple layouts
 - 👇 Supports hover, touch, and sensors events ([Gesture priority][])
