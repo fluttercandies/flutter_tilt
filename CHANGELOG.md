@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/docs/migration-guides/) for the details of breaking changes between versions.
 
+## 3.3.4
+
+**Improvements**
+
+- Simulated light reflection is more natural.
+
 ## 3.3.3
 
 **Improvements**

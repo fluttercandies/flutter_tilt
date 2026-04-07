@@ -82,6 +82,8 @@ class TiltLight extends StatelessWidget with TiltDecorationMixin {
       return const SizedBox();
     }
 
+    final lightColorBase = 255.0 * showProgress;
+
     return Positioned(
       left: enableReverse ? positionX : null,
       top: enableReverse ? positionY : null,
@@ -100,10 +102,12 @@ class TiltLight extends StatelessWidget with TiltDecorationMixin {
                 /// 以下 withAlpha 内的计算方式和 withOpacity 内部的计算方式一致，
                 /// 所以还不支持 P3 广色域，目前依旧是 sRGB。
                 /// https://docs.flutter.dev/release/breaking-changes/wide-gamut-framework
-                lightConfig.color.withAlpha((255.0 * showProgress).round()),
+                lightConfig.color.withAlpha((lightColorBase * 0.95).round()),
+                lightConfig.color.withAlpha((lightColorBase * 0.85).round()),
+                lightConfig.color.withAlpha((lightColorBase * 0.5).round()),
                 lightConfig.color.withAlpha(0),
               ],
-              stops: const <double>[0.01, 0.99],
+              stops: const <double>[0.01, 0.4, 0.75, 0.99],
             ),
           ),
         ),
