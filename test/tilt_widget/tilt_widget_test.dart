@@ -238,4 +238,32 @@ void main() {
       }
     });
   });
+
+  group('ChildLayout ::', () {
+    testWidgets('UI layer order', (WidgetTester tester) async {
+      const outerKey = Key('outer');
+      const innerKey = Key('inner');
+      const childKey = Key('child');
+      const behindKey = Key('behind');
+
+      Widget buildTestWidget() {
+        return const TiltWidget(
+          childLayout: ChildLayout(
+            outer: [Text('outer', key: outerKey)],
+            inner: [Text('inner', key: innerKey)],
+            behind: [Text('behind', key: behindKey)],
+          ),
+        );
+      }
+
+      await tester.pumpWidget(buildTestWidget());
+      await tester.pumpAndSettle();
+      final allTextKeys = tester
+          .widgetList<Text>(find.byType(Text))
+          .map((value) => value.key)
+          .toList()
+          .reversed;
+      expect(allTextKeys, [outerKey, innerKey, childKey, behindKey]);
+    });
+  });
 }

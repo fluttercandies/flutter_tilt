@@ -58,7 +58,7 @@ class TiltWidget extends StatelessWidget {
           child: const SizedBox(
             width: 10,
             height: 10,
-            child: Text('Tilt'),
+            child: Text('Tilt', key: Key('child')),
           ),
         ),
       ),

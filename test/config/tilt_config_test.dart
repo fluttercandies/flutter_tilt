@@ -63,6 +63,20 @@ void main() {
       expect(tiltConfigCopyWith.hashCode, tiltConfigExpect.hashCode);
     });
   });
+
+  group('ChildLayout ::', () {
+    test('value', () {
+      const layout = ChildLayout(
+        outer: [Placeholder()],
+        inner: [Placeholder()],
+        behind: [Placeholder()],
+      );
+      expect(layout.outer.length, 1);
+      expect(layout.inner.length, 1);
+      expect(layout.behind.length, 1);
+    });
+  });
+
   group('TiltDirection ::', () {
     test('value', () {
       final tiltDirection = -const TiltDirection(1.0, 1.0);
