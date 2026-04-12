@@ -83,9 +83,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-        with:
-          sparse-checkout: ${{ env.tilt_sparse_checkout }}
-          sparse-checkout-cone-mode: false
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
