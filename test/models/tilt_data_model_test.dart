@@ -6,12 +6,16 @@ void main() {
   group('TiltDataModel ::', () {
     test('hashCode', () {
       final tiltDataModel = TiltDataModel(
+        width: 1,
+        height: 1,
         position: const Offset(5, 5),
         areaProgress: Offset.zero,
         transform: Matrix4.identity(),
         angle: Offset.zero,
       );
       final tiltDataModel2 = TiltDataModel(
+        width: 1,
+        height: 1,
         position: const Offset(5, 5),
         areaProgress: Offset.zero,
         transform: Matrix4.identity(),

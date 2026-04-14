@@ -32,7 +32,7 @@ void main() {
       final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(0.0, 1.0),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
 
       await tester.pumpWidget(
         TiltWidget(
@@ -56,11 +56,11 @@ void main() {
       final tiltDataInitialExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
       final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(-0.8, -0.8),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
 
       await tester.pumpWidget(
         TiltWidget(
@@ -107,7 +107,7 @@ void main() {
       final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
 
       await tester.pumpWidget(
         TiltWidget(
@@ -144,11 +144,11 @@ void main() {
       final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
       final tiltDataExpect2 = tiltDataTestCalculate(
         areaProgress: const Offset(-1.0, -1.0),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
 
       await tester.pumpWidget(
         TiltWidget(
@@ -182,11 +182,11 @@ void main() {
       final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
       final tiltDataExpect2 = tiltDataTestCalculate(
         areaProgress: Offset.zero,
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
 
       await tester.pumpWidget(
         TiltWidget(
@@ -218,7 +218,7 @@ void main() {
       final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
 
       await tester.pumpWidget(
         TiltWidget(
@@ -265,7 +265,7 @@ void main() {
       final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
 
       await tester.pumpWidget(
         TiltWidget(
@@ -293,11 +293,11 @@ void main() {
       final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(1.0, 1.0),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
       final tiltDataExpect2 = tiltDataTestCalculate(
         areaProgress: Offset.zero,
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
 
       await tester.pumpWidget(
         TiltWidget(
@@ -335,7 +335,7 @@ void main() {
       final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(-0.8, -0.8),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
 
       await tester.pumpWidget(
         TiltWidget(
@@ -383,11 +383,6 @@ void main() {
                 Tilt(
                   key: const Key('tilt_widget'),
                   tiltConfig: const TiltConfig(enableGestureTouch: false),
-                  child: const SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Text('Tilt'),
-                  ),
                   onGestureMove: (
                     TiltDataModel tiltData,
                     GesturesType gesturesType,
@@ -395,6 +390,13 @@ void main() {
                     tiltDataTest = tiltData;
                     gesturesTypeTest = gesturesType;
                   },
+                  child: const TiltBaseContainer(
+                    child: SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Text('Tilt'),
+                    ),
+                  ),
                 ),
                 const SizedBox(key: Key('scroll'), height: 100, width: 100),
                 const SizedBox(height: 1000),
@@ -425,7 +427,7 @@ void main() {
       final tiltDataExpect = tiltDataTestCalculate(
         areaProgress: const Offset(-1.0, -1.0),
         tiltConfig: tiltConfigTest,
-      ).data;
+      ).toModel();
 
       await tester.pumpWidget(
         TiltWidget(

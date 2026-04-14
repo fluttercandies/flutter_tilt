@@ -3,6 +3,28 @@
 > [!IMPORTANT]  
 > See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/docs/migration-guides/) for the details of breaking changes between versions.
 
+## 4.0.0-rc (Unreleased)
+
+**Breaking changes**
+
+Migration Guides: [Migrate to v4.0.0](#)
+
+- `Tilt` widget now only manages gesture state, sensor state, and animation state...
+- The previous `Tilt.lightShadowMode` parameter has been split into the independent widgets `TiltBaseContainer` and `TiltProjectorContainer`.
+  To reproduce the previous style, you need to compose them inside the `Tilt` widget,
+  or use `Tilt.base` and `Tilt.projector` directly.
+- `ShadowConfig` has been split into `ShadowBaseConfig` and `ShadowProjectorConfig`.
+
+**Deprecations**
+
+- The `lightConfig` of `TiltProjectorContainer` is now deprecated.
+  Because the current simulated light effect is not suitable for Projector,
+  it is now disabled by default and will be removed in a future release.
+
+**New features**
+
+- Add `TiltAnimatedBuilder` to help implement custom tilt logic.
+
 ## 3.3.4
 
 **Improvements**

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../internal/controllers/tilt_gestures_controller.dart';
-import '../models/tilt_stream_model.dart';
+import '../../internal/controllers/tilt_gestures_controller.dart';
+import '../../models/tilt_stream_model.dart';
 
 /// Tilt StreamBuilder
 class TiltStreamBuilder extends StatefulWidget {

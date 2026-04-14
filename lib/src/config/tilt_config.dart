@@ -23,7 +23,6 @@ class TiltConfig {
     this.angle = 10.0,
     this.direction,
     this.enableReverse = false,
-    this.filterQuality,
     this.enableGestureSensors = true,
     this.sensorFactor = 10.0,
     this.enableSensorRevert = true,
@@ -131,9 +130,6 @@ class TiltConfig {
   /// {@endtemplate}
   ///
   final bool enableReverse;
-
-  /// FilterQuality
-  final FilterQuality? filterQuality;
 
   /// Gyroscope sensor triggered tilt.
   ///
@@ -435,7 +431,6 @@ class TiltConfig {
     double? angle,
     List<TiltDirection>? direction,
     bool? enableReverse,
-    FilterQuality? filterQuality,
     bool? enableGestureSensors,
     double? sensorFactor,
     bool? enableSensorRevert,
@@ -461,7 +456,6 @@ class TiltConfig {
       angle: angle ?? this.angle,
       direction: direction ?? this.direction,
       enableReverse: enableReverse ?? this.enableReverse,
-      filterQuality: filterQuality ?? this.filterQuality,
       enableGestureSensors: enableGestureSensors ?? this.enableGestureSensors,
       sensorFactor: sensorFactor ?? this.sensorFactor,
       enableSensorRevert: enableSensorRevert ?? this.enableSensorRevert,
@@ -501,7 +495,6 @@ class TiltConfig {
         Object.hashAll(other.direction ?? []) ==
             Object.hashAll(direction ?? []) &&
         other.enableReverse == enableReverse &&
-        other.filterQuality == filterQuality &&
         other.enableGestureSensors == enableGestureSensors &&
         other.sensorFactor == sensorFactor &&
         other.enableSensorRevert == enableSensorRevert &&
@@ -530,7 +523,6 @@ class TiltConfig {
       angle,
       Object.hashAll(direction ?? []),
       enableReverse,
-      filterQuality,
       enableGestureSensors,
       sensorFactor,
       enableSensorRevert,

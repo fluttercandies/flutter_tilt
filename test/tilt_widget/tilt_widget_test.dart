@@ -30,11 +30,6 @@ void main() {
                 Tilt(
                   key: const Key('tilt_widget'),
                   disable: true,
-                  child: const SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Text('Tilt'),
-                  ),
                   onGestureMove: (
                     TiltDataModel tiltData,
                     GesturesType gesturesType,
@@ -42,6 +37,13 @@ void main() {
                     tiltDataTest = tiltData;
                     gesturesTypeTest = gesturesType;
                   },
+                  child: const TiltBaseContainer(
+                    child: SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Text('Tilt'),
+                    ),
+                  ),
                 ),
                 const SizedBox(key: Key('scroll'), height: 100, width: 100),
                 const SizedBox(height: 1000),

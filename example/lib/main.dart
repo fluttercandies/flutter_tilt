@@ -53,7 +53,7 @@ class TiltExample extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: Center(
-        child: Tilt(
+        child: Tilt.base(
           borderRadius: BorderRadius.circular(24.0),
           tiltConfig: const TiltConfig(
             angle: 20,
@@ -61,7 +61,7 @@ class TiltExample extends StatelessWidget {
             leaveDuration: Duration(milliseconds: 1200),
           ),
           lightConfig: const LightConfig(disable: true),
-          shadowConfig: const ShadowConfig(disable: true),
+          shadowConfig: const ShadowBaseConfig(disable: true),
           childLayout: ChildLayout(
             inner: [
               ...innerBox,

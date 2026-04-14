@@ -6,7 +6,7 @@ import 'tilt_widget_base.dart';
 
 void main() {
   final childFinder = find.text('Tilt');
-  group('LightShadowMode.base :: tilt TiltStreamController ::', () {
+  group('TiltBaseContainer :: tilt TiltStreamController ::', () {
     testWidgets('stream listen', (WidgetTester tester) async {
       var tiltStreamModelTest = const TiltStreamModel(
         position: Offset(1, 1),

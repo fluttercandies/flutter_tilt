@@ -5,7 +5,7 @@ import 'package:flutter_tilt/src/internal/tilt_data.dart';
 import 'tilt_widget_projector.dart';
 
 void main() {
-  group('LightShadowMode.projector :: tilt gestures touch ::', () {
+  group('TiltProjectorContainer :: tilt gestures touch ::', () {
     const tiltConfig = TiltConfig();
     TiltData tiltDataTestCalculate(Offset areaProgress) => TiltData(
           isInit: true,
@@ -25,7 +25,8 @@ void main() {
       TiltDataModel? leaveTiltDataTest;
       GesturesType? moveGesturesTypeTest;
       GesturesType? leaveGesturesTypeTest;
-      final leaveTiltDataTestExpect = tiltDataTestCalculate(Offset.zero).data;
+      final leaveTiltDataTestExpect =
+          tiltDataTestCalculate(Offset.zero).toModel();
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -67,7 +68,8 @@ void main() {
     testWidgets('move top', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final tiltDataExpect = tiltDataTestCalculate(const Offset(0.0, 1.0)).data;
+      final tiltDataExpect =
+          tiltDataTestCalculate(const Offset(0.0, 1.0)).toModel();
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -95,7 +97,7 @@ void main() {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
       final tiltDataExpect =
-          tiltDataTestCalculate(const Offset(0.0, -1.0)).data;
+          tiltDataTestCalculate(const Offset(0.0, -1.0)).toModel();
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -122,7 +124,8 @@ void main() {
     testWidgets('move left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final tiltDataExpect = tiltDataTestCalculate(const Offset(1.0, 0.0)).data;
+      final tiltDataExpect =
+          tiltDataTestCalculate(const Offset(1.0, 0.0)).toModel();
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -150,7 +153,7 @@ void main() {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
       final tiltDataExpect =
-          tiltDataTestCalculate(const Offset(-1.0, 0.0)).data;
+          tiltDataTestCalculate(const Offset(-1.0, 0.0)).toModel();
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -177,7 +180,8 @@ void main() {
     testWidgets('move top left', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
-      final tiltDataExpect = tiltDataTestCalculate(const Offset(1.0, 1.0)).data;
+      final tiltDataExpect =
+          tiltDataTestCalculate(const Offset(1.0, 1.0)).toModel();
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -205,7 +209,7 @@ void main() {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
       final tiltDataExpect =
-          tiltDataTestCalculate(const Offset(-1.0, 1.0)).data;
+          tiltDataTestCalculate(const Offset(-1.0, 1.0)).toModel();
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -233,7 +237,7 @@ void main() {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
       final tiltDataExpect =
-          tiltDataTestCalculate(const Offset(1.0, -1.0)).data;
+          tiltDataTestCalculate(const Offset(1.0, -1.0)).toModel();
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -261,7 +265,7 @@ void main() {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
       final tiltDataExpect =
-          tiltDataTestCalculate(const Offset(-1.0, -1.0)).data;
+          tiltDataTestCalculate(const Offset(-1.0, -1.0)).toModel();
 
       /// 回调赋值
       await tester.pumpWidget(
@@ -291,12 +295,13 @@ void main() {
       TiltDataModel? leaveTiltDataTest;
       GesturesType? moveGesturesTypeTest;
       GesturesType? leaveGesturesTypeTest;
-      final leaveTiltDataTestExpect = tiltDataTestCalculate(Offset.zero).data;
+      final leaveTiltDataTestExpect =
+          tiltDataTestCalculate(Offset.zero).toModel();
 
       /// 回调赋值
       await tester.pumpWidget(
         TiltWidgetProjector(
-          shadowConfig: const ShadowConfig(disable: true),
+          shadowConfig: const ShadowProjectorConfig(disable: true),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             moveTiltDataTest = tiltData;
             moveGesturesTypeTest = gesturesType;

@@ -7,11 +7,17 @@ class TiltDataModel {
   /// TiltDataModel
   /// 倾斜数据 Model
   const TiltDataModel({
+    required this.width,
+    required this.height,
     required this.position,
     required this.areaProgress,
     required this.transform,
     required this.angle,
   });
+
+  final double width;
+
+  final double height;
 
   /// 当前坐标
   final Offset position;
@@ -56,6 +62,8 @@ class TiltDataModel {
       return false;
     }
     return other is TiltDataModel &&
+        other.width == width &&
+        other.height == height &&
         other.position == position &&
         other.areaProgress == areaProgress &&
         other.transform == transform &&
@@ -64,6 +72,8 @@ class TiltDataModel {
 
   @override
   int get hashCode => Object.hash(
+        width.hashCode,
+        height.hashCode,
         position.hashCode,
         areaProgress.hashCode,
         transform.hashCode,

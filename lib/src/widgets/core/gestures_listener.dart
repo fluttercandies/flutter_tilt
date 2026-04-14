@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
-import '../enums.dart';
-import '../internal/controllers/tilt_gestures_controller.dart';
-import '../models/tilt_stream_model.dart';
+import '../../enums.dart';
+import '../../internal/controllers/tilt_gestures_controller.dart';
+import '../../models/tilt_stream_model.dart';
 
 /// 手势监听
 class GesturesListener extends StatefulWidget {

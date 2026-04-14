@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 
 void main() {
-  group('LightShadowMode.base :: tilt gestures drag ::', () {
+  group('TiltBaseContainer :: tilt gestures drag ::', () {
     testWidgets('scroll', (WidgetTester tester) async {
       final childFinder = find.text('Tilt');
       final scrollFinder = find.byKey(const Key('scroll'));
@@ -21,7 +21,13 @@ void main() {
               children: const <Widget>[
                 Tilt(
                   key: Key('tilt_widget'),
-                  child: SizedBox(width: 100, height: 100, child: Text('Tilt')),
+                  child: TiltBaseContainer(
+                    child: SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Text('Tilt'),
+                    ),
+                  ),
                 ),
                 SizedBox(key: Key('scroll'), height: 100, width: 100),
                 SizedBox(height: 1000),

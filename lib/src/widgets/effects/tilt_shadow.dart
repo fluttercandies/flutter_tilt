@@ -3,13 +3,14 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/widgets.dart';
 
-import '../config/tilt_light_config.dart';
-import '../config/tilt_shadow_config.dart';
-import '../enums.dart';
-import '../internal/mixin/tilt_decoration_mixin.dart';
-import '../utils.dart';
+import '../../config/tilt_light_config.dart';
+import '../../config/tilt_shadow_config.dart';
+import '../../enums.dart';
+import '../../internal/mixin/tilt_decoration_mixin.dart';
+import '../../utils.dart';
 
-abstract class TiltShadow extends StatelessWidget with TiltDecorationMixin {
+abstract class TiltShadow<TShadowConfig extends ShadowConfig>
+    extends StatelessWidget with TiltDecorationMixin {
   const TiltShadow({
     super.key,
     required this.child,
@@ -30,7 +31,7 @@ abstract class TiltShadow extends StatelessWidget with TiltDecorationMixin {
   final LightConfig lightConfig;
 
   /// 阴影配置
-  final ShadowConfig shadowConfig;
+  final TShadowConfig shadowConfig;
 
   /// 阴影显示（受光源影响）
   ///
@@ -87,8 +88,8 @@ abstract class TiltShadow extends StatelessWidget with TiltDecorationMixin {
 }
 
 /// 阴影 Base
-/// [LightShadowMode.base]
-class TiltShadowBase extends TiltShadow {
+/// [TiltBaseContainer]
+class TiltShadowBase extends TiltShadow<ShadowBaseConfig> {
   /// 阴影 Base
   ///
   /// 作用于其他组件上的阴影效果
@@ -189,8 +190,8 @@ class TiltShadowBase extends TiltShadow {
 }
 
 /// 阴影 Projector
-/// [LightShadowMode.projector]
-class TiltShadowProjector extends TiltShadow {
+/// [TiltProjectorContainer]
+class TiltShadowProjector extends TiltShadow<ShadowProjectorConfig> {
   /// 阴影 Projector
   ///
   /// 作用于其他组件上的阴影效果

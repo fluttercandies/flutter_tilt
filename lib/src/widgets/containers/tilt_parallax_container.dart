@@ -1,15 +1,31 @@
 import 'package:flutter/widgets.dart';
 
-import '../internal/provider/tilt_animation_provider.dart';
-import '../internal/provider/tilt_provider.dart';
+import '../core/tilt_animated_builder.dart';
 
-/// 倾斜视差
 class TiltParallaxContainer extends StatelessWidget {
-  /// 倾斜视差
+  /// {@template tilt.TiltParallaxContainer.desc.en}
+  /// A parallax effect widget that can only be used inside [Tilt].
   ///
-  /// 用作视差的 Widget
+  /// Create a parallax layer within the Tilt widget tree.
+  /// {@endtemplate}
   ///
-  /// 只能在 [Tilt.childLayout] 中使用
+  /// {@template tilt.TiltParallaxContainer.param.en}
+  /// - [size]: Parallax size.
+  /// - [filterQuality]: Flutter FilterQuality.
+  /// {@endtemplate}
+  ///
+  /// ------
+  ///
+  /// {@template tilt.TiltParallaxContainer.desc.zh}
+  /// 倾斜视差，只能在 [Tilt] 中使用的视差效果 widget。
+  ///
+  /// 在 Tilt widget 树内创建视差效果层。
+  /// {@endtemplate}
+  ///
+  /// {@template tilt.TiltParallaxContainer.param.zh}
+  /// - [size]：视差大小。
+  /// - [filterQuality]：Flutter FilterQuality。
+  /// {@endtemplate}
   const TiltParallaxContainer({
     super.key,
     required this.child,
@@ -26,18 +42,12 @@ class TiltParallaxContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tiltAnimationProvider = TiltAnimationProvider.of(context);
-    final tiltTweenAnimationProvider = tiltAnimationProvider.tiltTweenAnimation;
-    final tiltProvider = TiltProvider.of(context);
-
-    return AnimatedBuilder(
-      animation: tiltTweenAnimationProvider,
-      builder: (BuildContext context, Widget? child) {
-        final areaProgress = tiltTweenAnimationProvider.value;
+    return TiltAnimatedBuilder(
+      builder: (context, tiltData, tiltConfig, onResize, child) {
         final tiltParallaxTransform = this.tiltParallaxTransform(
-          areaProgress,
+          tiltData.areaProgress,
           size,
-          tiltProvider.tiltConfig.enableReverse,
+          tiltConfig.enableReverse,
         );
 
         return Transform(

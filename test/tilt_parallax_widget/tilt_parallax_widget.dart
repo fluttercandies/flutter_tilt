@@ -12,7 +12,7 @@ class TiltParallaxWidget extends StatelessWidget {
     this.clipBehavior = Clip.antiAlias,
     this.tiltConfig = const TiltConfig(),
     this.lightConfig = const LightConfig(),
-    this.shadowConfig = const ShadowConfig(),
+    this.shadowConfig = const ShadowBaseConfig(),
     this.onGestureMove,
     this.onGestureLeave,
   });
@@ -25,7 +25,7 @@ class TiltParallaxWidget extends StatelessWidget {
   final Clip clipBehavior;
   final TiltConfig tiltConfig;
   final LightConfig lightConfig;
-  final ShadowConfig shadowConfig;
+  final ShadowBaseConfig shadowConfig;
   final void Function(TiltDataModel, GesturesType)? onGestureMove;
   final void Function(TiltDataModel, GesturesType)? onGestureLeave;
 
@@ -40,21 +40,23 @@ class TiltParallaxWidget extends StatelessWidget {
           child: Center(
             child: Tilt(
               key: const Key('tilt_widget'),
-              childLayout: childLayout,
               disable: disable,
               fps: fps,
-              border: border,
-              borderRadius: borderRadius,
-              clipBehavior: clipBehavior,
               tiltConfig: tiltConfig.copyWith(enableGestureSensors: false),
-              lightConfig: lightConfig,
-              shadowConfig: shadowConfig,
               onGestureMove: onGestureMove,
               onGestureLeave: onGestureLeave,
-              child: const SizedBox(
-                width: 10,
-                height: 10,
-                child: Text('Tilt'),
+              child: TiltBaseContainer(
+                childLayout: childLayout,
+                border: border,
+                borderRadius: borderRadius,
+                clipBehavior: clipBehavior,
+                lightConfig: lightConfig,
+                shadowConfig: shadowConfig,
+                child: const SizedBox(
+                  width: 10,
+                  height: 10,
+                  child: Text('Tilt'),
+                ),
               ),
             ),
           ),

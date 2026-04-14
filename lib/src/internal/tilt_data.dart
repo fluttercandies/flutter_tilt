@@ -32,14 +32,6 @@ class TiltData {
   /// 倾斜配置
   final TiltConfig tiltConfig;
 
-  /// 倾斜数据
-  TiltDataModel get data => TiltDataModel(
-        position: position,
-        transform: transform,
-        areaProgress: areaProgress,
-        angle: angle,
-      );
-
   /// 当前坐标
   Offset get position => Utils.progressPosition(width, height, areaProgress);
 
@@ -75,4 +67,14 @@ class TiltData {
       ..rotateX(rotateX)
       ..rotateY(rotateY);
   }
+
+  /// 转换为 TiltDataModel
+  TiltDataModel toModel() => TiltDataModel(
+        width: width,
+        height: height,
+        position: position,
+        transform: transform,
+        areaProgress: areaProgress,
+        angle: angle,
+      );
 }
