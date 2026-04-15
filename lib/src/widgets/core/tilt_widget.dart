@@ -14,6 +14,7 @@ import '../../models/tilt_stream_model.dart';
 import '../../utils.dart';
 import 'gestures_listener.dart';
 import 'tilt_stream_builder.dart';
+import 'widget_size_getter.dart';
 
 /// TiltWidget
 /// 倾斜
@@ -186,8 +187,9 @@ class _TiltWidgetState extends State<TiltWidget> {
             isMove: _isMove,
             currentGesturesType: _currentGesturesType,
             tiltConfig: widget.tiltConfig,
-            onResize: _onResize,
-            child: _TiltAnimationProviderWrapper(child: widget.child),
+            child: _TiltAnimationProviderWrapper(
+              child: WidgetSizeGetter(onSize: _onResize, child: widget.child),
+            ),
           );
         },
       ),

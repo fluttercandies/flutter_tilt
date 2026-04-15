@@ -16,7 +16,6 @@ class TiltProvider extends InheritedWidget {
     required this.isMove,
     required this.currentGesturesType,
     required this.tiltConfig,
-    required this.onResize,
   });
 
   /// 是否初始化
@@ -39,9 +38,6 @@ class TiltProvider extends InheritedWidget {
 
   /// 倾斜配置
   final TiltConfig tiltConfig;
-
-  /// 调整尺寸
-  final void Function(Size) onResize;
 
   static TiltProvider of(BuildContext context) {
     final tiltProvider =

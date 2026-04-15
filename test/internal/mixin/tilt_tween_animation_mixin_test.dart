@@ -217,16 +217,15 @@ class TiltTweenAnimationMixinTestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TiltProvider(
-      tiltConfig: const TiltConfig(),
+    return const TiltProvider(
+      tiltConfig: TiltConfig(),
       isInit: true,
       width: 10.0,
       height: 10.0,
       areaProgress: Offset.zero,
       isMove: true,
       currentGesturesType: GesturesType.touch,
-      onResize: (_) {},
-      child: const TiltTweenAnimationMixinTest(),
+      child: TiltTweenAnimationMixinTest(),
     );
   }
 }

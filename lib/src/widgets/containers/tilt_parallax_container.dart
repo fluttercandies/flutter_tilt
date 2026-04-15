@@ -43,7 +43,7 @@ class TiltParallaxContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TiltAnimatedBuilder(
-      builder: (context, tiltData, tiltConfig, onResize, child) {
+      builder: (context, tiltData, tiltConfig, child) {
         final tiltParallaxTransform = this.tiltParallaxTransform(
           tiltData.areaProgress,
           size,

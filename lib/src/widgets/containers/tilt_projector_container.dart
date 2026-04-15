@@ -6,7 +6,6 @@ import '../../config/tilt_shadow_config.dart';
 import '../core/tilt_animated_builder.dart';
 import '../effects/tilt_light.dart';
 import '../effects/tilt_shadow.dart';
-import 'tilt_container_utils.dart';
 
 class TiltProjectorContainer extends StatelessWidget {
   /// {@template tilt.TiltProjectorContainer.desc.en}
@@ -131,7 +130,7 @@ class TiltProjectorContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TiltAnimatedBuilder(
-      builder: (context, tiltData, tiltConfig, onResize, child) {
+      builder: (context, tiltData, tiltConfig, child) {
         return Transform(
           alignment: AlignmentDirectional.center,
           filterQuality: filterQuality,
@@ -144,7 +143,6 @@ class TiltProjectorContainer extends StatelessWidget {
               width: tiltData.width,
               height: tiltData.height,
               areaProgress: tiltData.areaProgress,
-              onResize: onResize,
             ),
           ),
         );
@@ -158,7 +156,6 @@ class TiltProjectorContainer extends StatelessWidget {
     required double width,
     required double height,
     required Offset areaProgress,
-    required void Function(Size) onResize,
   }) {
     return [
       /// shadow
@@ -219,10 +216,11 @@ class TiltProjectorContainer extends StatelessWidget {
             /// inner child
             ...childLayout.inner,
 
+            /// TODO: 已被 [WidgetSizeGetter] 替代，后续删除
             /// resize
-            Positioned.fill(
-              child: TiltContainerUtils.buildWidgetResize(onResize),
-            ),
+            // Positioned.fill(
+            //   child: TiltContainerUtils.buildWidgetResize(onResize),
+            // ),
           ],
         ),
       ),

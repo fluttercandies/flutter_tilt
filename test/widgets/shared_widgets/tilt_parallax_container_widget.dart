@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
+import 'package:flutter_tilt/src/widgets/containers/tilt_parallax_container.dart';
 
 class TiltParallaxContainerWidget extends StatelessWidget {
   const TiltParallaxContainerWidget({
@@ -60,7 +61,8 @@ class TiltParallaxContainerWidget extends StatelessWidget {
                     const ChildLayout(
                       outer: <Widget>[
                         Positioned(
-                          child: TiltParallax(
+                          child: TiltParallaxContainer(
+                            size: Offset(10, 10),
                             child: SizedBox(
                               width: 10,
                               height: 10,
@@ -71,7 +73,8 @@ class TiltParallaxContainerWidget extends StatelessWidget {
                       ],
                       inner: <Widget>[
                         Positioned(
-                          child: TiltParallax(
+                          child: TiltParallaxContainer(
+                            size: Offset(10, 10),
                             child: SizedBox(
                               width: 10,
                               height: 10,
@@ -82,7 +85,8 @@ class TiltParallaxContainerWidget extends StatelessWidget {
                       ],
                       behind: <Widget>[
                         Positioned(
-                          child: TiltParallax(
+                          child: TiltParallaxContainer(
+                            size: Offset(10, 10),
                             child: SizedBox(
                               width: 10,
                               height: 10,

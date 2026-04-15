@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
+import '../core/widget_size_getter.dart';
 
 abstract final class TiltContainerUtils {
+  /// TODO: 已被 [WidgetSizeGetter] 替代，后续删除
+  ///
   /// 尺寸监听 Widget
   ///
   /// - [onResize] 调整尺寸回调
