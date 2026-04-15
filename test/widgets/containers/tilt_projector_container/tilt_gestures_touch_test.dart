@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:flutter_tilt/src/internal/tilt_data.dart';
-import 'tilt_widget_projector.dart';
+import '../../shared_widgets/tilt_projector_container_widget.dart';
 
 void main() {
   group('TiltProjectorContainer :: tilt gestures touch ::', () {
@@ -30,7 +30,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltProjectorContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             moveTiltDataTest = tiltData;
             moveGesturesTypeTest = gesturesType;
@@ -55,7 +55,7 @@ void main() {
       expect(leaveTiltDataTest, leaveTiltDataTestExpect);
     });
     testWidgets('onPointerCancel', (WidgetTester tester) async {
-      await tester.pumpWidget(const TiltWidgetProjector());
+      await tester.pumpWidget(const TiltProjectorContainerWidget());
 
       final location = tester.getCenter(tiltWidgetFinder);
       await tester.sendEventToBinding(testPointer.down(location));
@@ -73,7 +73,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltProjectorContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -101,7 +101,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltProjectorContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -129,7 +129,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltProjectorContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -157,7 +157,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltProjectorContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -185,7 +185,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltProjectorContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -213,7 +213,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltProjectorContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -241,7 +241,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltProjectorContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -269,7 +269,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltProjectorContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -300,7 +300,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltProjectorContainerWidget(
           shadowConfig: const ShadowProjectorConfig(disable: true),
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             moveTiltDataTest = tiltData;

@@ -3,13 +3,13 @@ import 'dart:async' show StreamController;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
-import 'tilt_widget.dart';
+import 'shared_widgets/tilt_widget.dart';
 
 void main() {
   final tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
   final childFinder = find.text('Tilt');
 
-  group('tilt config ::', () {
+  group('Tilt config ::', () {
     testWidgets('default', (WidgetTester tester) async {
       await tester.pumpWidget(const TiltWidget());
       await tester.pumpAndSettle();
@@ -93,7 +93,7 @@ void main() {
     });
   });
 
-  group('didUpdateWidget ::', () {
+  group('Tilt didUpdateWidget ::', () {
     testWidgets('tiltStreamController', (WidgetTester tester) async {
       final tiltStreamController1 =
           StreamController<TiltStreamModel>.broadcast();
@@ -238,34 +238,6 @@ void main() {
           expect(currentGesturesType, GesturesType.sensors);
         }
       }
-    });
-  });
-
-  group('ChildLayout ::', () {
-    testWidgets('UI layer order', (WidgetTester tester) async {
-      const outerKey = Key('outer');
-      const innerKey = Key('inner');
-      const childKey = Key('child');
-      const behindKey = Key('behind');
-
-      Widget buildTestWidget() {
-        return const TiltWidget(
-          childLayout: ChildLayout(
-            outer: [Text('outer', key: outerKey)],
-            inner: [Text('inner', key: innerKey)],
-            behind: [Text('behind', key: behindKey)],
-          ),
-        );
-      }
-
-      await tester.pumpWidget(buildTestWidget());
-      await tester.pumpAndSettle();
-      final allTextKeys = tester
-          .widgetList<Text>(find.byType(Text))
-          .map((value) => value.key)
-          .toList()
-          .reversed;
-      expect(allTextKeys, [outerKey, innerKey, childKey, behindKey]);
     });
   });
 }

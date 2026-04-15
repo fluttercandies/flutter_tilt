@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
-import 'tilt_widget_base.dart';
+import '../../shared_widgets/tilt_projector_container_widget.dart';
 
 void main() {
   final childFinder = find.text('Tilt');
-  group('TiltBaseContainer :: tilt TiltStreamController ::', () {
+  group('TiltProjectorContainer :: tilt TiltStreamController ::', () {
     testWidgets('stream listen', (WidgetTester tester) async {
       var tiltStreamModelTest = const TiltStreamModel(
         position: Offset(1, 1),
@@ -23,10 +23,12 @@ void main() {
       final tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
-        TiltWidgetBase(tiltStreamController: tiltStreamController),
+        TiltProjectorContainerWidget(
+          tiltStreamController: tiltStreamController,
+        ),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsOneWidget);
+      expect(childFinder, findsNWidgets(2));
 
       /// 测试值不同
       expect(tiltStreamModelTest != tiltStreamModelExpect, true);
@@ -64,7 +66,7 @@ void main() {
       final tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
-        TiltWidgetBase(
+        TiltProjectorContainerWidget(
           tiltStreamController: tiltStreamController,
           tiltConfig: const TiltConfig(
             enableGestureTouch: false,
@@ -94,7 +96,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsOneWidget);
+      expect(childFinder, findsNWidgets(2));
       expect(tiltStreamModelTest != tiltStreamModelExpect, true);
 
       /// stream 监听
@@ -256,7 +258,7 @@ void main() {
       final tiltStreamController =
           StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
-        TiltWidgetBase(
+        TiltProjectorContainerWidget(
           tiltStreamController: tiltStreamController,
           onGestureMove: (
             TiltDataModel tiltDataModel,
@@ -281,7 +283,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsOneWidget);
+      expect(childFinder, findsNWidgets(2));
       expect(tiltStreamModelTest != tiltStreamModelExpect, true);
 
       /// stream 监听

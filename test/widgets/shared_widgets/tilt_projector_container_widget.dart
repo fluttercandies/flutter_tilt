@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 
-class TiltWidgetProjector extends StatelessWidget {
-  const TiltWidgetProjector({
+class TiltProjectorContainerWidget extends StatelessWidget {
+  const TiltProjectorContainerWidget({
     super.key,
     this.childLayout = const ChildLayout(),
     this.tiltStreamController,

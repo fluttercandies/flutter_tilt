@@ -57,4 +57,64 @@ void main() {
       expect(lightConfigCopyWith.hashCode, lightConfigExpect.hashCode);
     });
   });
+
+  group('LightProjectorConfig ::', () {
+    test('assert', () {
+      expect(
+        () => LightProjectorConfig(
+          minIntensity: 1.0,
+          maxIntensity: 0.0,
+        ),
+        throwsAssertionError,
+      );
+      expect(
+        () => LightProjectorConfig(
+          minIntensity: -0.1,
+          maxIntensity: 1.0,
+        ),
+        throwsAssertionError,
+      );
+      expect(
+        () => LightProjectorConfig(
+          minIntensity: 0.1,
+          maxIntensity: 1.1,
+        ),
+        throwsAssertionError,
+      );
+      expect(
+        () => LightProjectorConfig(spreadFactor: 0.1),
+        throwsAssertionError,
+      );
+      expect(
+        () => LightProjectorConfig(projectorScale: -1.0),
+        throwsAssertionError,
+      );
+    });
+    test('copyWith', () {
+      const lightConfig = LightProjectorConfig();
+      const lightConfigExpect = LightProjectorConfig(
+        disable: true,
+        color: Color(0xFFFFFFF0),
+        minIntensity: 0.0,
+        maxIntensity: 0.5,
+        spreadFactor: 1.0,
+        projectorScale: 1.0,
+        direction: LightDirection.around,
+        enableReverse: true,
+      );
+      final lightConfigCopyWith = lightConfig.copyWith(
+        disable: true,
+        color: const Color(0xFFFFFFF0),
+        minIntensity: 0.0,
+        maxIntensity: 0.5,
+        spreadFactor: 1.0,
+        projectorScale: 1.0,
+        direction: LightDirection.around,
+        enableReverse: true,
+      );
+      expect(lightConfig, lightConfig.copyWith());
+      expect(lightConfigCopyWith, lightConfigExpect);
+      expect(lightConfigCopyWith.hashCode, lightConfigExpect.hashCode);
+    });
+  });
 }

@@ -3,10 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:flutter_tilt/src/internal/tilt_data.dart';
-import 'tilt_widget_projector.dart';
+import '../../shared_widgets/tilt_base_container_widget.dart';
 
 void main() {
-  group('TiltProjectorContainer :: tilt gestures hover ::', () {
+  group('TiltBaseContainer :: tilt gestures hover ::', () {
     const tiltConfig = TiltConfig();
     TiltData tiltDataTestCalculate(Offset areaProgress) => TiltData(
           isInit: true,
@@ -29,7 +29,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltBaseContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             moveTiltDataTest = tiltData;
             moveGesturesTypeTest = gesturesType;
@@ -47,14 +47,14 @@ void main() {
       /// 倾斜 hover move
       await tester.sendEventToBinding(testPointer.hover(hoverEventLocation));
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(moveGesturesTypeTest, GesturesType.hover);
       expect(moveTiltDataTest != null, true);
 
       /// 倾斜 hover leave
       await tester.sendEventToBinding(testPointer.hover(const Offset(-1, -1)));
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(leaveGesturesTypeTest, GesturesType.hover);
       expect(leaveTiltDataTest, leaveTiltDataExpect);
 
@@ -68,7 +68,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltBaseContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -88,7 +88,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(0.0, -5.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, tiltDataExpect, reason: '倾斜-不超范围');
 
@@ -97,7 +97,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(0.0, -6.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, leaveTiltDataExpect, reason: '倾斜-超范围');
 
@@ -111,7 +111,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltBaseContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -131,7 +131,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(0.0, 4.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, tiltDataExpect, reason: '倾斜-不超范围');
 
@@ -140,7 +140,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(0.0, 6.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, leaveTiltDataExpect, reason: '倾斜-超范围');
 
@@ -154,7 +154,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltBaseContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -174,7 +174,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(-5.0, 0.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, tiltDataExpect, reason: '倾斜-不超范围');
 
@@ -183,7 +183,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(-6.0, 0.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, leaveTiltDataExpect, reason: '倾斜-超范围');
 
@@ -197,7 +197,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltBaseContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -217,7 +217,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(4.0, 0.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, tiltDataExpect, reason: '倾斜-不超范围');
 
@@ -226,7 +226,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(6.0, 0.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, leaveTiltDataExpect, reason: '倾斜-超范围');
 
@@ -240,7 +240,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltBaseContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -260,7 +260,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(-5.0, -5.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, tiltDataExpect, reason: '倾斜-不超范围');
 
@@ -269,7 +269,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(-6.0, -6.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, leaveTiltDataExpect, reason: '倾斜-超范围');
 
@@ -283,7 +283,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltBaseContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -303,7 +303,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(4.0, -5.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, tiltDataExpect, reason: '倾斜-不超范围');
 
@@ -312,7 +312,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(6.0, -6.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, leaveTiltDataExpect, reason: '倾斜-超范围');
 
@@ -326,7 +326,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltBaseContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -346,7 +346,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(-5.0, 4.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, tiltDataExpect, reason: '倾斜-不超范围');
 
@@ -355,7 +355,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(-6.0, 6.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, leaveTiltDataExpect, reason: '倾斜-超范围');
 
@@ -369,7 +369,7 @@ void main() {
 
       /// 回调赋值
       await tester.pumpWidget(
-        TiltWidgetProjector(
+        TiltBaseContainerWidget(
           onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
             tiltDataTest = tiltData;
             gesturesTypeTest = gesturesType;
@@ -389,7 +389,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(4.0, 4.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, tiltDataExpect, reason: '倾斜-不超范围');
 
@@ -398,7 +398,7 @@ void main() {
         testPointer.hover(hoverEventLocation + const Offset(6.0, 6.0)),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(gesturesTypeTest, GesturesType.hover);
       expect(tiltDataTest, leaveTiltDataExpect, reason: '倾斜-超范围');
 

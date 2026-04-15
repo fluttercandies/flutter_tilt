@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 
-class TiltWidget extends StatelessWidget {
-  const TiltWidget({
+class TiltBaseContainerWidget extends StatelessWidget {
+  const TiltBaseContainerWidget({
     super.key,
     this.childLayout = const ChildLayout(),
     this.tiltStreamController,
     this.disable = false,
-    this.fps = 120,
+    this.fps = 60,
     this.border,
     this.borderRadius,
     this.clipBehavior = Clip.antiAlias,
@@ -56,7 +56,7 @@ class TiltWidget extends StatelessWidget {
             child: const SizedBox(
               width: 10,
               height: 10,
-              child: Text('Tilt', key: Key('child')),
+              child: Text('Tilt'),
             ),
           ),
         ),

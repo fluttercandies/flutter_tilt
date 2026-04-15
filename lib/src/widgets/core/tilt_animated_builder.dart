@@ -73,7 +73,7 @@ class TiltAnimatedBuilder extends StatelessWidget {
   const TiltAnimatedBuilder({
     super.key,
     required this.builder,
-    required this.child,
+    this.child,
   });
 
   /// [TiltAnimatedWidgetBuilder]

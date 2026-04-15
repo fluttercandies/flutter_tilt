@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:flutter_tilt/src/internal/tilt_data.dart';
-import 'tilt_widget.dart';
+import 'shared_widgets/tilt_widget.dart';
 
 void main() {
   const tiltConfig = TiltConfig();
@@ -24,7 +24,7 @@ void main() {
   final childFinder = find.text('Tilt');
   final testPointer = TestPointer(1, PointerDeviceKind.mouse);
 
-  group('tilt TiltConfig ::', () {
+  group('Tilt.tiltConfig ::', () {
     testWidgets('disable true', (WidgetTester tester) async {
       TiltDataModel? tiltDataTest;
       GesturesType? gesturesTypeTest;
