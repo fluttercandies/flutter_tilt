@@ -4,6 +4,7 @@ import 'package:flutter_tilt/src/config/tilt_config.dart';
 import 'package:flutter_tilt/src/enums.dart';
 import 'package:flutter_tilt/src/internal/mixin/tilt_tween_animation_mixin.dart';
 import 'package:flutter_tilt/src/internal/provider/tilt_provider.dart';
+import 'package:flutter_tilt/src/internal/tilt_state.dart';
 
 void main() {
   group('TiltTweenAnimationMixin ::', () {
@@ -218,13 +219,15 @@ class TiltTweenAnimationMixinTestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const TiltProvider(
-      tiltConfig: TiltConfig(),
-      isInit: true,
-      width: 10.0,
-      height: 10.0,
-      areaProgress: Offset.zero,
-      isMove: true,
-      currentGesturesType: GesturesType.touch,
+      data: TiltState(
+        tiltConfig: TiltConfig(),
+        isInit: true,
+        width: 10.0,
+        height: 10.0,
+        areaProgress: Offset.zero,
+        isActive: true,
+        currentGesturesType: GesturesType.touch,
+      ),
       child: TiltTweenAnimationMixinTest(),
     );
   }

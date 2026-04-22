@@ -1,7 +1,7 @@
 import 'dart:async' as async show Timer;
 
-class FpsTimerController {
-  FpsTimerController(this.fps);
+class FpsThrottle {
+  FpsThrottle(this.fps);
 
   final int fps;
 

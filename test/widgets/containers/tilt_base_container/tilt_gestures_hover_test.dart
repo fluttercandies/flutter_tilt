@@ -2,18 +2,20 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
-import 'package:flutter_tilt/src/internal/tilt_data.dart';
+import 'package:flutter_tilt/src/internal/tilt_state.dart';
 import '../../shared_widgets/tilt_base_container_widget.dart';
 
 void main() {
   group('TiltBaseContainer :: tilt gestures hover ::', () {
     const tiltConfig = TiltConfig();
-    TiltData tiltDataTestCalculate(Offset areaProgress) => TiltData(
+    TiltState tiltDataTestCalculate(Offset areaProgress) => TiltState(
           isInit: true,
           width: 10,
           height: 10,
           areaProgress: areaProgress,
           tiltConfig: tiltConfig,
+          isActive: true,
+          currentGesturesType: GesturesType.hover,
         );
 
     final tiltWidgetFinder = find.byKey(const Key('tilt_widget'));

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart'
     show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/widgets.dart';
 
-import 'config/tilt_config.dart';
+import '../config/tilt_config.dart';
 
 abstract final class Utils {
   /// 传感器平台支持

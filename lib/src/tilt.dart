@@ -24,7 +24,7 @@ class Tilt extends TiltWidget {
   const Tilt({
     super.key,
     required super.child,
-    super.tiltStreamController,
+    super.tiltController,
     super.disable,
     super.fps,
     super.tiltConfig,
@@ -52,7 +52,7 @@ class Tilt extends TiltWidget {
   Tilt.base({
     super.key,
     required Widget child,
-    super.tiltStreamController,
+    super.tiltController,
     super.disable,
     super.fps,
     super.tiltConfig,
@@ -102,7 +102,7 @@ class Tilt extends TiltWidget {
   Tilt.projector({
     super.key,
     required Widget child,
-    super.tiltStreamController,
+    super.tiltController,
     super.disable,
     super.fps,
     super.tiltConfig,

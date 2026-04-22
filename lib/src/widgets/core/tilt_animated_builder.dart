@@ -1,17 +1,18 @@
 import 'package:flutter/widgets.dart';
 
 import '../../config/tilt_config.dart';
+import '../../enums.dart';
 import '../../internal/provider/tilt_animation_provider.dart';
 import '../../internal/provider/tilt_provider.dart';
-import '../../internal/tilt_data.dart';
+import '../../internal/tilt_state.dart';
 import '../../models/tilt_data_model.dart';
+import '../../utils/utils.dart';
 
 /// {@template tilt.TiltAnimatedWidgetBuilder.en}
 /// A builder callback for [TiltAnimatedBuilder] that is called on every animation frame.
 ///
 /// - [context]: The build context.
-/// - [tiltData]: The current tilt data snapshot, updated on every animation tick.
-/// - [tiltConfig]: The current tilt configuration.
+/// - [tiltAnimatedState]: The current animation snapshot containing the animated tilt data and target tilt data.
 /// - [child]: The pre-built subtree passed to [TiltAnimatedBuilder.child], or `null`.
 /// {@endtemplate}
 ///
@@ -21,16 +22,56 @@ import '../../models/tilt_data_model.dart';
 /// [TiltAnimatedBuilder] 的 builder 回调，每帧动画更新时触发。
 ///
 /// - [context]：当前 build context。
-/// - [tiltData]：当前帧的倾斜数据快照，每帧动画更新时变化。
-/// - [tiltConfig]：当前的倾斜配置。
+/// - [tiltAnimatedState]：当前动画快照，包含动画倾斜数据和目标倾斜数据。
 /// - [child]：传入 [TiltAnimatedBuilder.child] 的预构建子树，可能为 `null`。
 /// {@endtemplate}
 typedef TiltAnimatedWidgetBuilder = Widget Function(
   BuildContext context,
-  TiltDataModel tiltData,
-  TiltConfig tiltConfig,
+  TiltAnimatedState tiltAnimatedState,
   Widget? child,
 );
+
+@immutable
+class TiltAnimatedState {
+  const TiltAnimatedState({
+    required this.tiltConfig,
+    required this.animatedTiltData,
+    required this.targetTiltData,
+    required this.currentGesturesType,
+  });
+
+  /// The current tilt configuration.
+  ///
+  /// ------
+  ///
+  /// 当前倾斜配置。
+  final TiltConfig tiltConfig;
+
+  /// The current animated tilt data,
+  /// which represents the interpolated result from the initial state to [targetTiltData]
+  /// and is used for rendering the current animation progress.
+  ///
+  /// ------
+  ///
+  /// 当前动画倾斜数据，
+  /// 表示从初始状态到 [targetTiltData] 的插值结果，用于渲染当前动画进度。
+  final TiltDataModel animatedTiltData;
+
+  /// The current target tilt data,
+  /// which is the final target data of the animation.
+  ///
+  /// ------
+  ///
+  /// 当前目标倾斜数据，动画最终的目标数据。
+  final TiltDataModel targetTiltData;
+
+  /// The current gestures type.
+  ///
+  /// ------
+  ///
+  /// 当前手势类型。
+  final GesturesType currentGesturesType;
+}
 
 /// TiltAnimatedBuilder
 class TiltAnimatedBuilder extends StatelessWidget {
@@ -53,11 +94,14 @@ class TiltAnimatedBuilder extends StatelessWidget {
   /// ```dart
   /// Tilt(
   ///   child: TiltAnimatedBuilder(
-  ///     builder: (context, tiltData, tiltConfig, child) {
+  ///     builder: (context, tiltAnimatedState, child) {
   ///       return Transform(
   ///         alignment: AlignmentDirectional.center,
-  ///         transform: tiltData.transform,
-  ///         child: MyCustomWidget(progress: tiltData.areaProgress, child: child),
+  ///         transform: animatedState.animatedTiltData.transform,
+  ///         child: MyCustomWidget(
+  ///           progress: animatedState.animatedTiltData.areaProgress,
+  ///           child: child,
+  ///         ),
   ///       );
   ///     },
   ///     child: SomeWidget(),
@@ -110,25 +154,49 @@ class TiltAnimatedBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tiltProvider = TiltProvider.of(context);
+    final tiltState = TiltProvider.of(context);
     final tiltAnimationProvider = TiltAnimationProvider.of(context);
     final tiltTweenAnimation = tiltAnimationProvider.tiltTweenAnimation;
-    final tiltConfig = tiltProvider.tiltConfig;
 
     return AnimatedBuilder(
       animation: tiltTweenAnimation,
       builder: (BuildContext context, Widget? child) {
-        final areaProgress = tiltTweenAnimation.value;
-        final tiltData = TiltData(
-          isInit: tiltProvider.isInit,
-          width: tiltProvider.width,
-          height: tiltProvider.height,
-          areaProgress: areaProgress,
-          tiltConfig: tiltConfig,
-        ).toModel();
-        return builder(context, tiltData, tiltConfig, child);
+        final tiltAnimatedState = TiltAnimatedState(
+          tiltConfig: tiltState.tiltConfig,
+          animatedTiltData: _animatedTiltDataModel(
+            tiltState,
+            tiltTweenAnimation.value,
+          ),
+          targetTiltData: tiltState.toModel(),
+          currentGesturesType: tiltState.currentGesturesType,
+        );
+
+        return builder(context, tiltAnimatedState, child);
       },
       child: child,
     );
   }
+}
+
+TiltDataModel _animatedTiltDataModel(
+  TiltState tiltState,
+  Offset animatedAreaProgress,
+) {
+  return TiltDataModel(
+    width: tiltState.width,
+    height: tiltState.height,
+    position: Utils.progressPosition(
+      tiltState.width,
+      tiltState.height,
+      animatedAreaProgress,
+    ),
+    transform: tiltState.isInit && !tiltState.disable
+        ? tiltState.tiltTransformFor(animatedAreaProgress)
+        : Matrix4.identity(),
+    areaProgress: animatedAreaProgress,
+    angle: Utils.rotateAxis(
+      animatedAreaProgress * tiltState.tiltConfig.angle,
+      tiltState.tiltConfig.enableReverse,
+    ),
+  );
 }

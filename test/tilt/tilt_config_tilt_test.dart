@@ -3,21 +3,23 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
-import 'package:flutter_tilt/src/internal/tilt_data.dart';
+import 'package:flutter_tilt/src/internal/tilt_state.dart';
 import 'shared_widgets/tilt_widget.dart';
 
 void main() {
   const tiltConfig = TiltConfig();
-  TiltData tiltDataTestCalculate({
+  TiltState tiltDataTestCalculate({
     required Offset areaProgress,
     TiltConfig tiltConfig = tiltConfig,
   }) =>
-      TiltData(
+      TiltState(
         isInit: true,
         width: 10,
         height: 10,
         areaProgress: areaProgress,
         tiltConfig: tiltConfig,
+        isActive: true,
+        currentGesturesType: GesturesType.touch,
       );
 
   final tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
@@ -319,6 +321,12 @@ void main() {
       expect(childFinder, findsOneWidget);
       expect(moveGesturesTypeTest, GesturesType.touch);
       expect(moveTiltDataTest, tiltDataExpect);
+
+      moveTiltDataTest = null;
+      leaveTiltDataTest = null;
+      moveGesturesTypeTest = null;
+      leaveGesturesTypeTest = null;
+      leaveCountTest = 0;
 
       /// 倾斜-超范围
       await tester.fling(tiltWidgetFinder, const Offset(-6.0, -6.0), 0.1);

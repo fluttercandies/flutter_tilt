@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 
@@ -7,7 +5,7 @@ class TiltWidget extends StatelessWidget {
   const TiltWidget({
     super.key,
     this.childLayout = const ChildLayout(),
-    this.tiltStreamController,
+    this.tiltController,
     this.disable = false,
     this.fps = 120,
     this.border,
@@ -21,7 +19,7 @@ class TiltWidget extends StatelessWidget {
   });
 
   final ChildLayout childLayout;
-  final StreamController<TiltStreamModel>? tiltStreamController;
+  final TiltController? tiltController;
   final bool disable;
   final int fps;
   final BoxBorder? border;
@@ -40,7 +38,7 @@ class TiltWidget extends StatelessWidget {
         key: const Key('tilt_scaffold'),
         body: Tilt(
           key: const Key('tilt_widget'),
-          tiltStreamController: tiltStreamController,
+          tiltController: tiltController,
           disable: disable,
           fps: fps,
           tiltConfig: tiltConfig.copyWith(enableGestureSensors: false),
@@ -69,7 +67,7 @@ class TiltBaseWidget extends StatelessWidget {
   const TiltBaseWidget({
     super.key,
     this.childLayout = const ChildLayout(),
-    this.tiltStreamController,
+    this.tiltController,
     this.disable = false,
     this.fps = 120,
     this.border,
@@ -83,7 +81,7 @@ class TiltBaseWidget extends StatelessWidget {
   });
 
   final ChildLayout childLayout;
-  final StreamController<TiltStreamModel>? tiltStreamController;
+  final TiltController? tiltController;
   final bool disable;
   final int fps;
   final BoxBorder? border;
@@ -102,7 +100,7 @@ class TiltBaseWidget extends StatelessWidget {
         key: const Key('tilt_scaffold'),
         body: Tilt.base(
           key: const Key('tilt_widget'),
-          tiltStreamController: tiltStreamController,
+          tiltController: tiltController,
           disable: disable,
           fps: fps,
           tiltConfig: tiltConfig.copyWith(enableGestureSensors: false),
@@ -129,7 +127,7 @@ class TiltProjectorWidget extends StatelessWidget {
   const TiltProjectorWidget({
     super.key,
     this.childLayout = const ChildLayout(),
-    this.tiltStreamController,
+    this.tiltController,
     this.disable = false,
     this.fps = 120,
     this.border,
@@ -143,7 +141,7 @@ class TiltProjectorWidget extends StatelessWidget {
   });
 
   final ChildLayout childLayout;
-  final StreamController<TiltStreamModel>? tiltStreamController;
+  final TiltController? tiltController;
   final bool disable;
   final int fps;
   final BoxBorder? border;
@@ -162,7 +160,7 @@ class TiltProjectorWidget extends StatelessWidget {
         key: const Key('tilt_scaffold'),
         body: Tilt.projector(
           key: const Key('tilt_widget'),
-          tiltStreamController: tiltStreamController,
+          tiltController: tiltController,
           disable: disable,
           fps: fps,
           tiltConfig: tiltConfig.copyWith(enableGestureSensors: false),

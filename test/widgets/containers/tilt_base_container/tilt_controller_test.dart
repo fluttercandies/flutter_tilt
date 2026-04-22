@@ -1,86 +1,72 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
-import '../../shared_widgets/tilt_projector_container_widget.dart';
+
+import '../../shared_widgets/tilt_base_container_widget.dart';
 
 void main() {
   final childFinder = find.text('Tilt');
-  group('TiltProjectorContainer :: tilt TiltStreamController ::', () {
-    testWidgets('stream listen', (WidgetTester tester) async {
+
+  group('TiltBaseContainer :: tilt TiltController ::', () {
+    testWidgets('controller stream listen', (WidgetTester tester) async {
       var tiltStreamModelTest = const TiltStreamModel(
         position: Offset(1, 1),
         gesturesType: GesturesType.touch,
-        gestureUse: false,
+        isActive: false,
       );
       const tiltStreamModelExpect = TiltStreamModel(
         position: Offset.zero,
         gesturesType: GesturesType.controller,
-        gestureUse: true,
       );
 
-      /// 基础
-      final tiltStreamController =
-          StreamController<TiltStreamModel>.broadcast();
+      final tiltController = TiltController();
       await tester.pumpWidget(
-        TiltProjectorContainerWidget(
-          tiltStreamController: tiltStreamController,
-        ),
+        TiltBaseContainerWidget(tiltController: tiltController),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
-
-      /// 测试值不同
+      expect(childFinder, findsOneWidget);
       expect(tiltStreamModelTest != tiltStreamModelExpect, true);
 
-      await tester.pumpAndSettle();
-
-      /// 监听
-      tiltStreamController.stream.listen((TiltStreamModel tiltStreamModel) {
+      tiltController.stream.listen((TiltStreamModel tiltStreamModel) {
         tiltStreamModelTest = tiltStreamModel;
       });
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
 
-      /// 测试值相同
       expect(tiltStreamModelTest, tiltStreamModelExpect);
+      await tiltController.dispose();
     });
 
-    testWidgets('disable all gestures and use controller triggers', (
+    testWidgets('disable all gestures and drive with controller', (
       WidgetTester tester,
     ) async {
       var tiltStreamModelTest = const TiltStreamModel(
         position: Offset(1, 1),
         gesturesType: GesturesType.controller,
-        gestureUse: true,
+        isActive: true,
       );
       var tiltStreamModelExpect = const TiltStreamModel(
         position: Offset.zero,
         gesturesType: GesturesType.controller,
-        gestureUse: false,
+        isActive: false,
       );
       TiltStreamModel? gestureMoveExpect;
       TiltStreamModel? gestureLeaveExpect;
+      final tiltController = TiltController();
 
-      /// 基础 回调赋值
-      final tiltStreamController =
-          StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
-        TiltProjectorContainerWidget(
-          tiltStreamController: tiltStreamController,
+        TiltBaseContainerWidget(
+          tiltController: tiltController,
           tiltConfig: const TiltConfig(
             enableGestureTouch: false,
             enableGestureHover: false,
             enableGestureSensors: false,
           ),
-          onGestureMove: (
-            TiltDataModel tiltDataModel,
-            GesturesType gesturesType,
-          ) {
+          onGestureMove:
+              (TiltDataModel tiltDataModel, GesturesType gesturesType) {
             gestureMoveExpect = TiltStreamModel(
               position: tiltDataModel.position,
               gesturesType: gesturesType,
-              gestureUse: true,
+              isActive: true,
             );
           },
           onGestureLeave: (
@@ -90,17 +76,17 @@ void main() {
             gestureLeaveExpect = TiltStreamModel(
               position: tiltDataModel.position,
               gesturesType: gesturesType,
-              gestureUse: false,
+              isActive: false,
             );
           },
         ),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(tiltStreamModelTest != tiltStreamModelExpect, true);
 
       /// stream 监听
-      tiltStreamController.stream.listen((TiltStreamModel tiltStreamModel) {
+      tiltController.stream.listen((TiltStreamModel tiltStreamModel) {
         tiltStreamModelTest = tiltStreamModel;
       });
 
@@ -109,9 +95,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.touch,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(tiltStreamModelTest, gestureMoveExpect);
@@ -121,16 +107,16 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.touch,
-        gestureUse: false,
+        isActive: false,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(
         const TiltStreamModel(
           position: Offset(5, 5),
           gesturesType: GesturesType.touch,
-          gestureUse: false,
+          isActive: false,
         ),
         gestureLeaveExpect,
       );
@@ -140,9 +126,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.hover,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(tiltStreamModelTest, gestureMoveExpect);
@@ -152,9 +138,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.hover,
-        gestureUse: false,
+        isActive: false,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(
@@ -162,7 +148,7 @@ void main() {
         const TiltStreamModel(
           position: Offset(5, 5),
           gesturesType: GesturesType.hover,
-          gestureUse: false,
+          isActive: false,
         ),
       );
 
@@ -171,9 +157,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.controller,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(tiltStreamModelTest, gestureMoveExpect);
@@ -183,9 +169,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.controller,
-        gestureUse: false,
+        isActive: false,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(
@@ -193,7 +179,7 @@ void main() {
         const TiltStreamModel(
           position: Offset(5, 5),
           gesturesType: GesturesType.controller,
-          gestureUse: false,
+          isActive: false,
         ),
       );
 
@@ -202,9 +188,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.sensors,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(tiltStreamModelTest, gestureMoveExpect);
@@ -214,9 +200,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.sensors,
-        gestureUse: false,
+        isActive: false,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       // sensors 不会触发 onGestureLeave
       expect(gestureLeaveExpect, null);
@@ -224,50 +210,46 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset.zero,
         gesturesType: GesturesType.sensors,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(
         gestureMoveExpect,
         const TiltStreamModel(
           position: Offset(9.75, 9.75),
           gesturesType: GesturesType.sensors,
-          gestureUse: true,
+          isActive: true,
         ),
       );
+
+      await tiltController.dispose();
     });
 
-    testWidgets('gesture priority', (
-      WidgetTester tester,
-    ) async {
+    testWidgets('gesture priority', (WidgetTester tester) async {
       var tiltStreamModelTest = const TiltStreamModel(
         position: Offset(1, 1),
         gesturesType: GesturesType.controller,
-        gestureUse: true,
+        isActive: true,
       );
       var tiltStreamModelExpect = const TiltStreamModel(
         position: Offset.zero,
         gesturesType: GesturesType.controller,
-        gestureUse: false,
+        isActive: false,
       );
       TiltStreamModel? gestureMoveExpect;
       TiltStreamModel? gestureLeaveExpect;
+      final tiltController = TiltController();
 
-      /// 基础 回调赋值
-      final tiltStreamController =
-          StreamController<TiltStreamModel>.broadcast();
       await tester.pumpWidget(
-        TiltProjectorContainerWidget(
-          tiltStreamController: tiltStreamController,
-          onGestureMove: (
-            TiltDataModel tiltDataModel,
-            GesturesType gesturesType,
-          ) {
+        TiltBaseContainerWidget(
+          tiltController: tiltController,
+          onGestureMove:
+              (TiltDataModel tiltDataModel, GesturesType gesturesType) {
             gestureMoveExpect = TiltStreamModel(
               position: tiltDataModel.position,
               gesturesType: gesturesType,
-              gestureUse: true,
+              isActive: true,
             );
           },
           onGestureLeave: (
@@ -277,17 +259,17 @@ void main() {
             gestureLeaveExpect = TiltStreamModel(
               position: tiltDataModel.position,
               gesturesType: gesturesType,
-              gestureUse: false,
+              isActive: false,
             );
           },
         ),
       );
       await tester.pumpAndSettle();
-      expect(childFinder, findsNWidgets(2));
+      expect(childFinder, findsOneWidget);
       expect(tiltStreamModelTest != tiltStreamModelExpect, true);
 
       /// stream 监听
-      tiltStreamController.stream.listen((TiltStreamModel tiltStreamModel) {
+      tiltController.stream.listen((TiltStreamModel tiltStreamModel) {
         tiltStreamModelTest = tiltStreamModel;
       });
 
@@ -296,9 +278,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.sensors,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(tiltStreamModelTest, gestureMoveExpect);
@@ -308,9 +290,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.controller,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(tiltStreamModelTest, gestureMoveExpect);
@@ -320,9 +302,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.hover,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(tiltStreamModelTest, gestureMoveExpect);
@@ -332,9 +314,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.touch,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(tiltStreamModelTest, gestureMoveExpect);
@@ -343,7 +325,7 @@ void main() {
       const lowPriorityData = TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.touch,
-        gestureUse: true,
+        isActive: true,
       );
 
       /// hover 手势移动
@@ -351,9 +333,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.hover,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(gestureMoveExpect, lowPriorityData);
 
@@ -363,9 +345,9 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.touch,
-        gestureUse: false,
+        isActive: false,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(gestureMoveExpect, null);
@@ -374,7 +356,7 @@ void main() {
         const TiltStreamModel(
           position: Offset(5, 5),
           gesturesType: GesturesType.touch,
-          gestureUse: false,
+          isActive: false,
         ),
       );
 
@@ -383,12 +365,14 @@ void main() {
       tiltStreamModelExpect = const TiltStreamModel(
         position: Offset(10, 10),
         gesturesType: GesturesType.hover,
-        gestureUse: true,
+        isActive: true,
       );
-      tiltStreamController.sink.add(tiltStreamModelExpect);
+      tiltController.emit(tiltStreamModelExpect);
       await tester.pumpAndSettle();
       expect(tiltStreamModelTest, tiltStreamModelExpect);
       expect(tiltStreamModelTest, gestureMoveExpect);
+
+      await tiltController.dispose();
     });
   });
 }

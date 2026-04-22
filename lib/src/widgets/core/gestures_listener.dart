@@ -1,110 +1,53 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../enums.dart';
-import '../../internal/controllers/tilt_gestures_controller.dart';
-import '../../models/tilt_stream_model.dart';
+import '../../config/tilt_config.dart';
+import '../../internal/action_input/sources/tilt_pointer_input_source.dart';
 
 /// 手势监听
-class GesturesListener extends StatefulWidget {
+class GesturesListener extends StatelessWidget {
   /// 手势监听
   ///
   /// 对 Touch [Listener] 和 Mouse [MouseRegion] 的监听触发
   const GesturesListener({
     super.key,
     required this.child,
-    required this.tiltGesturesController,
+    required this.disable,
+    required this.tiltConfig,
+    required this.pointerInputSource,
   });
 
   final Widget child;
+  final bool disable;
+  final TiltConfig tiltConfig;
+  final TiltPointerInputSource pointerInputSource;
 
-  /// 倾斜手势控制器
-  final TiltGesturesController tiltGesturesController;
-
-  @override
-  State<GesturesListener> createState() => _GesturesListenerState();
-}
-
-class _GesturesListenerState extends State<GesturesListener> {
-  bool get _enableGestureTouch =>
-      widget.tiltGesturesController.tiltConfig.enableGestureTouch;
-  bool get _enableGestureHover =>
-      widget.tiltGesturesController.tiltConfig.enableGestureHover;
-
-  /// 避免 touch 和 hover 同时触发，导致 hover 离开的时候会“闪现”
-  bool _isTouch = false;
-
-  /// 避免 hover 未 Enter 时就触发
-  bool _isHover = false;
+  bool get _enableGestureTouch => tiltConfig.enableGestureTouch;
+  bool get _enableGestureHover => tiltConfig.enableGestureHover;
 
   @override
   Widget build(BuildContext context) {
-    if (widget.tiltGesturesController.disable) return widget.child;
+    if (disable) return child;
 
     /// 不受滑动影响
     return GestureDetector(
       onVerticalDragUpdate: _enableGestureTouch ? (_) {} : null,
       onHorizontalDragUpdate: _enableGestureTouch ? (_) {} : null,
       child: Listener(
-        onPointerMove: _enableGestureTouch ? _handlePointerMove : null,
-        onPointerUp: _enableGestureTouch ? _handlePointerUp : null,
-        onPointerCancel: _enableGestureTouch ? _handlePointerCancel : null,
+        onPointerMove:
+            _enableGestureTouch ? pointerInputSource.handlePointerMove : null,
+        onPointerUp:
+            _enableGestureTouch ? pointerInputSource.handlePointerUp : null,
+        onPointerCancel:
+            _enableGestureTouch ? pointerInputSource.handlePointerCancel : null,
         child: MouseRegion(
-          onEnter: _enableGestureHover ? _handleMouseEnter : null,
-          onHover: _enableGestureHover ? _handleMouseHover : null,
-          onExit: _enableGestureHover ? _handleMouseExit : null,
-          child: widget.child,
+          onEnter:
+              _enableGestureHover ? pointerInputSource.handleMouseEnter : null,
+          onHover:
+              _enableGestureHover ? pointerInputSource.handleMouseHover : null,
+          onExit:
+              _enableGestureHover ? pointerInputSource.handleMouseExit : null,
+          child: child,
         ),
-      ),
-    );
-  }
-
-  void _handlePointerMove(PointerMoveEvent e) {
-    _isTouch = true;
-    _addToTiltStream(e.localPosition, GesturesType.touch, true);
-  }
-
-  void _handlePointerUp(PointerUpEvent e) {
-    _isTouch = false;
-    _addToTiltStream(e.localPosition, GesturesType.touch, false);
-  }
-
-  void _handlePointerCancel(PointerCancelEvent e) {
-    _isTouch = false;
-    _addToTiltStream(e.localPosition, GesturesType.touch, false);
-  }
-
-  void _handleMouseEnter(PointerEnterEvent e) {
-    if (_isTouch) return;
-    _isHover = true;
-  }
-
-  void _handleMouseHover(PointerHoverEvent e) {
-    if (!_isHover || _isTouch) return;
-    _addToTiltStream(e.localPosition, GesturesType.hover, true);
-  }
-
-  void _handleMouseExit(PointerExitEvent e) {
-    if (_isTouch) return;
-    _isHover = false;
-    _addToTiltStream(e.localPosition, GesturesType.hover, false);
-  }
-
-  /// 添加到 Stream
-  ///
-  /// - [position] 当前位置
-  /// - [gesturesType] 手势类型
-  /// - [gestureUse] 手势是否使用
-  void _addToTiltStream(
-    Offset position,
-    GesturesType gesturesType,
-    bool gestureUse,
-  ) {
-    widget.tiltGesturesController.tiltStreamController.sink.add(
-      TiltStreamModel(
-        position: position,
-        gesturesType: gesturesType,
-        gestureUse: gestureUse,
       ),
     );
   }

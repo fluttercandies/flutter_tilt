@@ -7,7 +7,7 @@ import '../../config/tilt_light_config.dart';
 import '../../config/tilt_shadow_config.dart';
 import '../../enums.dart';
 import '../../internal/mixin/tilt_decoration_mixin.dart';
-import '../../utils.dart';
+import '../../utils/utils.dart';
 
 abstract class TiltShadow<TShadowConfig extends ShadowConfig>
     extends StatelessWidget with TiltDecorationMixin {

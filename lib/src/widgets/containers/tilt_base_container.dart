@@ -101,19 +101,21 @@ class TiltBaseContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TiltAnimatedBuilder(
-      builder: (context, tiltData, tiltConfig, child) {
+      builder: (context, tiltAnimatedState, child) {
+        final animatedTiltData = tiltAnimatedState.animatedTiltData;
+
         return Transform(
           alignment: AlignmentDirectional.center,
           filterQuality: filterQuality,
-          transform: tiltData.transform,
+          transform: animatedTiltData.transform,
           child: Stack(
             alignment: AlignmentDirectional.center,
             clipBehavior: Clip.none,
             children: _buildChildren(
               child: child,
-              width: tiltData.width,
-              height: tiltData.height,
-              areaProgress: tiltData.areaProgress,
+              width: animatedTiltData.width,
+              height: animatedTiltData.height,
+              areaProgress: animatedTiltData.areaProgress,
             ),
           ),
         );

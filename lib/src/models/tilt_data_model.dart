@@ -16,7 +16,6 @@ class TiltDataModel {
   });
 
   final double width;
-
   final double height;
 
   /// 当前坐标

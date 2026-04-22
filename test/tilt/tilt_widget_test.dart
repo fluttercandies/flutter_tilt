@@ -1,5 +1,3 @@
-import 'dart:async' show StreamController;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
@@ -88,30 +86,34 @@ void main() {
           frequency: fpsList[0].toDouble(),
         );
         await tester.pumpAndSettle();
-        expect(count, fps);
+        expect(count, fps + 1);
       }
     });
   });
 
   group('Tilt didUpdateWidget ::', () {
-    testWidgets('tiltStreamController', (WidgetTester tester) async {
-      final tiltStreamController1 =
-          StreamController<TiltStreamModel>.broadcast();
-      final tiltStreamController2 =
-          StreamController<TiltStreamModel>.broadcast();
-      final dataList = <StreamController<TiltStreamModel>>[
-        tiltStreamController1,
-        tiltStreamController2,
+    testWidgets('tiltController', (WidgetTester tester) async {
+      final tiltController1 = TiltController();
+      final tiltController2 = TiltController();
+      final dataList = <TiltController>[
+        tiltController1,
+        tiltController2,
       ];
 
       for (final data in dataList) {
         await tester.pumpWidget(
-          TiltWidget(tiltStreamController: data),
+          TiltWidget(tiltController: data),
         );
 
         await tester.pumpAndSettle();
         expect(data.hasListener, true);
       }
+
+      await tiltController1.dispose();
+      await tiltController2.dispose();
+
+      expect(tiltController1.hasListener, false);
+      expect(tiltController2.hasListener, false);
     });
 
     testWidgets('disable', (WidgetTester tester) async {
@@ -141,14 +143,14 @@ void main() {
     });
 
     testWidgets('fps', (WidgetTester tester) async {
-      final dataList = <int>[120, 60];
+      final fpsList = <int>[120, 60];
 
-      for (final data in dataList) {
+      for (final fps in fpsList) {
         var count = 0;
 
         await tester.pumpWidget(
           TiltWidget(
-            fps: data,
+            fps: fps,
             onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
               count++;
             },
@@ -159,16 +161,15 @@ void main() {
           tiltWidgetFinder,
           const Offset(0.0, 5.0),
           const Duration(milliseconds: 1000),
-          frequency: dataList[0].toDouble(),
+          frequency: fpsList[0].toDouble(),
         );
         await tester.pumpAndSettle();
-        expect(count, data);
+        expect(count, fps + 1);
       }
     });
 
     testWidgets('tiltConfig', (WidgetTester tester) async {
-      final tiltStreamController =
-          StreamController<TiltStreamModel>.broadcast();
+      final tiltController = TiltController();
       const tiltConfig1 =
           TiltConfig(leaveDuration: Duration(milliseconds: 4000));
       const tiltConfig2 = TiltConfig(leaveDuration: Duration.zero);
@@ -180,7 +181,7 @@ void main() {
 
         await tester.pumpWidget(
           TiltWidget(
-            tiltStreamController: tiltStreamController,
+            tiltController: tiltController,
             tiltConfig: data,
             onGestureMove: (TiltDataModel tiltData, GesturesType gesturesType) {
               currentGesturesType = gesturesType;
@@ -191,23 +192,17 @@ void main() {
         /// 事件 1，触发一次 touch leave（此时总体时间在 1000ms）
         if (i == 0) {
           /// 倾斜 touch move
-          tiltStreamController.sink.add(
-            const TiltStreamModel(
-              position: Offset(0.0, 5.0),
-              gesturesType: GesturesType.touch,
-              gestureUse: true,
-            ),
+          tiltController.move(
+            position: const Offset(0.0, 5.0),
+            gesturesType: GesturesType.touch,
           );
           await tester.pump(const Duration(milliseconds: 500));
           expect(currentGesturesType, GesturesType.touch);
 
           /// 倾斜 touch leave
-          tiltStreamController.sink.add(
-            const TiltStreamModel(
-              position: Offset(0.0, 5.0),
-              gesturesType: GesturesType.touch,
-              gestureUse: false,
-            ),
+          tiltController.leave(
+            position: const Offset(0.0, 5.0),
+            gesturesType: GesturesType.touch,
           );
           await tester.pump(const Duration(milliseconds: 500));
         }
@@ -219,12 +214,9 @@ void main() {
         ///
         /// 事件 2，触发一次 controller move，
         /// 由于重新赋值 [tiltConfig2.leaveDuration]，此时应结束持续时间。
-        tiltStreamController.sink.add(
-          const TiltStreamModel(
-            position: Offset(0.0, 5.0),
-            gesturesType: GesturesType.sensors,
-            gestureUse: true,
-          ),
+        tiltController.move(
+          position: const Offset(0.0, 5.0),
+          gesturesType: GesturesType.sensors,
         );
         await tester.pump(const Duration(milliseconds: 500));
 
@@ -238,6 +230,8 @@ void main() {
           expect(currentGesturesType, GesturesType.sensors);
         }
       }
+
+      await tiltController.dispose();
     });
   });
 }

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:flutter_tilt/src/widgets/containers/tilt_parallax_container.dart';
@@ -8,7 +6,7 @@ class TiltParallaxContainerWidget extends StatelessWidget {
   const TiltParallaxContainerWidget({
     super.key,
     this.childLayout,
-    this.tiltStreamController,
+    this.tiltController,
     this.disable = false,
     this.fps = 60,
     this.border,
@@ -22,7 +20,7 @@ class TiltParallaxContainerWidget extends StatelessWidget {
   });
 
   final ChildLayout? childLayout;
-  final StreamController<TiltStreamModel>? tiltStreamController;
+  final TiltController? tiltController;
   final bool disable;
   final int fps;
   final BoxBorder? border;
@@ -45,7 +43,7 @@ class TiltParallaxContainerWidget extends StatelessWidget {
           child: Center(
             child: Tilt(
               key: const Key('tilt_widget'),
-              tiltStreamController: tiltStreamController,
+              tiltController: tiltController,
               disable: disable,
               fps: fps,
               tiltConfig: tiltConfig.copyWith(enableGestureSensors: false),

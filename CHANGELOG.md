@@ -10,6 +10,7 @@
 Migration Guides: [Migrate to v4.0.0](#)
 
 - `Tilt` widget now only manages gesture state, sensor state, and animation state...
+- Replace `Tilt.TiltStreamController` with `Tilt.TiltController` to unify input stream management.
 - The previous `Tilt.lightShadowMode` parameter has been split into the independent widgets `TiltBaseContainer` and `TiltProjectorContainer`.
   To reproduce the previous style, you need to compose them inside the `Tilt` widget,
   or use `Tilt.base` and `Tilt.projector` directly.
