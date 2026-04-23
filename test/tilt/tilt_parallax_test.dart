@@ -1,9 +1,11 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'shared_widgets/tilt_parallax_widget.dart';
 
 void main() {
+  final tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
+
   group('TiltParallax ::', () {
     testWidgets('default', (WidgetTester tester) async {
       final outerFinder = find.text('outer');
@@ -66,6 +68,51 @@ void main() {
         behindLocation,
         const Offset(24.061335345163766, 14.999999999999998),
       );
+    });
+
+    testWidgets('child rebuild count', (WidgetTester tester) async {
+      const fps = 120;
+      var moveCount = 0;
+      var childBuildCount = 0;
+
+      await tester.pumpWidget(
+        TiltParallaxWidget(
+          fps: fps,
+          tiltConfig: const TiltConfig(initial: Offset(1, 0)),
+          onGestureMove: (_, __) {
+            moveCount++;
+          },
+          childLayout: ChildLayout(
+            outer: <Widget>[
+              Positioned(
+                child: TiltParallax(
+                  child: Builder(
+                    builder: (_) {
+                      childBuildCount++;
+                      return const SizedBox(
+                        width: 10,
+                        height: 10,
+                        child: Text('outer'),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+
+      await tester.timedDrag(
+        tiltWidgetFinder,
+        const Offset(0.0, 5.0),
+        const Duration(milliseconds: 1000),
+        frequency: fps.toDouble(),
+      );
+      await tester.pumpAndSettle();
+
+      expect(moveCount, fps + 1);
+      expect(childBuildCount, 1);
     });
   });
 }

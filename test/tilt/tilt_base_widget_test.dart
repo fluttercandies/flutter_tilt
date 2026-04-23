@@ -38,5 +38,46 @@ void main() {
           .reversed;
       expect(allTextKeys, [outerKey, innerKey, childKey, behindKey]);
     });
+
+    testWidgets('child rebuild count', (WidgetTester tester) async {
+      const fps = 120;
+      var moveCount = 0;
+      var childBuildCount = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Tilt.base(
+              key: const Key('tilt_widget'),
+              fps: fps,
+              onGestureMove: (_, __) {
+                moveCount++;
+              },
+              child: Builder(
+                builder: (_) {
+                  childBuildCount++;
+                  return const SizedBox(
+                    width: 10,
+                    height: 10,
+                    child: Text('Tilt'),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.timedDrag(
+        find.byKey(const Key('tilt_widget')),
+        const Offset(0.0, 5.0),
+        const Duration(milliseconds: 1000),
+        frequency: fps.toDouble(),
+      );
+      await tester.pumpAndSettle();
+
+      expect(moveCount, fps + 1);
+      expect(childBuildCount, 1);
+    });
   });
 }

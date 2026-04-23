@@ -148,5 +148,62 @@ void main() {
 
       await tester.sendEventToBinding(testPointer.removePointer());
     });
+
+    testWidgets('child rebuild count', (WidgetTester tester) async {
+      const fps = 120;
+      var moveCount = 0;
+      var tiltAnimatedBuildCount = 0;
+      var childBuildCount = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Tilt(
+              key: const Key('tilt_widget'),
+              fps: fps,
+              tiltConfig: const TiltConfig(
+                enterDuration: Duration.zero,
+                moveDuration: Duration(milliseconds: 1000),
+                enterToMoveDuration: Duration.zero,
+                leaveDuration: Duration.zero,
+              ),
+              onGestureMove: (_, __) {
+                moveCount++;
+              },
+              child: TiltAnimatedBuilder(
+                builder: (context, animatedState, child) {
+                  if (animatedState.currentGesturesType != GesturesType.none) {
+                    tiltAnimatedBuildCount++;
+                  }
+                  return child!;
+                },
+                child: Builder(
+                  builder: (_) {
+                    childBuildCount++;
+                    return const SizedBox(
+                      width: 10,
+                      height: 10,
+                      child: Text('Tilt'),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.timedDrag(
+        find.byKey(const Key('tilt_widget')),
+        const Offset(0.0, 5.0),
+        const Duration(milliseconds: 1000),
+        frequency: fps.toDouble(),
+      );
+      await tester.pumpAndSettle();
+
+      expect(moveCount, fps + 1);
+      expect(tiltAnimatedBuildCount, fps + 1);
+      expect(childBuildCount, 1);
+    });
   });
 }

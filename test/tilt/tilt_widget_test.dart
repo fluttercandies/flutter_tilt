@@ -7,6 +7,49 @@ void main() {
   final tiltWidgetFinder = find.byKey(const Key('tilt_widget'));
   final childFinder = find.text('Tilt');
 
+  group('Tilt Widget ::', () {
+    testWidgets('child rebuild count', (WidgetTester tester) async {
+      const fps = 120;
+      var moveCount = 0;
+      var childBuildCount = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Tilt(
+              key: const Key('tilt_widget'),
+              fps: fps,
+              onGestureMove: (_, __) {
+                moveCount++;
+              },
+              child: Builder(
+                builder: (_) {
+                  childBuildCount++;
+                  return const SizedBox(
+                    width: 10,
+                    height: 10,
+                    child: Text('Tilt'),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.timedDrag(
+        find.byKey(const Key('tilt_widget')),
+        const Offset(0.0, 5.0),
+        const Duration(milliseconds: 1000),
+        frequency: fps.toDouble(),
+      );
+      await tester.pumpAndSettle();
+
+      expect(moveCount, fps + 1);
+      expect(childBuildCount, 1);
+    });
+  });
+
   group('Tilt config ::', () {
     testWidgets('default', (WidgetTester tester) async {
       await tester.pumpWidget(const TiltWidget());
@@ -86,6 +129,8 @@ void main() {
           frequency: fpsList[0].toDouble(),
         );
         await tester.pumpAndSettle();
+
+        /// timedDrag 会多 1 次触发
         expect(count, fps + 1);
       }
     });
@@ -164,6 +209,8 @@ void main() {
           frequency: fpsList[0].toDouble(),
         );
         await tester.pumpAndSettle();
+
+        /// timedDrag 会多 1 次触发
         expect(count, fps + 1);
       }
     });
