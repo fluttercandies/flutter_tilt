@@ -60,7 +60,7 @@ class TiltParallaxContainerWidget extends StatelessWidget {
                       outer: <Widget>[
                         Positioned(
                           child: TiltParallaxContainer(
-                            size: Offset(10, 10),
+                            offset: Offset(10, 10),
                             child: SizedBox(
                               width: 10,
                               height: 10,
@@ -72,7 +72,7 @@ class TiltParallaxContainerWidget extends StatelessWidget {
                       inner: <Widget>[
                         Positioned(
                           child: TiltParallaxContainer(
-                            size: Offset(10, 10),
+                            offset: Offset(10, 10),
                             child: SizedBox(
                               width: 10,
                               height: 10,
@@ -84,7 +84,7 @@ class TiltParallaxContainerWidget extends StatelessWidget {
                       behind: <Widget>[
                         Positioned(
                           child: TiltParallaxContainer(
-                            size: Offset(10, 10),
+                            offset: Offset(10, 10),
                             child: SizedBox(
                               width: 10,
                               height: 10,

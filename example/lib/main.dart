@@ -34,7 +34,7 @@ class TiltExample extends StatelessWidget {
     for (var i = 1; i <= 10; i++) {
       innerBox.add(
         TiltParallax(
-          size: Offset(-20.0 * i, -30.0 * i),
+          offset: Offset(-20.0 * i, -30.0 * i),
           child: Container(
             width: 200 * (1 - i * 0.05),
             height: 200 * (1 - i * 0.05),

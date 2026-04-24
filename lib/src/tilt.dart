@@ -153,7 +153,7 @@ class TiltParallax extends TiltParallaxContainer {
   const TiltParallax({
     super.key,
     required super.child,
-    super.size = const Offset(10.0, 10.0),
+    super.offset = const Offset(10.0, 10.0),
     super.filterQuality,
   });
 }

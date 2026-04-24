@@ -10,7 +10,7 @@ class TiltParallaxContainer extends StatelessWidget {
   /// {@endtemplate}
   ///
   /// {@template tilt.TiltParallaxContainer.param.en}
-  /// - [size]: Parallax size.
+  /// - [offset]: Parallax offset.
   /// - [filterQuality]: Flutter FilterQuality.
   /// {@endtemplate}
   ///
@@ -23,20 +23,24 @@ class TiltParallaxContainer extends StatelessWidget {
   /// {@endtemplate}
   ///
   /// {@template tilt.TiltParallaxContainer.param.zh}
-  /// - [size]：视差大小。
+  /// - [offset]：视差偏移量。
   /// - [filterQuality]：Flutter FilterQuality。
   /// {@endtemplate}
   const TiltParallaxContainer({
     super.key,
     required this.child,
-    required this.size,
+    required this.offset,
     this.filterQuality,
   });
 
   final Widget child;
 
-  /// 视差大小 (x, y)
-  final Offset size;
+  /// Parallax offset
+  ///
+  /// ------
+  ///
+  /// 视差偏移量 (x, y)
+  final Offset offset;
 
   final FilterQuality? filterQuality;
 
@@ -46,7 +50,7 @@ class TiltParallaxContainer extends StatelessWidget {
       builder: (context, tiltAnimatedState, child) {
         final tiltParallaxTransform = this.tiltParallaxTransform(
           tiltAnimatedState.animatedTiltData.areaProgress,
-          size,
+          offset,
           tiltAnimatedState.tiltConfig.enableReverse,
         );
 
@@ -63,18 +67,18 @@ class TiltParallaxContainer extends StatelessWidget {
   /// 计算当前倾斜视差
   ///
   /// - [areaProgress] 当前坐标的区域进度
-  /// - [size] 视差大小
+  /// - [offset] 视差偏移量
   /// - [enableReverse] 开启倾斜反向，向上或向下倾斜
   Matrix4 tiltParallaxTransform(
     Offset areaProgress,
-    Offset size,
+    Offset offset,
     bool enableReverse,
   ) {
-    final dx = size.dx * areaProgress.dx;
-    final dy = size.dy * areaProgress.dy;
-    final offset = enableReverse ? Offset(-dx, -dy) : Offset(dx, dy);
+    final dx = offset.dx * areaProgress.dx;
+    final dy = offset.dy * areaProgress.dy;
+    final parallaxOffset = enableReverse ? Offset(-dx, -dy) : Offset(dx, dy);
     // TODO: 兼容低版本开发者，未来完全弃用时再替换为新的方法（Flutter 3.35 开始标记为弃用）
     // ignore: deprecated_member_use
-    return Matrix4.identity()..translate(offset.dx, offset.dy);
+    return Matrix4.identity()..translate(parallaxOffset.dx, parallaxOffset.dy);
   }
 }
