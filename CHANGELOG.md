@@ -15,7 +15,7 @@ Migration Guides: [Migrate to v4.0.0](#)
   To reproduce the previous style, you need to compose them inside the `Tilt` widget,
   or use `Tilt.base` and `Tilt.projector` directly.
 - `ShadowConfig` has been split into `ShadowBaseConfig` and `ShadowProjectorConfig`.
-- Rename `TiltParallaxContainer` parameter `size` to `offset`.
+- Rename `TiltParallax` parameter `size` to `offset`.
 
 **Deprecations**
 
