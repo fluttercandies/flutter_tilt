@@ -38,6 +38,7 @@ class TiltAnimatedState {
     required this.animatedTiltData,
     required this.targetTiltData,
     required this.currentGesturesType,
+    required this.isCurrentGesturesTypeActive,
   });
 
   /// The current tilt configuration.
@@ -51,18 +52,26 @@ class TiltAnimatedState {
   /// which represents the interpolated result from the initial state to [targetTiltData]
   /// and is used for rendering the current animation progress.
   ///
+  /// During the animation, [animatedTiltData] will gradually change from the initial state and approach [targetTiltData].
+  ///
   /// ------
   ///
   /// 当前动画倾斜数据，
   /// 表示从初始状态到 [targetTiltData] 的插值结果，用于渲染当前动画进度。
+  ///
+  /// 动画过程中 [animatedTiltData] 会逐渐从初始状态变化并趋近于 [targetTiltData]。
   final TiltDataModel animatedTiltData;
 
   /// The current target tilt data,
   /// which is the final target data of the animation.
   ///
+  /// During the animation, [animatedTiltData] will gradually change from the initial state and approach [targetTiltData].
+  ///
   /// ------
   ///
   /// 当前目标倾斜数据，动画最终的目标数据。
+  ///
+  /// 动画过程中 [animatedTiltData] 会逐渐从初始状态变化并趋近于 [targetTiltData]。
   final TiltDataModel targetTiltData;
 
   /// The current gestures type.
@@ -71,6 +80,13 @@ class TiltAnimatedState {
   ///
   /// 当前手势类型。
   final GesturesType currentGesturesType;
+
+  /// {@macro tilt.TiltStreamModel.isActive.en}
+  ///
+  /// ------
+  ///
+  /// {@macro tilt.TiltStreamModel.isActive.zh}。
+  final bool isCurrentGesturesTypeActive;
 }
 
 /// TiltAnimatedBuilder
@@ -169,6 +185,7 @@ class TiltAnimatedBuilder extends StatelessWidget {
           ),
           targetTiltData: tiltState.toModel(),
           currentGesturesType: tiltState.currentGesturesType,
+          isCurrentGesturesTypeActive: tiltState.isActive,
         );
 
         return builder(context, tiltAnimatedState, child);

@@ -77,13 +77,11 @@ class TiltStreamModel {
   /// {@endtemplate}
   final GesturesType gesturesType;
 
+  /// {@template tilt.TiltStreamModel.isActive.en}
   /// Whether the gesture is currently active.
   ///
   /// Indicates whether the gesture is currently active,
-  /// and is used to determine processing based on gesture priority.
-  ///
-  /// Gesture Priority:
-  /// {@macro tilt.GesturesType.gesturePriority}
+  /// and is used to determine processing based on `gesture priority` of [GesturesType].
   ///
   /// e.g.
   /// If [GesturesType.touch] is never set to false when triggered,
@@ -91,16 +89,15 @@ class TiltStreamModel {
   ///
   /// - true: Gesture is active.
   /// - false: Gesture has ended or is no longer active.
+  /// {@endtemplate}
   ///
   /// ------
   ///
+  /// {@template tilt.TiltStreamModel.isActive.zh}
   /// 手势当前是否处于活动状态。
   ///
   /// 表明手势当前是否处于活动状态，
-  /// 并根据手势优先级进行处理判断。
-  ///
-  /// 手势优先级：
-  /// {@macro tilt.GesturesType.gesturePriority}
+  /// 并根据 [GesturesType] 的 `手势优先级` 进行处理判断。
   ///
   /// 例如：
   /// 如果在触发 [GesturesType.touch] 的时候永远不赋值为 false，
@@ -108,6 +105,7 @@ class TiltStreamModel {
   ///
   /// - true：手势处于活动状态。
   /// - false：手势已结束或不再处于活动状态。
+  /// {@endtemplate}
   final bool isActive;
 
   @override

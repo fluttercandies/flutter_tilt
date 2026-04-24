@@ -154,6 +154,12 @@ void main() {
       var moveCount = 0;
       var tiltAnimatedBuildCount = 0;
       var childBuildCount = 0;
+      TiltDataModel? moveTiltData;
+      TiltDataModel? leaveTiltData;
+      TiltDataModel? moveAnimatedTiltData;
+      TiltDataModel? moveTargetTiltData;
+      TiltDataModel? leaveAnimatedTiltData;
+      TiltDataModel? leaveTargetTiltData;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -163,17 +169,34 @@ void main() {
               fps: fps,
               tiltConfig: const TiltConfig(
                 enterDuration: Duration.zero,
-                moveDuration: Duration(milliseconds: 1000),
+                // 确保存在动画时常，以便在测试过程中捕获动画状态
+                moveDuration: Duration(milliseconds: 1),
                 enterToMoveDuration: Duration.zero,
                 leaveDuration: Duration.zero,
               ),
-              onGestureMove: (_, __) {
+              onGestureMove: (tiltDataModel, _) {
                 moveCount++;
+                if (moveCount == fps + 1) {
+                  moveTiltData = tiltDataModel;
+                }
+              },
+              onGestureLeave: (tiltDataModel, _) {
+                leaveTiltData = tiltDataModel;
               },
               child: TiltAnimatedBuilder(
                 builder: (context, animatedState, child) {
                   if (animatedState.currentGesturesType != GesturesType.none) {
                     tiltAnimatedBuildCount++;
+
+                    if (animatedState.isCurrentGesturesTypeActive &&
+                        tiltAnimatedBuildCount == fps) {
+                      moveAnimatedTiltData = animatedState.animatedTiltData;
+                      moveTargetTiltData = animatedState.targetTiltData;
+                    }
+                    if (!animatedState.isCurrentGesturesTypeActive) {
+                      leaveAnimatedTiltData = animatedState.animatedTiltData;
+                      leaveTargetTiltData = animatedState.targetTiltData;
+                    }
                   }
                   return child!;
                 },
@@ -204,6 +227,21 @@ void main() {
       expect(moveCount, fps + 1);
       expect(tiltAnimatedBuildCount, fps + 1);
       expect(childBuildCount, 1);
+
+      expect(moveTiltData, isNotNull);
+      expect(leaveTiltData, isNotNull);
+      expect(moveAnimatedTiltData, isNotNull);
+      expect(moveTargetTiltData, isNotNull);
+      expect(leaveAnimatedTiltData, isNotNull);
+      expect(leaveTargetTiltData, isNotNull);
+
+      expect(
+        moveAnimatedTiltData!.areaProgress.dy,
+        closeTo(moveTargetTiltData!.areaProgress.dy, 0.1),
+      );
+      expect(moveTiltData, moveTargetTiltData);
+      expect(leaveAnimatedTiltData, leaveTargetTiltData);
+      expect(leaveTiltData, leaveTargetTiltData);
     });
   });
 }

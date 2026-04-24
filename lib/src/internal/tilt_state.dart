@@ -35,10 +35,18 @@ class TiltState {
   /// 区域进度
   final Offset areaProgress;
 
-  /// 是否处于活动状态（进入或移动）
+  /// {@macro tilt.TiltStreamModel.isActive.en}
+  ///
+  /// ------
+  ///
+  /// {@macro tilt.TiltStreamModel.isActive.zh}
   final bool isActive;
 
-  /// 当前手势类型
+  /// {@macro tilt.TiltStreamModel.gesturesType.en}
+  ///
+  /// ------
+  ///
+  /// {@macro tilt.TiltStreamModel.gesturesType.zh}
   final GesturesType currentGesturesType;
 
   /// 当前坐标
@@ -59,7 +67,6 @@ class TiltState {
   /// 禁用
   bool get disable => tiltConfig.disable;
 
-  /// 复制当前倾斜数据，并按需覆盖部分字段
   TiltState copyWith({
     bool? isInit,
     TiltConfig? tiltConfig,
