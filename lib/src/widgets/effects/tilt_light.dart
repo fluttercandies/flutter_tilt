@@ -86,24 +86,26 @@ class TiltLight extends StatelessWidget with TiltDecorationMixin {
       right: !enableReverse ? positionX : null,
       bottom: !enableReverse ? positionY : null,
       child: IgnorePointer(
-        child: Container(
+        child: SizedBox(
           width: spreadWidth,
           height: spreadHeight,
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              center: Alignment.center,
-              colors: <Color>[
-                /// TODO: Flutter v3.27.0 之后需要迁移，在这之前暂时使用 withAlpha，
-                /// （目前为了兼容更多低版本 Flutter 以及对于非主要 Tilt 效果的 P3 广色域优先级很低，未来再迁移为 withValues）
-                /// 以下 withAlpha 内的计算方式和 withOpacity 内部的计算方式一致，
-                /// 所以还不支持 P3 广色域，目前依旧是 sRGB。
-                /// https://docs.flutter.dev/release/breaking-changes/wide-gamut-framework
-                lightConfig.color.withAlpha((alphaProgress * 0.95).round()),
-                lightConfig.color.withAlpha((alphaProgress * 0.85).round()),
-                lightConfig.color.withAlpha((alphaProgress * 0.5).round()),
-                lightConfig.color.withAlpha(0),
-              ],
-              stops: const <double>[0.01, 0.4, 0.75, 0.99],
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: Alignment.center,
+                colors: <Color>[
+                  /// TODO: Flutter v3.27.0 之后需要迁移，在这之前暂时使用 withAlpha，
+                  /// （目前为了兼容更多低版本 Flutter 以及对于非主要 Tilt 效果的 P3 广色域优先级很低，未来再迁移为 withValues）
+                  /// 以下 withAlpha 内的计算方式和 withOpacity 内部的计算方式一致，
+                  /// 所以还不支持 P3 广色域，目前依旧是 sRGB。
+                  /// https://docs.flutter.dev/release/breaking-changes/wide-gamut-framework
+                  lightConfig.color.withAlpha((alphaProgress * 0.95).round()),
+                  lightConfig.color.withAlpha((alphaProgress * 0.85).round()),
+                  lightConfig.color.withAlpha((alphaProgress * 0.5).round()),
+                  lightConfig.color.withAlpha(0),
+                ],
+                stops: const <double>[0.01, 0.4, 0.75, 0.99],
+              ),
             ),
           ),
         ),
