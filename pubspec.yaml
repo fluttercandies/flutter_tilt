@@ -38,10 +38,10 @@ flutter:
 
 topics:
   - tilt
-  - skew
   - parallax
-  - sensor
+  - ui
   - widget
+  - animation
 
 screenshots:
   - description: 'Example Preview GIF'
