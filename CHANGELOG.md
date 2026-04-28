@@ -1,7 +1,13 @@
 # Changelog
 
 > [!IMPORTANT]  
-> See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/docs/migration-guides/) for the details of breaking changes between versions.
+> See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/v3/docs/migration-guides/) for the details of breaking changes between versions.
+
+## 3.3.5
+
+**Improvements**
+
+- Updated README.md
 
 ## 3.3.4
 
