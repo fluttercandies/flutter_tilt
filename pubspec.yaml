@@ -5,7 +5,7 @@ description: Easily apply tilt parallax hover effects for Flutter, which support
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 # publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-# https://semver.org/spec/v2.0.0-rc.1.html
+# https://semver.org/spec/v2.0.0.html
 # https://dart.dev/tools/pub/versioning#semantic-versions
 # https://dart.dev/tools/pub/dependencies#version-constraints
 version: 4.0.0-rc.1

@@ -1,7 +1,7 @@
 # Changelog
 
 > [!IMPORTANT]  
-> See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/docs/migration-guides/) for the details of breaking changes between versions.
+> See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/migration-guides/) for the details of breaking changes between versions.
 
 ## 4.0.0-rc (Unreleased)
 
@@ -26,6 +26,12 @@ Migration Guides: [Migrate to v4.0.0](#)
 **New features**
 
 - Add `TiltAnimatedBuilder` to help implement custom tilt logic.
+
+## 3.3.5
+
+**Improvements**
+
+- Updated README.md
 
 ## 3.3.4
 

@@ -40,7 +40,7 @@
     </tr>
     <tr>
       <td align="center" colspan="2">
-        Check out the <a href="https://amoshuke.github.io/flutter_tilt_book/en/docs/examples/">Live Demo</a>.
+        Check out the <a href="https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/examples/">Live Demo</a>.
       </td>
     </tr>
   </table>
@@ -132,11 +132,11 @@ Open sourced under the MIT license.
 
 [English Documentation]: https://amoshuke.github.io/flutter_tilt_book/en/
 [中文文档]: https://amoshuke.github.io/flutter_tilt_book/zh/
-[Live Demo]: https://amoshuke.github.io/flutter_tilt_book/en/docs/examples/
-[Migration Guides]: https://amoshuke.github.io/flutter_tilt_book/en/docs/migration-guides/
-[Sensors compatibility]: https://amoshuke.github.io/flutter_tilt_book/en/docs/installation/#sensors-compatibility
-[Gesture priority]: https://amoshuke.github.io/flutter_tilt_book/en/docs/widgets/tilt-widget/#gesture-priority
-[Installation]: https://amoshuke.github.io/flutter_tilt_book/en/docs/installation/
-[Simple usage]: https://amoshuke.github.io/flutter_tilt_book/en/docs/guides/simple-usage/
-[Tilt widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/docs/widgets/tilt-widget/
-[TiltParallax widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/docs/widgets/tiltparallax-widget/
+[Live Demo]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/examples/
+[Migration Guides]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/migration-guides/
+[Sensors compatibility]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/installation/#sensors-compatibility
+[Gesture priority]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-widget/#gesture-priority
+[Installation]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/installation/
+[Simple usage]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/guides/simple-usage/
+[Tilt widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-widget/
+[TiltParallax widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tiltparallax-widget/
