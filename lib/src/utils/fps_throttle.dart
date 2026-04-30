@@ -1,9 +1,27 @@
 import 'dart:async' as async show Timer;
+import 'dart:math' as math;
+
+Duration frameDurationFromFps(int fps) {
+  if (fps <= 0) {
+    throw RangeError.range(
+      fps,
+      1,
+      null,
+      'fps',
+      'fps must be greater than 0.',
+    );
+  }
+
+  return Duration(
+    microseconds: math.max(1, Duration.microsecondsPerSecond ~/ fps),
+  );
+}
 
 class FpsThrottle {
-  FpsThrottle(this.fps);
+  FpsThrottle(this.fps) : frameDuration = frameDurationFromFps(fps);
 
   final int fps;
+  final Duration frameDuration;
 
   /// FPS 计时器
   async.Timer? _fpsTimer;
@@ -25,7 +43,7 @@ class FpsThrottle {
   /// 启动计时器
   void _startTimer() {
     _fpsTimer = async.Timer(
-      Duration(milliseconds: (1000 / fps) ~/ 1),
+      frameDuration,
       () => _fpsTimer = null,
     );
   }

@@ -226,10 +226,8 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
   ) {
     if (!_isValidEnterToMove(tiltConfig)) return;
 
-    final isValidGesturesType = [
-      GesturesType.touch,
-      GesturesType.hover,
-    ].contains(currentGesturesType);
+    final isValidGesturesType = currentGesturesType == GesturesType.touch ||
+        currentGesturesType == GesturesType.hover;
 
     if (isMove && isValidGesturesType) {
       _startEnterToMoveAnimation();

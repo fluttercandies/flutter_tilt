@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../enums.dart';
@@ -425,9 +426,13 @@ class TiltConfig {
   /// [GesturesType.controller]
   final Duration controllerLeaveDuration;
 
+  /// Sentinel value used to distinguish "not provided" from explicit `null`
+  /// in [copyWith] for nullable fields like [initial].
+  static const Object _absent = Object();
+
   TiltConfig copyWith({
     bool? disable,
-    Offset? initial,
+    Object? initial = _absent,
     double? angle,
     List<TiltDirection>? direction,
     bool? enableReverse,
@@ -452,7 +457,7 @@ class TiltConfig {
   }) {
     return TiltConfig(
       disable: disable ?? this.disable,
-      initial: initial ?? this.initial,
+      initial: identical(initial, _absent) ? this.initial : initial as Offset?,
       angle: angle ?? this.angle,
       direction: direction ?? this.direction,
       enableReverse: enableReverse ?? this.enableReverse,
@@ -492,8 +497,7 @@ class TiltConfig {
         other.disable == disable &&
         other.initial == initial &&
         other.angle == angle &&
-        Object.hashAll(other.direction ?? []) ==
-            Object.hashAll(direction ?? []) &&
+        listEquals(other.direction, direction) &&
         other.enableReverse == enableReverse &&
         other.enableGestureSensors == enableGestureSensors &&
         other.sensorFactor == sensorFactor &&

@@ -13,11 +13,12 @@ class TiltAnimationProvider extends InheritedWidget {
   static TiltAnimationProvider of(BuildContext context) {
     final tiltAnimationProvider =
         context.dependOnInheritedWidgetOfExactType<TiltAnimationProvider>();
-    assert(
-      tiltAnimationProvider != null,
-      'No TiltAnimationProvider found in context',
-    );
-    return tiltAnimationProvider!;
+    if (tiltAnimationProvider == null) {
+      throw FlutterError(
+        'TiltAnimationProvider.of() was called with a context that does not contain a TiltAnimationProvider.',
+      );
+    }
+    return tiltAnimationProvider;
   }
 
   @override

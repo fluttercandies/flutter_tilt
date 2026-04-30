@@ -33,6 +33,14 @@ class TiltActionInputResolver {
   /// 手势冲突协调定时器
   async.Timer? _gesturesHarmonizerTimer;
 
+  static const _gesturePriority = [
+    GesturesType.touch, // 最高优先级
+    GesturesType.hover,
+    GesturesType.controller,
+    GesturesType.sensors, // 最低优先级
+    GesturesType.none,
+  ];
+
   void dispose() {
     cancelGesturesHarmonizerTimer();
   }
@@ -103,15 +111,8 @@ class TiltActionInputResolver {
   ) {
     if (gesturesType1 == gesturesType2) return gesturesType1;
 
-    final gesturePriority = <GesturesType>[
-      GesturesType.touch, // 最高优先级
-      GesturesType.hover,
-      GesturesType.controller,
-      GesturesType.sensors, // 最低优先级
-      GesturesType.none,
-    ];
-    return gesturePriority.indexOf(gesturesType1) <
-            gesturePriority.indexOf(gesturesType2)
+    return _gesturePriority.indexOf(gesturesType1) <
+            _gesturePriority.indexOf(gesturesType2)
         ? gesturesType1
         : gesturesType2;
   }
@@ -150,8 +151,7 @@ class TiltActionInputResolver {
 
   /// 启动手势冲突协调定时器，定时结束后允许传感器输入
   void _startGesturesHarmonizer(Duration duration) {
-    if (_gesturesHarmonizerTimer != null) return;
-    _gesturesHarmonizerTimer?.cancel();
+    cancelGesturesHarmonizerTimer();
     _gesturesHarmonizerTimer = async.Timer(
       duration,
       () => _gesturesHarmonizerTimer = null,

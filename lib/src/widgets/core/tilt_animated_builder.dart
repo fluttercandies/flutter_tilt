@@ -173,6 +173,7 @@ class TiltAnimatedBuilder extends StatelessWidget {
     final tiltState = TiltProvider.of(context);
     final tiltAnimationProvider = TiltAnimationProvider.of(context);
     final tiltTweenAnimation = tiltAnimationProvider.tiltTweenAnimation;
+    final targetTiltData = tiltState.toModel();
 
     return AnimatedBuilder(
       animation: tiltTweenAnimation,
@@ -183,7 +184,7 @@ class TiltAnimatedBuilder extends StatelessWidget {
             tiltState,
             tiltTweenAnimation.value,
           ),
-          targetTiltData: tiltState.toModel(),
+          targetTiltData: targetTiltData,
           currentGesturesType: tiltState.currentGesturesType,
           isCurrentGesturesTypeActive: tiltState.isActive,
         );

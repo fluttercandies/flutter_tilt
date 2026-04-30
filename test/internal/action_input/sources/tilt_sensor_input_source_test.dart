@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:flutter_tilt/src/internal/action_input/sources/tilt_sensor_input_source.dart';
+import 'package:flutter_tilt/src/utils/fps_throttle.dart';
 import 'package:sensors_plus/sensors_plus.dart' show AccelerometerEvent;
 
 import '../../../sensors_mock.dart';
@@ -18,7 +19,7 @@ void main() {
     const fps = 60;
     late TiltController tiltController;
     late TiltSensorInputSource inputSource;
-    late int frameDurationMs;
+    late Duration frameDuration;
 
     setUp(() {
       tiltController = TiltController();
@@ -28,7 +29,7 @@ void main() {
         fps: fps,
         tiltConfig: const TiltConfig(enableGestureSensors: true),
       );
-      frameDurationMs = (1000 / fps) ~/ 1;
+      frameDuration = frameDurationFromFps(fps);
     });
 
     tearDown(() {
@@ -43,6 +44,7 @@ void main() {
       var sensorFrameCount = 0;
       var replayedFrameCount = 0;
       late StreamSubscription<TiltStreamModel> firstSubscription;
+      late StreamSubscription<TiltStreamModel> replaySubscription;
 
       debugDefaultTargetPlatformOverride = TargetPlatform.android;
 
@@ -69,6 +71,9 @@ void main() {
 
       await tester.runAsync(
         () async {
+          final firstFramesReady = Completer<void>();
+          final replayFramesReady = Completer<void>();
+
           await tester.pumpWidget(
             Builder(
               builder: (BuildContext context) {
@@ -85,34 +90,50 @@ void main() {
               currentGesturesType = tiltStreamModel.gesturesType;
               if (tiltStreamModel.gesturesType == GesturesType.sensors) {
                 sensorFrameCount++;
+                if (sensorFrameCount == 3) {
+                  unawaited(
+                    firstSubscription.cancel().then((_) {
+                      if (!firstFramesReady.isCompleted) {
+                        firstFramesReady.complete();
+                      }
+                    }),
+                  );
+                }
               }
             },
           );
 
-          /// 延迟 3 帧，等待数据 sensorFrameCount 累加到 3
-          await Future.delayed(
-            Duration(milliseconds: frameDurationMs * 3),
+          /// 等待 3 帧后取消订阅
+          await firstFramesReady.future.timeout(
+            Duration(microseconds: frameDuration.inMicroseconds * 5),
           );
 
           /// 取消订阅后，等待 2 帧
-          await firstSubscription.cancel();
           await Future.delayed(
-            Duration(milliseconds: frameDurationMs * 2),
+            Duration(microseconds: frameDuration.inMicroseconds * 2 + 2000),
           );
 
-          final replaySubscription = tiltController.stream.listen(
+          replaySubscription = tiltController.stream.listen(
             (TiltStreamModel tiltStreamModel) {
               if (tiltStreamModel.gesturesType == GesturesType.sensors) {
                 replayedFrameCount++;
+                if (replayedFrameCount == 3) {
+                  unawaited(
+                    replaySubscription.cancel().then((_) {
+                      if (!replayFramesReady.isCompleted) {
+                        replayFramesReady.complete();
+                      }
+                    }),
+                  );
+                }
               }
             },
           );
 
-          /// 延迟 3 帧，等待数据 replayedFrameCount 累加到 3
-          await Future.delayed(
-            Duration(milliseconds: frameDurationMs * 3),
+          /// 等待重放流收到 3 帧后取消订阅
+          await replayFramesReady.future.timeout(
+            Duration(microseconds: frameDuration.inMicroseconds * 5),
           );
-          await replaySubscription.cancel();
         },
       );
 
@@ -258,6 +279,20 @@ void main() {
       expect(
         inputSource.deviceOrientation,
         equals(DeviceOrientation.portraitDown),
+      );
+    });
+
+    test('throws a RangeError for non-positive fps', () {
+      final invalidInputSource = TiltSensorInputSource(
+        tiltController: tiltController,
+        disable: false,
+        fps: 0,
+        tiltConfig: const TiltConfig(enableGestureSensors: true),
+      );
+
+      expect(
+        invalidInputSource.subscribeToGyroscopeTilt,
+        throwsRangeError,
       );
     });
   });

@@ -95,6 +95,72 @@ void main() {
       expect(accepted.position, const Offset(5, 6));
     });
 
+    test('restarts conflict timer when a new leave happens', () async {
+      resolver.resolve(
+        const TiltStreamModel(
+          position: Offset(3, 3),
+          gesturesType: GesturesType.touch,
+          isActive: true,
+        ),
+        deviceOrientation: DeviceOrientation.portraitUp,
+      );
+
+      resolver.resolve(
+        const TiltStreamModel(
+          position: Offset(3, 3),
+          gesturesType: GesturesType.touch,
+          isActive: false,
+        ),
+        deviceOrientation: DeviceOrientation.portraitUp,
+      );
+
+      await Future<void>.delayed(const Duration(milliseconds: 6));
+
+      resolver.resolve(
+        const TiltStreamModel(
+          position: Offset(7, 8),
+          gesturesType: GesturesType.controller,
+          isActive: true,
+        ),
+        deviceOrientation: DeviceOrientation.portraitUp,
+      );
+
+      resolver.resolve(
+        const TiltStreamModel(
+          position: Offset(7, 8),
+          gesturesType: GesturesType.controller,
+          isActive: false,
+        ),
+        deviceOrientation: DeviceOrientation.portraitUp,
+      );
+
+      await Future<void>.delayed(const Duration(milliseconds: 6));
+
+      final stillBlocked = resolver.resolve(
+        const TiltStreamModel(
+          position: Offset(5, 6),
+          gesturesType: GesturesType.sensors,
+        ),
+        deviceOrientation: DeviceOrientation.portraitUp,
+      );
+
+      expect(stillBlocked.gesturesType, GesturesType.controller);
+      expect(stillBlocked.isActive, isFalse);
+
+      await Future<void>.delayed(const Duration(milliseconds: 12));
+
+      final accepted = resolver.resolve(
+        const TiltStreamModel(
+          position: Offset(5, 6),
+          gesturesType: GesturesType.sensors,
+        ),
+        deviceOrientation: DeviceOrientation.portraitUp,
+      );
+
+      expect(accepted.gesturesType, GesturesType.sensors);
+      expect(accepted.position, const Offset(5, 6));
+    });
+
     test('maps sensor positions by device orientation (all directions)', () {
       const input = Offset(4, 7);
       final cases = <DeviceOrientation, Offset>{

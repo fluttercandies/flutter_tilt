@@ -8,6 +8,7 @@ import 'package:sensors_plus/sensors_plus.dart';
 import '../../../config/tilt_config.dart';
 import '../../../controllers/tilt_controller.dart';
 import '../../../enums.dart';
+import '../../../utils/fps_throttle.dart';
 import '../../../utils/utils.dart';
 import 'tilt_action_input_source.dart';
 
@@ -106,7 +107,7 @@ class TiltSensorInputSource implements TiltActionInputSource {
 
   /// 订阅 Gyroscope 输入，并按帧率补帧
   void subscribeToGyroscopeTilt() {
-    final frameDuration = Duration(milliseconds: (1000 / fps) ~/ 1);
+    final frameDuration = frameDurationFromFps(fps);
 
     _gyroscopeSubscription = gyroscopeEventStream().listen(
       (GyroscopeEvent gyroscopeEvent) {

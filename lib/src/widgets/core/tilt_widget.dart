@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../config/tilt_config.dart';
@@ -24,7 +23,7 @@ class TiltWidget extends StatefulWidget {
   /// 倾斜
   ///
   /// {@template tilt.TiltWidget.desc.en}
-  /// Core tilt widget with gesture handling, stream management, and animation.
+  /// Core tilt widget with gesture handling, stream management, and animation state.
   /// {@endtemplate}
   ///
   /// {@template tilt.TiltWidget.param.en}
@@ -39,7 +38,7 @@ class TiltWidget extends StatefulWidget {
   /// ------
   ///
   /// {@template tilt.TiltWidget.desc.zh}
-  /// 核心倾斜 widget，包含手势处理、流管理和动画。
+  /// 核心倾斜 widget，包含手势处理、流管理和动画状态。
   /// {@endtemplate}
   ///
   /// {@template tilt.TiltWidget.param.zh}
@@ -260,7 +259,7 @@ class _TiltWidgetState extends State<TiltWidget> {
     if (!_tiltState.isInit || widget.disable) return;
     switch (tiltStreamModel.gesturesType) {
       case GesturesType.none:
-        break;
+        return;
       case GesturesType.touch || GesturesType.hover || GesturesType.controller:
         if (tiltStreamModel.isActive) {
           _onGesturesMove(

@@ -57,7 +57,7 @@ class TiltProjectorContainer extends StatelessWidget {
   /// - [border]：BoxDecoration 边框样式。
   /// - [borderRadius]：BoxDecoration 边框圆角半径。
   /// - [clipBehavior]：容器的裁剪行为。
-  /// - [filterQuality]：Transform 的滤镜质量。
+  /// - [filterQuality]：Transform 的质量。
   /// {@endtemplate}
   const TiltProjectorContainer({
     super.key,

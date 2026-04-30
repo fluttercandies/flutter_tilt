@@ -16,8 +16,12 @@ class TiltProvider extends InheritedWidget {
   static TiltState of(BuildContext context) {
     final tiltProvider =
         context.dependOnInheritedWidgetOfExactType<TiltProvider>();
-    assert(tiltProvider != null, 'No TiltProvider found in context');
-    return tiltProvider!.data;
+    if (tiltProvider == null) {
+      throw FlutterError(
+        'TiltProvider.of() was called with a context that does not contain a TiltProvider.',
+      );
+    }
+    return tiltProvider.data;
   }
 
   @override
