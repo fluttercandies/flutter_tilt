@@ -158,9 +158,9 @@ class LightConfig {
 /// 光照效果配置。
 @Deprecated(
   '\nThe current simulated light effect is not suitable for Projector, '
-  'so it will be removed after version 4.1.0.\n'
+  'This feature was deprecated after v4.0.0.\n'
   '------\n'
-  '当前的模拟光照效果对 Projector 并不合适，因此将在 4.1.0 版本之后移除。\n',
+  '当前的模拟光照效果对 Projector 并不合适。此功能在 v4.0.0 版本后已弃用。\n',
 )
 @immutable
 class LightProjectorConfig extends LightConfig {
