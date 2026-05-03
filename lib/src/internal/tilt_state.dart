@@ -32,7 +32,15 @@ class TiltState {
   /// 尺寸 height
   final double height;
 
-  /// 区域进度
+  /// Progress value for the tilt effect in the widget area.
+  ///
+  /// widget 区域内倾斜效果的进度值。
+  ///
+  /// {@macro tilt.TiltDataModel.areaProgress.en}
+  ///
+  /// ------
+  ///
+  /// {@macro tilt.TiltDataModel.areaProgress.zh}
   final Offset areaProgress;
 
   /// {@macro tilt.TiltStreamModel.isActive.en}
@@ -49,16 +57,30 @@ class TiltState {
   /// {@macro tilt.TiltStreamModel.gesturesType.zh}
   final GesturesType currentGesturesType;
 
-  /// 当前坐标
+  /// {@macro tilt.TiltDataModel.position.en}
+  ///
+  /// ------
+  ///
+  /// {@macro tilt.TiltDataModel.position.zh}
   Offset get position => Utils.progressPosition(width, height, areaProgress);
 
-  /// Transform
+  /// {@macro tilt.TiltDataModel.transform.en}
+  ///
+  /// ------
+  ///
+  /// {@macro tilt.TiltDataModel.transform.zh}
   Matrix4 get transform =>
       isInit && !disable ? tiltTransform() : Matrix4.identity();
 
-  /// 实际旋转角度
+  /// The actual tilt angle
   ///
-  /// {@macro tilt.TiltDataModel.angle}
+  /// 实际倾斜旋转角度
+  ///
+  /// {@macro tilt.TiltDataModel.angle.en}
+  ///
+  /// ------
+  ///
+  /// {@macro tilt.TiltDataModel.angle.zh}
   Offset get angle => Utils.rotateAxis(
         areaProgress * tiltConfig.angle,
         tiltConfig.enableReverse,

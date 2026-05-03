@@ -52,7 +52,7 @@
 
 - 👀 Tilt & parallax effects
 - 🎨 Simulated light & shadow effects
-- 📱 Gyroscope sensor support ([Sensors compatibility][])
+- 📱 Gyroscope sensor support ([Sensor compatibility][])
 - 🧱 Multiple layouts
 - 👇 Supports hover, touch, and sensors events ([Gesture priority][])
 - 🖼️ Smooth animation
@@ -134,7 +134,7 @@ Open sourced under the MIT license.
 [中文文档]: https://amoshuke.github.io/flutter_tilt_book/zh/
 [Live Demo]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/examples/
 [Migration Guides]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/migration-guides/
-[Sensors compatibility]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/installation/#sensors-compatibility
+[Sensor compatibility]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/installation/#sensor-compatibility
 [Gesture priority]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-widget/#gesture-priority
 [Installation]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/installation/
 [Simple usage]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/guides/simple-usage/

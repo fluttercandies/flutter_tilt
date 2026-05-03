@@ -93,7 +93,7 @@ class TiltAnimatedState {
 class TiltAnimatedBuilder extends StatelessWidget {
   /// It can only be used inside the Tilt widget tree.
   ///
-  /// It provides a customisable animation [builder] callback for rendering logic.
+  /// It provides a customizable animation [builder] callback for rendering logic.
   /// (for example, [Transform]).
   ///
   /// ------
