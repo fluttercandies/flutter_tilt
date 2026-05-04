@@ -23,7 +23,7 @@ class TiltWidget extends StatefulWidget {
   /// 倾斜
   ///
   /// {@template tilt.TiltWidget.desc.en}
-  /// Core tilt widget with gesture handling, stream management, and animation state.
+  /// Core tilt widget with gesture handling, stream management, and animation state (**no UI rendering**).
   /// {@endtemplate}
   ///
   /// {@template tilt.TiltWidget.param.en}
@@ -38,7 +38,7 @@ class TiltWidget extends StatefulWidget {
   /// ------
   ///
   /// {@template tilt.TiltWidget.desc.zh}
-  /// 核心倾斜 widget，包含手势处理、流管理和动画状态。
+  /// 核心倾斜 widget，包含手势处理、流管理和动画状态（**无 UI 渲染**）。
   /// {@endtemplate}
   ///
   /// {@template tilt.TiltWidget.param.zh}

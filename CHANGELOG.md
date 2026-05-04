@@ -5,11 +5,12 @@
 
 ## 4.0.0-rc.1 (Unreleased)
 
+Migration Guide: [Migrate to v4.0.0](https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/migration-guides/migrate-to-v4-0-0/)
+
 **Breaking changes**
 
-Migration Guides: [Migrate to v4.0.0](#)
-
-- `Tilt` widget now only manages gesture state, sensor state, and animation state...
+- `Tilt` widget now only manages gesture, sensor, and animation state (**no UI rendering**).
+  - To reproduce the previous default style, you need to compose `TiltBaseContainer` with `Tilt`, or use the built-in `Tilt.base`.
 - Replace `Tilt.TiltStreamController` with `Tilt.TiltController` to unify input stream management.
 - The previous `Tilt.lightShadowMode` parameter has been split into the independent widgets `TiltBaseContainer` and `TiltProjectorContainer`.
   To reproduce the previous style, you need to compose them inside the `Tilt` widget,
@@ -26,6 +27,8 @@ Migration Guides: [Migrate to v4.0.0](#)
 **New features**
 
 - Add `TiltAnimatedBuilder` to help implement custom tilt logic.
+
+[PR #34](https://github.com/fluttercandies/flutter_tilt/pull/34)
 
 ## 3.3.5 (2026-04-28)
 
