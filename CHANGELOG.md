@@ -3,7 +3,7 @@
 > [!IMPORTANT]  
 > See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/migration-guides/) for the details of breaking changes between versions.
 
-## 4.0.0-rc.1 (Unreleased)
+## 4.0.0-rc.1 (2026-05-07)
 
 Migration Guide: [Migrate to v4.0.0](https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/migration-guides/migrate-to-v4-0-0/)
 
