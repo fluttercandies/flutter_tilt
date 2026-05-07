@@ -62,59 +62,61 @@ class TiltExample extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: Center(
-        child: Tilt.base(
-          borderRadius: BorderRadius.circular(24.0),
+        child: Tilt(
           tiltConfig: const TiltConfig(
             angle: 20,
             leaveCurve: Curves.easeInOutCubicEmphasized,
             leaveDuration: Duration(milliseconds: 1200),
           ),
-          lightConfig: const LightConfig(disable: true),
-          shadowConfig: const ShadowBaseConfig(disable: true),
-          childLayout: ChildLayout(
-            inner: [
-              ...innerBox,
-              const Positioned(
-                left: 30.0,
-                top: 30.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Flutter Tilt',
-                      style: TextStyle(fontSize: 14, color: Colors.white70),
-                    ),
-                    Text(
-                      'Layout',
-                      style: TextStyle(
-                        fontSize: 32,
-                        color: Colors.white,
-                        height: 1,
+          child: TiltBaseContainer(
+            lightConfig: const LightConfig(disable: true),
+            shadowConfig: const ShadowBaseConfig(disable: true),
+            borderRadius: BorderRadius.circular(24.0),
+            childLayout: ChildLayout(
+              inner: [
+                ...innerBox,
+                const Positioned(
+                  left: 30.0,
+                  top: 30.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Flutter Tilt',
+                        style: TextStyle(fontSize: 14, color: Colors.white70),
                       ),
-                    ),
-                  ],
+                      Text(
+                        'Layout',
+                        style: TextStyle(
+                          fontSize: 32,
+                          color: Colors.white,
+                          height: 1,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const Positioned(
-                left: 30.0,
-                bottom: 30.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Touch and move around.',
-                      style: TextStyle(fontSize: 14, color: Colors.white70),
-                    ),
-                  ],
+                const Positioned(
+                  left: 30.0,
+                  bottom: 30.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Touch and move around.',
+                        style: TextStyle(fontSize: 14, color: Colors.white70),
+                      ),
+                    ],
+                  ),
                 ),
+              ],
+            ),
+            child: SizedBox(
+              width: 300,
+              height: 500,
+              child: DecoratedBox(
+                decoration: const BoxDecoration(color: Colors.black),
               ),
-            ],
-          ),
-          child: SizedBox(
-            width: 300,
-            height: 500,
-            child: DecoratedBox(
-              decoration: const BoxDecoration(color: Colors.black),
             ),
           ),
         ),
