@@ -111,18 +111,22 @@ class TiltAnimatedBuilder extends StatelessWidget {
   /// Tilt(
   ///   child: TiltAnimatedBuilder(
   ///     builder: (context, tiltAnimatedState, child) {
+  ///       final animatedTiltData = tiltAnimatedState.animatedTiltData;
+  ///       final tiltTransform = animatedTiltData.transform;
+  ///       final areaProgress = animatedTiltData.areaProgress;
+  ///
   ///       return Transform(
   ///         alignment: AlignmentDirectional.center,
-  ///         transform: animatedState.animatedTiltData.transform,
+  ///         transform: tiltTransform,
   ///         child: MyCustomWidget(
-  ///           progress: animatedState.animatedTiltData.areaProgress,
-  ///           child: child,
+  ///           progress: areaProgress,
+  ///           child: child, // SomeWidget()
   ///         ),
   ///       );
   ///     },
   ///     child: SomeWidget(),
   ///   ),
-  /// )
+  /// ),
   /// ```
   ///
   const TiltAnimatedBuilder({

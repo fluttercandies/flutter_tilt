@@ -18,6 +18,9 @@ class TiltProjectorContainer extends StatelessWidget {
   /// - Images only
   /// - No data states
   /// - No Hero tags
+  ///
+  /// You should assess the performance risks yourself.
+  /// If your scenario runs smoothly, then you can use it.
   /// {@endtemplate}
   ///
   /// ------
@@ -45,6 +48,9 @@ class TiltProjectorContainer extends StatelessWidget {
   /// - 仅图片
   /// - 无数据状态
   /// - 无 Hero 标签
+  ///
+  /// 你应该自行评估性能风险，
+  /// 如果你应用的场景运行流畅，则可继续使用。
   /// {@endtemplate}
   ///
   /// ------
@@ -56,7 +62,7 @@ class TiltProjectorContainer extends StatelessWidget {
   /// - [shadowConfig]：阴影效果配置。
   /// - [border]：BoxDecoration 边框样式。
   /// - [borderRadius]：BoxDecoration 边框圆角半径。
-  /// - [clipBehavior]：容器的裁剪行为。
+  /// - [clipBehavior]：容器的裁剪表现。
   /// - [filterQuality]：Transform 的质量。
   /// {@endtemplate}
   const TiltProjectorContainer({

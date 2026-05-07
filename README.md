@@ -64,7 +64,9 @@
 - [Installation][]
 - [Simple usage][]
 - [Tilt widget parameters][]
+- [Tilt container list][]
 - [TiltParallax widget parameters][]
+- [TiltAnimatedBuilder widget parameters][]
 - [Live Demo][]
 
 
@@ -130,8 +132,8 @@ Open sourced under the MIT license.
 © AmosHuKe
 
 
-[English Documentation]: https://amoshuke.github.io/flutter_tilt_book/en/
-[中文文档]: https://amoshuke.github.io/flutter_tilt_book/zh/
+[English Documentation]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/
+[中文文档]: https://amoshuke.github.io/flutter_tilt_book/zh/v4-rc/
 [Live Demo]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/examples/
 [Migration Guides]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/migration-guides/
 [Sensor compatibility]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/installation/#sensor-compatibility
@@ -139,4 +141,6 @@ Open sourced under the MIT license.
 [Installation]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/installation/
 [Simple usage]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/guides/simple-usage/
 [Tilt widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-widget/
+[Tilt container list]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-container/
 [TiltParallax widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tiltparallax-widget/
+[TiltAnimatedBuilder widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-animated-builder-widget/

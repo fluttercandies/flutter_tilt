@@ -9,20 +9,20 @@ Migration Guide: [Migrate to v4.0.0](https://amoshuke.github.io/flutter_tilt_boo
 
 **Breaking changes**
 
-- `Tilt` widget now only manages gesture, sensor, and animation state (**no UI rendering**).
-  - To reproduce the previous default style, you need to compose `TiltBaseContainer` with `Tilt`, or use the built-in `Tilt.base`.
+- `Tilt` widget now only manages gesture, sensor, and animation state (no UI rendering).  
+  To reproduce the previous default style, you need to compose `TiltBaseContainer` with `Tilt`, or use the built-in `Tilt.base`.  
 - Replace `Tilt.TiltStreamController` with `Tilt.TiltController` to unify input stream management.
-- The previous `Tilt.lightShadowMode` parameter has been split into the independent widgets `TiltBaseContainer` and `TiltProjectorContainer`.
-  To reproduce the previous style, you need to compose them inside the `Tilt` widget,
-  or use `Tilt.base` and `Tilt.projector` directly.
+- The previous `Tilt.lightShadowMode` parameter has been split into the independent widgets `TiltBaseContainer` and `TiltProjectorContainer`.  
+  To reproduce the previous style, you need to compose them inside the `Tilt` widget,  
+  or use `Tilt.base` and `Tilt.projector` directly.  
 - `ShadowConfig` has been split into `ShadowBaseConfig` and `ShadowProjectorConfig`.
 - Rename `TiltParallax` parameter `size` to `offset`.
 
 **Deprecations**
 
-- The `lightConfig` of `TiltProjectorContainer` is now deprecated.
-  Because the current simulated light effect is not suitable for Projector,
-  it is now disabled by default and will be removed in a future release.
+- The `lightConfig` of `TiltProjectorContainer` is now deprecated.  
+  Because the current simulated light effect is not suitable for Projector,  
+  it is now disabled by default and will be removed in a future release.  
 
 **New features**
 
