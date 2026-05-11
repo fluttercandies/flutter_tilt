@@ -198,27 +198,27 @@ class TiltAnimatedBuilder extends StatelessWidget {
       child: child,
     );
   }
-}
 
-TiltDataModel _animatedTiltDataModel(
-  TiltState tiltState,
-  Offset animatedAreaProgress,
-) {
-  return TiltDataModel(
-    width: tiltState.width,
-    height: tiltState.height,
-    position: Utils.progressPosition(
-      tiltState.width,
-      tiltState.height,
-      animatedAreaProgress,
-    ),
-    transform: tiltState.isInit && !tiltState.disable
-        ? tiltState.tiltTransformFor(animatedAreaProgress)
-        : Matrix4.identity(),
-    areaProgress: animatedAreaProgress,
-    angle: Utils.rotateAxis(
-      animatedAreaProgress * tiltState.tiltConfig.angle,
-      tiltState.tiltConfig.enableReverse,
-    ),
-  );
+  TiltDataModel _animatedTiltDataModel(
+    TiltState tiltState,
+    Offset animatedAreaProgress,
+  ) {
+    return TiltDataModel(
+      width: tiltState.width,
+      height: tiltState.height,
+      position: Utils.progressPosition(
+        tiltState.width,
+        tiltState.height,
+        animatedAreaProgress,
+      ),
+      transform: tiltState.isInit && !tiltState.disable
+          ? tiltState.tiltTransformFor(animatedAreaProgress)
+          : Matrix4.identity(),
+      areaProgress: animatedAreaProgress,
+      angle: Utils.rotateAxis(
+        animatedAreaProgress * tiltState.tiltConfig.angle,
+        tiltState.tiltConfig.enableReverse,
+      ),
+    );
+  }
 }
