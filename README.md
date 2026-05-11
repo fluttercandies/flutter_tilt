@@ -35,7 +35,7 @@
         <img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview2-small.gif" alt="Example Preview GIF - Parallax image" /><br/><img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview5-small.gif" alt="Example Preview GIF - Layout" />
       </td>
       <td align="left">
-        <img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview4-small.gif" alt="Example Preview GIF - Parallax card" /><br/><img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
+        <img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview6-small.gif" alt="Example Preview GIF - TiltAnimatedBuilder" /><br/><img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
       </td>
     </tr>
     <tr>
@@ -142,5 +142,5 @@ Open sourced under the MIT license.
 [Simple usage]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/guides/simple-usage/
 [Tilt widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-widget/
 [Tilt container list]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-container/
-[TiltParallax widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tiltparallax-widget/
+[TiltParallax widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-parallax-widget/
 [TiltAnimatedBuilder widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-animated-builder-widget/

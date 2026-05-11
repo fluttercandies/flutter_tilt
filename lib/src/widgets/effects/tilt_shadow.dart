@@ -238,7 +238,8 @@ class TiltShadowProjector extends TiltShadow<ShadowProjectorConfig> {
       // ignore: deprecated_member_use
       ..scale(scale, scale);
 
-    /// TODO: BUG - 在 Web 端，Widget 嵌套顺序不同会导致渲染错误的奇怪效果，暂时单独处理。
+    /// TODO: BUG - 发生于 Flutter 3.19
+    /// 在 Web 端，Widget 嵌套顺序不同会导致渲染错误的奇怪效果，暂时单独处理。
     /// 目前测试下来是将 ImageFiltered 嵌套在 Transform 内引起的。
     if (kIsWeb) {
       return IgnorePointer(
@@ -266,7 +267,8 @@ class TiltShadowProjector extends TiltShadow<ShadowProjectorConfig> {
       );
     }
 
-    /// TODO: BUG - 在其他端，Widget 嵌套顺序不同会导致渲染错误的奇怪效果。
+    /// TODO: BUG - 发生于 Flutter 3.19
+    /// 在其他端，Widget 嵌套顺序不同会导致渲染错误的奇怪效果。
     /// 请暂时务必只保持以下嵌套顺序
     return IgnorePointer(
       child: Transform(

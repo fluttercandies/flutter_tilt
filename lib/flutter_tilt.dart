@@ -12,22 +12,20 @@ export 'src/config/tilt_shadow_config.dart';
 export 'src/enums.dart';
 
 /// Controllers
-export 'src/controllers/tilt_controller.dart' show TiltController;
+export 'src/controllers/tilt_controller.dart';
 
 /// Data Models
-export 'src/models/tilt_data_model.dart' show TiltDataModel;
-export 'src/models/tilt_stream_model.dart' show TiltStreamModel;
+export 'src/models/tilt_data_model.dart';
+export 'src/models/tilt_stream_model.dart';
 
 /// Main Widgets
-export 'src/tilt.dart' show Tilt, TiltParallax;
-export 'src/widgets/containers/tilt_base_container.dart' show TiltBaseContainer;
-export 'src/widgets/containers/tilt_projector_container.dart'
-    show TiltProjectorContainer;
+export 'src/tilt.dart';
+export 'src/widgets/containers/tilt_base_container.dart';
+export 'src/widgets/containers/tilt_projector_container.dart';
 
 /// Core Widgets
-export 'src/widgets/core/tilt_animated_builder.dart' show TiltAnimatedBuilder;
+export 'src/widgets/core/tilt_animated_builder.dart';
 
 /// Effects
-export 'src/widgets/effects/tilt_light.dart' show TiltLight;
-export 'src/widgets/effects/tilt_shadow.dart'
-    show TiltShadowBase, TiltShadowProjector;
+export 'src/widgets/effects/tilt_light.dart';
+export 'src/widgets/effects/tilt_shadow.dart';

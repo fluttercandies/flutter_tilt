@@ -1,4 +1,4 @@
-// More Live Demo: https://amoshuke.github.io/flutter_tilt_book
+﻿// More Live Demo: https://amoshuke.github.io/flutter_tilt_book
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
@@ -35,17 +35,17 @@ class TiltExample extends StatelessWidget {
       innerBox.add(
         TiltParallax(
           offset: Offset(-20.0 * i, -30.0 * i),
-          child: SizedBox(
-            width: 200 * (1 - i * 0.05),
-            height: 200 * (1 - i * 0.05),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  width: 4 * (1 - i * 0.05),
-                  color: Colors.white.withValues(alpha: 1 - (i - 1) * 0.1),
-                ),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                width: 4 * (1 - i * 0.05),
+                color: Colors.white.withValues(alpha: 1 - (i - 1) * 0.1),
               ),
+            ),
+            child: SizedBox(
+              width: 200 * (1 - i * 0.05),
+              height: 200 * (1 - i * 0.05),
             ),
           ),
         ),
@@ -104,12 +104,9 @@ class TiltExample extends StatelessWidget {
                 ),
               ],
             ),
-            child: SizedBox(
-              width: 300,
-              height: 500,
-              child: DecoratedBox(
-                decoration: const BoxDecoration(color: Colors.black),
-              ),
+            child: DecoratedBox(
+              decoration: const BoxDecoration(color: Colors.black),
+              child: SizedBox(width: 300, height: 500),
             ),
           ),
         ),
