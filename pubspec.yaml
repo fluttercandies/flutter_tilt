@@ -44,12 +44,7 @@ topics:
   - widget
   - animation
 
+# .pubignore - screenshots
 screenshots:
   - description: 'Example Preview GIF'
     path: README/preview2-small.gif
-  - description: 'Example Preview GIF'
-    path: README/preview6-small.gif
-  - description: 'Example Preview GIF'
-    path: README/preview5-small.gif
-  - description: 'Example Preview GIF'
-    path: README/preview3-small.gif
