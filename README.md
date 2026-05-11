@@ -32,10 +32,10 @@
   <table width="620" align="center" border="0">
     <tr>
       <td align="right">
-        <img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview2-small.gif" alt="Example Preview GIF - Parallax image" /><br/><img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview5-small.gif" alt="Example Preview GIF - Layout" />
+        <img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/refs/heads/main/README/preview2-small.gif" alt="Example Preview GIF - Parallax image" /><br/><img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/refs/heads/main/README/preview5-small.gif" alt="Example Preview GIF - Layout" />
       </td>
       <td align="left">
-        <img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview6-small.gif" alt="Example Preview GIF - TiltAnimatedBuilder" /><br/><img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
+        <img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/refs/heads/v4/README/preview6-small.gif" alt="Example Preview GIF - TiltAnimatedBuilder" /><br/><img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/refs/heads/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
       </td>
     </tr>
     <tr>
