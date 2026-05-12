@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../enums.dart';
@@ -23,7 +24,6 @@ class TiltConfig {
     this.angle = 10.0,
     this.direction,
     this.enableReverse = false,
-    this.filterQuality,
     this.enableGestureSensors = true,
     this.sensorFactor = 10.0,
     this.enableSensorRevert = true,
@@ -131,9 +131,6 @@ class TiltConfig {
   /// {@endtemplate}
   ///
   final bool enableReverse;
-
-  /// FilterQuality
-  final FilterQuality? filterQuality;
 
   /// Gyroscope sensor triggered tilt.
   ///
@@ -429,13 +426,16 @@ class TiltConfig {
   /// [GesturesType.controller]
   final Duration controllerLeaveDuration;
 
+  /// Sentinel value used to distinguish "not provided" from explicit `null`
+  /// in [copyWith] for nullable fields like [initial].
+  static const Object _absent = Object();
+
   TiltConfig copyWith({
     bool? disable,
-    Offset? initial,
+    Object? initial = _absent,
     double? angle,
     List<TiltDirection>? direction,
     bool? enableReverse,
-    FilterQuality? filterQuality,
     bool? enableGestureSensors,
     double? sensorFactor,
     bool? enableSensorRevert,
@@ -457,11 +457,10 @@ class TiltConfig {
   }) {
     return TiltConfig(
       disable: disable ?? this.disable,
-      initial: initial ?? this.initial,
+      initial: identical(initial, _absent) ? this.initial : initial as Offset?,
       angle: angle ?? this.angle,
       direction: direction ?? this.direction,
       enableReverse: enableReverse ?? this.enableReverse,
-      filterQuality: filterQuality ?? this.filterQuality,
       enableGestureSensors: enableGestureSensors ?? this.enableGestureSensors,
       sensorFactor: sensorFactor ?? this.sensorFactor,
       enableSensorRevert: enableSensorRevert ?? this.enableSensorRevert,
@@ -498,10 +497,8 @@ class TiltConfig {
         other.disable == disable &&
         other.initial == initial &&
         other.angle == angle &&
-        Object.hashAll(other.direction ?? []) ==
-            Object.hashAll(direction ?? []) &&
+        listEquals(other.direction, direction) &&
         other.enableReverse == enableReverse &&
-        other.filterQuality == filterQuality &&
         other.enableGestureSensors == enableGestureSensors &&
         other.sensorFactor == sensorFactor &&
         other.enableSensorRevert == enableSensorRevert &&
@@ -530,7 +527,6 @@ class TiltConfig {
       angle,
       Object.hashAll(direction ?? []),
       enableReverse,
-      filterQuality,
       enableGestureSensors,
       sensorFactor,
       enableSensorRevert,

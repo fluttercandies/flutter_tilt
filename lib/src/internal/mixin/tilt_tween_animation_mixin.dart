@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../config/tilt_config.dart';
 import '../../enums.dart';
 import '../provider/tilt_provider.dart';
+import '../tilt_state.dart';
 
 mixin TiltTweenAnimationMixin<T extends StatefulWidget>
     on State<T>, TickerProviderStateMixin<T> {
@@ -37,8 +38,9 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final tiltProvider = TiltProvider.of(context);
-    _updateTiltTweenAnimation(tiltProvider);
+    final tiltData = TiltProvider.of(context);
+    _updateTiltTweenAnimation(tiltData);
+    // 标记本帧由 didChangeDependencies 触发
     _didChangeDependencies = true;
   }
 
@@ -106,7 +108,7 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
       GesturesType.none || GesturesType.controller => Curves.linear,
       GesturesType.touch ||
       GesturesType.hover =>
-        _dynamicAnimationCurve(isMove, currentGesturesType, tiltConfig),
+        _dynamicAnimationCurve(isMove, tiltConfig),
       GesturesType.sensors => Curves.linear,
     };
   }
@@ -135,28 +137,28 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
   }
 
   /// 更新 TiltTween 动画
-  void _updateTiltTweenAnimation(TiltProvider tiltProvider) {
+  void _updateTiltTweenAnimation(TiltState tiltState) {
     final animationEnd = tiltTweenAnimationEnd(
-      tiltProvider.isMove,
-      tiltProvider.tiltConfig,
-      tiltProvider.areaProgress,
+      tiltState.isActive,
+      tiltState.tiltConfig,
+      tiltState.areaProgress,
     );
 
     /// 更新 enterToMoveAnimationController 的持续时间
     enterToMoveAnimationController.duration =
-        tiltProvider.tiltConfig.enterToMoveDuration;
+        tiltState.tiltConfig.enterToMoveDuration;
 
     if (tiltTweenAnimation.value == animationEnd) return;
 
     final animationDuration = tiltTweenAnimationDuration(
-      tiltProvider.isMove,
-      tiltProvider.currentGesturesType,
-      tiltProvider.tiltConfig,
+      tiltState.isActive,
+      tiltState.currentGesturesType,
+      tiltState.tiltConfig,
     );
     final animationCurve = tiltTweenAnimationCurve(
-      tiltProvider.isMove,
-      tiltProvider.currentGesturesType,
-      tiltProvider.tiltConfig,
+      tiltState.isActive,
+      tiltState.currentGesturesType,
+      tiltState.tiltConfig,
     );
 
     /// 更新 tiltTweenAnimationController 的持续时间
@@ -179,7 +181,7 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
   void _updateEnterToMoveAnimation() {
     if (!context.mounted) return;
 
-    /// 避免 didChangeDependencies 和 build 的 updateTiltTweenAnimation 更新同步调用
+    /// 只在动画进行时且本帧不是 didChangeDependencies 触发时 setState
     if (!_didChangeDependencies && enterToMoveAnimationController.isAnimating) {
       final tiltProvider = TiltProvider.of(context);
       _updateTiltTweenAnimation(tiltProvider);
@@ -224,10 +226,8 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
   ) {
     if (!_isValidEnterToMove(tiltConfig)) return;
 
-    final isValidGesturesType = [
-      GesturesType.touch,
-      GesturesType.hover,
-    ].contains(currentGesturesType);
+    final isValidGesturesType = currentGesturesType == GesturesType.touch ||
+        currentGesturesType == GesturesType.hover;
 
     if (isMove && isValidGesturesType) {
       _startEnterToMoveAnimation();
@@ -295,11 +295,7 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
   }
 
   /// 动态计算 Animation Curve
-  Curve _dynamicAnimationCurve(
-    bool isMove,
-    GesturesType currentGesturesType,
-    TiltConfig tiltConfig,
-  ) {
+  Curve _dynamicAnimationCurve(bool isMove, TiltConfig tiltConfig) {
     /// 离开
     if (!isMove) {
       return tiltConfig.leaveCurve;

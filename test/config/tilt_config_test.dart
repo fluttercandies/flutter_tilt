@@ -12,7 +12,6 @@ void main() {
         angle: 1.0,
         direction: [TiltDirection.top, TiltDirection.bottom],
         enableReverse: true,
-        filterQuality: FilterQuality.high,
         enableGestureSensors: false,
         sensorFactor: 2.0,
         enableSensorRevert: false,
@@ -38,7 +37,6 @@ void main() {
         angle: 1.0,
         direction: [TiltDirection.top, TiltDirection.bottom],
         enableReverse: true,
-        filterQuality: FilterQuality.high,
         enableGestureSensors: false,
         sensorFactor: 2.0,
         enableSensorRevert: false,
@@ -61,6 +59,31 @@ void main() {
       expect(tiltConfig, tiltConfig.copyWith());
       expect(tiltConfigCopyWith, tiltConfigExpect);
       expect(tiltConfigCopyWith.hashCode, tiltConfigExpect.hashCode);
+    });
+
+    test('copyWith - initial can be explicitly set to null', () {
+      const tiltConfig = TiltConfig(initial: Offset(1.0, 1.0));
+      expect(tiltConfig.copyWith().initial, const Offset(1.0, 1.0));
+      expect(tiltConfig.copyWith(initial: null).initial, isNull);
+    });
+
+    test('== and hashCode - equal direction lists are considered equal', () {
+      const a = TiltConfig(
+        direction: [TiltDirection.top, TiltDirection.left],
+      );
+      const b = TiltConfig(
+        direction: [TiltDirection.top, TiltDirection.left],
+      );
+
+      expect(a, b);
+      expect(a.hashCode, b.hashCode);
+    });
+
+    test('== and hashCode - different direction lists are considered unequal',
+        () {
+      const a = TiltConfig(direction: [TiltDirection.top]);
+      const b = TiltConfig(direction: [TiltDirection.bottom]);
+      expect(a, isNot(b));
     });
   });
 

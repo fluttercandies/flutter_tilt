@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../enums.dart';
-import '../../utils.dart';
+import '../../utils/utils.dart';
 
 mixin TiltDecorationMixin {
   /// 计算提供的方向进度

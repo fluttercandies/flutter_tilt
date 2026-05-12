@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Tilt Example',
       theme: ThemeData(
-        useMaterial3: true,
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.brown),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.brown,
@@ -42,15 +41,17 @@ class TiltExample extends StatelessWidget {
     for (var i = 1; i <= 10; i++) {
       innerBox.add(
         TiltParallax(
-          size: Offset(-20.0 * i, -30.0 * i),
-          child: Container(
+          offset: Offset(-20.0 * i, -30.0 * i),
+          child: SizedBox(
             width: 200 * (1 - i * 0.05),
             height: 200 * (1 - i * 0.05),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                width: 4 * (1 - i * 0.05),
-                color: Colors.white.withValues(alpha: 1 - (i - 1) * 0.1),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  width: 4 * (1 - i * 0.05),
+                  color: Colors.white.withValues(alpha: 1 - (i - 1) * 0.1),
+                ),
               ),
             ),
           ),
@@ -62,57 +63,61 @@ class TiltExample extends StatelessWidget {
       backgroundColor: const Color(0xFFFFFFFF),
       body: Center(
         child: Tilt(
-          borderRadius: BorderRadius.circular(24.0),
           tiltConfig: const TiltConfig(
             angle: 20,
             leaveCurve: Curves.easeInOutCubicEmphasized,
             leaveDuration: Duration(milliseconds: 1200),
           ),
-          lightConfig: const LightConfig(disable: true),
-          shadowConfig: const ShadowConfig(disable: true),
-          childLayout: ChildLayout(
-            inner: [
-              ...innerBox,
-              const Positioned(
-                left: 30.0,
-                top: 30.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Flutter Tilt',
-                      style: TextStyle(fontSize: 14, color: Colors.white70),
-                    ),
-                    Text(
-                      'Layout',
-                      style: TextStyle(
-                        fontSize: 32,
-                        color: Colors.white,
-                        height: 1,
+          child: TiltBaseContainer(
+            lightConfig: const LightConfig(disable: true),
+            shadowConfig: const ShadowBaseConfig(disable: true),
+            borderRadius: BorderRadius.circular(24.0),
+            childLayout: ChildLayout(
+              inner: [
+                ...innerBox,
+                const Positioned(
+                  left: 30.0,
+                  top: 30.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Flutter Tilt',
+                        style: TextStyle(fontSize: 14, color: Colors.white70),
                       ),
-                    ),
-                  ],
+                      Text(
+                        'Layout',
+                        style: TextStyle(
+                          fontSize: 32,
+                          color: Colors.white,
+                          height: 1,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const Positioned(
-                left: 30.0,
-                bottom: 30.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Touch and move around.',
-                      style: TextStyle(fontSize: 14, color: Colors.white70),
-                    ),
-                  ],
+                const Positioned(
+                  left: 30.0,
+                  bottom: 30.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Touch and move around.',
+                        style: TextStyle(fontSize: 14, color: Colors.white70),
+                      ),
+                    ],
+                  ),
                 ),
+              ],
+            ),
+            child: SizedBox(
+              width: 300,
+              height: 500,
+              child: DecoratedBox(
+                decoration: const BoxDecoration(color: Colors.black),
               ),
-            ],
-          ),
-          child: Container(
-            width: 300,
-            height: 500,
-            decoration: const BoxDecoration(color: Colors.black),
+            ),
           ),
         ),
       ),

@@ -10,9 +10,10 @@ class TiltStreamModel {
   const TiltStreamModel({
     required this.position,
     this.gesturesType = GesturesType.controller,
-    this.gestureUse = true,
+    this.isActive = true,
   });
 
+  /// {@template tilt.TiltStreamModel.position.en}
   /// The current trigger position,
   /// It will have the tilt effect of the corresponding position.
   ///
@@ -20,25 +21,25 @@ class TiltStreamModel {
   /// There is a widget size, width: 10, height: 10,
   /// - (0, 0): Maximum tilt top left.
   /// - (10, 10): Maximum tilt bottom right.
+  /// {@endtemplate}
   ///
   /// ------
   ///
+  /// {@template tilt.TiltStreamModel.position.zh}
   /// 当前触发的坐标位置，
   /// 会触发对应位置的倾斜效果。
   ///
   /// 例如：
-  /// 有一个组件尺寸为 width: 10, height: 10,
+  /// 有一个 widget 尺寸为 width: 10, height: 10,
   /// - (0, 0)：会触发最左上的倾斜。
   /// - (10, 10)：会触发最右下的倾斜。
-  ///
+  /// {@endtemplate}
   final Offset position;
 
+  /// {@template tilt.TiltStreamModel.gesturesType.en}
   /// Trigger gesture type.
   ///
-  /// It is triggered according to the `gesture priority`.
-  ///
-  /// Gesture Priority:
-  /// {@macro tilt.GesturesType.gesturePriority}
+  /// It is triggered according to the `gesture priority` of [GesturesType].
   ///
   /// If you need to customize the control with animation or other means.
   ///
@@ -52,15 +53,14 @@ class TiltStreamModel {
   ///
   /// If `TiltConfig.enableSensorRevert` is configured to be false,
   /// it will also not revert to the initial state.
+  /// {@endtemplate}
   ///
   /// ------
   ///
+  /// {@template tilt.TiltStreamModel.gesturesType.zh}
   /// 触发手势类型。
   ///
-  /// 会根据 `手势优先级` 进行触发。
-  ///
-  /// 手势优先级：
-  /// {@macro tilt.GesturesType.gesturePriority}
+  /// 会根据 [GesturesType] 的 `手势优先级` 进行触发。
   ///
   /// 如果需要自定义动画或其他方式自行控制，
   ///
@@ -74,41 +74,39 @@ class TiltStreamModel {
   ///
   /// 配置 `TiltConfig.enableSensorRevert` 为 false 的情况下，
   /// 将同样不会复原至初始状态。
-  ///
+  /// {@endtemplate}
   final GesturesType gesturesType;
 
-  /// Whether the gesture is being used.
+  /// {@template tilt.TiltStreamModel.isActive.en}
+  /// Whether the gesture is currently active.
   ///
-  /// It is used to determine if the gesture is being used and
-  /// will be processed according to the gesture priority.
-  ///
-  /// Gesture Priority:
-  /// {@macro tilt.GesturesType.gesturePriority}
+  /// Indicates whether the gesture is currently active,
+  /// and is used to determine processing based on `gesture priority` of [GesturesType].
   ///
   /// e.g.
-  /// If [GesturesType.touch] is never assigned false when triggered,
+  /// If [GesturesType.touch] is never set to false when triggered,
   /// gestures with a lower priority than [GesturesType.touch] will never be triggered.
   ///
-  /// - true : Gesture being used.
-  /// - false : Gestures to leave or no longer be used.
+  /// - true: Gesture is active.
+  /// - false: Gesture has ended or is no longer active.
+  /// {@endtemplate}
   ///
   /// ------
   ///
-  /// 手势是否正在使用。
+  /// {@template tilt.TiltStreamModel.isActive.zh}
+  /// 手势当前是否处于活动状态。
   ///
-  /// 用于确定手势是否正在使用，并根据手势优先级进行处理。
-  ///
-  /// 手势优先级：
-  /// {@macro tilt.GesturesType.gesturePriority}
+  /// 表明手势当前是否处于活动状态，
+  /// 并根据 [GesturesType] 的 `手势优先级` 进行处理判断。
   ///
   /// 例如：
   /// 如果在触发 [GesturesType.touch] 的时候永远不赋值为 false，
   /// 那么优先级低于 [GesturesType.touch] 的手势将永远不会被触发。
   ///
-  /// - true : 手势正在使用。
-  /// - false : 手势离开或不再使用。
-  ///
-  final bool gestureUse;
+  /// - true：手势处于活动状态。
+  /// - false：手势已结束或不再处于活动状态。
+  /// {@endtemplate}
+  final bool isActive;
 
   @override
   bool operator ==(Object other) {
@@ -121,13 +119,13 @@ class TiltStreamModel {
     return other is TiltStreamModel &&
         other.position == position &&
         other.gesturesType == gesturesType &&
-        other.gestureUse == gestureUse;
+        other.isActive == isActive;
   }
 
   @override
   int get hashCode => Object.hash(
         position.hashCode,
         gesturesType.hashCode,
-        gestureUse.hashCode,
+        isActive.hashCode,
       );
 }

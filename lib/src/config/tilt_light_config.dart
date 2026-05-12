@@ -20,7 +20,6 @@ class LightConfig {
     this.minIntensity = 0.0,
     this.maxIntensity = 0.5,
     this.spreadFactor = 4.0,
-    this.projectorScale = 1.1,
     this.direction = LightDirection.around,
     this.enableReverse,
   })  : assert(
@@ -28,8 +27,7 @@ class LightConfig {
               minIntensity >= 0.0 &&
               maxIntensity <= 1.0,
         ),
-        assert(spreadFactor >= 1.0),
-        assert(projectorScale >= 0.0);
+        assert(spreadFactor >= 1.0);
 
   /// Only disable the light effect.
   ///
@@ -67,20 +65,6 @@ class LightConfig {
   /// 光源扩散系数，
   /// 相对于当前 widget 尺寸。
   final double spreadFactor;
-
-  /// Light area size scale
-  ///
-  /// Only the following mode:
-  /// [LightShadowMode.projector]
-  ///
-  /// ------
-  ///
-  /// 光照区域尺寸比例
-  ///
-  /// 仅以下模式生效：
-  /// [LightShadowMode.projector]
-  ///
-  final double projectorScale;
 
   /// Light direction.
   ///
@@ -124,7 +108,6 @@ class LightConfig {
     double? minIntensity,
     double? maxIntensity,
     double? spreadFactor,
-    double? projectorScale,
     LightDirection? direction,
     bool? enableReverse,
   }) {
@@ -134,7 +117,6 @@ class LightConfig {
       minIntensity: minIntensity ?? this.minIntensity,
       maxIntensity: maxIntensity ?? this.maxIntensity,
       spreadFactor: spreadFactor ?? this.spreadFactor,
-      projectorScale: projectorScale ?? this.projectorScale,
       direction: direction ?? this.direction,
       enableReverse: enableReverse ?? this.enableReverse,
     );
@@ -154,7 +136,6 @@ class LightConfig {
         other.minIntensity == minIntensity &&
         other.maxIntensity == maxIntensity &&
         other.spreadFactor == spreadFactor &&
-        other.projectorScale == projectorScale &&
         other.direction == direction &&
         other.enableReverse == enableReverse;
   }
@@ -167,9 +148,84 @@ class LightConfig {
       minIntensity,
       maxIntensity,
       spreadFactor,
-      projectorScale,
       direction,
       enableReverse,
+    );
+  }
+}
+
+/// Light effect config.
+/// 光照效果配置。
+@Deprecated(
+  '\nThe current simulated light effect is not suitable for Projector, '
+  'This feature was deprecated after v4.0.0.\n'
+  '------\n'
+  '当前的模拟光照效果对 Projector 并不合适。此功能在 v4.0.0 版本后已弃用。\n',
+)
+@immutable
+class LightProjectorConfig extends LightConfig {
+  /// Light effect config.
+  /// 光照效果配置。
+  const LightProjectorConfig({
+    super.disable = true,
+    super.color,
+    super.minIntensity,
+    super.maxIntensity,
+    super.spreadFactor,
+    this.projectorScale = 1.1,
+    super.direction,
+    super.enableReverse,
+  }) : assert(projectorScale >= 0.0);
+
+  /// Light area size scale
+  ///
+  /// ------
+  ///
+  /// 光照区域尺寸比例
+  ///
+  final double projectorScale;
+
+  @override
+  LightProjectorConfig copyWith({
+    bool? disable,
+    Color? color,
+    double? minIntensity,
+    double? maxIntensity,
+    double? spreadFactor,
+    double? projectorScale,
+    LightDirection? direction,
+    bool? enableReverse,
+  }) {
+    return LightProjectorConfig(
+      disable: disable ?? this.disable,
+      color: color ?? this.color,
+      minIntensity: minIntensity ?? this.minIntensity,
+      maxIntensity: maxIntensity ?? this.maxIntensity,
+      spreadFactor: spreadFactor ?? this.spreadFactor,
+      projectorScale: projectorScale ?? this.projectorScale,
+      direction: direction ?? this.direction,
+      enableReverse: enableReverse ?? this.enableReverse,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is LightProjectorConfig &&
+        super == other &&
+        other.projectorScale == projectorScale;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      super.hashCode,
+      projectorScale,
     );
   }
 }

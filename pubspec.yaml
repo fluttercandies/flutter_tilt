@@ -8,8 +8,9 @@ description: Easily apply tilt parallax hover effects for Flutter, which support
 # https://semver.org/spec/v2.0.0.html
 # https://dart.dev/tools/pub/versioning#semantic-versions
 # https://dart.dev/tools/pub/dependencies#version-constraints
-version: 3.3.5
+version: 4.0.0
 homepage: https://amoshuke.github.io/flutter_tilt_book
+documentation: https://amoshuke.github.io/flutter_tilt_book
 repository: https://github.com/fluttercandies/flutter_tilt
 issue_tracker: https://github.com/fluttercandies/flutter_tilt/issues
 platforms:
@@ -38,15 +39,12 @@ flutter:
 
 topics:
   - tilt
-  - skew
   - parallax
-  - sensor
+  - ui
   - widget
+  - animation
 
+# .pubignore - screenshots
 screenshots:
   - description: 'Example Preview GIF'
     path: README/preview2-small.gif
-  - description: 'Example Preview GIF'
-    path: README/preview5-small.gif
-  - description: 'Example Preview GIF'
-    path: README/preview3-small.gif
