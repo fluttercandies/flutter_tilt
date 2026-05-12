@@ -35,12 +35,12 @@
         <img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/refs/heads/main/README/preview2-small.gif" alt="Example Preview GIF - Parallax image" /><br/><img width="285px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/refs/heads/main/README/preview5-small.gif" alt="Example Preview GIF - Layout" />
       </td>
       <td align="left">
-        <img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/refs/heads/v4/README/preview6-small.gif" alt="Example Preview GIF - TiltAnimatedBuilder" /><br/><img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/refs/heads/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
+        <img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/refs/heads/main/README/preview6-small.gif" alt="Example Preview GIF - TiltAnimatedBuilder" /><br/><img width="320px" src="https://raw.githubusercontent.com/fluttercandies/flutter_tilt/refs/heads/main/README/preview3-small.gif" alt="Example Preview GIF - Layout" />
       </td>
     </tr>
     <tr>
       <td align="center" colspan="2">
-        Check out the <a href="https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/examples/">Live Demo</a>.
+        Check out the <a href="https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/examples/">Live Demo</a>.
       </td>
     </tr>
   </table>
@@ -132,15 +132,15 @@ Open sourced under the MIT license.
 © AmosHuKe
 
 
-[English Documentation]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/
-[中文文档]: https://amoshuke.github.io/flutter_tilt_book/zh/v4-rc/
-[Live Demo]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/examples/
-[Migration Guides]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/migration-guides/
-[Sensor compatibility]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/installation/#sensor-compatibility
-[Gesture priority]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-widget/#gesture-priority
-[Installation]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/installation/
-[Simple usage]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/guides/simple-usage/
-[Tilt widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-widget/
-[Tilt container list]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-container/
-[TiltParallax widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-parallax-widget/
-[TiltAnimatedBuilder widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/widgets/tilt-animated-builder-widget/
+[English Documentation]: https://amoshuke.github.io/flutter_tilt_book/en/v4/
+[中文文档]: https://amoshuke.github.io/flutter_tilt_book/zh/v4/
+[Live Demo]: https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/examples/
+[Migration Guides]: https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/migration-guides/
+[Sensor compatibility]: https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/installation/#sensor-compatibility
+[Gesture priority]: https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/widgets/tilt-widget/#gesture-priority
+[Installation]: https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/installation/
+[Simple usage]: https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/guides/simple-usage/
+[Tilt widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/widgets/tilt-widget/
+[Tilt container list]: https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/widgets/tilt-container/
+[TiltParallax widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/widgets/tilt-parallax-widget/
+[TiltAnimatedBuilder widget parameters]: https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/widgets/tilt-animated-builder-widget/

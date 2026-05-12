@@ -1,11 +1,11 @@
 # Changelog
 
 > [!IMPORTANT]  
-> See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/migration-guides/) for the details of breaking changes between versions.
+> See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/migration-guides/) for the details of breaking changes between versions.
 
-## 4.0.0-rc.2 (2026-05-12)
+## 4.0.0 (2026-05-12)
 
-Migration Guide: [Migrate to v4.0.0](https://amoshuke.github.io/flutter_tilt_book/en/v4-rc/docs/migration-guides/migrate-to-v4-0-0/)
+Migration Guide: [English](https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/migration-guides/migrate-to-v4-0-0/) | [中文](https://amoshuke.github.io/flutter_tilt_book/zh/v4/docs/migration-guides/migrate-to-v4-0-0/)  
 
 **Breaking changes**
 
