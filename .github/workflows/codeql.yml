@@ -1,4 +1,4 @@
-name: "CodeQL"
+name: CodeQL
 
 on:
   schedule:
@@ -9,14 +9,12 @@ on:
       - dev
     paths-ignore:
       - '**.md'
-      - 'example/**'
   pull_request:
     branches:
       - main
       - dev
     paths-ignore:
       - '**.md'
-      - 'example/**'
 
 jobs:
   analyze:

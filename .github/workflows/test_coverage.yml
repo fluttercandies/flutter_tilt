@@ -18,7 +18,7 @@ on:
       - '**.md'
       - 'example/**'
 
-# You can use the following syntax to disable permissions for all of the available permissions:
+# Disable permissions for all of the available permissions
 permissions: {}
 
 env:
