@@ -18,6 +18,9 @@ on:
       - '**.md'
       - 'example/**'
 
+# You can use the following syntax to disable permissions for all of the available permissions:
+permissions: {}
+
 env:
   tilt_sparse_checkout: |
     /*
@@ -28,12 +31,12 @@ jobs:
     name: "Code Analysis :: Flutter (latest)"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
         with:
           sparse-checkout: ${{ env.tilt_sparse_checkout }}
           sparse-checkout-cone-mode: false
       - run: dir
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@4cab68ce0f1c7c924f688bff4792e044f1aeb30c
         with:
           channel: 'stable'
       - name: Prepare dependencies
@@ -59,11 +62,11 @@ jobs:
       matrix:
         flutter-version: ['3.19.0', '']
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
         with:
           sparse-checkout: ${{ env.tilt_sparse_checkout }}
           sparse-checkout-cone-mode: false
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@4cab68ce0f1c7c924f688bff4792e044f1aeb30c
         with:
           channel: 'stable'
           flutter-version: ${{ matrix.flutter-version }}
@@ -82,8 +85,8 @@ jobs:
       && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: subosito/flutter-action@v2
+      - uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
+      - uses: subosito/flutter-action@4cab68ce0f1c7c924f688bff4792e044f1aeb30c
         with:
           channel: 'stable'
       - name: Prepare dependencies
@@ -93,6 +96,6 @@ jobs:
       - name: Test Coverage
         run: flutter test --coverage
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@51e64229ac331acb0d7f7b17c67423995f991c79
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
