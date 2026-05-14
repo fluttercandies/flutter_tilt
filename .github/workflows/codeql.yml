@@ -68,6 +68,7 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
+      if: matrix.build-mode == 'autobuild'
       uses: github/codeql-action/autobuild@e46ed2cbd01164d986452f91f178727624ae40d7
 
     # If the analyze step fails for one of the languages you are analyzing with
