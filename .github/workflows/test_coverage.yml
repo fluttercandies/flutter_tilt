@@ -1,5 +1,4 @@
-name: 'test coverage'
-run-name: 'Test Coverage'
+name: 'Test Coverage'
 
 on:
   workflow_dispatch:
