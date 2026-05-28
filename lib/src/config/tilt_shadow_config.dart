@@ -257,8 +257,8 @@ class ShadowBaseConfig extends ShadowConfig {
   }
 }
 
-/// Shadow effect config.
-/// 阴影效果配置。
+/// Shadow effect config (projector).
+/// 阴影效果配置 (projector)。
 @immutable
 class ShadowProjectorConfig extends ShadowConfig {
   /// Shadow effect config.
