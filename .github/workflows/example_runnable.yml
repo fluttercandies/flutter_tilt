@@ -23,7 +23,7 @@ defaults:
     working-directory: ./example
 
 env:
-  FLUTTER_VERSION: '3.44.0'
+  FLUTTER_VERSION: '3.44.1'
 
 jobs:
   code-analysis:
