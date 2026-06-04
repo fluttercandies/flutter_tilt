@@ -124,8 +124,8 @@ class TiltStreamModel {
 
   @override
   int get hashCode => Object.hash(
-        position.hashCode,
-        gesturesType.hashCode,
-        isActive.hashCode,
+        position,
+        gesturesType,
+        isActive,
       );
 }

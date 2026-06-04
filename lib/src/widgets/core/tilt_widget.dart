@@ -267,10 +267,7 @@ class _TiltWidgetState extends State<TiltWidget> {
             tiltStreamModel.gesturesType,
           );
         } else {
-          _onGesturesRevert(
-            tiltStreamModel.position,
-            tiltStreamModel.gesturesType,
-          );
+          _onGesturesRevert(tiltStreamModel.gesturesType);
         }
       case GesturesType.sensors:
         // Sensors 只会触发 onGestureMove，不会触发 onGestureLeave
@@ -288,27 +285,25 @@ class _TiltWidgetState extends State<TiltWidget> {
 
   /// 手势移动触发
   ///
-  /// [offset] 当前坐标
-  void _onGesturesMove(Offset offset, GesturesType gesturesType) {
+  /// [position] 当前坐标
+  void _onGesturesMove(Offset position, GesturesType gesturesType) {
     if (!_tiltState.isInit || widget.disable) return;
     if (!_fpsThrottle.shouldTrigger()) return;
     if (widget.tiltConfig.enableOutsideAreaMove ||
-        Utils.isInRange(_tiltState.width, _tiltState.height, offset)) {
+        Utils.isInRange(_tiltState.width, _tiltState.height, position)) {
       setState(() {
-        _currentPosition = offset;
-        _tiltState = _tiltState.moveTo(offset, gesturesType);
+        _currentPosition = position;
+        _tiltState = _tiltState.moveTo(position, gesturesType);
       });
 
-      _onGestureMove(_tiltState.areaProgress, gesturesType);
+      _onGestureMove(gesturesType);
     } else {
-      _onGesturesRevert(offset, gesturesType);
+      _onGesturesRevert(gesturesType);
     }
   }
 
   /// 手势复原触发
-  ///
-  /// [offset] 当前坐标
-  void _onGesturesRevert(Offset offset, GesturesType gesturesType) {
+  void _onGesturesRevert(GesturesType gesturesType) {
     if (!_tiltState.isInit || widget.disable || !_tiltState.isActive) return;
 
     /// 是否还原的取值
@@ -320,7 +315,7 @@ class _TiltWidgetState extends State<TiltWidget> {
       _currentPosition = position;
       _tiltState = _tiltState.revertTo(position, gesturesType);
     });
-    _onGestureLeave(_tiltState.areaProgress, gesturesType);
+    _onGestureLeave(gesturesType);
   }
 
   /// 手势传感器复原触发
@@ -345,47 +340,26 @@ class _TiltWidgetState extends State<TiltWidget> {
   }
 
   /// onGestureMove
-  ///
-  /// - [areaProgress] 当前坐标的区域进度
-  void _onGestureMove(Offset areaProgress, GesturesType gesturesType) {
+  void _onGestureMove(GesturesType gesturesType) {
     if (widget.onGestureMove != null) {
-      _triggerGestureCallback(
-        widget.onGestureMove,
-        areaProgress,
-        gesturesType,
-      );
+      _triggerGestureCallback(widget.onGestureMove, gesturesType);
     }
   }
 
   /// onGestureLeave
-  ///
-  /// - [areaProgress] 当前坐标的区域进度
-  void _onGestureLeave(Offset areaProgress, GesturesType gesturesType) {
+  void _onGestureLeave(GesturesType gesturesType) {
     if (widget.onGestureLeave != null) {
-      _triggerGestureCallback(
-        widget.onGestureLeave,
-        areaProgress,
-        gesturesType,
-      );
+      _triggerGestureCallback(widget.onGestureLeave, gesturesType);
     }
   }
 
   /// 触发手势回调
   void _triggerGestureCallback(
     TiltCallback? callback,
-    Offset areaProgress,
     GesturesType gesturesType,
   ) {
     if (callback != null && mounted) {
-      callback(
-        _tiltState
-            .copyWith(
-              areaProgress: areaProgress,
-              currentGesturesType: gesturesType,
-            )
-            .toModel(),
-        gesturesType,
-      );
+      callback(_tiltState.toModel(), gesturesType);
     }
   }
 }

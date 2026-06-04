@@ -129,11 +129,11 @@ class TiltDataModel {
 
   @override
   int get hashCode => Object.hash(
-        width.hashCode,
-        height.hashCode,
-        position.hashCode,
-        areaProgress.hashCode,
-        transform.hashCode,
-        angle.hashCode,
+        width,
+        height,
+        position,
+        areaProgress,
+        transform,
+        angle,
       );
 }

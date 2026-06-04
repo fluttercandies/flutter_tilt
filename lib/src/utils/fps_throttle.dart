@@ -34,17 +34,11 @@ class FpsThrottle {
   /// 判断是否可以触发下一帧
   bool shouldTrigger() {
     if (_fpsTimer == null) {
-      _startTimer();
+      _fpsTimer = async.Timer(frameDuration, _resetTimer);
       return true;
     }
     return false;
   }
 
-  /// 启动计时器
-  void _startTimer() {
-    _fpsTimer = async.Timer(
-      frameDuration,
-      () => _fpsTimer = null,
-    );
-  }
+  void _resetTimer() => _fpsTimer = null;
 }

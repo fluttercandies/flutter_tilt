@@ -115,12 +115,14 @@ class TiltAnimatedBuilder extends StatelessWidget {
   ///       final tiltTransform = animatedTiltData.transform;
   ///       final areaProgress = animatedTiltData.areaProgress;
   ///
-  ///       return Transform(
-  ///         alignment: AlignmentDirectional.center,
-  ///         transform: tiltTransform,
-  ///         child: MyCustomWidget(
-  ///           progress: areaProgress,
-  ///           child: child, // SomeWidget()
+  ///       return RepaintBoundary(
+  ///         child: Transform(
+  ///           alignment: AlignmentDirectional.center,
+  ///           transform: tiltTransform,
+  ///           child: MyCustomWidget(
+  ///             progress: areaProgress,
+  ///             child: child, // SomeWidget()
+  ///           ),
   ///         ),
   ///       );
   ///     },

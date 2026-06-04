@@ -54,23 +54,33 @@ void main() {
           tiltTweenAnimationTest.tiltTweenAnimationDuration;
       const tiltConfig = TiltConfig();
       expect(
-        tiltTweenAnimationDuration(false, GesturesType.none, tiltConfig),
+        tiltTweenAnimationDuration(false, false, GesturesType.none, tiltConfig),
         Duration.zero,
       );
       expect(
-        tiltTweenAnimationDuration(true, GesturesType.none, tiltConfig),
+        tiltTweenAnimationDuration(true, false, GesturesType.none, tiltConfig),
         Duration.zero,
       );
       expect(
-        tiltTweenAnimationDuration(false, GesturesType.touch, tiltConfig),
+        tiltTweenAnimationDuration(
+          false,
+          false,
+          GesturesType.touch,
+          tiltConfig,
+        ),
         tiltConfig.leaveDuration,
       );
       expect(
-        tiltTweenAnimationDuration(true, GesturesType.touch, tiltConfig),
+        tiltTweenAnimationDuration(true, false, GesturesType.touch, tiltConfig),
+        tiltConfig.moveDuration,
+      );
+      expect(
+        tiltTweenAnimationDuration(true, true, GesturesType.touch, tiltConfig),
         tiltConfig.enterDuration,
       );
       expect(
         tiltTweenAnimationDuration(
+          true,
           true,
           GesturesType.touch,
           tiltConfig.copyWith(enterToMoveDuration: Duration.zero),
@@ -79,6 +89,7 @@ void main() {
       );
       expect(
         tiltTweenAnimationDuration(
+          true,
           true,
           GesturesType.touch,
           tiltConfig.copyWith(
@@ -92,6 +103,7 @@ void main() {
       expect(
         tiltTweenAnimationDuration(
           true,
+          true,
           GesturesType.touch,
           tiltConfig.copyWith(
             enterDuration: const Duration(milliseconds: 1),
@@ -102,15 +114,16 @@ void main() {
         const Duration(milliseconds: 1),
       );
       expect(
-        tiltTweenAnimationDuration(false, GesturesType.hover, tiltConfig),
+        tiltTweenAnimationDuration(false, true, GesturesType.hover, tiltConfig),
         tiltConfig.leaveDuration,
       );
       expect(
-        tiltTweenAnimationDuration(true, GesturesType.hover, tiltConfig),
+        tiltTweenAnimationDuration(true, true, GesturesType.hover, tiltConfig),
         tiltConfig.enterDuration,
       );
       expect(
         tiltTweenAnimationDuration(
+          true,
           true,
           GesturesType.hover,
           tiltConfig.copyWith(enterToMoveDuration: Duration.zero),
@@ -119,6 +132,7 @@ void main() {
       );
       expect(
         tiltTweenAnimationDuration(
+          true,
           true,
           GesturesType.hover,
           tiltConfig.copyWith(
@@ -132,6 +146,7 @@ void main() {
       expect(
         tiltTweenAnimationDuration(
           true,
+          true,
           GesturesType.hover,
           tiltConfig.copyWith(
             enterDuration: const Duration(milliseconds: 1),
@@ -142,19 +157,39 @@ void main() {
         const Duration(milliseconds: 1),
       );
       expect(
-        tiltTweenAnimationDuration(false, GesturesType.controller, tiltConfig),
+        tiltTweenAnimationDuration(
+          false,
+          true,
+          GesturesType.controller,
+          tiltConfig,
+        ),
         tiltConfig.controllerLeaveDuration,
       );
       expect(
-        tiltTweenAnimationDuration(true, GesturesType.controller, tiltConfig),
+        tiltTweenAnimationDuration(
+          true,
+          true,
+          GesturesType.controller,
+          tiltConfig,
+        ),
         tiltConfig.controllerMoveDuration,
       );
       expect(
-        tiltTweenAnimationDuration(false, GesturesType.sensors, tiltConfig),
+        tiltTweenAnimationDuration(
+          false,
+          true,
+          GesturesType.sensors,
+          tiltConfig,
+        ),
         tiltConfig.sensorMoveDuration,
       );
       expect(
-        tiltTweenAnimationDuration(true, GesturesType.sensors, tiltConfig),
+        tiltTweenAnimationDuration(
+          true,
+          true,
+          GesturesType.sensors,
+          tiltConfig,
+        ),
         tiltConfig.sensorMoveDuration,
       );
     });
@@ -209,7 +244,86 @@ void main() {
         Curves.linear,
       );
     });
+
+    testWidgets(
+      'enterToMove keeps ramping the tilt duration while the pointer stays still',
+      (WidgetTester tester) async {
+        const config = TiltConfig(
+          enableGestureSensors: false,
+          enterDuration: Duration(milliseconds: 900),
+          moveDuration: Duration(milliseconds: 90),
+          enterToMoveDuration: Duration(milliseconds: 300),
+          enterToMoveCurve: Curves.linear,
+        );
+        const idle = TiltState(
+          tiltConfig: config,
+          isInit: true,
+          width: 10.0,
+          height: 10.0,
+          areaProgress: Offset.zero,
+          isActive: false,
+          currentGesturesType: GesturesType.none,
+        );
+
+        /// enter 到角落后指针保持不动（目标固定为 (1, 1)）
+        const entered = TiltState(
+          tiltConfig: config,
+          isInit: true,
+          width: 10.0,
+          height: 10.0,
+          areaProgress: Offset(1.0, 1.0),
+          isActive: true,
+          currentGesturesType: GesturesType.touch,
+        );
+
+        final notifier = ValueNotifier<TiltState>(idle);
+        addTearDown(notifier.dispose);
+
+        await tester.pumpWidget(_TiltStateHarness(notifier: notifier));
+        final state = tester.state<TiltTweenAnimationMixinTestState>(
+          find.byType(TiltTweenAnimationMixinTest),
+        );
+
+        /// 触发 enter+move，开启 enterToMove 过渡
+        notifier.value = entered;
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 30));
+        final d1 = state.tiltTweenAnimationController.duration!;
+
+        /// 指针保持不动，仅推进 enterToMove 过渡窗口
+        await tester.pump(const Duration(milliseconds: 150));
+        final d2 = state.tiltTweenAnimationController.duration!;
+
+        expect(
+          d2,
+          lessThan(d1),
+          reason: 'enterToMove must keep ramping the tilt animation duration '
+              'from enterDuration toward moveDuration even when the pointer stays still. '
+              'If d2 == d1, the per-tick duration refresh was short-circuited.',
+        );
+
+        await tester.pumpAndSettle();
+      },
+    );
   });
+}
+
+/// 驱动 [TiltProvider] 数据的测试
+class _TiltStateHarness extends StatelessWidget {
+  const _TiltStateHarness({required this.notifier});
+
+  final ValueNotifier<TiltState> notifier;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<TiltState>(
+      valueListenable: notifier,
+      builder: (context, state, _) => TiltProvider(
+        data: state,
+        child: const TiltTweenAnimationMixinTest(),
+      ),
+    );
+  }
 }
 
 /// TiltTweenAnimationMixin Test Widget

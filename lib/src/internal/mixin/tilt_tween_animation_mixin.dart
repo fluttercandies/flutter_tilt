@@ -69,20 +69,25 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
   /// 倾斜动画的持续时间
   ///
   /// - [isMove] 是否移动
+  /// - [isEnter] 是否处于 Enter 状态
   /// - [currentGesturesType] 当前手势类型
   /// - [tiltConfig] TiltConfig
   ///
   /// @return [Duration]
   Duration tiltTweenAnimationDuration(
     bool isMove,
+    bool isEnter,
     GesturesType currentGesturesType,
     TiltConfig tiltConfig,
   ) {
     return switch (currentGesturesType) {
       GesturesType.none => Duration.zero,
-      GesturesType.touch ||
-      GesturesType.hover =>
-        _dynamicAnimationDuration(isMove, currentGesturesType, tiltConfig),
+      GesturesType.touch || GesturesType.hover => _dynamicAnimationDuration(
+          isMove,
+          isEnter,
+          currentGesturesType,
+          tiltConfig,
+        ),
       GesturesType.controller => isMove
           ? tiltConfig.controllerMoveDuration
           : tiltConfig.controllerLeaveDuration,
@@ -150,8 +155,16 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
 
     if (tiltTweenAnimation.value == animationEnd) return;
 
+    /// 处理 EnterToMove 状态，必须在计算 [tiltTweenAnimationDuration] 之前调用以确保动画时长正确
+    _handleEnterToMoveState(
+      tiltState.isActive,
+      tiltState.currentGesturesType,
+      tiltState.tiltConfig,
+    );
+
     final animationDuration = tiltTweenAnimationDuration(
       tiltState.isActive,
+      _isEnter,
       tiltState.currentGesturesType,
       tiltState.tiltConfig,
     );
@@ -192,11 +205,8 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
 
   /// 是否有效的 EnterToMove 动画
   bool _isValidEnterToMove(TiltConfig tiltConfig) {
-    if (tiltConfig.enterToMoveDuration == Duration.zero ||
-        tiltConfig.enterDuration == tiltConfig.moveDuration) {
-      return false;
-    }
-    return true;
+    return !(tiltConfig.enterToMoveDuration == Duration.zero ||
+        tiltConfig.enterDuration == tiltConfig.moveDuration);
   }
 
   /// 启动 EnterToMove 动画
@@ -237,14 +247,19 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
   }
 
   /// 动态计算 Animation Duration
+  ///
+  /// - [isMove] 是否移动
+  /// - [isEnter] 是否处于 Enter 状态
+  /// - [currentGesturesType] 当前手势类型
+  /// - [tiltConfig] TiltConfig
+  ///
+  /// @return [Duration]
   Duration _dynamicAnimationDuration(
     bool isMove,
+    bool isEnter,
     GesturesType currentGesturesType,
     TiltConfig tiltConfig,
   ) {
-    /// 处理 EnterToMove 状态
-    _handleEnterToMoveState(isMove, currentGesturesType, tiltConfig);
-
     /// 离开
     if (!isMove) {
       return tiltConfig.leaveDuration;
@@ -256,7 +271,7 @@ mixin TiltTweenAnimationMixin<T extends StatefulWidget>
     }
 
     /// 非 Enter 状态 || EnterToMove 动画已完成
-    if (!_isEnter || enterToMoveAnimationController.isCompleted) {
+    if (!isEnter || enterToMoveAnimationController.isCompleted) {
       return tiltConfig.moveDuration;
     }
 
