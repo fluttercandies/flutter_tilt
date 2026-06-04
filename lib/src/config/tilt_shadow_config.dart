@@ -23,7 +23,7 @@ abstract class ShadowConfig {
     this.disable = false,
     this.color = const Color(0xFF9E9E9E),
     this.minIntensity = 0.0,
-    this.maxIntensity = 0.5,
+    this.maxIntensity = 0.25,
     this.offsetInitial = Offset.zero,
     this.offsetFactor = 0.1,
     this.direction,
