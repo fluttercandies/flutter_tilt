@@ -7,8 +7,8 @@
 
 **Improvements**
 
-- Isolate tilt repaints with a `RepaintBoundary` to avoid repainting the parent subtree during animation.
-- Avoid redundant calculations and optimize performance.
+- Isolate tilt repaints with a `RepaintBoundary` to avoid repainting the parent subtree during animation. ([#41](https://github.com/fluttercandies/flutter_tilt/pull/41))
+- Avoid redundant calculations and optimize performance. ([#41](https://github.com/fluttercandies/flutter_tilt/pull/41))
 
 ## 4.0.0 (2026-05-12)
 
