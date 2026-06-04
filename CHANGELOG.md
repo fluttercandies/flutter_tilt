@@ -3,6 +3,13 @@
 > [!IMPORTANT]  
 > See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/migration-guides/) for the details of breaking changes between versions.
 
+## 4.0.1 (2026-06-04)
+
+**Improvements**
+
+- Isolate tilt repaints with a `RepaintBoundary` to avoid repainting the parent subtree during animation. ([#41](https://github.com/fluttercandies/flutter_tilt/pull/41))
+- Avoid redundant calculations and optimize performance. ([#41](https://github.com/fluttercandies/flutter_tilt/pull/41))
+
 ## 4.0.0 (2026-05-12)
 
 Migration Guide: [English](https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/migration-guides/migrate-to-v4-0-0/) | [中文](https://amoshuke.github.io/flutter_tilt_book/zh/v4/docs/migration-guides/migrate-to-v4-0-0/)  

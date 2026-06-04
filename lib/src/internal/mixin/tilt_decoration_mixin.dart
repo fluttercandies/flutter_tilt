@@ -32,21 +32,12 @@ mixin TiltDecorationMixin {
     final progress = -areaProgress;
     final progressX = progress.dx, progressY = progress.dy;
 
-    /// 距离中心
-    final distanceFromCenter = Utils.p2pDistance(
-      Offset.zero,
-      Offset(progressX, progressY),
-    );
-
-    /// 限制距离中心
-    final constrainedDistance = distanceFromCenter.clamp(min, max);
-
     /// 根据方向计算进度
     var progressData = _calculateDirectionProgress(
       direction,
       progressX,
       progressY,
-      constrainedDistance,
+      min,
       max,
     );
 
@@ -67,7 +58,7 @@ mixin TiltDecorationMixin {
   /// - [direction] 光照方向
   /// - [progressX] 当前水平进度
   /// - [progressY] 当前垂直进度
-  /// - [constrainedDistance] 限制后的距离（距离中心）
+  /// - [min] 最小进度限制 0-1
   /// - [max] 最大进度限制 0-1
   ///
   /// @return 对应方向的进度
@@ -75,7 +66,7 @@ mixin TiltDecorationMixin {
     Direction direction,
     double progressX,
     double progressY,
-    double constrainedDistance,
+    double min,
     double max,
   ) {
     return switch (direction) {
@@ -83,17 +74,38 @@ mixin TiltDecorationMixin {
           direction,
           progressX,
           progressY,
-          constrainedDistance,
+          min,
           max,
         ),
       ShadowDirection _ => _calculateShadowDirectionProgress(
           direction,
           progressX,
           progressY,
-          constrainedDistance,
+          min,
           max,
         ),
     };
+  }
+
+  /// 计算距离中心点的距离，并限制在最小和最大范围内
+  ///
+  /// - [progressX] 当前水平进度
+  /// - [progressY] 当前垂直进度
+  /// - [min] 最小进度限制 0-1
+  /// - [max] 最大进度限制 0-1
+  ///
+  /// @return 对应方向的进度
+  double _constrainedDistance(
+    double progressX,
+    double progressY,
+    double min,
+    double max,
+  ) {
+    final distance = Utils.p2pDistance(
+      Offset.zero,
+      Offset(progressX, progressY),
+    );
+    return distance.clamp(min, max);
   }
 
   /// 计算光照方向的进度
@@ -101,7 +113,7 @@ mixin TiltDecorationMixin {
   /// - [direction] 光照方向
   /// - [progressX] 当前水平进度
   /// - [progressY] 当前垂直进度
-  /// - [constrainedDistance] 限制后的距离（距离中心）
+  /// - [min] 最小进度限制 0-1
   /// - [max] 最大进度限制 0-1
   ///
   /// @return 对应方向的进度
@@ -109,18 +121,20 @@ mixin TiltDecorationMixin {
     LightDirection direction,
     double progressX,
     double progressY,
-    double constrainedDistance,
+    double min,
     double max,
   ) {
     return switch (direction) {
       LightDirection.none => 0.0,
-      LightDirection.around => constrainedDistance,
+      LightDirection.around =>
+        _constrainedDistance(progressX, progressY, min, max),
       LightDirection.all => max,
       LightDirection.top => progressY,
       LightDirection.bottom => -progressY,
       LightDirection.left => progressX,
       LightDirection.right => -progressX,
-      LightDirection.center => max - constrainedDistance,
+      LightDirection.center =>
+        max - _constrainedDistance(progressX, progressY, min, max),
       LightDirection.topLeft => progressX + progressY,
       LightDirection.bottomRight => -(progressX + progressY),
       LightDirection.topRight => -(progressX - progressY),
@@ -135,7 +149,7 @@ mixin TiltDecorationMixin {
   /// - [direction] 阴影方向
   /// - [progressX] 当前水平进度
   /// - [progressY] 当前垂直进度
-  /// - [constrainedDistance] 限制后的距离（距离中心）
+  /// - [min] 最小进度限制 0-1
   /// - [max] 最大进度限制 0-1
   ///
   /// @return 对应方向的进度
@@ -143,18 +157,20 @@ mixin TiltDecorationMixin {
     ShadowDirection direction,
     double progressX,
     double progressY,
-    double constrainedDistance,
+    double min,
     double max,
   ) {
     return switch (direction) {
       ShadowDirection.none => 0.0,
-      ShadowDirection.around => constrainedDistance,
+      ShadowDirection.around =>
+        _constrainedDistance(progressX, progressY, min, max),
       ShadowDirection.all => max,
       ShadowDirection.top => -progressY,
       ShadowDirection.bottom => progressY,
       ShadowDirection.left => -progressX,
       ShadowDirection.right => progressX,
-      ShadowDirection.center => max - constrainedDistance,
+      ShadowDirection.center =>
+        max - _constrainedDistance(progressX, progressY, min, max),
       ShadowDirection.topLeft => -(progressX + progressY),
       ShadowDirection.bottomRight => progressX + progressY,
       ShadowDirection.topRight => progressX - progressY,

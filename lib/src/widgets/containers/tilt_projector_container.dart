@@ -139,18 +139,20 @@ class TiltProjectorContainer extends StatelessWidget {
       builder: (context, tiltAnimatedState, child) {
         final animatedTiltData = tiltAnimatedState.animatedTiltData;
 
-        return Transform(
-          alignment: AlignmentDirectional.center,
-          filterQuality: filterQuality,
-          transform: animatedTiltData.transform,
-          child: Stack(
+        return RepaintBoundary(
+          child: Transform(
             alignment: AlignmentDirectional.center,
-            clipBehavior: Clip.none,
-            children: _buildChildren(
-              child: child,
-              width: animatedTiltData.width,
-              height: animatedTiltData.height,
-              areaProgress: animatedTiltData.areaProgress,
+            filterQuality: filterQuality,
+            transform: animatedTiltData.transform,
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              clipBehavior: Clip.none,
+              children: _buildChildren(
+                child: child,
+                width: animatedTiltData.width,
+                height: animatedTiltData.height,
+                areaProgress: animatedTiltData.areaProgress,
+              ),
             ),
           ),
         );

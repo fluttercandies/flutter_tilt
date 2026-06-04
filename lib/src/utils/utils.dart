@@ -25,14 +25,16 @@ abstract final class Utils {
   ///
   /// @return [Offset] 中心定位
   static Offset centerPosition(double width, double height) =>
-      Offset(width, height) / 2;
+      Offset(width / 2.0, height / 2.0);
+
+  static const double _degToRad = pi / 180.0;
 
   /// 弧度
   ///
   /// - [angle] 角度
   ///
   /// @return [double] 弧度
-  static double radian(double angle) => pi / 180.0 * angle;
+  static double radian(double angle) => _degToRad * angle;
 
   /// 两点间的距离 sqrt((x1-x2)²+(y1-y2)²)
   ///
@@ -113,9 +115,6 @@ abstract final class Utils {
   ) {
     if (width == 0.0 || height == 0.0) return Offset.zero;
     final center = centerPosition(width, height);
-    final tiltDirectionList = <TiltDirection>[
-      ...?tiltDirection,
-    ];
     var x = (center.dx - position.dx) / width * 2.0;
     var y = (center.dy - position.dy) / height * 2.0;
 
@@ -124,10 +123,10 @@ abstract final class Utils {
     y = y.clamp(-1.0, 1.0);
 
     /// 限制倾斜方向
-    if (tiltDirectionList.isNotEmpty) {
+    if (tiltDirection != null && tiltDirection.isNotEmpty) {
       final direction = TiltDirection.validator(
         TiltDirection(x, y),
-        tiltDirectionList,
+        tiltDirection,
       );
       x = direction.dx;
       y = direction.dy;
