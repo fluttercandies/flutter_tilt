@@ -7,7 +7,7 @@
 
 **Fixes**
 
-- Fix light/shadow not reaching `maxIntensity` for the `LightDirection.around` and `LightDirection.all` directions.   
+- Fix light/shadow not reaching `maxIntensity` for the `LightDirection.around` and `LightDirection.all` directions. ([#42](https://github.com/fluttercandies/flutter_tilt/pull/42))   
   Now that it is fixed, if the effect looks too strong, set `maxIntensity` to the square of its previous value (e.g. `0.5` → `0.25`, `0.6` → `0.36`).
 
 ## 4.0.1 (2026-06-04)
