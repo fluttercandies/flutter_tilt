@@ -3,6 +3,13 @@
 > [!IMPORTANT]  
 > See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/migration-guides/) for the details of breaking changes between versions.
 
+## 4.0.2 (2026-06-05)
+
+**Fixes**
+
+- Fix light/shadow not reaching `maxIntensity` for the `LightDirection.around` and `LightDirection.all` directions.   
+  Now that it is fixed, if the effect looks too strong, set `maxIntensity` to the square of its previous value (e.g. `0.5` → `0.25`, `0.6` → `0.36`).
+
 ## 4.0.1 (2026-06-04)
 
 **Improvements**

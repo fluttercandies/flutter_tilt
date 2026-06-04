@@ -69,8 +69,8 @@ class TiltLight extends StatelessWidget with TiltDecorationMixin {
     /// 定位 y （从中心位置开始）
     final positionY = p2cPosition.dy;
 
-    /// 光源方向进度
-    final showProgress = tiltDecorationDirectionProgress(
+    /// 光源方向强度
+    final intensity = tiltDecorationDirectionIntensity(
       areaProgress,
       lightConfig.direction,
       min: lightConfig.minIntensity,
@@ -78,7 +78,7 @@ class TiltLight extends StatelessWidget with TiltDecorationMixin {
     );
 
     /// 光源颜色的 Alpha 进度
-    final alphaProgress = 255.0 * showProgress;
+    final alphaProgress = 255.0 * intensity;
 
     return Positioned(
       left: enableReverse ? positionX : null,

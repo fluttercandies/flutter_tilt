@@ -41,7 +41,7 @@ abstract class TiltShadow<TShadowConfig extends ShadowConfig>
   double get showShadow {
     final direction =
         (shadowConfig.direction ?? lightConfig.direction) as Direction;
-    return tiltDecorationDirectionProgress(
+    return tiltDecorationDirectionIntensity(
       areaProgress,
       direction,
       min: shadowConfig.minIntensity,

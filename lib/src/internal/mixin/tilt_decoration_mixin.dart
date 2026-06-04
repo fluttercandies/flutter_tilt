@@ -4,7 +4,7 @@ import '../../enums.dart';
 import '../../utils/utils.dart';
 
 mixin TiltDecorationMixin {
-  /// 计算提供的方向进度
+  /// 计算提供的方向强度
   ///
   /// 范围：0-1
   ///
@@ -14,17 +14,15 @@ mixin TiltDecorationMixin {
   ///   - [ShadowDirection] 阴影方向
   ///
   /// 可选项
-  /// - [min] 最小进度限制 0-1
-  /// - [max] 最大进度限制 0-1
-  /// - [enableReverse] 开启反向
+  /// - [min] 最小强度限制 0-1
+  /// - [max] 最大强度限制 0-1
   ///
-  /// @return [double] 方向进度 0-1
-  double tiltDecorationDirectionProgress(
+  /// @return [double] 方向强度，映射到 [min] - [max] 区间
+  double tiltDecorationDirectionIntensity(
     Offset areaProgress,
     Direction direction, {
     double min = 0.0,
     double max = 1.0,
-    bool enableReverse = false,
   }) {
     assert(min <= max && min >= 0.0 && max <= 1.0);
 
@@ -32,151 +30,122 @@ mixin TiltDecorationMixin {
     final progress = -areaProgress;
     final progressX = progress.dx, progressY = progress.dy;
 
-    /// 根据方向计算进度
-    var progressData = _calculateDirectionProgress(
+    /// 根据方向计算强度
+    var intensity = _calculateDirectionIntensity(
       direction,
       progressX,
       progressY,
-      min,
-      max,
     );
 
-    /// 强度调整
-    progressData *= max;
+    /// 将强度限制在 0-1
+    intensity = intensity.clamp(0.0, 1.0);
 
-    /// 反向处理
-    if (enableReverse) progressData = -progressData;
+    /// 按 min-max 区间映射：强度 0 对应 min，强度 1 对应 max
+    intensity = min + intensity * (max - min);
 
-    /// 避免超出范围
-    progressData = progressData.clamp(min, max);
-
-    return progressData;
+    return intensity;
   }
 
-  /// 根据方向计算进度
+  /// 根据方向计算强度
   ///
   /// - [direction] 光照方向
   /// - [progressX] 当前水平进度
   /// - [progressY] 当前垂直进度
-  /// - [min] 最小进度限制 0-1
-  /// - [max] 最大进度限制 0-1
   ///
-  /// @return 对应方向的进度
-  double _calculateDirectionProgress(
+  /// @return 对应方向的强度
+  double _calculateDirectionIntensity(
     Direction direction,
     double progressX,
     double progressY,
-    double min,
-    double max,
   ) {
     return switch (direction) {
-      LightDirection _ => _calculateLightDirectionProgress(
+      LightDirection _ => _calculateLightDirectionIntensity(
           direction,
           progressX,
           progressY,
-          min,
-          max,
         ),
-      ShadowDirection _ => _calculateShadowDirectionProgress(
+      ShadowDirection _ => _calculateShadowDirectionIntensity(
           direction,
           progressX,
           progressY,
-          min,
-          max,
         ),
     };
   }
 
-  /// 计算距离中心点的距离，并限制在最小和最大范围内
+  /// 计算距离中心点的距离，并限制在 0-1 范围内
   ///
   /// - [progressX] 当前水平进度
   /// - [progressY] 当前垂直进度
-  /// - [min] 最小进度限制 0-1
-  /// - [max] 最大进度限制 0-1
   ///
-  /// @return 对应方向的进度
+  /// @return 限制在 0-1 范围内的距离
   double _constrainedDistance(
     double progressX,
     double progressY,
-    double min,
-    double max,
   ) {
     final distance = Utils.p2pDistance(
       Offset.zero,
       Offset(progressX, progressY),
     );
-    return distance.clamp(min, max);
+    return distance.clamp(0, 1);
   }
 
-  /// 计算光照方向的进度
+  /// 计算光照方向的强度
   ///
   /// - [direction] 光照方向
   /// - [progressX] 当前水平进度
   /// - [progressY] 当前垂直进度
-  /// - [min] 最小进度限制 0-1
-  /// - [max] 最大进度限制 0-1
   ///
-  /// @return 对应方向的进度
-  double _calculateLightDirectionProgress(
+  /// @return 对应方向的强度
+  double _calculateLightDirectionIntensity(
     LightDirection direction,
     double progressX,
     double progressY,
-    double min,
-    double max,
   ) {
     return switch (direction) {
       LightDirection.none => 0.0,
-      LightDirection.around =>
-        _constrainedDistance(progressX, progressY, min, max),
-      LightDirection.all => max,
+      LightDirection.around => _constrainedDistance(progressX, progressY),
+      LightDirection.all => 1,
       LightDirection.top => progressY,
       LightDirection.bottom => -progressY,
       LightDirection.left => progressX,
       LightDirection.right => -progressX,
-      LightDirection.center =>
-        max - _constrainedDistance(progressX, progressY, min, max),
+      LightDirection.center => 1 - _constrainedDistance(progressX, progressY),
       LightDirection.topLeft => progressX + progressY,
       LightDirection.bottomRight => -(progressX + progressY),
       LightDirection.topRight => -(progressX - progressY),
       LightDirection.bottomLeft => progressX - progressY,
-      LightDirection.xCenter => max - progressY.abs(),
-      LightDirection.yCenter => max - progressX.abs(),
+      LightDirection.xCenter => 1 - progressY.abs(),
+      LightDirection.yCenter => 1 - progressX.abs(),
     };
   }
 
-  /// 计算阴影方向的进度
+  /// 计算阴影方向的强度
   ///
   /// - [direction] 阴影方向
   /// - [progressX] 当前水平进度
   /// - [progressY] 当前垂直进度
-  /// - [min] 最小进度限制 0-1
-  /// - [max] 最大进度限制 0-1
   ///
-  /// @return 对应方向的进度
-  double _calculateShadowDirectionProgress(
+  /// @return 对应方向的强度
+  double _calculateShadowDirectionIntensity(
     ShadowDirection direction,
     double progressX,
     double progressY,
-    double min,
-    double max,
   ) {
     return switch (direction) {
       ShadowDirection.none => 0.0,
-      ShadowDirection.around =>
-        _constrainedDistance(progressX, progressY, min, max),
-      ShadowDirection.all => max,
+      ShadowDirection.around => _constrainedDistance(progressX, progressY),
+      ShadowDirection.all => 1,
       ShadowDirection.top => -progressY,
       ShadowDirection.bottom => progressY,
       ShadowDirection.left => -progressX,
       ShadowDirection.right => progressX,
-      ShadowDirection.center =>
-        max - _constrainedDistance(progressX, progressY, min, max),
+      ShadowDirection.center => 1 - _constrainedDistance(progressX, progressY),
       ShadowDirection.topLeft => -(progressX + progressY),
       ShadowDirection.bottomRight => progressX + progressY,
       ShadowDirection.topRight => progressX - progressY,
       ShadowDirection.bottomLeft => -(progressX - progressY),
-      ShadowDirection.xCenter => max - progressY.abs(),
-      ShadowDirection.yCenter => max - progressX.abs(),
+      ShadowDirection.xCenter => 1 - progressY.abs(),
+      ShadowDirection.yCenter => 1 - progressX.abs(),
     };
   }
 }
