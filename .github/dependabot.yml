@@ -8,7 +8,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     labels:
       - "infra"
       - "auto.dependencies"
@@ -17,7 +17,7 @@ updates:
     versioning-strategy: "increase"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     labels:
       - "auto.dependencies"
       - "auto.pub-package"
