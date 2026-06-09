@@ -69,7 +69,7 @@ abstract class TiltShadow<TShadowConfig extends ShadowConfig>
   double get centerProgress => Utils.p2pDistance(Offset.zero, progress);
 
   /// 距离中心的进度最大值
-  double get centerMaxProgress => math.max(1.0, centerProgress);
+  double get centerMaxProgress => math.min(1.0, centerProgress);
 
   /// 阴影当前偏移距离
   ///
@@ -147,7 +147,9 @@ class TiltShadowBase extends TiltShadow<ShadowBaseConfig> {
 
       /// 阴影扩散半径距离还原
       ///
-      /// 避免初始状态的扩散
+      /// 作为还原的基准值，
+      /// 根据尺寸设置一个固定的初始扩散值（当前尺寸短边的 10%），
+      /// 来避免初始状态的扩散（也就是将扩散收缩在 widget 内部）。
       ///
       /// (阴影扩散半径距离 + 初始固定扩散值，随进度还原至 0)
       final spreadRadiusRevert =

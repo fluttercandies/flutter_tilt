@@ -3,6 +3,12 @@
 > [!IMPORTANT]  
 > See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/migration-guides/) for the details of breaking changes between versions.
 
+## 4.0.3 (2026-06-09)
+
+**Fixes**
+
+- Fix shadow blur and spread appearing at full strength when centered or at small tilt angles.
+
 ## 4.0.2 (2026-06-05)
 
 **Fixes**
