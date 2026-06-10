@@ -3,6 +3,13 @@
 > [!IMPORTANT]  
 > See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/migration-guides/) for the details of breaking changes between versions.
 
+## 4.0.4 (2026-06-10)
+
+**Fixes**
+
+- Fix `copyWith` not being able to explicitly set nullable fields to `null`,
+  e.g. `TiltConfig.direction`, `LightConfig.enableReverse`, `ShadowConfig.direction` / `enableReverse`.
+
 ## 4.0.3 (2026-06-09)
 
 **Fixes**

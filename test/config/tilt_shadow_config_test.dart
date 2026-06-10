@@ -76,6 +76,18 @@ void main() {
       expect(shadowConfigCopyWith.hashCode, shadowConfigExpect.hashCode);
     });
 
+    test('copyWith - direction can be explicitly set to null', () {
+      const shadowConfig = ShadowBaseConfig(direction: ShadowDirection.all);
+      expect(shadowConfig.copyWith().direction, ShadowDirection.all);
+      expect(shadowConfig.copyWith(direction: null).direction, isNull);
+    });
+
+    test('copyWith - enableReverse can be explicitly set to null', () {
+      const shadowConfig = ShadowBaseConfig(enableReverse: true);
+      expect(shadowConfig.copyWith().enableReverse, true);
+      expect(shadowConfig.copyWith(enableReverse: null).enableReverse, isNull);
+    });
+
     test('hashCode', () {
       final shadowConfig = const ShadowBaseConfig();
       final shadowConfig2 = const ShadowBaseConfig();
@@ -136,6 +148,19 @@ void main() {
       expect(shadowConfig, shadowConfig.copyWith());
       expect(shadowConfigCopyWith, shadowConfigExpect);
       expect(shadowConfigCopyWith.hashCode, shadowConfigExpect.hashCode);
+    });
+
+    test('copyWith - direction can be explicitly set to null', () {
+      const shadowConfig =
+          ShadowProjectorConfig(direction: ShadowDirection.all);
+      expect(shadowConfig.copyWith().direction, ShadowDirection.all);
+      expect(shadowConfig.copyWith(direction: null).direction, isNull);
+    });
+
+    test('copyWith - enableReverse can be explicitly set to null', () {
+      const shadowConfig = ShadowProjectorConfig(enableReverse: true);
+      expect(shadowConfig.copyWith().enableReverse, true);
+      expect(shadowConfig.copyWith(enableReverse: null).enableReverse, isNull);
     });
 
     test('hashCode', () {

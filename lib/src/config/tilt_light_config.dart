@@ -102,6 +102,10 @@ class LightConfig {
   /// {@endtemplate}
   final bool? enableReverse;
 
+  /// Sentinel value used to distinguish "not provided" from explicit `null`
+  /// in [copyWith] for nullable fields like [enableReverse].
+  static const Object _absent = Object();
+
   LightConfig copyWith({
     bool? disable,
     Color? color,
@@ -109,7 +113,7 @@ class LightConfig {
     double? maxIntensity,
     double? spreadFactor,
     LightDirection? direction,
-    bool? enableReverse,
+    Object? enableReverse = _absent,
   }) {
     return LightConfig(
       disable: disable ?? this.disable,
@@ -118,7 +122,9 @@ class LightConfig {
       maxIntensity: maxIntensity ?? this.maxIntensity,
       spreadFactor: spreadFactor ?? this.spreadFactor,
       direction: direction ?? this.direction,
-      enableReverse: enableReverse ?? this.enableReverse,
+      enableReverse: identical(enableReverse, _absent)
+          ? this.enableReverse
+          : enableReverse as bool?,
     );
   }
 
@@ -194,7 +200,7 @@ class LightProjectorConfig extends LightConfig {
     double? spreadFactor,
     double? projectorScale,
     LightDirection? direction,
-    bool? enableReverse,
+    Object? enableReverse = LightConfig._absent,
   }) {
     return LightProjectorConfig(
       disable: disable ?? this.disable,
@@ -204,7 +210,9 @@ class LightProjectorConfig extends LightConfig {
       spreadFactor: spreadFactor ?? this.spreadFactor,
       projectorScale: projectorScale ?? this.projectorScale,
       direction: direction ?? this.direction,
-      enableReverse: enableReverse ?? this.enableReverse,
+      enableReverse: identical(enableReverse, LightConfig._absent)
+          ? this.enableReverse
+          : enableReverse as bool?,
     );
   }
 

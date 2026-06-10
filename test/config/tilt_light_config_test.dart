@@ -56,6 +56,12 @@ void main() {
       expect(lightConfigCopyWith, lightConfigExpect);
       expect(lightConfigCopyWith.hashCode, lightConfigExpect.hashCode);
     });
+
+    test('copyWith - enableReverse can be explicitly set to null', () {
+      const lightConfig = LightConfig(enableReverse: true);
+      expect(lightConfig.copyWith().enableReverse, true);
+      expect(lightConfig.copyWith(enableReverse: null).enableReverse, isNull);
+    });
   });
 
   group('LightProjectorConfig ::', () {
@@ -115,6 +121,12 @@ void main() {
       expect(lightConfig, lightConfig.copyWith());
       expect(lightConfigCopyWith, lightConfigExpect);
       expect(lightConfigCopyWith.hashCode, lightConfigExpect.hashCode);
+    });
+
+    test('copyWith - enableReverse can be explicitly set to null', () {
+      const lightConfig = LightProjectorConfig(enableReverse: true);
+      expect(lightConfig.copyWith().enableReverse, true);
+      expect(lightConfig.copyWith(enableReverse: null).enableReverse, isNull);
     });
   });
 }

@@ -427,14 +427,14 @@ class TiltConfig {
   final Duration controllerLeaveDuration;
 
   /// Sentinel value used to distinguish "not provided" from explicit `null`
-  /// in [copyWith] for nullable fields like [initial].
+  /// in [copyWith] for nullable fields like [initial] and [direction].
   static const Object _absent = Object();
 
   TiltConfig copyWith({
     bool? disable,
     Object? initial = _absent,
     double? angle,
-    List<TiltDirection>? direction,
+    Object? direction = _absent,
     bool? enableReverse,
     bool? enableGestureSensors,
     double? sensorFactor,
@@ -459,7 +459,9 @@ class TiltConfig {
       disable: disable ?? this.disable,
       initial: identical(initial, _absent) ? this.initial : initial as Offset?,
       angle: angle ?? this.angle,
-      direction: direction ?? this.direction,
+      direction: identical(direction, _absent)
+          ? this.direction
+          : direction as List<TiltDirection>?,
       enableReverse: enableReverse ?? this.enableReverse,
       enableGestureSensors: enableGestureSensors ?? this.enableGestureSensors,
       sensorFactor: sensorFactor ?? this.sensorFactor,

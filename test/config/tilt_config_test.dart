@@ -67,6 +67,12 @@ void main() {
       expect(tiltConfig.copyWith(initial: null).initial, isNull);
     });
 
+    test('copyWith - direction can be explicitly set to null', () {
+      const tiltConfig = TiltConfig(direction: [TiltDirection.top]);
+      expect(tiltConfig.copyWith().direction, [TiltDirection.top]);
+      expect(tiltConfig.copyWith(direction: null).direction, isNull);
+    });
+
     test('== and hashCode - equal direction lists are considered equal', () {
       const a = TiltConfig(
         direction: [TiltDirection.top, TiltDirection.left],

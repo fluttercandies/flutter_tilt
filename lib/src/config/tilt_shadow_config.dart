@@ -109,6 +109,11 @@ abstract class ShadowConfig {
   /// {@endtemplate}
   final bool? enableReverse;
 
+  /// Sentinel value used to distinguish "not provided" from explicit `null`
+  /// in `copyWith` of subclasses for nullable fields
+  /// like [direction] and [enableReverse].
+  static const Object _absent = Object();
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -206,8 +211,8 @@ class ShadowBaseConfig extends ShadowConfig {
     double? maxIntensity,
     Offset? offsetInitial,
     double? offsetFactor,
-    ShadowDirection? direction,
-    bool? enableReverse,
+    Object? direction = ShadowConfig._absent,
+    Object? enableReverse = ShadowConfig._absent,
     double? spreadInitial,
     double? spreadFactor,
     double? minBlurRadius,
@@ -220,8 +225,12 @@ class ShadowBaseConfig extends ShadowConfig {
       maxIntensity: maxIntensity ?? this.maxIntensity,
       offsetInitial: offsetInitial ?? this.offsetInitial,
       offsetFactor: offsetFactor ?? this.offsetFactor,
-      direction: direction ?? this.direction,
-      enableReverse: enableReverse ?? this.enableReverse,
+      direction: identical(direction, ShadowConfig._absent)
+          ? this.direction
+          : direction as ShadowDirection?,
+      enableReverse: identical(enableReverse, ShadowConfig._absent)
+          ? this.enableReverse
+          : enableReverse as bool?,
       spreadInitial: spreadInitial ?? this.spreadInitial,
       spreadFactor: spreadFactor ?? this.spreadFactor,
       minBlurRadius: minBlurRadius ?? this.minBlurRadius,
@@ -316,8 +325,8 @@ class ShadowProjectorConfig extends ShadowConfig {
     double? maxIntensity,
     Offset? offsetInitial,
     double? offsetFactor,
-    ShadowDirection? direction,
-    bool? enableReverse,
+    Object? direction = ShadowConfig._absent,
+    Object? enableReverse = ShadowConfig._absent,
     double? projectorScaleFrom,
     double? projectorScaleTo,
     double? projectorBlurSigmaFrom,
@@ -330,8 +339,12 @@ class ShadowProjectorConfig extends ShadowConfig {
       maxIntensity: maxIntensity ?? this.maxIntensity,
       offsetInitial: offsetInitial ?? this.offsetInitial,
       offsetFactor: offsetFactor ?? this.offsetFactor,
-      direction: direction ?? this.direction,
-      enableReverse: enableReverse ?? this.enableReverse,
+      direction: identical(direction, ShadowConfig._absent)
+          ? this.direction
+          : direction as ShadowDirection?,
+      enableReverse: identical(enableReverse, ShadowConfig._absent)
+          ? this.enableReverse
+          : enableReverse as bool?,
       projectorScaleFrom: projectorScaleFrom ?? this.projectorScaleFrom,
       projectorScaleTo: projectorScaleTo ?? this.projectorScaleTo,
       projectorBlurSigmaFrom:
