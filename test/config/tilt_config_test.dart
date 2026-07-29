@@ -12,6 +12,10 @@ void main() {
         angle: 1.0,
         direction: [TiltDirection.top, TiltDirection.bottom],
         enableReverse: true,
+        enableRevert: false,
+        enableOutsideAreaMove: false,
+        perspectiveIntensity: 0.02,
+        zOffset: 100.0,
         enableGestureSensors: false,
         sensorFactor: 2.0,
         enableSensorRevert: false,
@@ -19,8 +23,6 @@ void main() {
         sensorMoveDuration: Duration.zero,
         enableGestureHover: false,
         enableGestureTouch: false,
-        enableRevert: false,
-        enableOutsideAreaMove: false,
         enterDuration: Duration.zero,
         moveDuration: Duration.zero,
         enterToMoveDuration: Duration.zero,
@@ -30,8 +32,6 @@ void main() {
         leaveCurve: Curves.bounceIn,
         controllerMoveDuration: Duration.zero,
         controllerLeaveDuration: Duration.zero,
-        perspectiveIntensity: 0.02,
-        zOffset: 100.0,
       );
       final tiltConfigCopyWith = tiltConfig.copyWith(
         disable: true,
@@ -39,6 +39,10 @@ void main() {
         angle: 1.0,
         direction: [TiltDirection.top, TiltDirection.bottom],
         enableReverse: true,
+        enableRevert: false,
+        enableOutsideAreaMove: false,
+        perspectiveIntensity: 0.02,
+        zOffset: 100.0,
         enableGestureSensors: false,
         sensorFactor: 2.0,
         enableSensorRevert: false,
@@ -46,8 +50,6 @@ void main() {
         sensorMoveDuration: Duration.zero,
         enableGestureHover: false,
         enableGestureTouch: false,
-        enableRevert: false,
-        enableOutsideAreaMove: false,
         enterDuration: Duration.zero,
         moveDuration: Duration.zero,
         enterToMoveDuration: Duration.zero,
@@ -57,8 +59,6 @@ void main() {
         leaveCurve: Curves.bounceIn,
         controllerMoveDuration: Duration.zero,
         controllerLeaveDuration: Duration.zero,
-        perspectiveIntensity: 0.02,
-        zOffset: 100.0,
       );
       expect(tiltConfig, tiltConfig.copyWith());
       expect(tiltConfigCopyWith, tiltConfigExpect);
