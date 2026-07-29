@@ -238,7 +238,7 @@ class TiltProjectorContainer extends StatelessWidget {
       /// outer child
       ...childLayout.outer,
 
-      /// TODO: 即将弃用，不适合 Projector 效果，4.1.0 版本将移除
+      /// TODO: 即将弃用，不适合 Projector 效果
       if (!lightConfig.disable)
         IgnorePointer(
           child: Transform.scale(
