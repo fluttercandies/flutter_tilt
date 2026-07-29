@@ -3,6 +3,13 @@
 > [!IMPORTANT]  
 > See the [Migration Guides](https://amoshuke.github.io/flutter_tilt_book/en/v4/docs/migration-guides/) for the details of breaking changes between versions.
 
+## 4.1.0 (2026-07-29)
+
+**New features**
+
+- `TiltConfig.perspectiveIntensity`: Custom perspective intensity (near-large, far-small). Defaults to a size-adaptive value when `null`. ([#63](https://github.com/fluttercandies/flutter_tilt/pull/63))
+- `TiltConfig.zOffset`: Offsets the rotation pivot along the Z-axis, creating a subtle tilting and swinging effect. Defaults to `0` (no offset). ([#63](https://github.com/fluttercandies/flutter_tilt/pull/63))
+
 ## 4.0.4 (2026-06-10)
 
 **Fixes**

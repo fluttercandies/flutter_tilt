@@ -12,6 +12,10 @@ void main() {
         angle: 1.0,
         direction: [TiltDirection.top, TiltDirection.bottom],
         enableReverse: true,
+        enableRevert: false,
+        enableOutsideAreaMove: false,
+        perspectiveIntensity: 0.02,
+        zOffset: 100.0,
         enableGestureSensors: false,
         sensorFactor: 2.0,
         enableSensorRevert: false,
@@ -19,8 +23,6 @@ void main() {
         sensorMoveDuration: Duration.zero,
         enableGestureHover: false,
         enableGestureTouch: false,
-        enableRevert: false,
-        enableOutsideAreaMove: false,
         enterDuration: Duration.zero,
         moveDuration: Duration.zero,
         enterToMoveDuration: Duration.zero,
@@ -37,6 +39,10 @@ void main() {
         angle: 1.0,
         direction: [TiltDirection.top, TiltDirection.bottom],
         enableReverse: true,
+        enableRevert: false,
+        enableOutsideAreaMove: false,
+        perspectiveIntensity: 0.02,
+        zOffset: 100.0,
         enableGestureSensors: false,
         sensorFactor: 2.0,
         enableSensorRevert: false,
@@ -44,8 +50,6 @@ void main() {
         sensorMoveDuration: Duration.zero,
         enableGestureHover: false,
         enableGestureTouch: false,
-        enableRevert: false,
-        enableOutsideAreaMove: false,
         enterDuration: Duration.zero,
         moveDuration: Duration.zero,
         enterToMoveDuration: Duration.zero,
@@ -71,6 +75,15 @@ void main() {
       const tiltConfig = TiltConfig(direction: [TiltDirection.top]);
       expect(tiltConfig.copyWith().direction, [TiltDirection.top]);
       expect(tiltConfig.copyWith(direction: null).direction, isNull);
+    });
+
+    test('copyWith - perspectiveIntensity can be explicitly set to null', () {
+      const tiltConfig = TiltConfig(perspectiveIntensity: 0.01);
+      expect(tiltConfig.copyWith().perspectiveIntensity, 0.01);
+      expect(
+        tiltConfig.copyWith(perspectiveIntensity: null).perspectiveIntensity,
+        isNull,
+      );
     });
 
     test('== and hashCode - equal direction lists are considered equal', () {

@@ -23,7 +23,11 @@ class TiltConfig {
     this.initial,
     this.angle = 10.0,
     this.direction,
+    this.perspectiveIntensity,
+    this.zOffset = 0.0,
     this.enableReverse = false,
+    this.enableRevert = true,
+    this.enableOutsideAreaMove = true,
     this.enableGestureSensors = true,
     this.sensorFactor = 10.0,
     this.enableSensorRevert = true,
@@ -31,8 +35,6 @@ class TiltConfig {
     this.sensorMoveDuration = const Duration(milliseconds: 50),
     this.enableGestureHover = true,
     this.enableGestureTouch = true,
-    this.enableRevert = true,
-    this.enableOutsideAreaMove = true,
     this.enterDuration = const Duration(milliseconds: 1000),
     this.moveDuration = const Duration(milliseconds: 100),
     this.enterToMoveDuration = const Duration(milliseconds: 600),
@@ -131,6 +133,86 @@ class TiltConfig {
   /// {@endtemplate}
   ///
   final bool enableReverse;
+
+  /// Enable tilt revert,
+  /// will revert to the initial state.
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  /// [GesturesType.controller]
+  ///
+  /// ------
+  ///
+  /// 启用倾斜复原，
+  /// 会复原至初始状态。
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.touch]
+  /// [GesturesType.hover]
+  /// [GesturesType.controller]
+  ///
+  final bool enableRevert;
+
+  /// Tilt can continue to be triggered outside the area.
+  ///
+  /// Only the following gestures:
+  /// [GesturesType.touch]
+  /// [GesturesType.controller]
+  ///
+  /// ------
+  ///
+  /// 开启倾斜过程中区域外可以继续移动
+  ///
+  /// 仅以下手势生效：
+  /// [GesturesType.touch]
+  /// [GesturesType.controller]
+  ///
+  /// 当触发手势移动的倾斜过程中，
+  /// 手势移动到区域外是否可以继续移动。
+  ///
+  final bool enableOutsideAreaMove;
+
+  /// {@template tilt.TiltConfig.perspectiveIntensity}
+  ///
+  /// Perspective intensity (near-large, far-small).
+  ///
+  /// When `null`, it defaults to a size-adaptive value.
+  ///
+  /// ------
+  ///
+  /// 透视强度（近大远小）。
+  ///
+  /// 为 `null` 时，将默认按尺寸自适应。
+  ///
+  /// {@endtemplate}
+  final double? perspectiveIntensity;
+
+  /// {@template tilt.TiltConfig.zOffset}
+  ///
+  /// The offset of the rotation pivot along the Z-axis.
+  ///
+  /// When non-zero,
+  /// the widget produces a tilting and swinging effect around the offset pivot point on the Z-axis.
+  ///
+  /// For example:
+  /// - `-100`: The pivot is 100 pixels behind the widget.
+  /// - `100`: The pivot is 100 pixels in front of the widget.
+  /// - `0`: The pivot is at the center of the widget.
+  ///
+  /// ------
+  ///
+  /// 旋转支点在 Z 轴方向的偏移量。
+  ///
+  /// 不为 0 时，widget 将绕 Z 轴上的偏移支点产生倾斜摆动的效果。
+  ///
+  /// 例如：
+  /// - `-100`：支点位于 widget 后方 100 像素。
+  /// - `100`：支点位于 widget 前方 100 像素。
+  /// - `0`：支点位于 widget 中心。
+  ///
+  /// {@endtemplate}
+  final double zOffset;
 
   /// Gyroscope sensor triggered tilt.
   ///
@@ -235,45 +317,6 @@ class TiltConfig {
   /// [GesturesType.touch]
   ///
   final bool enableGestureTouch;
-
-  /// Enable tilt revert,
-  /// will revert to the initial state.
-  ///
-  /// Only the following gestures:
-  /// [GesturesType.touch]
-  /// [GesturesType.hover]
-  /// [GesturesType.controller]
-  ///
-  /// ------
-  ///
-  /// 启用倾斜复原，
-  /// 会复原至初始状态。
-  ///
-  /// 仅以下手势生效：
-  /// [GesturesType.touch]
-  /// [GesturesType.hover]
-  /// [GesturesType.controller]
-  ///
-  final bool enableRevert;
-
-  /// Tilt can continue to be triggered outside the area.
-  ///
-  /// Only the following gestures:
-  /// [GesturesType.touch]
-  /// [GesturesType.controller]
-  ///
-  /// ------
-  ///
-  /// 开启倾斜过程中区域外可以继续移动
-  ///
-  /// 仅以下手势生效：
-  /// [GesturesType.touch]
-  /// [GesturesType.controller]
-  ///
-  /// 当触发手势移动的倾斜过程中，
-  /// 手势移动到区域外是否可以继续移动。
-  ///
-  final bool enableOutsideAreaMove;
 
   /// Animation duration during gesture enter,
   ///
@@ -436,6 +479,10 @@ class TiltConfig {
     double? angle,
     Object? direction = _absent,
     bool? enableReverse,
+    bool? enableRevert,
+    bool? enableOutsideAreaMove,
+    Object? perspectiveIntensity = _absent,
+    double? zOffset,
     bool? enableGestureSensors,
     double? sensorFactor,
     bool? enableSensorRevert,
@@ -443,8 +490,6 @@ class TiltConfig {
     Duration? sensorMoveDuration,
     bool? enableGestureHover,
     bool? enableGestureTouch,
-    bool? enableRevert,
-    bool? enableOutsideAreaMove,
     Duration? enterDuration,
     Duration? moveDuration,
     Duration? enterToMoveDuration,
@@ -463,6 +508,13 @@ class TiltConfig {
           ? this.direction
           : direction as List<TiltDirection>?,
       enableReverse: enableReverse ?? this.enableReverse,
+      enableRevert: enableRevert ?? this.enableRevert,
+      enableOutsideAreaMove:
+          enableOutsideAreaMove ?? this.enableOutsideAreaMove,
+      perspectiveIntensity: identical(perspectiveIntensity, _absent)
+          ? this.perspectiveIntensity
+          : perspectiveIntensity as double?,
+      zOffset: zOffset ?? this.zOffset,
       enableGestureSensors: enableGestureSensors ?? this.enableGestureSensors,
       sensorFactor: sensorFactor ?? this.sensorFactor,
       enableSensorRevert: enableSensorRevert ?? this.enableSensorRevert,
@@ -470,9 +522,6 @@ class TiltConfig {
       sensorMoveDuration: sensorMoveDuration ?? this.sensorMoveDuration,
       enableGestureHover: enableGestureHover ?? this.enableGestureHover,
       enableGestureTouch: enableGestureTouch ?? this.enableGestureTouch,
-      enableRevert: enableRevert ?? this.enableRevert,
-      enableOutsideAreaMove:
-          enableOutsideAreaMove ?? this.enableOutsideAreaMove,
       enterDuration: enterDuration ?? this.enterDuration,
       moveDuration: moveDuration ?? this.moveDuration,
       enterToMoveDuration: enterToMoveDuration ?? this.enterToMoveDuration,
@@ -501,6 +550,10 @@ class TiltConfig {
         other.angle == angle &&
         listEquals(other.direction, direction) &&
         other.enableReverse == enableReverse &&
+        other.enableRevert == enableRevert &&
+        other.enableOutsideAreaMove == enableOutsideAreaMove &&
+        other.perspectiveIntensity == perspectiveIntensity &&
+        other.zOffset == zOffset &&
         other.enableGestureSensors == enableGestureSensors &&
         other.sensorFactor == sensorFactor &&
         other.enableSensorRevert == enableSensorRevert &&
@@ -508,8 +561,6 @@ class TiltConfig {
         other.sensorMoveDuration == sensorMoveDuration &&
         other.enableGestureHover == enableGestureHover &&
         other.enableGestureTouch == enableGestureTouch &&
-        other.enableRevert == enableRevert &&
-        other.enableOutsideAreaMove == enableOutsideAreaMove &&
         other.enterDuration == enterDuration &&
         other.moveDuration == moveDuration &&
         other.enterToMoveDuration == enterToMoveDuration &&
@@ -529,6 +580,10 @@ class TiltConfig {
       angle,
       Object.hashAll(direction ?? []),
       enableReverse,
+      enableRevert,
+      enableOutsideAreaMove,
+      perspectiveIntensity,
+      zOffset,
       enableGestureSensors,
       sensorFactor,
       enableSensorRevert,
@@ -536,8 +591,6 @@ class TiltConfig {
       sensorMoveDuration,
       enableGestureHover,
       enableGestureTouch,
-      enableRevert,
-      enableOutsideAreaMove,
       enterDuration,
       moveDuration,
       enterToMoveDuration,
