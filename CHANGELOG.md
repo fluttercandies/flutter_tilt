@@ -7,10 +7,8 @@
 
 **New features**
 
-- `TiltConfig.perspectiveIntensity`: Custom perspective intensity (near-large, far-small).   
-  Defaults to a size-adaptive value when `null`.
-- `TiltConfig.zOffset`: Offsets the rotation pivot along the Z-axis, creating a subtle tilting and swinging effect.   
-  Defaults to `0` (no offset).
+- `TiltConfig.perspectiveIntensity`: Custom perspective intensity (near-large, far-small). Defaults to a size-adaptive value when `null`. ([#63](https://github.com/fluttercandies/flutter_tilt/pull/63))
+- `TiltConfig.zOffset`: Offsets the rotation pivot along the Z-axis, creating a subtle tilting and swinging effect. Defaults to `0` (no offset). ([#63](https://github.com/fluttercandies/flutter_tilt/pull/63))
 
 ## 4.0.4 (2026-06-10)
 
