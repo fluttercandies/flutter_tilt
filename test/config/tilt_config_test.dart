@@ -30,6 +30,8 @@ void main() {
         leaveCurve: Curves.bounceIn,
         controllerMoveDuration: Duration.zero,
         controllerLeaveDuration: Duration.zero,
+        perspectiveIntensity: 0.02,
+        zOffset: 100.0,
       );
       final tiltConfigCopyWith = tiltConfig.copyWith(
         disable: true,
@@ -55,6 +57,8 @@ void main() {
         leaveCurve: Curves.bounceIn,
         controllerMoveDuration: Duration.zero,
         controllerLeaveDuration: Duration.zero,
+        perspectiveIntensity: 0.02,
+        zOffset: 100.0,
       );
       expect(tiltConfig, tiltConfig.copyWith());
       expect(tiltConfigCopyWith, tiltConfigExpect);
@@ -71,6 +75,15 @@ void main() {
       const tiltConfig = TiltConfig(direction: [TiltDirection.top]);
       expect(tiltConfig.copyWith().direction, [TiltDirection.top]);
       expect(tiltConfig.copyWith(direction: null).direction, isNull);
+    });
+
+    test('copyWith - perspectiveIntensity can be explicitly set to null', () {
+      const tiltConfig = TiltConfig(perspectiveIntensity: 0.01);
+      expect(tiltConfig.copyWith().perspectiveIntensity, 0.01);
+      expect(
+        tiltConfig.copyWith(perspectiveIntensity: null).perspectiveIntensity,
+        isNull,
+      );
     });
 
     test('== and hashCode - equal direction lists are considered equal', () {

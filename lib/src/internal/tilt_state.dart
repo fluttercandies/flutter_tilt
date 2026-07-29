@@ -162,20 +162,36 @@ class TiltState {
 
   /// 计算指定区域进度的倾斜
   Matrix4 tiltTransformFor(Offset targetAreaProgress) {
+    final config = tiltConfig;
     final rotate = Utils.rotateAxis(
       /// 旋转大小：区域进度 * 弧度
-      targetAreaProgress * Utils.radian(tiltConfig.angle),
-      tiltConfig.enableReverse,
+      targetAreaProgress * Utils.radian(config.angle),
+      config.enableReverse,
     );
     final rotateX = rotate.dx, rotateY = rotate.dy;
     final maxSize = math.max<double>(width, height);
 
+    // 透视强度，自定义原始值，未设置时按尺寸自适应（近大远小）
+    final perspectiveIntensityValue =
+        config.perspectiveIntensity ?? 0.5 / maxSize;
+
+    // 旋转支点在 Z 方向的偏移量
+    final zOffset = config.zOffset;
+
     return Matrix4.identity()
-      // 近大远小效果（适配不同尺寸的组件）
-      ..setEntry(3, 2, 0.5 / maxSize)
-      // 旋转轴
+      // 透视：近大远小
+      ..setEntry(3, 2, perspectiveIntensityValue)
+      // 与后面的 zOffset 成对，把旋转轴心沿 Z 偏移（与后面的 zOffset 对消，不改变原始大小）
+      // TODO: 兼容低版本开发者，未来完全弃用时再替换为新的方法（Flutter 3.35 开始标记为弃用）
+      // ignore: deprecated_member_use
+      ..translate(0.0, 0.0, -zOffset)
+      // 倾斜：绕 X / Y 轴旋转
       ..rotateX(rotateX)
-      ..rotateY(rotateY);
+      ..rotateY(rotateY)
+      // 与前面的 zOffset 成对，把轴心推回，绕 “Z 偏移支点” 旋转（纵深摆动）
+      // TODO: 兼容低版本开发者，未来完全弃用时再替换为新的方法（Flutter 3.35 开始标记为弃用）
+      // ignore: deprecated_member_use
+      ..translate(0.0, 0.0, zOffset);
   }
 
   /// 转换为 TiltDataModel

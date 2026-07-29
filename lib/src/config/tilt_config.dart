@@ -42,6 +42,8 @@ class TiltConfig {
     this.leaveCurve = Curves.linear,
     this.controllerMoveDuration = const Duration(milliseconds: 100),
     this.controllerLeaveDuration = const Duration(milliseconds: 300),
+    this.perspectiveIntensity,
+    this.zOffset = 0.0,
   }) : assert(sensorRevertFactor >= 0 && sensorRevertFactor <= 1);
 
   /// Only disable the tilt effect.
@@ -426,6 +428,47 @@ class TiltConfig {
   /// [GesturesType.controller]
   final Duration controllerLeaveDuration;
 
+  /// {@template tilt.TiltConfig.perspectiveIntensity}
+  ///
+  /// Perspective intensity (near-large, far-small).
+  ///
+  /// When `null`, it defaults to a size-adaptive value.
+  ///
+  /// ------
+  ///
+  /// 透视强度（近大远小）。
+  ///
+  /// 为 `null` 时，将默认按尺寸自适应。
+  ///
+  /// {@endtemplate}
+  final double? perspectiveIntensity;
+
+  /// {@template tilt.TiltConfig.zOffset}
+  ///
+  /// The offset of the rotation pivot along the Z-axis.
+  ///
+  /// When non-zero,
+  /// the widget produces a tilting and swinging effect around the offset pivot point on the Z-axis.
+  ///
+  /// For example:
+  /// - `-100`: The pivot is 100 pixels behind the widget.
+  /// - `100`: The pivot is 100 pixels in front of the widget.
+  /// - `0`: The pivot is at the center of the widget.
+  ///
+  /// ------
+  ///
+  /// 旋转支点在 Z 轴方向的偏移量。
+  ///
+  /// 不为 0 时，widget 将绕 Z 轴上的偏移支点产生倾斜摆动的效果。
+  ///
+  /// 例如：
+  /// - `-100`：支点位于 widget 后方 100 像素。
+  /// - `100`：支点位于 widget 前方 100 像素。
+  /// - `0`：支点位于 widget 中心。
+  ///
+  /// {@endtemplate}
+  final double zOffset;
+
   /// Sentinel value used to distinguish "not provided" from explicit `null`
   /// in [copyWith] for nullable fields like [initial] and [direction].
   static const Object _absent = Object();
@@ -454,6 +497,8 @@ class TiltConfig {
     Curve? leaveCurve,
     Duration? controllerMoveDuration,
     Duration? controllerLeaveDuration,
+    Object? perspectiveIntensity = _absent,
+    double? zOffset,
   }) {
     return TiltConfig(
       disable: disable ?? this.disable,
@@ -484,6 +529,10 @@ class TiltConfig {
           controllerMoveDuration ?? this.controllerMoveDuration,
       controllerLeaveDuration:
           controllerLeaveDuration ?? this.controllerLeaveDuration,
+      perspectiveIntensity: identical(perspectiveIntensity, _absent)
+          ? this.perspectiveIntensity
+          : perspectiveIntensity as double?,
+      zOffset: zOffset ?? this.zOffset,
     );
   }
 
@@ -518,7 +567,9 @@ class TiltConfig {
         other.enterToMoveCurve == enterToMoveCurve &&
         other.leaveCurve == leaveCurve &&
         other.controllerMoveDuration == controllerMoveDuration &&
-        other.controllerLeaveDuration == controllerLeaveDuration;
+        other.controllerLeaveDuration == controllerLeaveDuration &&
+        other.perspectiveIntensity == perspectiveIntensity &&
+        other.zOffset == zOffset;
   }
 
   @override
@@ -547,6 +598,8 @@ class TiltConfig {
       leaveCurve,
       controllerMoveDuration,
       controllerLeaveDuration,
+      perspectiveIntensity,
+      zOffset,
     ]);
   }
 }
