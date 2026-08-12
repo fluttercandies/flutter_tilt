@@ -17,6 +17,8 @@ updates:
       codeql-action:
         patterns:
           - "github/codeql-action/*"
+    cooldown:
+      default-days: 7
   - package-ecosystem: "pub"
     versioning-strategy: "increase"
     directory: "/"
@@ -25,3 +27,5 @@ updates:
     labels:
       - "auto.dependencies"
       - "auto.pub-package"
+    cooldown:
+      default-days: 7
