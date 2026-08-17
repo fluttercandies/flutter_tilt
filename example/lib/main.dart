@@ -1,6 +1,6 @@
-﻿// More Live Demo: https://amoshuke.github.io/flutter_tilt_book
+// More Live Demo: https://amoshuke.github.io/flutter_tilt_book
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 
 void main() {
@@ -65,6 +65,7 @@ class TiltExample extends StatelessWidget {
             lightConfig: const LightConfig(disable: true),
             shadowConfig: const ShadowBaseConfig(disable: true),
             borderRadius: BorderRadius.circular(24.0),
+            filterQuality: FilterQuality.low,
             childLayout: ChildLayout(
               inner: [
                 ...innerBox,
